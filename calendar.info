@@ -10,9 +10,9 @@
     <version name="2.0b2" url="http://openacs.org/acs-repository/download/apm/calendar-2.0b2.apm">
         <owner url="mailto:tong@ebt.ee.usyd.edu.au">Lilian Tong</owner>
         <owner>Charles Mok</owner>
-        <summary></summary>
+        <summary>Personal and shared event calendars.</summary>
         <vendor>University of Sydney</vendor>
-        <description format="text/html">straight port of calendar</description>
+        <description format="text/html">Manage group and shared calendars with download.</description>
 
         <provides url="calendar" version="2.0b2"/>
         <requires url="acs-datetime" version="4.0"/>

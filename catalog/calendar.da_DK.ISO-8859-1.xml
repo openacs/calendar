@@ -29,6 +29,7 @@
   <msg key="Date">Dato:</msg>
   <msg key="Date_1">Dato</msg>
   <msg key="day">dag</msg>
+  <msg key="day_rolling_period">dage</msg>
   <msg key="day_s">dag(e)</msg>
   <msg key="Delete">Slet</msg>
   <msg key="delete">slet</msg>
@@ -37,6 +38,7 @@
   <msg key="Edit">Redigér</msg>
   <msg key="edit">redigér</msg>
   <msg key="End_Time">Sluttidspunkt</msg>
+  <msg key="Events_over_a">Vis de næste</msg>
   <msg key="Friday">Fredag</msg>
   <msg key="from">fra</msg>
   <msg key="Grant">Giv</msg>

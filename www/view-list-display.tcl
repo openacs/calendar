@@ -54,15 +54,15 @@ if {[empty_string_p $start_date] && [empty_string_p $end_date]} {
 }
 
 if {[empty_string_p $start_date] && ![empty_string_p $end_date]} {
-    set title "[_ acs-datetime.to] [util_AnsiDatetoPrettyDate $end_date]"
+    set title "[_ acs-datetime.to] [lc_time_fmt $end_date "%q"]"
 }
 
 if {![empty_string_p $start_date] && [empty_string_p $end_date]} {
-    set title "[_ acs-datetime.Items_from] [util_AnsiDatetoPrettyDate $start_date]"
+    set title "[_ acs-datetime.Items_from] [lc_time_fmt $start_date "%q"]"
 }
 
 if {![empty_string_p $start_date] && ![empty_string_p $end_date]} {
-    set title "[_ acs-datetime.Items_from] [util_AnsiDatetoPrettyDate $start_date] [_ acs-datetime.to] [util_AnsiDatetoPrettyDate $end_date]"
+    set title "[_ acs-datetime.Items_from] [lc_time_fmt $start_date "%q"] [_ acs-datetime.to] [lc_time_fmt $end_date "%q"]"
 }
 
 set today_date [dt_sysdate]    

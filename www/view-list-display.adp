@@ -7,7 +7,10 @@
                   <h5>@title@</h5>
                 </td>
                 <td align="right">
-                  Events over a <input type="text" class="cal-field" id="period_days" name="period_days" value="@period_days@" size="3" maxlength="3"> day rolling period <input class="cal-button-sml" type="submit" value="Go">
+                  #calendar.Events_over_a#
+                  <input type="text" class="cal-field" id="period_days" name="period_days" value="@period_days@" size="3" maxlength="3">
+                  #calendar.day_rolling_period#
+                  <input class="cal-button-sml" type="submit" value="#acs-kernel.common_go#">
                   @form_vars;noquote@
                 </td>
               </tr>

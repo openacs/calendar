@@ -31,6 +31,7 @@
   <msg key="Date">Date:</msg>
   <msg key="Date_1">Date</msg>
   <msg key="day">day</msg>
+  <msg key="day_rolling_period">day rolling period</msg>
   <msg key="day_s">day (s)</msg>
   <msg key="Delete">Delete</msg>
   <msg key="delete">delete</msg>
@@ -46,6 +47,7 @@
   <msg key="Edit">Edit</msg>
   <msg key="edit">edit</msg>
   <msg key="End_Time">End Time</msg>
+  <msg key="Events_over_a">Events over a</msg>
   <msg key="Friday">Friday</msg>
   <msg key="from">from</msg>
   <msg key="Grant">Grant</msg>

@@ -46,60 +46,17 @@ set party_name [db_string get_party_name {
 # ----------------------------------------------
 # view, greant, or revoke
 
-# view
 if { [string equal $action "view"] } {
-    
-
-    # ----------------------------------------------
-    # get calendar_permissions within the system
-
-    db_multirow calendars get_viewable_calendar {
-	
-	select   unique(object_id) as calendar_id, 
-	         calendar.name(object_id) as calendar_name,
-                 calendar.show_p(object_id, :party_id) as show_p
-	from     acs_object_party_privilege_map 
-	where    calendar.readable_p(object_id, :party_id) = 't'
-	and      party_id = :party_id
-	and      acs_object_util.object_type_p(object_id, 'calendar') = 't'
-	and      calendar.private_p(object_id) = 'f'
-	
-	union
-
-	select   cal_item.on_which_calendar(object_id) as calendar_id, 
-	         calendar.name(cal_item.on_which_calendar(object_id)) as calendar_name,
-	         calendar.show_p(cal_item.on_which_calendar(object_id), :party_id) as show_p
-	from     acs_object_party_privilege_map 
-	where    privilege = 'cal_item_read'
-	and      party_id = :party_id
-	and      acs_object_util.object_type_p(object_id, 'cal_item') = 't'
-	and      calendar.private_p(cal_item.on_which_calendar(object_id)) = 'f'
-
-	
-    }    
-
-# grant
+    db_multirow calendars get_viewable_calendar { }    
 } elseif { [string equal $action "edit"] } {
-    
-
-
-
     foreach old_items $calendar_old_list {
-
 	if { [string equal [lsearch -exact $calendar_hide_list [lindex $old_items 0]] "-1"] } {
-	    
 	    # revoke permission	    
-	    calendar_assign_permissions [lindex $old_items 0] $party_id "calendar_show" 
-	    
+	    calendar_assign_permissions [lindex $old_items 0] $party_id "calendar_read" 
 	} else {
-
-	   calendar_assign_permissions [lindex $old_items 0] $party_id "calendar_show" "revoke"
-
+	   calendar_assign_permissions [lindex $old_items 0] $party_id "calendar_read" "revoke"
 	}
-	
-	
     }
-
 
     set action view
     ad_returnredirect "calendar-preferences?[export_url_vars action]"

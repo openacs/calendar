@@ -23,7 +23,8 @@ if {[llength $calendar_list] > 0} {
     set calendar_list_sql "[join $calendar_list ","]"
 
     db_multirow calendars select_calendars "
-    select calendar_id, calendar_name
+    select calendar_id, calendar_name, 
+    acs_permission__permission_p(calendar_id, :user_id, 'calendar_admin') as calendar_admin_p
     from calendars
     where calendar_id in ($calendar_list_sql)
     "

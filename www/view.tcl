@@ -23,14 +23,14 @@ set date [calendar::adjust_date -date $date -julian_date $julian_date]
 
 # Set up some template
 set item_template "<a href=\"cal-item-view?cal_item_id=\$item_id\">\$item</a>"
-set hour_template "<a href=\"cal-item-new?date=$date&start_time=\$start_time&end_time=\$end_time\">\$hour</a>"
+set hour_template "<a href=\"cal-item-new?date=\[ns_urlencode \$date]&start_time=\$start_time&end_time=\$end_time\">\$hour</a>"
 set item_add_template "<a href=\"cal-item-new?julian_date=\$julian_date&start_time=&end_time=\">ADD</a>"
 
 # Depending on the view, make a different widget
 if {$view == "day"} {
     set cal_stuff [calendar::one_day_display \
-            -prev_nav_template "<a href=\"?view=$view&date=\$yesterday\">&lt;</a>" \
-            -next_nav_template "<a href=\"?view=$view&date=\$tomorrow\">&gt;</a>" \
+	    -prev_nav_template "<a href=\"view?view=$view&date=\[ns_urlencode \$yesterday]\">&lt;</a>" \
+	    -next_nav_template "<a href=\"view?view=$view&date=\[ns_urlencode \$tomorrow]\">&gt;</a>" \
             -item_template $item_template \
             -hour_template $hour_template \
             -date $date -start_hour 7 -end_hour 22 \

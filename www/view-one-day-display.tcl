@@ -5,7 +5,6 @@
 # date (YYYY-MM-DD) - optional
 # start_display_hour and end_display_hour
 
-
 # calendar-portlet uses this stuff
 if { ![info exists url_stub_callback] } {
     set url_stub_callback ""
@@ -34,7 +33,7 @@ if {[empty_string_p $date]} {
     # Default to todays date in the users (the connection) timezone
     set server_now_time [dt_systime]
     set user_now_time [lc_time_system_to_conn $server_now_time]
-    set date [lc_time_fmt $user_now_time "%x"]
+    set date [lc_time_fmt $user_now_time "%F"]
 }
 
 set current_date $date
@@ -59,7 +58,7 @@ db_foreach select_day_items {} {
             set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
         }
         
-        set url_stub $url_stubs($calendar_id)
+	set url_stub $url_stubs($calendar_id)
     }
 
     set item "$name"

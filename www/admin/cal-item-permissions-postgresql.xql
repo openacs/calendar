@@ -12,6 +12,16 @@
       </querytext>
 </fullquery>
 
+
+<fullquery name="get_cal_item_name">      
+      <querytext>
+      
+                     select    cal_item__name(:cal_item_id)
+                     from      dual
+                  
+      </querytext>
+</fullquery>
+
  
 <fullquery name="list_users">      
       <querytext>

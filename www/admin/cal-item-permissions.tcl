@@ -42,7 +42,7 @@ set party_name [db_string get_party_name {
                } -default ""]
 
 # get cal_item name
-set cal_item_name [db_string get_cal_item)name {
+set cal_item_name [db_string get_cal_item_name {
                      select    cal_item.name(:cal_item_id)
                      from      dual
                   } -default ""]

@@ -57,8 +57,8 @@ if {$view == "month"} {
             -date $date \
             -item_add_template "<font size=-3>$item_add_template</font>" \
             -calendar_id_list $calendar_list \
-            -prev_month_template "<a href=view?view=month&date=\[ns_urlencode \$ansi_date]>&lt;</a>" \
-            -next_month_template "<a href=view?view=month&date=\[ns_urlencode \$ansi_date]>&gt;</a>"]
+            -prev_month_template "<a href=view?view=month&date=\$ansi_date>&lt;</a>" \
+            -next_month_template "<a href=view?view=month&date=\$ansi_date>&gt;</a>"]
 }
 
 if {$view == "list"} {

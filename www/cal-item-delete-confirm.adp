@@ -22,7 +22,7 @@
     <td valign=top> 
     <table>
     <tr><td colspan=2><blockquote>@item_data.description@</blockquote></td></tr>
-    <tr><th align=right>Date<if @item_data.no_time_p@ eq 0>and Time</if>:</th><td><a href="./?calendar_id=@calendar_id@&view=day&show_cal_nav=@show_cal_nav@&date=@raw_start_date@">@item_data.start_date@</a><if @item_data.no_time_p@ eq 0>, from @item_data.start_time@ to @item_data.end_time@</if></td></tr>
+    <tr><th align=right>Date<if @item_data.no_time_p@ eq 0> and Time</if>:</th><td><a href="./?calendar_id=@calendar_id@&view=day&show_cal_nav=@show_cal_nav@&date=@raw_start_date@">@item_data.start_date@</a><if @item_data.no_time_p@ eq 0>, from @item_data.start_time@ to @item_data.end_time@</if></td></tr>
     <tr><th align=right>Title:</th><td>@item_data.name@</td></tr>
     <tr><th align=right>Type:</th><td>@item_data.item_type@</td></tr>
     </table>

@@ -37,7 +37,7 @@ foreach attachment $item_attachments {
     <if @edit_p@ eq 1><a href="cal-item-edit?cal_item_id=@cal_item_id@&return_url=@return_url@">edit</a> | <a href="./cal-item-delete?cal_item_id=@cal_item_id@&return_url=@return_url@">delete</a> @attachment_options@
 </if>
 <p>
-<a href="cal-item-outlook?cal_item_id=@cal_item_id@">sync with Outlook</a>
+<a href="ics/@cal_item_id@.ics">sync with Outlook</a>
     </td>
   </tr>
 </table>

@@ -25,7 +25,7 @@ drop function cal_item__new (
     integer,
     varchar,
     integer,
-    timestamp,
+    timestamptz,
     integer,
     varchar
 );

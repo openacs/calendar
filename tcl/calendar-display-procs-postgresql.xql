@@ -39,7 +39,7 @@
 <querytext>
         select   to_char(to_date(:current_date, 'yyyy-mm-dd'), 'D') 
         as       day_of_the_week,
-        to_char(next_day(to_date(:current_date, 'yyyy-mm-dd')- '1 week'::timespan, 'Sunday'), 'YYYY-MM-DD')
+        to_char(next_day(to_date(:current_date, 'yyyy-mm-dd')- '1 week'::interval, 'Sunday'), 'YYYY-MM-DD')
         as       sunday_of_the_week,
         to_char(next_day(to_date(:current_date, 'yyyy-mm-dd'), 'Saturday'), 'YYYY-MM-DD')
         as       saturday_of_the_week

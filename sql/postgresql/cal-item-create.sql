@@ -113,7 +113,7 @@ CREATE FUNCTION cal_item__new (
     integer,	-- recurrence_id	acs_events.recurrence_id%TYPE
     varchar,	-- object_type		acs_objects.object_type%TYPE
     integer,	-- context_id		acs_objects.context_id%TYPE
-    timestamp,	-- createion_date	acs_objects.creation_date%TYPE
+    timestamptz,-- creation_date	acs_objects.creation_date%TYPE
     integer,	-- creation_user	acs_objects.creation_user%TYPE
     varchar	-- creation_ip		acs_objects.creation_ip%TYPE
 )

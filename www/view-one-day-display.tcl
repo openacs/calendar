@@ -104,7 +104,7 @@ set item_add_without_time [subst $hour_template]
 # items. Will be properly implemented in OpenACS 5.1 (or so) -- Dirk
 multirow create day_items_with_time current_hour_link current_hour localized_current_hour name item_id calendar_name status_summary start_hour end_hour start_time end_time colspan rowspan full_item
 
-for {set i $start_display_hour } { $i < $end_display_hour } { incr i } {
+for {set i 0 } { $i < 24 } { incr i } {
     set items_per_hour($i) 0
 }
 

@@ -38,7 +38,7 @@ element create cal_item calendar_id \
         -label "Calendar ID" -datatype integer -widget hidden -value $calendar_id
 
 element create cal_item title \
-        -label "Title" -datatype text -widget text -html {size 60 maxlength 255}
+        -label "Title" -datatype text -widget text -html {size 60} -maxlength 255
 
 element create cal_item date \
         -label "Date" -datatype date -widget date
@@ -53,7 +53,7 @@ element create cal_item end_time \
         -label "End Time" -datatype date -widget date -format "HH12:MI AM" -optional
 
 element create cal_item description \
-        -label "Description" -datatype text -widget textarea -html {cols 60 rows 3 wrap soft}
+        -label "Description" -datatype text -widget textarea -html {cols 60 rows 3 wrap soft} -optional
 
 element create cal_item item_type_id \
         -label "Type" -datatype integer -widget select -options [calendar::get_item_types -calendar_id $calendar_id] -optional

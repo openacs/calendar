@@ -6,7 +6,7 @@
      	@cvs-id $Id$
 -->
 
-<master src="master">
+<master>
 <property name="title">Calendar Item Administration </property>
 <property name="context"> "Calendar Item Permissions" </property>
 

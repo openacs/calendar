@@ -7,7 +7,7 @@
 -->
 
 
-<master src="master">
+<master>
 <property name="title">Calendars: Repeating Event</property>
 <property name="context">Repeat</property>
 

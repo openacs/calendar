@@ -7,7 +7,7 @@
 -->
 
 
-<master src="master">
+<master>
 <property name="title">Calendar Administration@title@ </property>
 <property name="context">@context@</property>
 

@@ -1,4 +1,4 @@
-<master src="master">
+<master>
 <property name="title">Calendar: Choose Calendar</property>
 <property name="context">Choose</property>
 

@@ -6,7 +6,7 @@
      	@creation-date Dec 14, 2000
      	@cvs-id $Id$
 -->
-<master src="master">
+<master>
 <property name="title">Calendar Administration: @party_name@ </property>
 <property name="context"> "Calendar Preferences" </property>
 

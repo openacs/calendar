@@ -1,4 +1,4 @@
-<master src="master">
+<master>
 <property name="title">Calendar: Add Item</property>
 <property name="context">Add</property>
 

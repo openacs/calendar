@@ -7,7 +7,7 @@
 -->
 
 
-<master src="master">
+<master>
 <property name="title">Calendar Item Delete: @cal_item.name@</property>
 <property name="context">Delete</property>
 

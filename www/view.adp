@@ -1,4 +1,4 @@
-<master src="master">
+<master>
 <property name="title">Calendars</property>
 <property name="context">Calendar</property>
 

@@ -25,8 +25,8 @@
 <fullquery name="cal_item_create.insert_timespan">      
       <querytext>
 	select timespan__new (    
-					:start_date::timestamp,
-					:end_date::timestamp
+					:start_date::timestamptz,
+					:end_date::timestamptz
 	) 
 
       </querytext>
@@ -60,8 +60,8 @@
       <querytext>
 	select time_interval__edit (
 					:interval_id,
-					:start_date::timestamp,
-					:end_date::timestamp
+					:start_date::timestamptz,
+					:end_date::timestamptz
 	)
 
       </querytext>

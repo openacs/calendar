@@ -28,4 +28,14 @@
     </querytext>
 </fullquery>
  
+<fullquery name="calendar_have_private_p.get_calendar_info_calendar_id_list">
+    <querytext>
+    select    calendar_id
+    from      calendars
+    where     owner_id = :party_id
+    and       private_p = 't'
+    and       calendar_id in ([join $calendar_id_list ", "])
+    </querytext>
+</fullquery>
+ 
 </queryset>

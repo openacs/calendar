@@ -5,7 +5,7 @@
 
     <fullquery name="calendar::item::dates_valid_p.dates_valid_p_select">
       <querytext>
-        select CASE WHEN (:start_date::timestamp - :end_date::timestamp) <= 0 
+        select CASE WHEN :start_date::timestamptz <= :end_date::timestamptz
                     THEN 1
                     ELSE -1
                END 
@@ -19,9 +19,9 @@
          0 as n_attachments,
          to_char(start_date, 'YYYY-MM-DD HH:MI:SS') as start_date,
          end_date as end_date,
-         to_char(start_date, 'YYYY-MM-DD HH24:MI:SS') as ansi_start_date,
-         to_char(end_date, 'YYYY-MM-DD HH24:MI:SS') as ansi_end_date,
-         coalesce(a.name, e.name) as name,
+         to_char(start_date, 'YYYY-MM-DD HH24:MI:SS') as full_start_date,
+         to_char(end_date, 'YYYY-MM-DD HH24:MI:SS') as full_end_date,
+         coalesce(e.name, a.name) as name,
          coalesce(e.description, a.description) as description,
          recurrence_id,
          i.item_type_id,

@@ -284,7 +284,7 @@ CREATE FUNCTION calendar__new (
        boolean,            -- calendar.private_p
        integer,            -- calendar.package_id
        integer,            -- acs_objects.context_id%TYPE
-       timestamp,          -- acs_objects.creation_date%TYPE
+       timestamptz,        -- acs_objects.creation_date%TYPE
        integer,            -- acs_objects.creation_user%TYPE
        varchar             -- acs_objects.creation_ip%TYPE
 )
@@ -443,7 +443,7 @@ LANGUAGE 'plpgsql';
 
 
 CREATE FUNCTION calendar__month_name(
-	timestamp
+	timestamptz
 )
 RETURNS varchar
 AS 'declare
@@ -461,12 +461,12 @@ LANGUAGE 'plpgsql';
 
 
 CREATE FUNCTION calendar__next_month(
-	timestamp
+	timestamptz
 )
-RETURNS timestamp
+RETURNS timestamptz
 AS 'declare
 	next_month__current_dates		alias for $1;
-	v_date			timestamp;
+	v_date			timestamptz;
     begin
 	--select	trunc(add_months(to_date(db_sysdate), -1))
         select date_trunc(''day'', current_timestamp + cast(''1 month'' as interval))
@@ -479,9 +479,9 @@ LANGUAGE 'plpgsql';
           
 
 CREATE FUNCTION calendar__prev_month(
-	timestamp
+	timestamptz
 )
-RETURNS timestamp
+RETURNS timestamptz
 AS 'declare
 	prev_month__current_date		alias for $1;
 	v_date			date;
@@ -497,7 +497,7 @@ LANGUAGE 'plpgsql';
 
 
 CREATE FUNCTION calendar__num_day_in_month(
-	timestamp
+	timestamptz
 )
 RETURNS integer
 AS 'declare
@@ -514,12 +514,12 @@ LANGUAGE 'plpgsql';
 
 
 CREATE FUNCTION calendar__first_displayed_date(
-	timestamp
+	timestamptz
 )
-RETURNS timestamp
+RETURNS timestamptz
 AS 'declare
 	first_displayed_date__current_date	alias for $1;
-	v_date			timestamp;
+	v_date			timestamptz;
 begin
         select next_day(date_trunc(''Month'', current_date) - 7 , ''SUNDAY'')
 	into		v_date
@@ -531,12 +531,12 @@ LANGUAGE 'plpgsql';
 
 
 CREATE FUNCTION calendar__last_displayed_date(
-	timestamp
+	timestamptz
 )
-RETURNS timestamp
+RETURNS timestamptz
 AS 'declare
 	last_displayed_date__current_date	alias for $1;
-	v_date			timestamp;
+	v_date			timestamptz;
 begin
 	select next_day(last_day(current_date), ''SATURDAY'')
         into		v_date

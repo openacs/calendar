@@ -140,7 +140,7 @@ DROP FUNCTION calendar__new (
        boolean,            -- calendar.private_p
        integer,            -- calendar.package_id
        integer,            -- acs_objects.context_id%TYPE
-       timestamp,          -- acs_objects.creation_date%TYPE
+       timestamptz,        -- acs_objects.creation_date%TYPE
        integer,            -- acs_objects.creation_user%TYPE
        varchar             -- acs_objects.creation_ip%TYPE
 );
@@ -168,27 +168,27 @@ DROP FUNCTION calendar__show_p (
 );
 
 DROP FUNCTION calendar__month_name(
-	timestamp
+	timestamptz
 );
 
 DROP FUNCTION calendar__next_month(
-	timestamp
+	timestamptz
 );
 
 DROP FUNCTION  calendar__prev_month(
-	timestamp
+	timestamptz
 );
 
 DROP FUNCTION calendar__num_day_in_month(
-	timestamp
+	timestamptz
 );
 
 DROP FUNCTION calendar__first_displayed_date(
-	timestamp
+	timestamptz
 );
 
 DROP FUNCTION calendar__last_displayed_date(
-	timestamp
+	timestamptz
 );
 
   -- drop table  

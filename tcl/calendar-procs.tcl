@@ -122,14 +122,23 @@ ad_proc calendar_have_group_cal_p { party_id } {
 # figure out if user have a private calendar or not
 # again, best suited to be rolled into the pl/sql
 
-ad_proc calendar_have_private_p { {-return_id 0} party_id } {
-    
+ad_proc calendar_have_private_p { 
+    {-return_id 0} 
+    {-calendar_id_list {}}
+    party_id 
+} {
     check to see if ther user have a prviate calendar
     if -return_id is 1, then proc will return the calendar_id
 
+    @param calendar_id_list If you supply the calendar_id_list, then we'll only search 
+    for a personal calendar among the calendars supplied here.
 } {
 
-    set result [db_string get_calendar_info "" -default 0]
+    if { [llength $calendar_id_list] > 0 } {
+        set result [db_string get_calendar_info_calendar_id_list {} -default 0]
+    } else {
+        set result [db_string get_calendar_info {} -default 0]
+    }
     
     if { ![string equal $result "0"] } {
 

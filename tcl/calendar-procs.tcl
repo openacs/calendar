@@ -240,13 +240,6 @@ ad_proc calendar_create_private { private_id } {
     create a private calendar
 
 } {
-    # check to make sure the user_id given is indeed a user
-    # this shouldn always happen
-
-    if {![cc_is_party_user_p $private_id]} {
-	return "ERROR: ID NOT USER"
-    }
-
     # set the private calendar name
     set calendar_name "private calendar for [db_string get_user_name {
 	select   acs_object.name(:private_id) 

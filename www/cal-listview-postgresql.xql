@@ -20,7 +20,7 @@ and      s.interval_id = t.interval_id
 and      e.activity_id = a.activity_id
 and      start_date between
         to_date(:current_date,:date_format) and
-         to_date(:current_date,:date_format) + (24 - 1/3600)/24
+         to_date(:current_date,:date_format) + cast('23 hours 59 minutes 59 seconds' as interval)
 and      e.event_id
 in       (
            select    cal_item_id
@@ -49,7 +49,7 @@ and      s.interval_id = t.interval_id
 and      e.activity_id = a.activity_id
 and      start_date between
         to_date(:current_date,:date_format) and
-         to_date(:current_date,:date_format) + (24 - 1/3600)/24
+         to_date(:current_date,:date_format) + cast('23 hours 59 minutes 59 seconds' as interval)
 and      e.event_id
 in       (
            select    cal_item_id

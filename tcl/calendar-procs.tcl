@@ -30,6 +30,14 @@ ad_proc calendar_make_datetime { event_date
     set hours [lindex $event_time 3]
     set minutes [lindex $event_time 1]
 
+    if {$month < 10} {
+	set month "0$month"
+    }
+
+    if {$day < 10} {
+	set day "0$day"
+    }
+
     if {$hours < 10} {
 	set hours "0$hours"
     }

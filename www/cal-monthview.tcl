@@ -130,7 +130,7 @@ if {[llength $calendar_list] == 0} {
 
 
 
-set row_html [dt_widget_month -calendar_details $set_id]
+set row_html [dt_widget_month  -calendar_details $set_id -date $date]
 
 ad_return_template
 

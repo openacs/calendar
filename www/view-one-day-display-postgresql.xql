@@ -29,7 +29,8 @@ and      start_date between
          to_date(:current_date,:date_format) and
          to_date(:current_date,:date_format) + cast('23 hours 59 minutes 59 seconds' as interval)
 and      cal_items.cal_item_id= e.event_id
-and      to_char(start_date, 'HH24') = '00'
+and      to_char(start_date, 'HH24:MI') = '00:00'
+and      to_char(end_date, 'HH24:MI') = '00:00'
 </querytext>
 </fullquery>
 
@@ -59,7 +60,8 @@ and      start_date between
          to_date(:current_date,:date_format) and
          to_date(:current_date,:date_format) + cast('23 hours 59 minutes 59 seconds' as interval)
 and      cal_items.cal_item_id= e.event_id
-and      to_char(start_date, 'HH24') <> ''
+and      to_char(start_date, 'HH24:MI') <> '00:00'
+and      to_char(end_date, 'HH24:MI') <> '00:00'
 order by start_hour
 </querytext>
 </fullquery>

@@ -191,7 +191,7 @@ create table calendars (
           -- public calendar. 
         private_p               varchar2(1)
                                 default 'f'
-                                constraint calendars_prviate_p_ck 
+                                constraint calendars_private_p_ck 
                                 check (private_p in ( 
                                         't',
                                         'f'

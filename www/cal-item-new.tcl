@@ -126,9 +126,11 @@ ad_form -extend -name cal_item -validate {
 } -new_request {
     set date [template::util::date::from_ansi $date]
     set repeat_p 0
-    if {[info exists start_time] && ![empty_string_p $start_time]} {
+    if {[info exists start_time] && ![empty_string_p $start_time] && $start_time != 0} {
 	# Set the start time
+	set start_hour $start_time
 	set start_time "{} {} {} $start_time 0 {} {HH24:MI}"
+	set end_time "{} {} {} [expr $start_hour + 1] 0 {} {HH24:MI}"
 	set time_p 1 
     } else {
 	set time_p 0

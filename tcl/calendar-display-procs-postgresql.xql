@@ -35,9 +35,9 @@
 <querytext>
         select   to_char(to_date(:current_date, 'yyyy-mm-dd'), 'D') 
         as       day_of_the_week,
-        to_char(next_day(to_date(:current_date, 'yyyy-mm-dd')-7, 'Sunday')) 
+        to_char(next_day(to_date(:current_date, 'yyyy-mm-dd')- '1 week'::timespan, 'Sunday'), 'D')
         as       sunday_of_the_week,
-        to_char(next_day(to_date(:current_date, 'yyyy-mm-dd'), 'Saturday')) 
+        to_char(next_day(to_date(:current_date, 'yyyy-mm-dd'), 'Saturday'), 'D')
         as       saturday_of_the_week
         from     dual
 </querytext>

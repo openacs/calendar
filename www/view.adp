@@ -33,21 +33,25 @@
   <div id="events">   
     <if @view@ eq "list">
       <include src="view-list-display" start_date=@start_date@ 
-      end_date=@end_date@ date=@date@ period_days=@period_days@ sort_by=@sort_by@> 
+      end_date=@end_date@ date=@date@ period_days=@period_days@ sort_by=@sort_by@
+      show_calendar_name_p=@show_calendar_name_p@> 
     </if>
     
     
     <if @view@ eq "day">
-      <include src="view-one-day-display" date="@date@" start_hour=0 end_hour=23>
+      <include src="view-one-day-display" date="@date@" start_hour=0 end_hour=23
+      show_calendar_name_p=@show_calendar_name_p@>
     </if>
     
     <if @view@ eq "week">
-      <include src="view-week-display" date="@date@">
+      <include src="view-week-display" date="@date@"
+      show_calendar_name_p=@show_calendar_name_p@>
     </if>
     
     
     <if @view@ eq "month">
-      <include src="view-month-display" date=@date@>
+      <include src="view-month-display" date=@date@
+      show_calendar_name_p=@show_calendar_name_p@>
     </if>
   </div>
 

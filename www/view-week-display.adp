@@ -44,7 +44,9 @@
             <if @items.no_time_p@ true>
             </span>
             </if>
-            <span class="cal-text-grey-sml">[@items.calendar_name@]</span>
+            <if @show_calendar_name_p@>
+              <span class="cal-text-grey-sml">[@items.calendar_name@]</span>
+            </if>
             </td>
             </tr>
            </if>

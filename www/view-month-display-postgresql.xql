@@ -13,8 +13,8 @@
 	         coalesce(e.description, a.description) as description,
                  coalesce(e.status_summary, a.status_summary) as status_summary,
 	         e.event_id as item_id,
-		 on_which_calendar,
-		 calendar_name
+		 cals.calendar_id,
+		 cals.calendar_name
 	from     acs_activities a,
 	         acs_events e,
 	         timespans s,

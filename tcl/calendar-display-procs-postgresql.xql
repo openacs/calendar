@@ -7,6 +7,8 @@
       <querytext>
       
 	select   to_char(start_date, 'J') as start_date,
+                 to_char(start_date, 'HH:MIpm') as start_time,
+                 to_char(end_date, 'HH:MIpm') as end_time,
 	         coalesce(e.name, a.name) as name,
 	         coalesce(e.description, a.description) as description,
                  coalesce(e.status_summary, a.status_summary) as status_summary,
@@ -24,7 +26,7 @@
 	         from    cal_items
 	         where   on_which_calendar = :calendar_id
          )
-	
+         order by start_date,end_date	
       </querytext>
 </fullquery>
 

@@ -21,6 +21,9 @@ namespace eval calendar {
         {-item_add_template ""}
         {-date ""}
         {-url_stub_callback ""}
+        {-show_calendar_name_p 1}
+        {-prev_month_template ""}
+        {-next_month_template ""}
     } {
         Creates a month widget with events for that month
 
@@ -52,7 +55,15 @@ namespace eval calendar {
 
             db_foreach select_monthly_items {} {
                 set item "$name"
-                set item "[subst $item_template]<br>"
+                set item "[subst $item_template]"
+
+                if {![dt_no_time_p -start_time $start_time -end_time $end_time]} {
+                    set item "<font size=-2><b>$start_time</b></font> $item"
+                }
+                
+                if {$show_calendar_name_p} {
+                    append item " <font size=-2>($calendar_name)</font>"
+                }
 
                 # DRB: This ugly hack was added for dotlrn-events, to give us a way to
                 # flag event status in red in accordance with the spec.  When calendar
@@ -63,6 +74,8 @@ namespace eval calendar {
                     append item " <font color=\"red\">$status_summary</font> "
                 }
 
+                append item "<br>"
+
                 ns_set put $items $start_date $item
             }            
         }
@@ -71,10 +84,23 @@ namespace eval calendar {
         if {[empty_string_p $item_add_template]} {
             set day_number_template "<font size=1>$day_template</font>"
         } else {
-            set day_number_template "<font size=1>$item_add_template &nbsp; &nbsp; $day_template</font>"
+            set day_number_template "<font size=1>$day_template &nbsp; &nbsp; $item_add_template</font>"
         }
 
-        return [dt_widget_month -calendar_details $items -date $date -day_number_template $day_number_template]
+        return [dt_widget_month -calendar_details $items -date $date \
+                -master_bgcolor black \
+                -header_bgcolor lavender \
+                -header_text_color black \
+                -header_text_size "+1" \
+                -day_header_bgcolor lavender \
+                -day_bgcolor white \
+                -today_bgcolor #FFF8DC \
+                -empty_bgcolor lightgrey \
+                -day_text_color black \
+                -prev_next_links_in_title 1 \
+                -prev_month_template $prev_month_template \
+                -next_month_template $next_month_template \
+                -day_number_template $day_number_template]
     }
 
     ad_proc -public one_week_display {

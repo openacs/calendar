@@ -76,15 +76,14 @@ set current_weekday 0
 multirow create week_items name item_id start_date calendar_name status_summary day_of_week start_date_weekday start_time end_time no_time_p full_item
 
 # Convert date from user timezone to system timezone
-set first_weekday_of_the_week_system [lc_time_conn_to_system "$first_weekday_of_the_week 00:00:00"]
-set last_weekday_of_the_week_system [lc_time_conn_to_system "$last_weekday_of_the_week 00:00:00"]
+set first_weekday_of_the_week_tz [lc_time_conn_to_system "$first_weekday_of_the_week 00:00:00"]
+set last_weekday_of_the_week_tz [lc_time_conn_to_system "$last_weekday_of_the_week 00:00:00"]
 
 db_foreach select_week_items {} {
     # Convert from system timezone to user timezone
     set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
     set ansi_end_date [lc_time_system_to_conn $ansi_end_date]
 
-    set day_of_week [expr [lc_time_fmt $ansi_start_date "%f"] - $first_day_of_week]
     set start_date_weekday [lc_time_fmt $ansi_start_date "%A"]
 
     set start_date [lc_time_fmt $ansi_start_date "%x"]

@@ -5,7 +5,7 @@
 
     <fullquery name="calendar::item::dates_valid_p.dates_valid_p_select">
       <querytext>
-        select CASE WHEN (:start_date::timestamp - :end_date::timestamp) < 0 
+        select CASE WHEN (:start_date::timestamp - :end_date::timestamp) <= 0 
                     THEN 1
                     ELSE -1
                END 

@@ -48,7 +48,11 @@
                 <a
                 href="cal-item-view?cal_item_id=@day_items_with_time.item_id@">@day_items_with_time.start_time@
                 - @day_items_with_time.end_time@
-                @day_items_with_time.full_item;noquote@<span class="text-grey-sml">@day_items_with_time.calendar_name@</span>
+                @day_items_with_time.full_item;noquote@
+                <if @show_calendar_name_p@>
+                <span
+                class="text-grey-sml">@day_items_with_time.calendar_name@</span>
+                </if>
                 </td>
                 </if>
               </if>

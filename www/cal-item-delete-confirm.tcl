@@ -16,7 +16,7 @@ ad_page_contract {
 }
 
 # Select information about the calendar item
-db_1row get_item_data { 
+if {![db_0or1row get_item_data { 
     select   to_char(start_date,'HH:MIpm')as start_time,
     start_date as raw_start_date,
     to_char(start_date, 'MM/DD/YYYY') as start_date,
@@ -38,6 +38,9 @@ db_1row get_item_data {
     and      e.event_id = :cal_item_id
     and      cal_items.cal_item_id= :cal_item_id
     and      cal_item_types.item_type_id(+)= cal_items.item_type_id
+}]} {
+    ad_returnredirect "./"
+    return
 }
 
 set item_data(start_time) $start_time

@@ -4,6 +4,7 @@
 <property name="header_stuff">
   <link href="/resources/calendar/calendar.css" rel="stylesheet" type="text/css">
 </property>
+<property name="displayed_object_id">@cal_item_id@</property>
 
 <table width="95%">
 

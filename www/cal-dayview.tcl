@@ -152,7 +152,7 @@ while {$i < $num_hour_rows} {
     "
 
     if {$cal_item_index == -1} {
-	append row_html "<td colspan=1 bgcolor=DCDCDC>&nbsp;</td>"
+	append row_html "&nbsp;"
     }
 
     while {$cal_item_index > -1} {

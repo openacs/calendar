@@ -9,6 +9,6 @@ ad_page_contract {
     {return_url "./"}
 }
 
-cal_item_delete_recurrence -recurrence_id $recurrence_id
+calendar::item::delete_recurrence -recurrence_id $recurrence_id
 
 ad_returnredirect $return_url

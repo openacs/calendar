@@ -1,24 +1,35 @@
 <?xml version="1.0"?>
 <queryset>
 
-<fullquery name="cal_item_create.get_permissions_to_items">      
-      <querytext>
-      
-	select          grantee_id,
-                  	privilege
-	from            acs_permissions
-	where           object_id = :on_which_calendar
-    
-      </querytext>
+<fullquery name="calendar::item::add_recurrence.update_event">
+<querytext>
+update acs_events 
+set recurrence_id= :recurrence_id
+where event_id= :cal_item_id
+</querytext>
 </fullquery>
 
-<fullquery name="cal_item_update.select_recurrence_id">
+<fullquery name="calendar::item::add_recurrence.insert_cal_items">
+<querytext>
+insert into cal_items 
+(cal_item_id, on_which_calendar)
+select
+event_id, 
+(select on_which_calendar 
+as calendar_id from cal_items 
+where cal_item_id = :cal_item_id)
+from acs_events where recurrence_id= :recurrence_id 
+and event_id <> :cal_item_id
+</querytext>
+</fullquery>
+
+<fullquery name="calendar::item::edit.select_recurrence_id">
 <querytext>
 select recurrence_id from acs_events where event_id= :cal_item_id
 </querytext>
 </fullquery>
 
-<fullquery name="cal_item_update.update_activity">
+<fullquery name="calendar::item::edit.update_activity">
     <querytext>
     update acs_activities 
     set    name = :name,
@@ -32,7 +43,7 @@ select recurrence_id from acs_events where event_id= :cal_item_id
     </querytext>
 </fullquery>
 
-<fullquery name="cal_item_update.update_event">
+<fullquery name="calendar::item::edit.update_event">
     <querytext>
     update acs_events
     set    name = :name,
@@ -41,7 +52,7 @@ select recurrence_id from acs_events where event_id= :cal_item_id
     </querytext>
 </fullquery>
 
-<fullquery name="cal_item_update.get_interval_id">
+<fullquery name="calendar::item::edit.get_interval_id">
     <querytext>
     select interval_id 
     from   timespans
@@ -54,13 +65,13 @@ select recurrence_id from acs_events where event_id= :cal_item_id
     </querytext>
 </fullquery>
 
-<fullquery name="cal_item_edit_recurrence.select_recurrence_id">
+<fullquery name="calendar::item::edit_recurrence.select_recurrence_id">
 <querytext>
 select recurrence_id from acs_events where event_id= :event_id
 </querytext>
 </fullquery>
 
-<fullquery name="cal_item_edit_recurrence.recurrence_activities_update">
+<fullquery name="calendar::item::edit_recurrence.recurrence_activities_update">
     <querytext>
     update acs_activities 
     set    name = :name,
@@ -74,7 +85,7 @@ select recurrence_id from acs_events where event_id= :event_id
     </querytext>
 </fullquery>
 
-<fullquery name="cal_item_edit_recurrence.recurrence_events_update">
+<fullquery name="calendar::item::edit_recurrence.recurrence_events_update">
     <querytext>
     update acs_events set
     name= :name, description= :description
@@ -83,7 +94,7 @@ select recurrence_id from acs_events where event_id= :event_id
 </fullquery>
 
 
-<fullquery name="cal_item_edit_recurrence.recurrence_items_update">
+<fullquery name="calendar::item::edit_recurrence.recurrence_items_update">
     <querytext>
             update cal_items
             set    [join $colspecs ", "]

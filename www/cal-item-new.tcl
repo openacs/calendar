@@ -26,7 +26,6 @@ if { [string equal $calendar_id "-1"] || [empty_string_p $calendar_id]} {
     if { ![calendar_have_private_p $user_id] } {
 	calendar::new -owner_id $user_id -private_p "t" -calendar_name "Personal" -package_id $package_id
     } 
-    set calendar_id [calendar_have_private_p -return_id 1 $user_id]
 } else {
     ad_require_permission $calendar_id cal_item_create
 }
@@ -39,12 +38,12 @@ set date [calendar::adjust_date -date $date -julian_date $julian_date]
 set ansi_date $date
 set calendar_list [calendar::calendar_list]
 
-if {![info exists cal_item_id]} {
-    if {[llength $calendar_list] > 1 && [empty_string_p $calendar_id]} {
-        set return_url [ad_urlencode "cal-item-new?date=[ns_urlencode $date]&start_time=$start_time&end_time=$end_time"]
-        ad_returnredirect "calendar-choose?return_url=$return_url"
+if { ![info exists cal_item_id] } {
+    if { [llength $calendar_list] > 1 && [empty_string_p $calendar_id] } {
+        set return_url [export_vars -base cal-item-new { date start_time end_time }]
+        ad_returnredirect [export_vars -base calendar-choose { return_url }]
         ad_script_abort
-    } else {
+    } elseif { [empty_string_p $calendar_id] } {
 	set calendar_id [lindex [lindex $calendar_list 0] 1]
     }
 } else {

@@ -31,10 +31,7 @@ if {[empty_string_p $calendar_id_list]} {
 db_1row select_weekday_info {}
 db_1row select_week_info {}
     
-set current_weekday 1
-
-# this needs to be I18Nized
-set weekday_english_names {Sunday Monday Tuesday Wednesday Thursday Friday Saturday}
+set current_weekday 0
 
 # Loop through the calendars
 multirow create week_items name item_id start_date calendar_name status_summary day_of_week start_date_weekday start_time end_time no_time_p
@@ -60,10 +57,12 @@ db_foreach select_week_items {} {
     if {$day_of_week > $current_weekday} {
         # need to add dummy entries to show all days
         for {  } { $current_weekday < $day_of_week } { incr current_weekday } {
-            multirow append week_items "" "" [lc_time_fmt [dt_julian_to_ansi [expr $sunday_julian + $current_weekday -1]] "%x"] "" "" $current_weekday [lindex $weekday_english_names [expr $current_weekday -1]] "" "" ""
+	    set ansi_this_date [dt_julian_to_ansi [expr $sunday_julian + $current_weekday]]
+            multirow append week_items "" "" [lc_time_fmt $ansi_this_date "%x"] "" "" $current_weekday [lc_time_fmt $ansi_this_date %A] "" "" ""
         }
     }
-    if {[string equal $start_time "00:00"]} {
+
+    if {[string equal $start_time "12:00 AM"] && [string equal $end_time "12:00 AM"]} {
         set no_time_p t
     } else {
         set no_time_p f
@@ -73,10 +72,11 @@ db_foreach select_week_items {} {
     set current_weekday $day_of_week
 }
 
-if {$current_weekday < 8} {
+if {$current_weekday < 7} {
     # need to add dummy entries to show all hours
-    for {  } { $current_weekday < 8 } { incr current_weekday } {
-        multirow append week_items "" "" [lc_time_fmt [dt_julian_to_ansi [expr $sunday_julian + $current_weekday -1]] "%x"] "" "" $current_weekday [lindex $weekday_english_names [expr $current_weekday -1]] "" "" ""
+    for {  } { $current_weekday < 7 } { incr current_weekday } {
+	set ansi_this_date [dt_julian_to_ansi [expr $sunday_julian + $current_weekday]]
+	multirow append week_items "" "" [lc_time_fmt $ansi_this_date "%x"] "" "" $current_weekday [lc_time_fmt $ansi_this_date %A] "" "" ""
     }
 }
 

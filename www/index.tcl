@@ -14,6 +14,7 @@ ad_page_contract {
     {julian_date ""}
     {calendar_list:multiple,optional {}}
     {return_url ""}
+    {force_calendar_id ""}
 } -properties {
     package_id:onevalue
     user_id:onevalue

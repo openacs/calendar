@@ -86,12 +86,18 @@
         </td>
 	
 	<td valign=top align=left>
+          <if @force_calendar_id@ not nil>
+          <b>@force_calendar_name@</b>
+          <INPUT TYPE=hidden name=calendar_id value=@force_calendar_id@>
+          </if>
+          <else>
 	  <select name=calendar_id>	
 	    <option value="-1"> Private
             <multiple name=calendars>	    
  	      <option value=@calendars.calendar_id@>@calendars.calendar_name@	  
 	    </multiple>
           </select> 
+          </else>
 	</td>
 
       </else>

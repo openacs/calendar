@@ -15,6 +15,7 @@ ad_page_contract {
     {start_time "now"}
     {end_time "now"}
     {return_url ""}
+    {force_calendar_id ""}
 } -properties {
     cal_item_id:onevalue
 
@@ -122,6 +123,10 @@ if { $action == "edit" } {
     }
 
     db_multirow calendars list_calendars {}
+
+    if {![empty_string_p $force_calendar_id]} {
+        set force_calendar_name [calendar_get_name $force_calendar_id]
+    }
 
 }
 

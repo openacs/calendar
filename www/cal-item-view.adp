@@ -29,7 +29,13 @@
     <tr>
     <td class="cal-table-data-title">#calendar.Description#:
     </td>
-    <td>@cal_item.description@
+    <td>@cal_item.description;noquote@
+    </tr>
+
+    <tr>
+    <td class="cal-table-data-title">#calendar.Sharing#:
+    </td>
+    <td>@cal_item.calendar_name@
     </tr>
 
     <tr>
@@ -79,10 +85,8 @@
   </tr>
   <tr>
     <td colspan="2">
-      <if @edit_p@ eq 1>
+      <if @write_p@ true>
         <a href="cal-item-new?cal_item_id=@cal_item_id@&return_url=@return_url@" class="button">#calendar.edit#</a>
-      </if>
-      <if @delete_p@ eq 1>
         <a href="./cal-item-delete?cal_item_id=@cal_item_id@&return_url=@return_url@" class="button">#calendar.delete#</a>
       </if>
       <p><a href="ics/@cal_item_id@.ics" class="button">#calendar.sync_with_Outlook#</a> 
@@ -91,8 +95,8 @@
 
   <if @cal_item.recurrence_id@ not nil>
     <tr>
-    <td class="cal-table-data-action">
-    <a  href="ics/@cal_item_id@.ics?all_occurences_p=1">#calendar.all_events#</a>
+    <td>
+    <a  href="ics/@cal_item_id@.ics?all_occurences_p=1" class="button">#calendar.all_events#</a>
     </td>
     <td>Sync all events with Outlook</td>
     </tr>

@@ -20,16 +20,6 @@ auth::require_login
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
-if { [string equal $calendar_id "-1"] || [empty_string_p $calendar_id]} {
-    # Seamlessly create a private calendar if the user doesn't have one
-
-    if { ![calendar_have_private_p $user_id] } {
-	calendar::new -owner_id $user_id -private_p "t" -calendar_name "Personal" -package_id $package_id
-    } 
-} else {
-    ad_require_permission $calendar_id cal_item_create
-}
-
 if {![info exists item_type_id]} {
     set item_type_id ""
 }
@@ -37,23 +27,19 @@ if {![info exists item_type_id]} {
 set date [calendar::adjust_date -date $date -julian_date $julian_date]
 set ansi_date $date
 set calendar_list [calendar::calendar_list]
+set calendar_options [calendar::calendar_list -privilege create]
 
-if { ![info exists cal_item_id] } {
-    if { [llength $calendar_list] > 1 && [empty_string_p $calendar_id] } {
-        set return_url [export_vars -base cal-item-new { date start_time end_time }]
-        ad_returnredirect [export_vars -base calendar-choose { return_url }]
-        ad_script_abort
-    } elseif { [empty_string_p $calendar_id] } {
-	set calendar_id [lindex [lindex $calendar_list 0] 1]
-    }
-} else {
-    set calendar_id [db_string get_calendar_id {select 
-         on_which_calendar as calendar_id
-         from cal_items 
-        where cal_item_id = :cal_item_id} -default ""]
 
+# TODO: Move into ad_form
+if { ![ad_form_new_p -key cal_item_id] } {
+    set calendar_id [db_string get_calendar_id {
+        select on_which_calendar as calendar_id
+         from  cal_items 
+        where  cal_item_id = :cal_item_id
+    } -default ""]
 }
 
+# TODO: Move into ad_form
 if { [exists_and_not_null cal_item_id] } {
     set page_title "One calendar item"
     set ad_form_mode display
@@ -63,7 +49,7 @@ if { [exists_and_not_null cal_item_id] } {
 }
 
 ad_form -name cal_item  -form {
-    cal_item_id:key
+    {cal_item_id:key}
 
     {title:text(text)
         {label "[_ calendar.Title_1]"}
@@ -76,7 +62,7 @@ ad_form -name cal_item  -form {
 
     {time_p:text(radio)     
         {label "&nbsp;"}
-        {html {onchange "javascript:TimePChanged();"}} 
+        {html {onClick "javascript:TimePChanged(this);"}} 
         {options {{"[_ calendar.All_Day_Event]" 0}
                   {"[_ calendar.Use_Hours_Below]" 1} }}
     }
@@ -95,15 +81,59 @@ ad_form -name cal_item  -form {
         {label "[_ calendar.Description]"}
         {html {cols 60 rows 3 wrap soft} maxlength 255}
     }
-
-    {repeat_p:text(radio)     
-        {label "[_ calendar.Repeat_1]"}
-        {options {{"[_ calendar.Yes]" 1}
-                  {"[_ calendar.No]" 0} }}
+    {calendar_id:integer(radio)
+        {label "[_ calendar.Sharing]"}
+        {options $calendar_options}
     }
-
-    {calendar_id:text(hidden) {value $calendar_id}}
 }
+
+if { [ad_form_new_p -key cal_item_id] } {
+    ad_form -extend -name cal_item -form {
+        {repeat_p:text(radio)     
+            {label "[_ calendar.Repeat_1]"}
+            {options {{"[_ calendar.Yes]" 1}
+                {"[_ calendar.No]" 0} }}
+        }
+    }
+} else {
+    ad_form -extend -name cal_item -form {
+        {edit_all_p:text(radio)     
+            {label "[_ calendar.Apply_to_all]"}
+            {options {{"[_ calendar.Yes]" 1}
+                {"[_ calendar.No]" 0} }}
+        }
+    }
+}
+
+
+#----------------------------------------------------------------------
+# LARS: Hack to make enable/disable time widgets work with i18n
+#----------------------------------------------------------------------
+
+set format_string [lc_get formbuilder_time_format]
+
+multirow create time_format_elms name
+
+while { ![empty_string_p $format_string] } {
+    # Snip off the next token
+    regexp {([^/\-.: ]*)([/\-.: ]*)(.*)} \
+          $format_string match word sep format_string
+    # Extract the trailing "t", if any
+    regexp -nocase $template::util::date::token_exp $word \
+          match token type
+
+    # Output the widget
+    set fragment_def $template::util::date::fragment_widgets([string toupper $token])
+
+    multirow append time_format_elms [lindex $fragment_def 1]
+}
+
+
+
+
+#----------------------------------------------------------------------
+# Finishing definition of form
+#----------------------------------------------------------------------
 
 set cal_item_types [calendar::get_item_types -calendar_id $calendar_id]
 
@@ -119,9 +149,14 @@ if {[llength $cal_item_types] > 1} {
 
 ad_form -extend -name cal_item -validate { 
     {title {[string length $title] <= 4000}
-        " TITLE MUST BE 4"
+        "Title is too long"
     }
 } -new_request {
+    # Seamlessly create a private calendar if the user doesn't have one
+    if { ![calendar_have_private_p $user_id] } {
+	calendar::new -owner_id $user_id -private_p "t" -calendar_name "Personal" -package_id $package_id
+    } 
+    
     set date [template::util::date::from_ansi $date]
     set repeat_p 0
     if {[info exists start_time] && ![empty_string_p $start_time] && $start_time != 0} {
@@ -136,8 +171,12 @@ ad_form -extend -name cal_item -validate {
 	set start_time "{} {} {} 0 0 {} {HH24:MI}"
 	set end_time "{} {} {} 0 0 {} {HH24:MI}"
     }
+    set calendar_id [lindex [lindex $calendar_options 0] 1]
 } -edit_request {
     calendar::item::get -cal_item_id $cal_item_id -array cal_item
+
+    permission::require_write_permission -object_id $cal_item_id -creation_user $cal_item(creation_user)
+
     set cal_item_id $cal_item(cal_item_id)
     set n_attachments $cal_item(n_attachments)
     set ansi_start_date $cal_item(start_date_ansi)
@@ -152,10 +191,14 @@ ad_form -extend -name cal_item -validate {
     set calendar_id $cal_item(calendar_id)
     set time_p $cal_item(time_p)
 
-    if {[empty_string_p $repeat_p]} {
+    if { [empty_string_p $repeat_p] } {
         set repeat_p 0
     } else {
         set repeat_p 1
+    }
+    set edit_all_p $repeat_p
+    if { !$repeat_p } {
+        element set_properties cal_item edit_all_p -widget hidden
     }
     set date [template::util::date::from_ansi $ansi_start_date]
     set start_time [template::util::date::from_ansi $ansi_start_date [lc_get formbuilder_time_format]]
@@ -164,33 +207,49 @@ ad_form -extend -name cal_item -validate {
     set start_date [calendar::to_sql_datetime -date $date -time $start_time -time_p $time_p]
     set end_date [calendar::to_sql_datetime -date $date -time $end_time -time_p $time_p]
 
-    set cal_item_id [calendar::item::new -start_date $start_date \
-            -end_date $end_date \
-            -name $title \
-            -description $description \
-            -calendar_id $calendar_id \
-            -item_type_id $item_type_id]
+    if { ![calendar::personal_p -calendar_id $calendar_id] } {
+        permission::require_permission -object_id $calendar_id -privilege create
+    }
+    
+    set cal_item_id [calendar::item::new \
+                         -start_date $start_date \
+                         -end_date $end_date \
+                         -name $title \
+                         -description $description \
+                         -calendar_id $calendar_id \
+                         -item_type_id $item_type_id]
+
+    if {$repeat_p} {
+        ad_returnredirect [export_vars -base cal-item-create-recurrence { cal_item_id }]
+    } else {
+        ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]
+    }
+    ad_script_abort
+
 } -edit_data {
+    # Require write permission on the item and create on the calendar into which we're putting it
+    permission::require_write_permission -object_id $cal_item_id
+    if { ![calendar::personal_p -calendar_id $calendar_id] } {
+        permission::require_permission -object_id $calendar_id -privilege create
+    }
+
     # set up the datetimes
     set start_date [calendar::to_sql_datetime -date $date -time $start_time -time_p $time_p]
     set end_date [calendar::to_sql_datetime -date $date -time $end_time -time_p $time_p]
 
     # Do the edit
-    calendar::item::edit -cal_item_id $cal_item_id \
-            -start_date $start_date \
-            -end_date $end_date \
-            -name $title \
-            -description $description \
-            -item_type_id $item_type_id \
-            -edit_all_p $repeat_p
-} -after_submit {
-    if {$repeat_p} {
-        ad_returnredirect "cal-item-create-recurrence?cal_item_id=$cal_item_id"
-    } else {
-        ad_returnredirect "cal-item-view?cal_item_id=$cal_item_id"
-    }
+    calendar::item::edit \
+        -cal_item_id $cal_item_id \
+        -start_date $start_date \
+        -end_date $end_date \
+        -name $title \
+        -description $description \
+        -item_type_id $item_type_id \
+        -edit_all_p $edit_all_p \
+        -calendar_id $calendar_id
+    
+    ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]
     ad_script_abort
 }
 
 
-ad_return_template

@@ -1,4 +1,4 @@
-<table CELLPADDING=0 CELLSPACING=0 BORDER=0 width="100%">
+ <table CELLPADDING=0 CELLSPACING=0 BORDER=0 width="100%">
 
   <tr><td>
   <table cellpadding=3 cellspacing=0 border=0 width="100%" class="cal-table-display">
@@ -25,9 +25,8 @@
       </td>
 
       <td width="95%" class="cal-week">
-      <a
-      href="@base_url@cal-item-new?date=@week_items.ansi_start_date@&start_time=&end_time=">
-      <img border="0" align="right" height="16" width="16" src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#"></a><a
+      <a href="@base_url@cal-item-new?date=@week_items.ansi_start_date@&start_time=&end_time=">
+      <img border="0" align="right" height="7" width="7" src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#"></a><a
       href="?view=day&date=@week_items.ansi_start_date@@page_num@">@week_items.start_date@</a>
       </td>
       </tr>
@@ -69,3 +68,8 @@
   </td>
   </tr>
 </table>
+
+
+
+
+

@@ -1,23 +1,7 @@
-<!--	
-	Template for calendar edit
-	
-	@author Gary Jin (gjin@arsidigta.com)
-     	@creation-date Jan 09, 2000
-     	@cvs-id $Id$
--->
+<master>
+  <property name="title">@page_title;noquote@</property>
+  <property name="context">@context;noquote@</property>
+  <property name="focus">calendar.calendar_name</property>
 
-
-<if @action@ eq delete>
-
-  <form action="calendar-edit" method=post>
-    <input type=hidden name=calendar_id value=@calendar_id@>
-    <input type=hidden name=confirm value=yes>
-    <p>	
-      #calendar.lt_Are_you_sure_you_want# 
-    </p>	
-
-    <input type=submit value="#calendar.Yes_I_am_sure#">	
-
-  </form>
-</if>
+<formtemplate id="calendar"></formtemplate>
 

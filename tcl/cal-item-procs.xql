@@ -85,10 +85,10 @@ select recurrence_id from acs_events where event_id= :event_id
 
 <fullquery name="cal_item_edit_recurrence.recurrence_items_update">
     <querytext>
-    update cal_items set
-    item_type_id= :item_type_id
-    where cal_item_id in (select event_id from acs_events where recurrence_id= :recurrence_id)
+            update cal_items
+            set    [join $colspecs ", "]
+            where  cal_item_id in (select event_id from acs_events where recurrence_id = :recurrence_id)
     </querytext>
 </fullquery>
- 
+  
 </queryset>

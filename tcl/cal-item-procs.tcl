@@ -134,18 +134,17 @@ ad_proc cal_item_create { start_date
 
 #------------------------------------------------
 # update an existing calendar item
-ad_proc cal_item_update { cal_item_id
-                          start_date
-                          end_date
-                          name
-                          description
-{item_type_id ""}
-{edit_all_p 0}
+ad_proc cal_item_update { 
+    cal_item_id
+    start_date
+    end_date
+    name
+    description
+    {item_type_id ""}
+    {edit_all_p 0}
+    {calendar_id ""}
 } {
-
-    updating  a new cal_item
-    for this version, i am omitting recurrence
-
+    Updating a cal_item
 } {
     
     if {$edit_all_p} {
@@ -153,12 +152,14 @@ ad_proc cal_item_update { cal_item_id
 
         # If the recurrence id is NULL, then we stop here and just do the normal update
         if {![empty_string_p $recurrence_id]} {
-            cal_item_edit_recurrence -event_id $cal_item_id \
-                    -start_date $start_date \
-                    -end_date $end_date \
-                    -name $name \
-                    -description $description \
-                    -item_type_id $item_type_id
+            cal_item_edit_recurrence \
+                -event_id $cal_item_id \
+                -start_date $start_date \
+                -end_date $end_date \
+                -name $name \
+                -description $description \
+                -item_type_id $item_type_id \
+                -calendar_id $calendar_id
 
             return
         }
@@ -190,11 +191,25 @@ ad_proc cal_item_update { cal_item_id
 	end;
         "
     
-        # Update the item_type_id
-        db_dml update_item_type_id "update cal_items
-        set item_type_id= :item_type_id
-        where cal_item_id= :cal_item_id"
-    }
+        # Update the item_type_id and calendar_id
+        set colspecs [list]
+        lappend colspecs "item_type_id = :item_type_id"
+        if { ![empty_string_p $calendar_id] } {
+            lappend colspecs "on_which_calendar = :calendar_id"
+
+            db_dml update_context_id {
+                update acs_objects
+                set    context_id = :calendar_id
+                where  object_id = :cal_item_id
+            }
+        }
+        
+        db_dml update_item_type_id "
+            update cal_items
+            set    [join $colspecs ", "]
+            where  cal_item_id= :cal_item_id
+        "
+   }
 }
 
 
@@ -240,6 +255,7 @@ ad_proc -public cal_item_edit_recurrence {
     {-name:required}
     {-description:required}
     {-item_type_id ""}
+    {-calendar_id ""}
 } {
     edit a recurrence
 } {
@@ -256,7 +272,18 @@ ad_proc -public cal_item_edit_recurrence {
         # Update the events table
         db_dml recurrence_events_update {}
         
-        # Update the cal_items table
+        set colspecs [list]
+        lappend colspecs {item_type_id = :item_type_id}
+        if { ![empty_string_p $calendar_id] } {
+            lappend colspecs {on_which_calendar = :calendar_id}
+
+            db_dml update_context_id {
+                update acs_objects
+                set    context_id = :calendar_id
+                where  object_id in (select event_id from acs_events where recurrence_id = :recurrence_id)
+            }
+        }
+
         db_dml recurrence_items_update {}
     }
 }

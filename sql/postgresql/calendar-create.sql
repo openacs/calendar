@@ -21,8 +21,7 @@
 
 
   select acs_privilege__create_privilege('cal_item_create', 'Add an new item', null); 
-  select acs_privilege__create_privilege('cal_item_read',   'view an 
-cal_item', null);
+  select acs_privilege__create_privilege('cal_item_read',   'view an cal_item', null);
   select acs_privilege__create_privilege('cal_item_write',  'Edit an exsiting cal_item', null);
   select acs_privilege__create_privilege('cal_item_delete', 'Delete cal_item', null );
   select acs_privilege__create_privilege('cal_item_invite', 'Allow others to view cal_item', null); 
@@ -33,19 +32,15 @@ cal_item', null);
 
   select acs_privilege__add_child('delete', 'cal_item_delete'); 
         
-  select acs_privilege__create_privilege('calendar_on', 'Implies that a
-calendar is selected', null); 
+  select acs_privilege__create_privilege('calendar_on', 'Implies that a calendar is selected', null); 
   select acs_privilege__create_privilege('calendar_show', 'Show a calendar', null);
 
   select acs_privilege__add_child('read', 'calendar_on'); 
   select acs_privilege__add_child('read', 'calendar_show');         
 	
-  select acs_privilege__create_privilege('calendar_create', 'Create a new
-calendar', null);
-  select acs_privilege__create_privilege('calendar_read', 'View items on
-an exsiting calendar', null);	
-  select acs_privilege__create_privilege('calendar_write', 'Edit items of
-an exsiting calendar', null);
+  select acs_privilege__create_privilege('calendar_create', 'Create a new calendar', null);
+  select acs_privilege__create_privilege('calendar_read', 'View items on an exsiting calendar', null);	
+  select acs_privilege__create_privilege('calendar_write', 'Edit items of an exsiting calendar', null);
   select acs_privilege__create_privilege('calendar_delete','Delete an calendar', null);
 
   select acs_privilege__add_child('create', 'calendar_create');
@@ -216,7 +211,7 @@ create table calendars (
           -- public calendar. 
         private_p               boolean
                                 default 'f'
-                                constraint calendars_prviate_p_ck 
+                                constraint calendars_private_p_ck 
                                 check (private_p in ( 
                                         't',
                                         'f'

@@ -4,12 +4,12 @@
   <multiple name=views>
     <if @views.active_p@ eq t>
       <td class="cal-navbar-selected">
-      @views.name@
+        <a href="@base_url@?view=@views.text@&date=@date@@page_num@" style="color: #004080; text-decoration: none;">@views.name@</a>
       </td>
     </if>
     <else>
       <td class="cal-navbar">
-      <a href="@base_url@?view=@views.text@&date=@date@@page_num@">@views.name@</a>
+        <a href="@base_url@?view=@views.text@&date=@date@@page_num@">@views.name@</a>
       </td>
     </else>
   </multiple>
@@ -78,7 +78,7 @@
     </tr>
     <tr>
       <td class="cal-spacer" colspan="7">
-        <img border="0" src="spacer.gif">
+        <img border="0" src="/resources/acs-subsite/spacer.gif">
       </td>
     </tr>
 

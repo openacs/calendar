@@ -29,7 +29,7 @@
     <tr>
     <td class="cal-table-data-title">#calendar.Description#:
     </td>
-    <td>@cal_item.description@
+    <td>@cal_item.description;noquote@
     </tr>
 
     <tr>

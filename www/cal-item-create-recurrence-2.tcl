@@ -21,6 +21,6 @@ ad_page_contract {
 ad_require_permission $cal_item_id cal_item_write
 
 # Set up the recurrence
-calendar_item_add_recurrence -cal_item_id $cal_item_id -interval_type $interval_type -every_n $every_n -days_of_week $days_of_week -recur_until [calendar_make_datetime [array get recur_until]]
+calendar::item::add_recurrence -cal_item_id $cal_item_id -interval_type $interval_type -every_n $every_n -days_of_week $days_of_week -recur_until [calendar_make_datetime [array get recur_until]]
 
 ad_returnredirect $return_url

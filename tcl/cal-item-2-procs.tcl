@@ -38,6 +38,32 @@ namespace eval calendar::item {
         db_1row $query_name {} -column_array row
     }
         
+    ad_proc -public add_recurrence {
+	{-cal_item_id:required}
+	{-interval_type:required}
+	{-every_n:required}
+	{-days_of_week ""}
+	{-recur_until ""}
+    } {
+	Adds a recurrence for a calendar item
+    } {
+	# We do things in a transaction
+	db_transaction {
+	    # Create the recurrence
+	    set recurrence_id [db_exec_plsql create_recurrence {}]
+	    
+	    # Update the events table
+	    db_dml update_event {}
+	    
+	    # Insert instances
+	    db_exec_plsql insert_instances {}
+	    
+	    # Make sure they're all in the calendar!
+	    db_dml insert_cal_items {}
+	}
+    }
+    
+
     ad_proc -public edit {
         {-cal_item_id:required}
         {-start_date:required}

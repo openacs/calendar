@@ -9,6 +9,9 @@
          i.cal_item_id,
          0 as n_attachments,
          to_char(start_date,'HH:MIpm') as start_time,
+	 to_char(start_date,'D') as day_of_week,
+         to_char(start_date,'Day') as pretty_day_of_week,
+         to_char(start_date,'DD') as day_of_month,
          to_char(start_date, 'YYYY-MM-DD HH:MI:SS') as start_date,
          to_char(start_date, 'MM/DD/YYYY') as pretty_short_start_date,
          to_char(end_date, 'HH:MIpm') as end_time,
@@ -40,6 +43,9 @@
          i.cal_item_id,
          (select count(*) from attachments where object_id = cal_item_id) as n_attachments,
          to_char(start_date,'HH:MIpm') as start_time,
+	 to_char(start_date,'D') as day_of_week,
+         to_char(start_date,'Day') as pretty_day_of_week,
+         to_char(start_date,'DD') as day_of_month,
          to_char(start_date, 'YYYY-MM-DD HH:MI:SS') as start_date,
          to_char(start_date, 'MM/DD/YYYY') as pretty_short_start_date,
          to_char(end_date, 'HH:MIpm') as end_time,
@@ -64,5 +70,21 @@
          e.event_id = :cal_item_id
      </querytext>
    </fullquery>
+
+<fullquery name="calendar::item::add_recurrence.create_recurrence">
+<querytext>
+select recurrence__new(:interval_type,
+    	:every_n,
+    	:days_of_week,
+    	:recur_until,
+	NULL)
+</querytext>
+</fullquery>
+
+<fullquery name="calendar::item::add_recurrence.insert_instances">
+<querytext>
+select acs_event__insert_instances(:cal_item_id, NULL);
+</querytext>
+</fullquery>
 
 </queryset>

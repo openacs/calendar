@@ -38,7 +38,9 @@
             <file type="data_model_create" db_type="postgresql" path="sql/postgresql/calendar-create.sql"/>
             <file type="data_model_drop" db_type="postgresql" path="sql/postgresql/calendar-drop.sql"/>
             <file type="query_file" db_type="oracle" path="tcl/cal-item-2-procs-oracle.xql"/>
+            <file type="query_file" db_type="postgresql" path="tcl/cal-item-2-procs-postgresql.xql"/>
             <file type="tcl_procs" path="tcl/cal-item-2-procs.tcl"/>
+            <file type="query_file" path="tcl/cal-item-2-procs.xql"/>
             <file type="query_file" db_type="oracle" path="tcl/cal-item-procs-oracle.xql"/>
             <file type="query_file" db_type="postgresql" path="tcl/cal-item-procs-postgresql.xql"/>
             <file type="tcl_procs" path="tcl/cal-item-procs.tcl"/>
@@ -96,6 +98,7 @@
             <file type="query_file" db_type="postgresql" path="www/cal-item-delete-confirm-postgresql.xql"/>
             <file type="content_page" path="www/cal-item-delete-confirm.adp"/>
             <file type="content_page" path="www/cal-item-delete-confirm.tcl"/>
+            <file type="content_page" path="www/cal-item-delete.tcl"/>
             <file type="content_page" path="www/cal-item-edit.adp"/>
             <file type="content_page" path="www/cal-item-edit.tcl"/>
             <file type="content_page" path="www/cal-item-new.adp"/>
@@ -133,6 +136,7 @@
             <file type="documentation" path="www/doc/regressionTest.htm"/>
             <file type="documentation" path="www/doc/requirements.html"/>
             <file type="documentation" path="www/doc/thesisUsabilityTest.htm"/>
+            <file type="content_page" path="www/ics/index.vuh"/>
             <file type="content_page" path="www/index.adp"/>
             <file type="content_page" path="www/index.tcl"/>
             <file type="content_page" path="www/item-type-delete.tcl"/>

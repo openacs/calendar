@@ -11,6 +11,7 @@
   <msg key="All_Day_Event">All Day Event</msg>
   <msg key="all_events">all events</msg>
   <msg key="and_Time">and Time</msg>
+  <msg key="Apply_to_all">Apply to all events</msg>
   <msg key="Attachments">Attachments:</msg>
   <msg key="Audiences_for_item">Audiences for item %cal_item_name%</msg>
   <description key="Audiences_for_item">Used as a header where the audiences of a calendar item are shown.</description>
@@ -109,6 +110,7 @@ than once in your calendar. The event's details are:</msg>
   <msg key="same">same</msg>
   <msg key="Saturday">Saturday</msg>
   <msg key="Select_Calendars">Select Calendars</msg>
+  <msg key="Sharing">Sharing</msg>
   <msg key="Start_Time">Start Time</msg>
   <msg key="Submit_query">Submit query</msg>
   <msg key="Sunday">Sunday</msg>
@@ -127,6 +129,4 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Yes">Yes</msg>
   <msg key="yes_delete_it">yes, delete it</msg>
   <msg key="Yes_I_am_sure">Yes, I am sure!</msg>
-  <msg key="start_date_before_end_date">Start Date must be before End Date</msg>
-  <msg key="start_time_before_end_time">Start Time must be before End Time</msg>
 </message_catalog>

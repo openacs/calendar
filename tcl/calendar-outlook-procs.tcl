@@ -61,7 +61,7 @@ namespace eval calendar::outlook {
         The client timezone helps to make things right. 
         It is the number offset from GMT.
     } {
-        calendar::item::get -cal_item_id $cal_item_id -array cal_item -normalize_system_time 1
+        calendar::item::get -cal_item_id $cal_item_id -array cal_item -normalize_time_to_utc 1
         # If necessary, select recurrence information
 
         # Here we have some fields

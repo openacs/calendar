@@ -4,22 +4,25 @@
 if { ![info exists url_stub_callback] } {
     set url_stub_callback ""
 }
-
-if { ![info exists item_template] } {
-    set url_template {?sort_by=$order_by}
+if { ![info exists url_template] } {
+    set url_template {?sort_by=$sort_by}
 }
-
 if { ![info exists item_template] } {
     set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\$item</a>"
 }
-
 if { ![info exists show_calendar_name_p] } {
     set show_calendar_name_p 1
 }
-
-if { ![info exists order_by] } {
-    set order_by ""
+if { ![exists_and_not_null sort_by] } {
+    set sort_by "start_date"
 }
+if { ![exists_and_not_null start_date] } {
+    set start_date [clock format [clock seconds] -format "%Y-%m-%d 00:00"]
+}
+if { ![exists_and_not_null end_date] } {
+    set end_date [clock format [clock scan "+30 days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
+}
+
 
 if {[exists_and_not_null calendar_id_list]} {
     set calendars_clause "and on_which_calendar in ([join $calendar_id_list ","]) and (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))"
@@ -41,10 +44,6 @@ if {[exists_and_not_null page_num]} {
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
-# sort by cannot be empty
-if {[empty_string_p $sort_by]} {
-    set sort_by "start_date"
-}
 
 set date_format "YYYY-MM-DD HH24:MI"
 

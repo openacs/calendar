@@ -12,6 +12,14 @@ ad_page_contract {
     {julian_date ""}
     {calendar_list:multiple ""}
     {sort_by ""}
+} -validate {
+    valid_date -requires { date } {
+        if {![string equal $date ""]} {
+            if {[catch {set date [clock format [clock scan $date] -format "%Y%m%d"]} err]} {
+                ad_complain "Your input was not valid. It has to be in the form YYYYMMDD."
+            }
+        }
+    }
 }
 
 set package_id [ad_conn package_id]

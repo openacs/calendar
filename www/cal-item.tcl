@@ -110,27 +110,8 @@ if { $action == "edit" } {
     if { [string equal $calendar_id 0] } {
 	set edit_p 1
     }
-    
-    db_multirow calendars list_calendars {
 
-	select    object_id as calendar_id,
-    	          calendar.name(object_id) as calendar_name
-	from      acs_permissions
-	where     privilege in ( 
-	            'calendar_write',
-	            'calendar_admin'
-	          )
-	and       grantee_id = :user_id
-        and       acs_object_util.object_type_p(
-                    object_id, 
-                    'calendar'
-                  ) = 't'
-        and       calendar.private_p(
-                    object_id
-                  ) = 'f'
-	          
-
-    }
+    db_multirow calendars list_calendars {}
 
 }
 

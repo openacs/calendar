@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<message_catalog package_key="calendar" package_version="2.0d1" locale="ch_zh" charset="utf-8">
+
+  <msg key="Description">傍苧</msg>
+  <msg key="Edit">園辞</msg>
+  <msg key="edit">園辞</msg>
+  <msg key="Start_Time">尼強扮寂</msg>
+  <msg key="Title">炎籾</msg>
+  <msg key="Title_1">炎籾</msg>
+</message_catalog>

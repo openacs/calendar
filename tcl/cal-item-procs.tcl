@@ -214,34 +214,12 @@ ad_proc cal_item_update { cal_item_id
     set date_format "YYYY-MM-DD HH24:MI"
 
     # first update the acs_activities
-    set sql "
-    update acs_activities 
-    set    name = :name,
-           description = :description
-    where  activity_id
-    in     (
-           select activity_id
-           from   acs_events
-           where  event_id = :cal_item_id
-           )
-    "
     
-    db_dml update_activity $sql
+    db_dml update_activity ""
 
     # update the time interval based on the timespan id
 
-    # find out the interval_id so we can call time_interval.edit()
-    set sql "
-    select interval_id 
-    from   timespans
-    where  timespan_id
-    in     (
-           select timespan_id
-           from   acs_events
-           where  event_id = :cal_item_id
-           )
-    "
-    db_1row get_interval_id $sql
+    db_1row get_interval_id ""
 
     # call edit procedure
     db_exec_plsql update_interval "

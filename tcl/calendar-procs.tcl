@@ -83,12 +83,7 @@ ad_proc calendar_have_group_cal_p { party_id } {
    
 } {
 
-    set sql "
-    select    calendar_id,
-    from      calendars
-    where     owner_id = :party_id
-    "
-    return [db_0or1row get_calendar_info $sql]
+    return [db_0or1row get_calendar_info ""]
     
 }
 
@@ -104,15 +99,7 @@ ad_proc calendar_have_private_p { {-return_id 0} party_id } {
 
 } {
 
-
-    # query to figure out the existence of the private calendar
-    set sql "
-    select    calendar_id
-    from      calendars
-    where     owner_id = :party_id
-    and       private_p = 't'
-    "
-    set result [db_string get_calendar_info $sql -default 0]
+    set result [db_string get_calendar_info "" -default 0]
     
     if { ![string equal $result "0"] } {
 

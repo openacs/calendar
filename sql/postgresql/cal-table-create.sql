@@ -58,8 +58,8 @@ create table cal_party_prefs (
           -- which time zone does the user belong to
         time_zone               integer 
                                 constraint cal_pty_prefs_time_zone_fk
-                                --references timezones
-                                --on delete cascade
+                                references timezones
+                                on delete cascade
 				check (time_zone > 0),
           -- which day to start the week, monday or sunday
         first_day_of_week       varchar(9)

@@ -11,5 +11,21 @@
       </querytext>
 </fullquery>
 
+<fullquery name="calendar_have_group_cal_p.get_calendar_info">
+    <querytext>
+    select    calendar_id,
+    from      calendars
+    where     owner_id = :party_id
+    </querytext>
+</fullquery>
+
+<fullquery name="calendar_have_private_p.get_calendar_info">
+    <querytext>
+    select    calendar_id
+    from      calendars
+    where     owner_id = :party_id
+    and       private_p = 't'
+    </querytext>
+</fullquery>
  
 </queryset>

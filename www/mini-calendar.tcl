@@ -14,7 +14,7 @@ foreach viewname {list day week month} {
     } else {
         set active_p f
     }
-    multirow append views [string toupper $viewname 0] $viewname $active_p
+    multirow append views [_ acs-datetime.[string toupper $viewname 0]] $viewname $active_p
 }
 
 set list_of_vars [list]

@@ -93,7 +93,7 @@ where 	privilege in (
 	        'calendar_read', 
          	'calendar_write', 
          	'calendar_delete',
-         	'calendar_admin'
+         	'calendar_admin',
 	       	'calendar_on',
 	       	'calendar_show'
 	);

@@ -19,7 +19,7 @@ if { ![info exists day_template] } {
 }
 
 if { ![info exists item_template] } {
-    set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\$item</a>"
+    set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\[ad_quotehtml \$item\]</a>"
 }
 
 if { ![info exists prev_nav_template] } {
@@ -87,8 +87,8 @@ db_foreach select_day_items {} {
 	set url_stub $url_stubs($calendar_id)
     }
 
-    set item "$name"
-    set full_item "[subst $item_template]"
+    set item $name
+    set full_item [subst $item_template]
 
     multirow append day_items_without_time $name $status_summary $item_id $calendar_name $full_item
 }
@@ -171,7 +171,7 @@ foreach this_item $day_items_per_hour {
     set end_time [lindex $this_item 8]
 
     set item [lindex $this_item 1]
-    set full_item "[subst $item_template]"
+    set full_item [subst $item_template]
 
     set current_hour_link "[subst $hour_template]"
 

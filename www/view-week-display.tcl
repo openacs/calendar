@@ -7,7 +7,7 @@ if { ![info exists day_template] } {
 }
 
 if { ![info exists item_template] } {
-    set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\$item</a>"
+    set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\[ad_quotehtml \$item\]</a>"
 }
 
 if {[exists_and_not_null page_num]} {

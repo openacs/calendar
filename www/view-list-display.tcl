@@ -8,7 +8,7 @@ if { ![info exists url_template] } {
     set url_template {?sort_by=$sort_by}
 }
 if { ![info exists item_template] } {
-    set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\$item</a>"
+    set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\[ad_quotehtml \$item\]</a>"
 }
 if { ![info exists show_calendar_name_p] } {
     set show_calendar_name_p 1

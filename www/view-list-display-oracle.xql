@@ -12,7 +12,9 @@
          nvl(e.status_summary, a.status_summary) as status_summary,
          e.event_id as item_id,
          recurrence_id,
-         (select type from cal_item_types where item_type_id= ci.item_type_id) as item_type
+         (select type from cal_item_types where item_type_id= ci.item_type_id) as item_type,	 
+         cals.calendar_id,
+	 cals.calendar_name
 from     acs_activities a,
          acs_events e,
          timespans s,

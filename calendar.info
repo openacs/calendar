@@ -19,6 +19,7 @@
         <description format="text/html">straight port of calendar</description>
 
         <requires url="acs-datetime" version="4.0"/>
+	<requires url="acs-event" version="0.1d"/>
         <requires url="ref-timezones" version="0.1d"/>
 
         <files>

@@ -18,9 +18,8 @@ if {!$user_id} {
     ad_script_abort
 }
 
-if {![db_string private_calendar_count_qry {}]} {
-    # Create a personal calendar for the user
+if { ![calendar_have_private_p $user_id] } {
     calendar::new -owner_id $user_id -private_p "t" -calendar_name "Personal" -package_id $package_id
-}
+} 
 
 ad_returnredirect "view"    

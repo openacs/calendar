@@ -96,12 +96,7 @@ if { [string equal $action "view"] } {
 
     # simple UI this would need be changed in the next release
 
-    db_multirow parties list_users {
-	select   acs_object.name(party_id) 
-	         as pretty_name,
-	         party_id
-        from parties
-    }
+    db_multirow parties list_users {}
 
 
 }

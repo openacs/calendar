@@ -16,10 +16,10 @@
 <fullquery name="list_users">      
       <querytext>
       
-	select   acs_object__name(party_id) 
-	         as pretty_name,
-	         party_id
-        from parties
+	select acs_object__name(party_id) as pretty_name,
+	       party_id
+        from   parties
+        order  by upper(acs_object__name(party_id))
     
       </querytext>
 </fullquery>

@@ -17,7 +17,7 @@
       <querytext>
       
 	
-	select   unique(object_id) as calendar_id, 
+	select   distinct(object_id) as calendar_id, 
 	         calendar__name(object_id) as calendar_name,
                  calendar__show_p(object_id, :party_id) as show_p
 	from     acs_object_party_privilege_map 

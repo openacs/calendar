@@ -4,7 +4,7 @@
 <fullquery name="get_existing_permissions">      
       <querytext>
       
-    select   unique(child_privilege) as privilege 
+    select   distinct(child_privilege) as privilege 
     from     acs_privilege_hierarchy 
     where    child_privilege like 'calendar%'
 

@@ -137,6 +137,7 @@ end;
 	begin
 	:1 := cal_item.new(
 	  on_which_calendar  => :calendar_id,
+          name               => :name, 
 	  activity_id        => :activity_id,
           timespan_id        => :timespan_id,
           item_type_id       => :item_type_id,

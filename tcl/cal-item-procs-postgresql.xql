@@ -132,7 +132,7 @@ select acs_event__insert_instances(:cal_item_id, NULL);
 	select cal_item__new (
 					null,
 					:calendar_id,
-					null,
+					:name,
 					null,
                                         null,
                                         null,

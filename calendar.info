@@ -119,6 +119,8 @@
             <file type="content_page" path="www/cal-listview.tcl"/>
             <file type="query_file" db_type="oracle" path="www/cal-monthview-oracle.xql"/>
             <file type="query_file" db_type="postgresql" path="www/cal-monthview-postgresql.xql"/>
+            <file type="content_page" path="www/calendar-choose.adp"/>
+            <file type="content_page" path="www/calendar-choose.tcl"/>
             <file type="content_page" path="www/cal-monthview.adp"/>
             <file type="content_page" path="www/cal-monthview.tcl"/>
             <file type="content_page" path="www/cal-nav.adp"/>
@@ -134,6 +136,7 @@
             <file type="content_page" path="www/calendar-item-types.adp"/>
             <file type="content_page" path="www/calendar-item-types.tcl"/>
             <file type="content_page" path="www/dayview.adp"/>
+            <file type="documentation" path="www/doc/index.html"/>
             <file type="documentation" path="www/doc/permissions.html"/>
             <file type="documentation" path="www/doc/regressionTest.htm"/>
             <file type="documentation" path="www/doc/requirements.html"/>

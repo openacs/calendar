@@ -86,6 +86,7 @@ namespace eval calendar {
         {-url_stub_callback ""}
         {-prev_week_template ""}
         {-next_week_template ""}
+        {-show_calendar_name_p 1}
     } {
         Creates a week widget
 
@@ -132,7 +133,11 @@ namespace eval calendar {
                     set time_details "<b>$pretty_start_date - $pretty_end_date</b>:"
                 }
 
-                set item "$time_details $item_details <font size=-1>($calendar_name)</font><br>"
+                set item "$time_details $item_details"
+
+                if {$show_calendar_name_p} {
+                    append item "<font size=-1>($calendar_name)</font><br>"
+                }
 
                 if { [string length $status_summary] > 0 } {
                     append item " <font color=\"red\">$status_summary</font> "
@@ -166,6 +171,7 @@ namespace eval calendar {
         {-start_hour 0}
         {-end_hour 23}
         {-url_stub_callback ""}
+        {-show_calendar_name_p 1}
     } {
         Creates a day widget
 
@@ -204,10 +210,18 @@ namespace eval calendar {
             }
 
             db_foreach select_day_items {} {
-                if {[empty_string_p $item_type]} {
-                    set item_details "$calendar_name"
-                } else {
-                    set item_details "$calendar_name - $item_type"
+                set item_details ""
+
+                if {$show_calendar_name_p} {
+                    append item_details $calendar_name
+                }
+
+                if {![empty_string_p $item_type]} {
+                    if {![empty_string_p $item_details]} {
+                        append item_details " - "
+                    }
+
+                    append item_details "$item_type"
                 }
 
                 set item $name
@@ -215,10 +229,17 @@ namespace eval calendar {
 
                 if {[dt_no_time_p -start_time $pretty_start_date -end_time $pretty_end_date]} {
                     # Hack for no-time items
-                    set item "$item_subst <font size=-1>($item_details)</font>"
+                    set item "$item_subst"
+                    if {![empty_string_p $item_details]} {
+                        append item " <font size=-1>($item_details)</font>"
+                    }
+
                     set ns_set_pos "X"
                 } else {
-                    set item "<b>$pretty_start_date - $pretty_end_date</b>: $item_subst <font size=-1>($item_details)</font>"
+                    set item "<b>$pretty_start_date - $pretty_end_date</b>: $item_subst"
+                    if {![empty_string_p $item_details]} {
+                        append item " <font size=-1>($item_details)</font>"
+                    }
                     set ns_set_pos $start_hour
                 }
 
@@ -251,6 +272,7 @@ namespace eval calendar {
        {-calendar_id_list ""}
        {-item_template {$item}}
        {-url_stub_callback ""}
+       {-show_calendar_name_p 1}
    } {
        Creates a list widget
    } {
@@ -282,7 +304,12 @@ namespace eval calendar {
 
            db_foreach select_day_items {} {
                # ns_log Notice "bma: one item"
-               set item "$pretty_start_date - $pretty_end_date: $name ($calendar_name)"
+               set item "$pretty_start_date - $pretty_end_date: $name"
+
+               if {$show_calendar_name_p} {
+                   append item " ($calendar_name)"
+               }
+
                set item [subst $item_template]
 
                ns_set put $items $start_hour $item

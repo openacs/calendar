@@ -13,6 +13,7 @@ ad_library {
 }
 
 namespace eval calendar {}
+namespace eval calendar::notification {}
 
 
 #------------------------------------------------
@@ -536,3 +537,13 @@ ad_proc -public calendar::do_notifications {
     
 }
     
+
+ad_proc -public calendar::notification::get_url {
+    object_id
+} {
+    Returns a full URL to the object_id
+} {
+    return [site_node::get_url_from_object_id -object_id $object_id]
+}
+    
+

@@ -19,7 +19,6 @@
         <requires url="acs-lang" version="5.0.0a5"/>
         <requires url="notifications" version="5.0.0b4"/>
         <requires url="ref-timezones" version="5.0.0a5"/>
-        <requires url="notifications" version="5.0.0b4"/>
 
         <callbacks>
         </callbacks>

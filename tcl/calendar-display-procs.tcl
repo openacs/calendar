@@ -204,8 +204,8 @@ namespace eval calendar {
         {-calendar_id_list ""}
         {-hour_template {$hour}}
         {-item_template {$item}}
-        {-prev_nav_template {<a href=".?date=[ns_urlencode $yesterday]">&lt;</a>}}
-        {-next_nav_template {<a href=".?date=[ns_urlencode $tomorrow]">&gt;</a>}}
+        {-prev_nav_template {<a href=".?date=[ns_urlencode $yesterday]"><img border=0 src=\"[dt_left_arrow]\" alt=\"back one day\"></a>}}
+        {-next_nav_template {<a href=".?date=[ns_urlencode $tomorrow]"><img border=0 src=\"[dt_right_arrow]\" alt=\"forward one day\"></a>}}
         {-start_hour 0}
         {-end_hour 23}
         {-url_stub_callback ""}

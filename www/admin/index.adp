@@ -12,11 +12,6 @@
 <property name="context">@context_bar;noquote@</property>
 
 
-<p>
-#calendar.lt_Your_are_in_the_follo# <br>
-@data@
-</p>
-
 <if @calendars:rowcount@ eq 0>
   <p>
     <i>#calendar.lt_You_have_no_party_wid#</i>

@@ -41,16 +41,6 @@ db_multirow calendars calendar_list {
 }
           
 
-# list the groups that the user_id is a member of
-set group_set_id [cc_member_of_groups $user_id] 
-
-set set_size [ns_set size $group_set_id]
-set data ""
-
-for {set i 0} {$i < [ns_set size $group_set_id]} {incr i} {
-    set data "<li> [ns_set key $group_set_id $i] => [ns_set value $group_set_id $i]"
-}
-
 ad_return_template 
 
 

@@ -10,5 +10,5 @@ ad_page_contract {
 
 set page_title "Add User"
 
-set context [list [list [export_vars -base permissions { object_id }] "$Permissions"] $page_title]
+set context [list [list [export_vars -base permissions { object_id }] "Permissions"] $page_title]
 

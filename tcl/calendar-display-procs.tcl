@@ -210,16 +210,17 @@ namespace eval calendar {
                     set item_details "$calendar_name - $item_type"
                 }
 
+                set item $name
+                set item_subst [subst $item_template]
+
                 if {[dt_no_time_p -start_time $pretty_start_date -end_time $pretty_end_date]} {
                     # Hack for no-time items
-                    set item "$name ($item_details)"
+                    set item "$item_subst <font size=-1>($item_details)</font>"
                     set ns_set_pos "X"
                 } else {
-                    set item "$pretty_start_date - $pretty_end_date: $name ($item_details)"
+                    set item "<b>$pretty_start_date - $pretty_end_date</b>: $item_subst <font size=-1>($item_details)</font>"
                     set ns_set_pos $start_hour
                 }
-
-                set item [subst $item_template]
 
                 if { [string length $status_summary] > 0 } {
                     append item " <font color=\"red\">$status_summary</font> "

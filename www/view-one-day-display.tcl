@@ -4,6 +4,14 @@
 #
 # date (YYYY-MM-DD) - optional
 
+if { ![info exists start_display_hour] } {
+    set start_display_hour 0
+}
+
+if { ![info exists end_display_hour] } {
+    set end_display_hour 23
+}
+
 set ansi_date_format "YYYY-MM-DD HH24:MI:SS"
 
 if {[empty_string_p $date]} {
@@ -30,7 +38,7 @@ db_foreach select_day_items {} {
 
 multirow create day_items_with_time current_hour name item_id calendar_name status_summary start_hour end_hour start_time end_time colspan rowspan
 
-for {set i 0 } { $i < 24 } { incr i } {
+for {set i $start_display_hour } { $i < $end_display_hour } { incr i } {
     set items_per_hour($i) 0
 }
 
@@ -47,9 +55,9 @@ db_foreach select_day_items_with_time {} {
     set end_time [lc_time_fmt $ansi_end_date "%H:%M"]
 
     for { set item_current_hour $start_hour } { $item_current_hour < $end_hour } { incr item_current_hour } {
-        if {$start_hour == $item_current_hour} {
+        if {$start_hour == $item_current_hour $$ start_hour >= $start_display_hour } {
             lappend day_items_per_hour [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
-        } else {
+        } elseif { $end_hour <= $end_display_hour } {
             lappend day_items_per_hour [list $item_current_hour "" $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
         }
         incr items_per_hour($item_current_hour)
@@ -58,11 +66,11 @@ db_foreach select_day_items_with_time {} {
 }
 
 set day_items_per_hour [lsort -command calendar::compare_day_items_by_current_hour $day_items_per_hour]
-set day_current_hour 0
+set day_current_hour $start_display_hour
 
 # Get the maximum items per hour
 set max_items_per_hour 0
-for {set i 0 } { $i < 24 } { incr i } {
+for {set i $start_display_hour } { $i < $end_display_hour } { incr i } {
     if {$items_per_hour($i) > $max_items_per_hour} {
         set max_items_per_hour $items_per_hour($i)
     }
@@ -83,9 +91,9 @@ foreach item $day_items_per_hour {
     set day_current_hour [expr [lindex $item 0] +1 ]
 }
 
-if {$day_current_hour < 24} {
+if {$day_current_hour < $end_display_hour } {
     # need to add dummy entries to show all hours
-    for {  } { $day_current_hour < 24 } { incr day_current_hour } {
+    for {  } { $day_current_hour <= $end_display_hour } { incr day_current_hour } {
         multirow append day_items_with_time $day_current_hour "" "" "" "" "" 0 0
     }
 }

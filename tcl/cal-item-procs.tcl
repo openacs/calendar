@@ -76,7 +76,7 @@ ad_proc -public calendar::item::new {
 ad_proc -public calendar::item::get {
     {-cal_item_id:required}
     {-array:required}
-    {-normalize_system_time 1}
+    {-normalize_time_to_utc 0}
 } {
     Get the data for a calendar item
 
@@ -90,12 +90,12 @@ ad_proc -public calendar::item::get {
     }
 
     db_1row $query_name {} -column_array row
-    if {$normalize_system_time} {
+    if {$normalize_time_to_utc} {
+	set row(start_date_ansi) [lc_time_local_to_utc $row(start_date_ansi)]
+	set row(end_date_ansi) [lc_time_local_to_utc $row(end_date_ansi)]
+    } else {
 	set row(start_date_ansi) [lc_time_system_to_conn $row(start_date_ansi)]
 	set row(end_date_ansi) [lc_time_system_to_conn $row(end_date_ansi)]
-    } else {
-	set row(start_date_ansi) [lc_time_conn_to_system $row(start_date_ansi)]
-	set row(end_date_ansi) [lc_time_conn_to_system $row(end_date_ansi)]
     }
 
     if { $row(start_date_ansi) ==  $row(end_date_ansi) && [string equal [lc_time_fmt $row(start_date_ansi) "%T"] "00:00:00"]} {

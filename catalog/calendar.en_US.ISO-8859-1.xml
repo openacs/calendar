@@ -132,4 +132,5 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Yes">Yes</msg>
   <msg key="yes_delete_it">yes, delete it</msg>
   <msg key="Yes_I_am_sure">Yes, I am sure!</msg>
+  <msg key="start_time_before_end_time">Start time is before end time</msg>
 </message_catalog>

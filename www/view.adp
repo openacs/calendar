@@ -3,7 +3,6 @@
 <property name="context">#calendar.Calendar#</property>
 
 <link href="calendar.css" rel="stylesheet" type="text/css">
-
 <table width="95%">
 
   <tr>

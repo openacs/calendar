@@ -39,8 +39,7 @@
   <td class="@calendar_items.today@" align="center">@calendar_items.pretty_start_time@</td>
   <td class="@calendar_items.today@" align="center">@calendar_items.pretty_end_time@</td>
   <td class="@calendar_items.today@" align="center">@calendar_items.item_type@</td>
-  <td class="@calendar_items.today@" align=left><a
-  href="cal-item-view?cal_item_id=@calendar_items.item_id@">@calendar_items.name@</a>
+  <td class="@calendar_items.today@" align=left>@calendar_items.full_item;noquote@</a>
   (@calendar_items.calendar_name@)</td>
 
   </tr>

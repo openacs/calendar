@@ -3,6 +3,22 @@
 # Parameters:
 #
 # date (YYYY-MM-DD) - optional
+# start_display_hour and end_display_hour
+
+
+# calendar-portlet uses this stuff
+if { ![info exists url_stub_callback] } {
+    set url_stub_callback ""
+}
+
+if { ![info exists day_template] } {
+    set day_template "<a href=?julian_date=\$julian_date>\$day_number</a>"
+}
+
+if { ![info exists item_template] } {
+    set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\$item</a>"
+}
+# calendar-portlet
 
 if { ![info exists start_display_hour] } {
     set start_display_hour 0
@@ -30,13 +46,30 @@ set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
 # Loop through the calendars
-multirow create day_items_without_time name status_summary item_id calendar_name
+multirow create day_items_without_time name status_summary item_id calendar_name full_item
 
 db_foreach select_day_items {} {
-    multirow append day_items_without_time $name $status_summary $item_id $calendar_name
+    # reset url stub
+    set url_stub ""
+    
+    # In case we need to dispatch to a different URL (ben)
+    if {![empty_string_p $url_stub_callback]} {
+        # Cache the stuff
+        if {![info exists url_stubs($calendar_id)]} {
+            set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
+        }
+        
+        set url_stub $url_stubs($calendar_id)
+    }
+
+    set item "$name"
+    set full_item "[subst $item_template]"
+
+    multirow append day_items_without_time $name $status_summary $item_id $calendar_name $full_item
 }
 
-multirow create day_items_with_time current_hour localized_current_hour name item_id calendar_name status_summary start_hour end_hour start_time end_time colspan rowspan
+# Quite some extra code here to be able to display overlapping items.
+multirow create day_items_with_time current_hour localized_current_hour name item_id calendar_name status_summary start_hour end_hour start_time end_time colspan rowspan full_item
 
 for {set i $start_display_hour } { $i < $end_display_hour } { incr i } {
     set items_per_hour($i) 0
@@ -55,8 +88,7 @@ db_foreach select_day_items_with_time {} {
     set end_time [lc_time_fmt $ansi_end_date "%X"]
 
     for { set item_current_hour $start_hour } { $item_current_hour < $end_hour } { incr item_current_hour } {
-	set item_current_hour [expr int($item_current_hour)]
-
+        set item_current_hour [expr [string trimleft $item_current_hour 0]+0]
         if {$start_hour == $item_current_hour && $start_hour >= $start_display_hour } {
             lappend day_items_per_hour [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
         } elseif { $end_hour <= $end_display_hour } {
@@ -78,28 +110,48 @@ for {set i $start_display_hour } { $i < $end_display_hour } { incr i } {
     }
 }
 
-foreach item $day_items_per_hour {
-    set item_start_hour [expr int( [lindex $item 5])]
-    set item_end_hour [lindex $item 6]
+foreach this_item $day_items_per_hour {
+    set item_start_hour [expr [string trimleft [lindex $this_item 5] 0]+0]
+    set item_end_hour [expr [string trimleft [lindex $this_item 6] 0]+0]
     set rowspan [expr $item_end_hour - $item_start_hour]
     if {$item_start_hour > $day_current_hour} {
         # need to add dummy entries to show all hours
         for {  } { $day_current_hour < $item_start_hour } { incr day_current_hour } {
 	    set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%r"]
-            multirow append day_items_with_time $day_current_hour $localized_day_current_hour "" "" "" "" "" "" "" "" 0 0
+            multirow append day_items_with_time $day_current_hour $localized_day_current_hour "" "" "" "" "" "" "" "" 0 0 ""
         }
     }
 
     set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%r"]
-    multirow append day_items_with_time [lindex $item 0] $localized_day_current_hour [lindex $item 1] [lindex $item 2] [lindex $item 3] [lindex $item 4] [lindex $item 5] [lindex $item 6] [lindex $item 7] [lindex $item 8] 0 $rowspan
-    set day_current_hour [expr [lindex $item 0] +1 ]
+
+    # reset url stub
+    set url_stub ""
+    
+    # In case we need to dispatch to a different URL (ben)
+    if {![empty_string_p $url_stub_callback]} {
+        # Cache the stuff
+        if {![info exists url_stubs($calendar_id)]} {
+            set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
+        }
+        
+        set url_stub $url_stubs($calendar_id)
+    }
+
+    set start_time [lindex $this_item 7] 
+    set end_time [lindex $this_item 8]
+
+    set item [lindex $this_item 1]
+    set full_item "[subst $item_template]"
+
+    multirow append day_items_with_time [lindex $this_item 0] $localized_day_current_hour [lindex $this_item 1] [lindex $this_item 2] [lindex $this_item 3] [lindex $this_item 4] [lindex $this_item 5] [lindex $this_item 6] [lindex $this_item 7] [lindex $this_item 8] 0 $rowspan $full_item
+    set day_current_hour [expr [lindex $this_item 0] +1 ]
 }
 
 if {$day_current_hour < $end_display_hour } {
     # need to add dummy entries to show all hours
     for {  } { $day_current_hour <= $end_display_hour } { incr day_current_hour } {
 	set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%r"]
-        multirow append day_items_with_time $day_current_hour $localized_day_current_hour "" "" "" "" "" 0 0
+        multirow append day_items_with_time $day_current_hour $localized_day_current_hour "" "" "" "" "" 0 0 ""
     }
 }
 

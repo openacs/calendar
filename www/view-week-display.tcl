@@ -4,6 +4,22 @@
 #
 # date (YYYY-MM-DD) - optional
 
+
+# calendar-portlet uses this stuff
+if { ![info exists url_stub_callback] } {
+    set url_stub_callback ""
+}
+
+if { ![info exists day_template] } {
+    set day_template "<a href=?date=\$date>\$day &nbsp; - &nbsp; \$pretty_date</a>"
+}
+
+if { ![info exists item_template] } {
+    set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\$item</a>"
+}
+# calendar-portlet
+
+
 if {[empty_string_p $date]} {
     # Default to todays date in the users (the connection) timezone
     set server_now_time [dt_systime]
@@ -34,7 +50,7 @@ db_1row select_week_info {}
 set current_weekday 0
 
 # Loop through the calendars
-multirow create week_items name item_id start_date calendar_name status_summary day_of_week start_date_weekday start_time end_time no_time_p
+multirow create week_items name item_id start_date calendar_name status_summary day_of_week start_date_weekday start_time end_time no_time_p full_item
 
 # Convert date from user timezone to system timezone
 set sunday_of_the_week_system [lc_time_conn_to_system "$sunday_of_the_week 00:00:00"]
@@ -58,7 +74,7 @@ db_foreach select_week_items {} {
         # need to add dummy entries to show all days
         for {  } { $current_weekday < $day_of_week } { incr current_weekday } {
 	    set ansi_this_date [dt_julian_to_ansi [expr $sunday_julian + $current_weekday]]
-            multirow append week_items "" "" [lc_time_fmt $ansi_this_date "%x"] "" "" $current_weekday [lc_time_fmt $ansi_this_date %A] "" "" ""
+            multirow append week_items "" "" [lc_time_fmt $ansi_this_date "%x"] "" "" $current_weekday [lc_time_fmt $ansi_this_date %A] "" "" "" ""
         }
     }
 
@@ -68,7 +84,20 @@ db_foreach select_week_items {} {
         set no_time_p f
     }
 
-    multirow append week_items $name $item_id $start_date $calendar_name $status_summary $day_of_week $start_date_weekday $start_time $end_time $no_time_p
+    # In case we need to dispatch to a different URL (ben)
+    if {![empty_string_p $url_stub_callback]} {
+        # Cache the stuff
+        if {![info exists url_stubs($calendar_id)]} {
+            set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
+        }
+        
+        set url_stub $url_stubs($calendar_id)
+    }
+    
+    set item "$name"
+    set full_item "[subst $item_template]"
+
+    multirow append week_items $name $item_id $start_date $calendar_name $status_summary $day_of_week $start_date_weekday $start_time $end_time $no_time_p $full_item
     set current_weekday $day_of_week
 }
 
@@ -76,7 +105,7 @@ if {$current_weekday < 7} {
     # need to add dummy entries to show all hours
     for {  } { $current_weekday < 7 } { incr current_weekday } {
 	set ansi_this_date [dt_julian_to_ansi [expr $sunday_julian + $current_weekday]]
-	multirow append week_items "" "" [lc_time_fmt $ansi_this_date "%x"] "" "" $current_weekday [lc_time_fmt $ansi_this_date %A] "" "" ""
+	multirow append week_items "" "" [lc_time_fmt $ansi_this_date "%x"] "" "" $current_weekday [lc_time_fmt $ansi_this_date %A] "" "" "" ""
     }
 }
 

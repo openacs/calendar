@@ -55,7 +55,7 @@
       <if @days_of_a_month.item_id@ ne "">
         <div class="cal-month-event">@days_of_a_month.ansi_start_time@
         <a
-        href=cal-item-view?cal_item_id=@days_of_a_month.item_id@>@days_of_a_month.calendar_item@</a>
+        href=cal-item-view?cal_item_id=@days_of_a_month.item_id@>@days_of_a_month.full_item;noquote@</a>
         <span class="text-grey-sml"> [@days_of_a_month.calendar_name@]</span>
         </div>
       </if>

@@ -54,7 +54,7 @@
             <if @week_items.no_time_p@ ne "t">
             @week_items.start_time@ -  @week_items.end_time@
             </if>
-            @week_items.name@
+            @week_items.full_item;noquote@
             </a>
             <if @week_items.no_time_p@ eq "t">
             </span>

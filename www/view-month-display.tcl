@@ -10,6 +10,22 @@ if {![info exists date] || [empty_string_p $date]} {
     set user_now_time [lc_time_system_to_conn $server_now_time]
     set date [lc_time_fmt $user_now_time "%x"]
 }
+
+# calendar-portlet uses this stuff
+if { ![info exists url_stub_callback] } {
+    set url_stub_callback ""
+}
+
+if { ![info exists day_template] } {
+    set day_template "<a href=?date=\$date>\$day &nbsp; - &nbsp; \$pretty_date</a>"
+}
+
+if { ![info exists item_template] } {
+    set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\$item</a>"
+}
+# calendar-portlet
+
+
 dt_get_info $date
 
 set ansi_date_format "YYYY-MM-DD HH24:MI:SS"
@@ -41,7 +57,7 @@ set today_ansi_list [dt_ansi_to_list $today_date]
 set today_julian_date [dt_ansi_to_julian [lindex $today_ansi_list 0] [lindex $today_ansi_list 1] [lindex $today_ansi_list 2]]
 
 
-multirow create days_of_a_month calendar_item item_id ansi_start_date ansi_start_time day_number calendar_name beginning_of_week_p end_of_week_p today_p outside_month_p 
+multirow create days_of_a_month calendar_item item_id ansi_start_date ansi_start_time day_number calendar_name beginning_of_week_p end_of_week_p today_p outside_month_p full_item
 
 for {set current_day $first_julian_date} {$current_day < $first_julian_date_of_month} {incr current_day} {
     if {$current_day == $first_julian_date} {
@@ -49,7 +65,7 @@ for {set current_day $first_julian_date} {$current_day < $first_julian_date_of_m
     } else {
         set beginning_of_week_p f
     }
-    multirow append days_of_a_month "" "" [dt_julian_to_ansi [expr $first_julian_date_of_month + $current_day -1]] "" "" "" $beginning_of_week_p f "" t 
+    multirow append days_of_a_month "" "" [dt_julian_to_ansi [expr $first_julian_date_of_month + $current_day -1]] "" "" "" $beginning_of_week_p f "" t  ""
 }
 
 set current_day $first_julian_date_of_month
@@ -68,7 +84,7 @@ db_foreach select_monthly_items {} {
     if {$current_day < $julian_start_date} {
         for {} {$current_day < $julian_start_date} {incr current_day} {
             array set display_information [calendar::get_month_multirow_information -current_day $current_day -today_julian_date $today_julian_date -first_julian_date_of_month $first_julian_date_of_month]
-            multirow append days_of_a_month "" "" [dt_julian_to_ansi $current_day] "" $display_information(day_number) "" $display_information(beginning_of_week_p) $display_information(end_of_week_p) $display_information(today_p) f 
+            multirow append days_of_a_month "" "" [dt_julian_to_ansi $current_day] "" $display_information(day_number) "" $display_information(beginning_of_week_p) $display_information(end_of_week_p) $display_information(today_p) f ""
         } 
     }
 
@@ -76,14 +92,30 @@ db_foreach select_monthly_items {} {
         set ansi_start_time "--"
     }
 
+    # reset url stub
+    set url_stub ""
+    
+    # In case we need to dispatch to a different URL (ben)
+    if {![empty_string_p $url_stub_callback]} {
+        # Cache the stuff
+        if {![info exists url_stubs($calendar_id)]} {
+            set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
+		}
+        
+        set url_stub $url_stubs($calendar_id)
+    }
+    
+    set item "$name"
+    set full_item "[subst $item_template]"
+
     array set display_information [calendar::get_month_multirow_information -current_day $current_day -today_julian_date $today_julian_date -first_julian_date_of_month $first_julian_date_of_month]
-    multirow append days_of_a_month $name $item_id [dt_julian_to_ansi $current_day] $ansi_start_time $display_information(day_number) $calendar_name $display_information(beginning_of_week_p) $display_information(end_of_week_p) $display_information(today_p)  f 
+    multirow append days_of_a_month $name $item_id [dt_julian_to_ansi $current_day] $ansi_start_time $display_information(day_number) $calendar_name $display_information(beginning_of_week_p) $display_information(end_of_week_p) $display_information(today_p)  f  $full_item
 }
 
 
 for {} {$current_day <= $last_julian_date_in_month} {incr current_day} {
     array set display_information [calendar::get_month_multirow_information -current_day $current_day -today_julian_date $today_julian_date -first_julian_date_of_month $first_julian_date_of_month]
-    multirow append days_of_a_month "" "" [dt_julian_to_ansi $current_day] "" $display_information(day_number) "" $display_information(beginning_of_week_p) $display_information(end_of_week_p) $display_information(today_p) f 
+    multirow append days_of_a_month "" "" [dt_julian_to_ansi $current_day] "" $display_information(day_number) "" $display_information(beginning_of_week_p) $display_information(end_of_week_p) $display_information(today_p) f ""
     incr number_day_cells
 }
 
@@ -91,6 +123,6 @@ set remaining_days [expr 6 - $current_day % 7]
 
 if {$remaining_days > 0 } {
     for {} {$current_day <= [expr $last_julian_date_in_month + $remaining_days]} {incr current_day} {
-        multirow append days_of_a_month "" "" "" "" "" "" f f "" t 
+        multirow append days_of_a_month "" "" "" "" "" "" f f "" t ""
     }
 }

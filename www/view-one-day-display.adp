@@ -24,18 +24,17 @@
             <multiple name="day_items_without_time">
             <tr class="row-light">
             <td width="1%" class="cal-day-time"><img border="0" align="left" src="no-time.gif" alt="No Time"></td>
-            <td class="cal-day-event-notime"><a
-    href="cal-item-view?cal_item_id=@day_items_without_time.item_id@">@day_items_without_time.name@</a></td>
+            <td class="cal-day-event-notime">@day_items_without_time.full_item;noquote@</td>
             </tr>
             </multiple>
           </if>
           <if @day_items_with_time:rowcount@ gt 0>
             <multiple name="day_items_with_time">
             <if @day_items_with_time.current_hour@ odd>
-              <tr class="row-light">
+              <tr class="odd">
             </if>
             <else>
-              <tr class="row-dark">
+              <tr class="even">
             </else>
 
 	<td width="20%" class="cal-day-time">      <a	
@@ -50,7 +49,7 @@
                 <a
                 href="cal-item-view?cal_item_id=@day_items_with_time.item_id@">@day_items_with_time.start_time@
                 - @day_items_with_time.end_time@
-                @day_items_with_time.name@</a><span class="text-grey-sml">@day_items_with_time.calendar_name@</span>
+                @day_items_with_time.full_item;noquote@<span class="text-grey-sml">@day_items_with_time.calendar_name@</span>
                 </td>
                 </if>
               </if>

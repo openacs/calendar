@@ -4,6 +4,16 @@ if { ![exists_and_not_null calendar_id]} {
     set calendar_id [lindex [lindex $calendar_list 0] 1]
 }
 
+# calendar-portlet uses this stuff
+if { ![info exists url_stub_callback] } {
+    set url_stub_callback ""
+}
+
+if { ![info exists item_template] } {
+    set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\$item</a>"
+}
+# calendar-portlet
+
 set calendar_name [calendar_get_name $calendar_id]
 
 set package_id [ad_conn package_id]
@@ -43,7 +53,7 @@ set form_vars [export_form_vars start_date sort_by view]
 
 set flip -1
 
-multirow create calendar_items calendar_name item_id name item_type pretty_weekday pretty_start_date pretty_end_date pretty_start_time pretty_end_time flip today
+multirow create calendar_items calendar_name item_id name item_type pretty_weekday pretty_start_date pretty_end_date pretty_start_time pretty_end_time flip today full_item
 
 set last_pretty_start_date ""
 # Loop through the events, and add them
@@ -93,6 +103,14 @@ db_foreach select_list_items {} {
         set today ""
     }
 
-    multirow append calendar_items $calendar_name $item_id $name $item_type $pretty_weekday $pretty_start_date $pretty_end_date $pretty_start_time $pretty_end_time $flip $today
+    # In case we need to dispatch to a different URL (ben)
+    if {![empty_string_p $url_stub_callback]} {
+        set url_stub [$url_stub_callback $calendar_id]
+    }
+    
+    set item "$name"
+    set item [subst $item_template]
+                
+    multirow append calendar_items $calendar_name $item_id $name $item_type $pretty_weekday $pretty_start_date $pretty_end_date $pretty_start_time $pretty_end_time $flip $today $item
 
 }

@@ -72,7 +72,12 @@ if {[llength $calendar_list] == 0} {
 
 	    # find out the calendar_id of the private calendar
 	    set calendar_id [calendar_have_private_p -return_id 1 $user_id]
-	    set calendar_name "Private"
+	    
+            set calendar_name [calendar_get_name $calendar_id]
+            
+            if {[empty_string_p $calendar_name]} {
+                set calendar_name "Private"
+            }
 
 	} else {
 	    set calendar_name [calendar_get_name $calendar_id]

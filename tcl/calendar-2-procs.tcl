@@ -13,8 +13,9 @@ namespace eval calendar {
         {-sql_date:required}
         {-format:required}
     } {
-        # for now, we recognize only "YYYY-MM-DD" "HH12:MIam" and "HH24:MI"
-
+        
+    } {
+        # for now, we recognize only "YYYY-MM-DD" "HH12:MIam" and "HH24:MI". 
         set date [template::util::date::create]
 
         switch -exact -- $format {
@@ -48,6 +49,9 @@ namespace eval calendar {
                 set date [template::util::date::set_property format $date {HH24:MI}]
                 set date [template::util::date::set_property hours $date $sql_date]
                 set date [template::util::date::set_property minutes $date 0]
+            }
+            default {
+                set date [template::util::date::set_property ansi $date $sql_date]
             }
         }
 

@@ -17,13 +17,7 @@
        select
          i.cal_item_id,
          0 as n_attachments,
-         to_char(start_date,'HH:MIpm') as start_time,
-	 to_char(start_date,'D') as day_of_week,
-         to_char(start_date,'Day') as pretty_day_of_week,
-         to_char(start_date,'DD') as day_of_month,
          to_char(start_date, 'YYYY-MM-DD HH:MI:SS') as start_date,
-         to_char(start_date, 'MM/DD/YYYY') as pretty_short_start_date,
-         to_char(end_date, 'HH:MIpm') as end_time,
          end_date as end_date,
          to_char(start_date, 'YYYY-MM-DD HH24:MI:SS') as full_start_date,
          to_char(end_date, 'YYYY-MM-DD HH24:MI:SS') as full_end_date,

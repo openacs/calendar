@@ -49,7 +49,7 @@ if {[calendar::attachments_enabled_p]} {
 }
 
 # cal nav
-set cal_nav [dt_widget_calendar_navigation "view" day $cal_item(start_date) "calendar_id="]
+set cal_nav [dt_widget_calendar_navigation -link_current_view "view" day $cal_item(start_date) "calendar_id="]
 
 ad_return_template 
 

@@ -62,6 +62,15 @@ namespace eval calendar::item {
         }
         
         db_1row $query_name {} -column_array row
+        
+        set row(start_time) [lc_time_fmt $row(full_start_date) "%X"]
+        # Unfortunately, SQL has weekday starting at 1 = Sunday
+        set row(day_of_week) [expr [lc_time_fmt $row(full_start_date) "%w"] + 1]
+        set row(pretty_day_of_week) [lc_time_fmt $row(full_start_date) "%A"]
+        set row(day_of_month) [lc_time_fmt $row(full_start_date) "%d"]
+        set row(pretty_short_start_date) [lc_time_fmt $row(full_start_date) "%x"]
+
+        set row(end_time) [lc_time_fmt $row(full_end_date) "%X"]
     }
         
     ad_proc -public add_recurrence {

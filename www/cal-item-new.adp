@@ -1,6 +1,7 @@
 <master>
 <property name="title">#calendar.Calendar_Add_Item#</property>
 <property name="context">#calendar.Add#</property>
+<property name="focus">cal_item.title</property>
 
 <table width="95%">
 

@@ -1,4 +1,3 @@
-
 ad_page_contract {
     
     Creating a new Calendar Item
@@ -47,13 +46,15 @@ element create cal_item time_p \
         -label "&nbsp;" -datatype text -widget radio -options [list [list "[_ calendar.All_Day_Event]" 0] [list "[_ calendar.Use_Hours_Below]" 1]]
 
 element create cal_item start_time \
-        -label "[_ calendar.Start_Time]" -datatype date -widget date -format "HH12:MI AM" -optional
+        -label "[_ calendar.Start_Time]" -datatype date -widget date \
+        -format [lc_get formbuilder_time_format] -optional
 
 element create cal_item end_time \
-        -label "[_ calendar.End_Time]" -datatype date -widget date -format "HH12:MI AM" -optional
+        -label "[_ calendar.End_Time]" -datatype date -widget date \
+        -format [lc_get formbuilder_time_format] -optional
 
 element create cal_item description \
-        -label "[_ calendar.Description]" -datatype text -widget textarea -html {cols 60 rows 3 wrap soft}
+        -label "[_ calendar.Description]" -datatype text -widget textarea -html {cols 60 rows 3 wrap soft} -optional
 
 element create cal_item item_type_id \
         -label "[_ calendar.Type_1]" -datatype integer -widget select -options [calendar::get_item_types -calendar_id $calendar_id] -optional
@@ -87,26 +88,33 @@ if {[form is_valid cal_item]} {
     ad_script_abort
 }
 
-# Set some properties
-element set_properties cal_item date -value [calendar::from_sql_datetime -sql_date $date -format "YYYY-MM-DD"]
-
-if {[dt_no_time_p -start_time $start_time -end_time $end_time]} {
-    # No time event
-    element set_properties cal_item time_p -value 0
-} else {
-    if {![empty_string_p $start_time]} {
-        set start_time_date [calendar::from_sql_datetime -sql_date $start_time -format {HH24}]
-        element set_properties cal_item start_time -value $start_time_date
-    }
-
-    if {![empty_string_p $end_time]} {
-        set end_time_date [calendar::from_sql_datetime -sql_date $end_time -format {HH24}]
-        element set_properties cal_item end_time -value $end_time_date
-    }
-
-    element set_properties cal_item time_p -value 1
+# Hide the type widget if there *are* no types to choose from
+if { [llength [element get_property cal_item item_type_id options]] <= 1 } {
+    element set_properties cal_item item_type_id -widget hidden
 }
 
-set cal_nav [dt_widget_calendar_navigation "view" day $date "calendar_id=$calendar_id"]
+if { [form is_request cal_item] } {
+    # Set some properties
+    element set_properties cal_item date -value [calendar::from_sql_datetime -sql_date $date -format "YYYY-MM-DD"]
+    
+    if {[dt_no_time_p -start_time $start_time -end_time $end_time]} {
+        # No time event
+        element set_properties cal_item time_p -value 0
+    } else {
+        if {![empty_string_p $start_time]} {
+            set start_time_date [calendar::from_sql_datetime -sql_date $start_time -format {HH24}]
+            element set_properties cal_item start_time -value $start_time_date
+        }
+        
+        if {![empty_string_p $end_time]} {
+            set end_time_date [calendar::from_sql_datetime -sql_date $end_time -format {HH24}]
+            element set_properties cal_item end_time -value $end_time_date
+        }
+        
+        element set_properties cal_item time_p -value 1
+    }
+}
+
+set cal_nav [dt_widget_calendar_navigation -link_current_view "view" day $date "calendar_id=$calendar_id"]
 
 ad_return_template

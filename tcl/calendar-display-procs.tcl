@@ -46,6 +46,9 @@ namespace eval calendar {
         
 	
 	db_foreach select_monthly_items {} {
+            set start_time [lc_time_fmt $ansi_start_date "%X"]
+            set end_time [lc_time_fmt $ansi_end_date "%X"]
+
 	    # Calendar name now set in query
 	    # set calendar_name [calendar_get_name $calendar_id]
 	    
@@ -143,13 +146,14 @@ namespace eval calendar {
         
         set items [ns_set create]
 
-        # This isn't going to be pretty. First we make it work, though. (ben)
-
-        db_1row select_weekday_info {}
+        # Find the first day of the week in julian
+        set current_date_weekday_no [expr [clock format [clock scan $date] -format %w] + 1]
+        set first_day_of_week_julian [expr [dt_ansi_to_julian_single_arg $date] - (($current_date_weekday_no + 6 - [lc_get firstdayofweek]) % 7)]
 
         # Loop through the calendars
 	db_foreach select_week_items {} {
-	    ns_log Notice "ONE WEEK ITEM"
+            set pretty_start_date [lc_time_fmt $ansi_start_date "%X"]
+            set pretty_end_date [lc_time_fmt $ansi_end_date "%X"]
 
 	    # now selected from the query
 	    # set calendar_name [calendar_get_name $calendar_id]
@@ -239,6 +243,9 @@ namespace eval calendar {
 
         # Loop through the calendars
 	db_foreach select_day_items {} {
+            set pretty_start_date [lc_time_fmt $ansi_start_date "%X"]
+            set pretty_end_date [lc_time_fmt $ansi_end_date "%X"]
+            
 	    # Not needed anymore
             # set calendar_name [calendar_get_name $calendar_id]
 
@@ -354,6 +361,11 @@ namespace eval calendar {
                     append item " ($calendar_name)"
                 }
                 
+                set pretty_date [lc_time_fmt $ansi_start_date "%x"]
+                set pretty_weekday [lc_time_fmt $ansi_start_date "%A"]
+                set pretty_start_date [lc_time_fmt $ansi_start_date "%X"]
+                set pretty_end_date [lc_time_fmt $ansi_end_date "%X"]
+
                 ns_set put $items $start_hour [list $pretty_date $pretty_start_date $pretty_end_date $pretty_weekday $item_type $item]
             }
             
@@ -369,84 +381,5 @@ namespace eval calendar {
                 -url_template $url_template]
         
     }
-
-#      ad_proc -public list_display {
-#          {-date ""}
-#          {-calendar_id_list ""}
-#          {-item_template {$item}}
-#          {-url_stub_callback ""}
-#          {-show_calendar_name_p 1}
-#     } {
-#         Creates a list widget
-#     } {
-#         if {[empty_string_p $date]} {
-#             set date [dt_sysdate]
-#         }
-
-#         set date_format "YYYY-MM-DD HH24:MI"
-#         set current_date $date
-
-#         # If we were given no calendars, we assume we display the 
-#         # private calendar. It makes no sense for this to be called with
-#         # no data whatsoever.
-#         if {[empty_string_p $calendar_id_list]} {
-#             set calendar_id_list [list [calendar_have_private_p -return_id 1 [ad_get_user_id]]]
-#         }
-       
-#         set items [ns_set create]
-
-#         # Loop through the calendars
-#         foreach calendar_id $calendar_id_list {
-#             set calendar_name [calendar_get_name $calendar_id]
-
-#             # In case we need to dispatch to a different URL (ben)
-#             if {![empty_string_p $url_stub_callback]} {
-#                 set url_stub [$url_stub_callback $calendar_id]
-#             }
-
-#             db_foreach select_day_items {} {
-#                 # ns_log Notice "bma: one item"
-#                 set item "$pretty_start_date - $pretty_end_date: $name"
-
-#                 if {$show_calendar_name_p} {
-#                     append item " ($calendar_name)"
-#                 }
-
-#                 set item [subst $item_template]
-
-#                 ns_set put $items $start_hour $item
-#             }
-
-#         }
-
-#         set return_html "Items for [util_AnsiDatetoPrettyDate $date]:<p><ul>\n"
-
-#         for {set i 0} {$i <= 23} {incr i} {
-#             if {$i < 10} {
-#                 set index_hour "0$i"
-#             } else {
-#                 set index_hour $i
-#             }
-
-#             while {1} {
-#                 set index [ns_set find $items $index_hour]
-#                 if {$index == -1} {
-#                     break
-#                 }
-
-#                 # ns_log Notice "bma: one item found !!"
-
-#                 append return_html "<li> [ns_set value $items $index]\n"
-#                 ns_set delete $items $index
-#             }
-#             append return_html "<p>"
-#         }
-
-#         append return_html "</ul>"
-
-#         return $return_html
-#     }
-       
-
 
 }

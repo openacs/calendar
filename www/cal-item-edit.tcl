@@ -31,13 +31,15 @@ element create cal_item time_p \
         -label "&nbsp;" -datatype text -widget radio -options [list [list "[_ calendar.All_Day_Event]" 0] [list "[_ calendar.Use_Hours_Below]" 1]]
 
 element create cal_item start_time \
-        -label "[_ calendar.Start_Time]" -datatype date -widget date -format "HH12:MI AM"
+        -label "[_ calendar.Start_Time]" -datatype date -widget date \
+        -format [lc_get formbuilder_time_format] -optional
 
 element create cal_item end_time \
-        -label "[_ calendar.End_Time]" -datatype date -widget date -format "HH12:MI AM"
+        -label "[_ calendar.End_Time]" -datatype date -widget date \
+        -format [lc_get formbuilder_time_format] -optional
 
 element create cal_item description \
-        -label "[_ calendar.Description]" -datatype text -widget textarea -html {cols 60 rows 3 wrap soft}
+        -label "[_ calendar.Description]" -datatype text -widget textarea -html {cols 60 rows 3 wrap soft} -optional
 
 element create cal_item item_type_id \
         -label "[_ calendar.Type_1]" -datatype integer -widget select -optional
@@ -47,7 +49,7 @@ element create cal_item repeat_p \
 
 
 if {[form is_valid cal_item]} {
-    template::form get_values cal_item cal_item_id title date time_p start_time end_time description item_type_id repeat_p
+    form get_values cal_item cal_item_id title date time_p start_time end_time description item_type_id repeat_p
 
     # set up the datetimes
     set start_date [calendar::to_sql_datetime -date $date -time $start_time -time_p $time_p]
@@ -75,18 +77,9 @@ calendar::item::get -cal_item_id $cal_item_id -array cal_item
 # Prepare the form nicely
 element set_properties cal_item item_type_id -options [calendar::get_item_types -calendar_id $cal_item(calendar_id)] 
 
-element set_properties cal_item cal_item_id -value $cal_item(cal_item_id)
-element set_properties cal_item title -value $cal_item(name)
-element set_properties cal_item date -value [calendar::from_sql_datetime -sql_date $cal_item(start_date) -format {YYYY-MM-DD}]
-element set_properties cal_item start_time -value [calendar::from_sql_datetime -sql_date $cal_item(start_time) -format {HH12:MIam}]
-element set_properties cal_item end_time -value [calendar::from_sql_datetime -sql_date $cal_item(end_time) -format {HH12:MIam}]
-element set_properties cal_item description -value $cal_item(description)
-element set_properties cal_item item_type_id -value $cal_item(item_type_id)
-
-if {[dt_no_time_p -start_time $cal_item(start_time) -end_time $cal_item(end_time)]} {
-    element set_properties cal_item time_p -value 0
-} else {
-    element set_properties cal_item time_p -value 1
+# Hide the type widget if there *are* no types to choose from
+if { [llength [element get_property cal_item item_type_id options]] <= 1 } {
+    element set_properties cal_item item_type_id -widget hidden
 }
 
 # if no recurrence, don't show the repeat stuff
@@ -94,7 +87,24 @@ if {[empty_string_p $cal_item(recurrence_id)]} {
     element set_properties cal_item repeat_p -widget hidden
 }
 
-set cal_nav [dt_widget_calendar_navigation "view" day $cal_item(start_date) "calendar_id"]
+if { [form is_request cal_item] } {
+    element set_properties cal_item cal_item_id -value $cal_item(cal_item_id)
+    element set_properties cal_item title -value $cal_item(name)
+    element set_properties cal_item date -value [template::util::date::from_ansi $cal_item(start_date)]
+    element set_properties cal_item start_time -value [template::util::date::from_ansi $cal_item(full_start_date) [lc_get formbuilder_time_format]]
+    element set_properties cal_item end_time -value [template::util::date::from_ansi $cal_item(full_end_date) [lc_get formbuilder_time_format]]
+    element set_properties cal_item description -value $cal_item(description)
+    element set_properties cal_item item_type_id -value $cal_item(item_type_id)
+
+    if {[dt_no_time_p -start_time $cal_item(start_time) -end_time $cal_item(end_time)]} {
+        element set_properties cal_item time_p -value 0
+    } else {
+        element set_properties cal_item time_p -value 1
+    }
+}
+
+
+set cal_nav [dt_widget_calendar_navigation -link_current_view "view" day $cal_item(start_date) "calendar_id"]
 
 ad_return_template
 

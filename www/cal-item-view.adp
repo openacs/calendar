@@ -21,9 +21,9 @@
 
     <td valign=top> 
     <table>
-    <tr><td colspan=2><blockquote>@cal_item.description@</blockquote></td></tr>
     <tr><th align=right>#calendar.Date_1#<if @cal_item.no_time_p@ eq 0> #calendar.and_Time#</if>:</th><td><a href="./view?view=day&date=@cal_item.start_date@">@cal_item.pretty_short_start_date@</a><if @cal_item.no_time_p@ eq 0>, #calendar.from# @cal_item.start_time@ #calendar.to# @cal_item.end_time@</if></td></tr>
     <tr><th align=right>#calendar.Title#</th><td>@cal_item.name@</td></tr>
+    <tr><td colspan=2><blockquote>@cal_item.description@</blockquote></td></tr>
     <if @cal_item.item_type@ not nil><tr><th align=right>#calendar.Type#</th><td>@cal_item.item_type@</td></tr></if>
     <if @cal_item.n_attachments@ gt 0><tr><th align=right>#calendar.Attachments#</th><td>
 <%

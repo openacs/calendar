@@ -274,6 +274,8 @@ create table cal_item_types (
 -- create package calendar
 -------------------------------------------------------------
 
+select define_function_args ('calendar__new', 'calendar_id,calendar_name,object_type;calendar,owner_id,private_p,package_id,context_id,creation_date,creation_user,creation_ip');
+
 CREATE FUNCTION calendar__new (
        integer,            -- calendar.calendar_id%TYPE
        varchar(200),            -- calendar.calendar_name%TYPE
@@ -324,6 +326,8 @@ AS 'declare
 	return v_calendar_id;
     end;'
 LANGUAGE 'plpgsql';   
+
+select define_function_args('calendar__delete','calendar_id');
 
 CREATE FUNCTION calendar__delete(
        integer            -- calendar.calendar_id%TYPE

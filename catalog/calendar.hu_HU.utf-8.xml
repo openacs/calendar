@@ -13,6 +13,7 @@
   <msg key="Calendar">Naptár</msg>
   <msg key="Calendar_Add_Item">Naptár: új tétel</msg>
   <msg key="Calendar_Edit_Item">Naptár: tétel szerkesztése</msg>
+  <msg key="Calendar_Item_Types">Naptárbejegyzés-típusok</msg>
   <msg key="Calendar_Name">Naptár neve</msg>
   <msg key="Calendar_Permissions">&quot;Naptár jogosultságok&quot;</msg>
   <msg key="Calendar_Permissions_1">Naptár jogosultságok</msg>
@@ -22,6 +23,7 @@
   <msg key="Date">Dátum:</msg>
   <msg key="Date_1">Dátum</msg>
   <msg key="day">nap</msg>
+  <msg key="day_rolling_period">napos időszak alatt</msg>
   <msg key="day_s">nap(ok)</msg>
   <msg key="Delete">Törlés</msg>
   <msg key="delete">törlés</msg>
@@ -29,6 +31,9 @@
   <msg key="Details">Részletek:</msg>
   <msg key="Edit">Szerkesztés</msg>
   <msg key="edit">szerkesztés</msg>
+  <msg key="Events_over_a">Események egy</msg>
   <msg key="Friday">Péntek</msg>
   <msg key="Item">Tétel</msg>
+  <msg key="New_Type">Új típus:</msg>
+  <msg key="No_Items">Nincsenek tételek.</msg>
 </message_catalog>

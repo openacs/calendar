@@ -11,8 +11,9 @@
   <msg key="All_Day_Event">حدث طوال النهار</msg>
   <msg key="all_events">كُلّ الأحداث</msg>
   <msg key="and_Time">والوقت</msg>
+  <msg key="Apply_to_all">يطبق علر جميع الآحداث</msg>
   <msg key="Attachments">الملحقات:</msg>
-  <msg key="Audiences_for_item">مُشاهدون للمادةِ</msg>
+  <msg key="Audiences_for_item">مُشاهدون للمادةِ%cal_item_name%</msg>
   <msg key="Calendar">المُفكِرات</msg>
   <msg key="Calendar_Add_Item">المفكرة: أضف بند</msg>
   <msg key="Calendar_Edit_Item">المفكرة: عَدّلْ البند</msg>

@@ -10,23 +10,27 @@ dt_get_info $date
 if {[info exists url_stub_callback]} {
     # This parameter is only set if this file is called from .LRN.
     # This way I make sure that for the time being this adp/tcl
-    # snippet is backwards-compatible.  Will be fixed in OpenACS 5.1.
-    set portled_mode_p 1
+    # snippet is backwards-compatible.
+    set portlet_mode_p 1
 }
 
 if {[info exists portlet_mode_p] && $portlet_mode_p} {
-    set page_num "&page_num=$page_num"
-    set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=$encoded_return_url&action=edit&cal_item_id=\$item_id>"
+    set page_num_urlvar "&page_num=$page_num"
+    set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=[ad_urlencode "../"]&action=edit&cal_item_id=\$item_id"
     set prev_month_template "?view=month&date=\[ad_urlencode \$prev_month\]&page_num=$page_num"
-    set prev_month_template "?view=month&date=\[ad_urlencode \$next_month\]&page_num=$page_num"
+    set next_month_template "?view=month&date=\[ad_urlencode \$next_month\]&page_num=$page_num"
     set url_stub_callback "calendar_portlet_display::get_url_stub"
 } else {
     set item_template "cal-item-view?cal_item_id=\$item_id"
     set prev_month_template "view?view=month&\date=[ad_urlencode $prev_month]"
     set next_month_template "view?view=month&\date=[ad_urlencode $next_month]"
     set url_stub_callback ""
-    set page_num ""
+    set page_num_urlvar ""
     set base_url ""
+}
+
+if { ![info exists show_calendar_name_p] } {
+    set show_calendar_name_p 1
 }
 
 if {[exists_and_not_null calendar_id_list]} {
@@ -157,7 +161,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
 		f \
 		0 \
                 "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
-		"?view=day&date=[dt_julian_to_ansi $current_day]&page_num=${page_num}"
+		"?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar"
         } 
     }
 
@@ -197,7 +201,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
 	f \
 	$time_p \
         "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
-	"?view=day&date=[dt_julian_to_ansi $current_day]&page_num=${page_num}"
+	"?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar"
 }
 
 # Add cells for remaining days inside the month
@@ -221,7 +225,7 @@ for {} {$current_day <= $last_julian_date_in_month} {incr current_day} {
 	f \
         0 \
 	"${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
-	"?view=day&date=[dt_julian_to_ansi $current_day]&page_num=${page_num}"
+	"?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar"
 }
 
 # Add cells for remaining days outside the month

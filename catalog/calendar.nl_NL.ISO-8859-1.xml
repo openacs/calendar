@@ -7,7 +7,7 @@
   <msg key="Add_a_new_Audience">Een nieuw publiek toevoegen</msg>
   <msg key="add_an_event">Een gebeurtenis toevoegen</msg>
   <msg key="Add_Item">Gebeurtenis toevoegen</msg>
-  <msg key="Add_Recurrence">Herhaling toevoegen</msg>
+  <msg key="Add_Recurrence">Repeterend toevoegen</msg>
   <msg key="All_Day_Event">Gebeurtenis op iedere dag</msg>
   <msg key="all_events">alle gebeurtenissen</msg>
   <msg key="and_Time">en tijd</msg>
@@ -38,9 +38,9 @@
   <msg key="Details">Details:</msg>
   <msg key="developer_note_calendar_add">Toelichting voor ontwikkelaars: Een kalender aanmaken omvat de volgende stappen: 
 &lt;ol&gt;
-&lt;li&gt;Maak een kalenderobject aan en wijzig, indien nodig, de standaardrechten.
-&lt;li&gt;Associeer de kalender met groepen en/of gebruikers.
-&lt;li&gt;Wijzig groeps- en gebruikersrechten, indien gewenst.
+&lt;li&gt;Een kalenderobject aanmaken en - indien nodig- de standaardrechten veranderen.&lt;/li&gt;
+&lt;li&gt;De kalender met groepen en/of gebruikers verbinden.&lt;/li&gt;
+&lt;li&gt;De gewenste groeps- en gebruikersrechten toepassen.&lt;/li&gt;
 &lt;/ol&gt;</msg>
   <msg key="Edit">Bewerken</msg>
   <msg key="edit">bewerken</msg>
@@ -50,20 +50,20 @@
   <msg key="from">van</msg>
   <msg key="Grant">Toekennen</msg>
   <msg key="Grant_Permissions">Rechten toekennen</msg>
-  <msg key="is_recurring">Terugkerende gebeurtenis.</msg>
+  <msg key="is_recurring">Repeterende gebeurtenis.</msg>
   <msg key="Item">Gebeurtenis</msg>
-  <msg key="lt_Are_you_sure_you_want">Moet deze kalender echt worden verwijderd?
+  <msg key="lt_Are_you_sure_you_want">Deze kalender echt verwijderen?
 
 Alle gebeurtenissen en alle rechten die met deze kalender zijn verbonden zullen ook worden verwijderd. </msg>
-  <msg key="lt_Are_you_sure_you_want_1">Moet deze gebeurtenis echt worden verwijderd?</msg>
+  <msg key="lt_Are_you_sure_you_want_1">Deze gebeurtenis echt verwijderen?</msg>
   <msg key="lt_Audiences_for_calenda">Publiek voor kalender</msg>
   <msg key="lt_Calendar_Administrati">Kalender administratie</msg>
-  <msg key="lt_Calendar_Administrati_1">Kalender administratie van gebruiker</msg>
+  <msg key="lt_Calendar_Administrati_1">Kalender administratie voor gebruiker</msg>
   <msg key="lt_Calendar_Choose_Calen">Kalender: kalender kiezen</msg>
   <msg key="lt_Calendar_detail_listi">Kalender detail: alle informatie over de persoonlijke kalender</msg>
   <msg key="lt_Calendar_Item_Adminis">Gebeurtenis administratie</msg>
   <msg key="lt_Calendar_Item_Permiss">&quot;Rechten van gebeurtenissen&quot;</msg>
-  <msg key="lt_Calendars_Repeating_E">Kalenders: terugkerende gebeurtenis</msg>
+  <msg key="lt_Calendars_Repeating_E">Kalenders: repeterende gebeurtenis</msg>
   <msg key="lt_Create_a_new_calendar">Nieuwe kalender aanmaken </msg>
   <msg key="lt_delete_all_occurrence">alle voorkomende gevallen verwijderen</msg>
   <msg key="lt_delete_only_this_inst">alleen deze instance verwijderen</msg>
@@ -79,7 +79,7 @@ Alle gebeurtenissen en alle rechten die met deze kalender zijn verbonden zullen 
   <msg key="lt_The_following_is_a__l">Dit is een lijst van beschikbare kalenders. Deze lijst is beschikbaar via de persoonlijke kalender, zodat gebeurtenissen tussen twee kalenders kunnen worden ingezien. Men kan zelf aangeven welke kalenders op de lijst moeten blijven en welke niet.</msg>
   <msg key="lt_There_are_no_audience">Deze kalender heeft geen publiek </msg>
   <msg key="lt_This_is_a_repeating_e">Deze gebeurtenis is terugkerend</msg>
-  <msg key="lt_You_are_choosing_to_m">Deze gebeurtenis is als terugkerend ingesteld, zodat deze vaker in de kalender zal verschijnen. De details zijn:</msg>
+  <msg key="lt_You_are_choosing_to_m">Deze gebeurtenis is als repeterend ingesteld, zodat deze vaker in de kalender zal verschijnen. De details zijn:</msg>
   <msg key="lt_You_can_manage_the_fo">De volgende kalenders staan ter beschikking</msg>
   <msg key="lt_You_have_no_party_wid">Er is geen kalender die voor alle gebruikers beschikbaar is.</msg>
   <msg key="Monday">maandag</msg>

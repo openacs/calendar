@@ -348,7 +348,7 @@ AS 'declare
         where           object_id in (
 				select  cal_item_id
                                 from    cal_items
-                                where   on_which_calendar = delete__calendar_id;
+                                where   on_which_calendar = delete__calendar_id
 			);
                          
 	PERFORM acs_object__delete(delete__calendar_id);

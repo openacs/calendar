@@ -43,7 +43,7 @@
                 <group column="current_hour">
                   <if @items.event_name@ true>
                     <td class="cal-day-event" rowspan="@items.rowspan@"  colspan="@items.colspan@" valign="top">
-                      <a href="@items.event_url@">@items.event_name@  (@start_time@ - @end_time@)</a>
+                      <a href="@items.event_url@">@items.event_name@  (@items.start_time@ - @items.end_time@)</a>
                       <if @show_calendar_name_p@>
                         <span class="cal-text-grey-sml">@items.calendar_name@</span>
                       </if>

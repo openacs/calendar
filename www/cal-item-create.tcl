@@ -20,6 +20,7 @@ ad_page_contract {
     {calendar_id "-1"}
     {return_url ""}
     {recurrence_p 0}
+    {item_type_id ""}
 } 
 
 if { $date == "now" } {
@@ -85,7 +86,7 @@ if { [string equal $calendar_id "-1"] } {
 	# no private calendar detected. 
 	# we need to create the private calendar
 
-	set calender_id [calendar_create_private $user_id ]
+	set calendar_id [calendar_create_private $user_id ]
 
     } 
     set calendar_id [calendar_have_private_p -return_id 1 $user_id]
@@ -108,14 +109,17 @@ if { [string equal $calendar_id "-1"] } {
 }
 
 
-# create new cal_item
-set cal_item_id [cal_item_create $start_datetime \
+db_transaction {
+    # create new cal_item
+    set cal_item_id [cal_item_create $start_datetime \
 	                         $end_datetime \
                                  $name \
 				 $description \
                                  $calendar_id \
 				 $creation_ip \
-                                 $creation_user]
+                                 $creation_user \
+                                 $item_type_id]
+}
 
 if {$recurrence_p} {
     # We must ask for recurrence information

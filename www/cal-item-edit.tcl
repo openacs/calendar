@@ -18,6 +18,7 @@ ad_page_contract {
     {name ""}
     {description ""}
     {return_url ""}
+    {item_type_id ""}
 } 
 
 # find out the user_id 
@@ -67,7 +68,7 @@ set cal_item_id [cal_item_update $cal_item_id \
 	                         $end_datetime \
                                  $name \
 				 $description \
-				 ]
+				 $item_type_id]
 
 # set the proper rediret value to view and date
 set action "view"

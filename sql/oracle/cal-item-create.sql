@@ -57,6 +57,10 @@ create table cal_items (
                                 constraint cal_item_which_cal_fk
                                 references calendars
                                 on delete cascade
+        item_type_id            integer,
+        constraint cal_items_type_fk
+        foreign key (on_which_calendar, item_type_id)
+        references cal_item_types(calendar_id, item_type_id)
 );
 
 comment on table cal_items is '
@@ -92,6 +96,7 @@ as
                 timespan_id             in acs_events.timespan_id%TYPE          default null,
                 activity_id             in acs_events.activity_id%TYPE          default null,  
                 recurrence_id           in acs_events.recurrence_id%TYPE        default null,
+                item_type_id            in cal_items.item_type_id%TYPE default null,
                 object_type             in acs_objects.object_type%TYPE         default 'cal_item',
                 context_id              in acs_objects.context_id%TYPE          default null,
                 creation_date           in acs_objects.creation_date%TYPE       default sysdate,
@@ -132,6 +137,7 @@ as
                 timespan_id             in acs_events.timespan_id%TYPE          default null,
                 activity_id             in acs_events.activity_id%TYPE          default null,  
                 recurrence_id           in acs_events.recurrence_id%TYPE        default null,
+                item_type_id            in cal_items.item_type_id%TYPE default null,
                 object_type             in acs_objects.object_type%TYPE         default 'cal_item',
                 context_id              in acs_objects.context_id%TYPE          default null,
                 creation_date           in acs_objects.creation_date%TYPE       default sysdate,
@@ -162,8 +168,8 @@ as
                 );
 
                 insert into     cal_items
-                                (cal_item_id, on_which_calendar)
-                values          (v_cal_item_id, on_which_calendar);
+                                (cal_item_id, on_which_calendar, item_type_id)
+                values          (v_cal_item_id, on_which_calendar, item_type_id);
 
                   -- assign the default permission to the cal_item
                   -- by default, cal_item are going to inherit the 

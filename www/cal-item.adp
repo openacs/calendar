@@ -78,6 +78,32 @@
     </td>
   </tr>
 
+  <if @action@ eq add or @action@ eq edit>
+  <if @force_calendar_id@ not nil>
+  <tr>
+  <td align=right valign=top><b>Item Type</b></td>
+  <td valign=top align=left>
+  <SELECT name=item_type_id>
+  <OPTION VALUE=""> --
+<%
+foreach one_item_type $cal_item_types {
+        set one_item_type_id [lindex $one_item_type 0]
+        set one_item_type [lindex $one_item_type 1]
+
+        if {$one_item_type_id == $item_type_id} {
+                set selected_html "SELECTED"
+        } else {
+                set selected_html ""
+        }
+
+        template::adp_puts "<OPTION value=$one_item_type_id $selected_html> $one_item_type\n"
+}
+%>
+  </SELECT>
+  </td>
+  </if>
+  </if>
+
   <if @action@ eq add>
     <tr>
       <if @calendars:rowcount@ eq 0>

@@ -147,12 +147,18 @@ namespace eval calendar {
             # ns_log Notice "bma: one calendar $calendar_name"
 
             db_foreach select_day_items {} {
+                if {[empty_string_p $item_type]} {
+                    set item_details "$calendar_name"
+                } else {
+                    set item_details "$calendar_name - $item_type"
+                }
+
                 if {$pretty_start_date == "00:00 AM" && $pretty_end_date == "00:00 AM"} {
                     # Hack for no-time items
-                    set item "$name ($calendar_name)"
+                    set item "$name ($item_details)"
                     set ns_set_pos "X"
                 } else {
-                    set item "$pretty_start_date - $pretty_end_date: $name ($calendar_name)"
+                    set item "$pretty_start_date - $pretty_end_date: $name ($item_details)"
                     set ns_set_pos $start_hour
                 }
 

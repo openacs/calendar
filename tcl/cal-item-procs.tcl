@@ -86,6 +86,7 @@ ad_proc cal_item_create { start_date
                           on_which_calendar
                           creation_ip
                           creation_user
+{item_type_id ""}
 } {
 
   create a new cal_item
@@ -132,13 +133,13 @@ ad_proc cal_item_create { start_date
 	  on_which_calendar  => :on_which_calendar,
 	  activity_id        => :activity_id,
           timespan_id        => :timespan_id,
+        item_type_id        => :item_type_id,
 	  creation_user      => :creation_user,
 	  creation_ip        => :creation_ip
 	);
 	end;
     }
     ]
-
 
     # getting the permissions out 
     # all this is because cal-item is not a child 
@@ -157,12 +158,19 @@ ad_proc cal_item_create { start_date
     # the stuff in pl/sql layer didn't work
     # NOTE: need to fold the following back in into pl/sql.
 
-    db_foreach get_permissions_to_items {
+    # Fix by Ben to prevent possible deadlock
+    # FIXME: this should all be moved into on PL/SQL statement (ben)
+
+    set permissions_to_add [db_list_of_lists get_permissions_to_items {
 	select          grantee_id,
                   	privilege
 	from            acs_permissions
 	where           object_id = :on_which_calendar
-    } {
+    }]
+
+    foreach perm $permissions_to_add {
+        set grantee_id [lindex $perm 0]
+        set privilege [lindex $perm 1]
 
 	# setting the permission
 
@@ -203,6 +211,7 @@ ad_proc cal_item_update { cal_item_id
                           end_date
                           name
                           description
+{item_type_id ""}
 } {
 
     updating  a new cal_item
@@ -221,17 +230,23 @@ ad_proc cal_item_update { cal_item_id
 
     db_1row get_interval_id ""
 
-    # call edit procedure
-    db_exec_plsql update_interval "
+    db_transaction {
+        # call edit procedure
+        db_exec_plsql update_interval "
 	begin
-	  time_interval.edit (
-	    interval_id  => :interval_id,
-	    start_date   => to_date(:start_date,:date_format),
-	    end_date     => to_date(:end_date,:date_format)
-	  );
+        time_interval.edit (
+        interval_id  => :interval_id,
+        start_date   => to_date(:start_date,:date_format),
+        end_date     => to_date(:end_date,:date_format)
+        );
 	end;
-    "
+        "
     
+        # Update the item_type_id
+        db_dml update_item_type_id "update cal_items
+        set item_type_id= :item_type_id
+        where cal_item_id= :cal_item_id"
+    }
 }
 
 

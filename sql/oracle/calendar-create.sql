@@ -221,6 +221,27 @@ comment on column calendars.package_id is '
 ';
 
 
+----------------------------
+-- Event Types for Calendars
+----------------------------
+
+create sequence cal_item_type_seq;
+
+create table cal_item_types (
+       item_type_id              integer not null
+                                 constraint cal_item_type_id_pk
+                                 primary key,
+       calendar_id               integer not null
+                                 constraint cal_item_type_cal_id_fk     
+                                 references calendars(calendar_id),
+       type                      varchar(100) not null,
+       -- this constraint is obvious given that item_type_id
+       -- is unique, but it's necessary to allow strong
+       -- references to the pair calendar_id, item_type_id (ben)
+       constraint cal_item_types_un
+       unique (calendar_id, item_type_id)
+);
+
 -------------------------------------------------------------
 -- Load cal_item_object
 -------------------------------------------------------------

@@ -75,6 +75,8 @@ set delete_p [ad_permission_p $cal_item_id cal_item_delete]
 # admin permission
 set admin_p [ad_permission_p $cal_item_id calendar_admin]
 
+set item_type_id ""
+
 #------------------------------------------------
 # only worry about the query when it is an edit
 if { $action == "edit" } {
@@ -93,19 +95,24 @@ if { $action == "edit" } {
 	         to_char(end_date, 'HH24:MI') as end_time,
 	         nvl(a. name, e.name) as name,
 	         nvl(e.description, a.description) as description,
-                 recurrence_id
+                 recurrence_id,
+                 item_type_id,
+                 on_which_calendar as calendar_id
 	from     acs_activities a,
 	         acs_events e,
 	         timespans s,
-	         time_intervals t
+	         time_intervals t,
+                 cal_items
 	where    e.timespan_id = s.timespan_id
 	and      s.interval_id = t.interval_id
 	and      e.activity_id = a.activity_id
 	and      e.event_id = :cal_item_id
+        and      cal_items.cal_item_id= :cal_item_id
     }
-    
-    
 
+    set force_calendar_id $calendar_id
+    
+    set cal_item_types [calendar::get_item_types -calendar_id $force_calendar_id]    
     # forced error checking
     set name [ad_quotehtml $name]
     set description [ad_quotehtml $description]
@@ -127,6 +134,8 @@ if { $action == "edit" } {
 
     if {![empty_string_p $force_calendar_id]} {
         set force_calendar_name [calendar_get_name $force_calendar_id]
+
+        set cal_item_types [calendar::get_item_types -calendar_id $force_calendar_id]
     }
 
 }

@@ -11,16 +11,19 @@
 	         to_char(end_date, 'HH24:MI') as end_time,
 	         nvl(a. name, e.name) as name,
 	         nvl(e.description, a.description) as description,
-                 recurrence_id
+                 recurrence_id,
+                 item_type_id,
+                 on_which_calendar as calendar_id
 	from     acs_activities a,
 	         acs_events e,
 	         timespans s,
-	         time_intervals t
+	         time_intervals t,
+                 cal_items
 	where    e.timespan_id = s.timespan_id
 	and      s.interval_id = t.interval_id
 	and      e.activity_id = a.activity_id
 	and      e.event_id = :cal_item_id
-    
+        and      cal_items.cal_item_id = :cal_item_id
       </querytext>
 </fullquery>
 

@@ -3,6 +3,8 @@
 ad_page_contract {
     
     Main Calendar Admin Page. 
+    ## HACKED BY BEN FOR SLOAN ##
+    ## FEATURES TEMPORARILY TAKEN OUT ##
     
     This pages checks to see if the user has any group calendar 
     that he or she is the admin of. 
@@ -15,9 +17,6 @@ ad_page_contract {
  
 } -properties {
     context_bar:onevalue
-    user_id:onevalue
-    data:onevalue
-    calendars:multirow
 }
 
 
@@ -25,7 +24,7 @@ ad_page_contract {
 set user_id [ad_verify_and_get_user_id]
 
 set package_id [ad_conn package_id]
-set context_bar "calendar admin"
+set context_bar "Admin"
 
 
 db_multirow calendars calendar_list {

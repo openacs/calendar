@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="calendar" package_version="2.0.1" locale="de_DE" charset="ISO-8859-1">
+<message_catalog package_key="calendar" package_version="2.1.0b1" locale="de_DE" charset="ISO-8859-1">
 
   <msg key="_You_may_choose_to">. Sie können</msg>
   <msg key="Add">Hinzufügen</msg>
@@ -97,6 +97,7 @@
   <msg key="Select_Calendars">Kalender auswählen</msg>
   <msg key="Sharing">Freigabe</msg>
   <msg key="Start_Time">Beginnt</msg>
+  <msg key="start_time_before_end_time">Startzeitpunkt muss vor Endzeitpunkt liegen</msg>
   <msg key="Submit_query">Anfrage senden</msg>
   <msg key="Sunday">Sonntag</msg>
   <msg key="sync_with_Outlook">In Outlook übernehmen:</msg>

@@ -69,7 +69,7 @@ namespace eval calendar {
 
     ad_proc -public one_week_display {
         {-calendar_id_list ""}
-        {-day_template "<a href=?date=\$julian>\$day</a>"}
+        {-day_template "<a href=?date=\$date>\$day &nbsp; - &nbsp; \$pretty_date</a>"}
         {-item_template "<a href=?action=edit&cal_item_id=\$item_id>\$item</a>"}
         {-item_add_template ""}
         {-date ""}
@@ -105,7 +105,9 @@ namespace eval calendar {
                 if { [string length $status_summary] > 0 } {
                     append item " <font color=\"red\">$status_summary</font> "
                 }
-                ns_set put $items $start_date $item
+                ns_log Notice "CALENDAR-WEEK: one item $item"
+
+                ns_set put $items $start_date_julian $item
             }
 
         }

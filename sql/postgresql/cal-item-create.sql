@@ -75,6 +75,10 @@ CREATE TABLE cal_items (
                           constraint cal_item_which_cal_fk
                           references calendars
                           on delete cascade
+        item_type_id            integer,
+        constraint cal_items_type_fk
+        foreign key (on_which_calendar, item_type_id)
+        references cal_item_types(calendar_id, item_type_id)
 );
 
 comment on table cal_items is '

@@ -20,8 +20,13 @@ namespace eval calendar {
         {-item_template "<a href=?action=edit&cal_item_id=\$item_id>\$item</a>"}
         {-item_add_template ""}
         {-date ""}
+        {-url_stub_callback ""}
     } {
         Creates a month widget with events for that month
+
+        The url_stub_callback parameter allows a parameterizable URL stub
+        for each calendar_id. If the parameter is non-null, it is considered a proc
+        that can be called on a calendar_id to generate a URL stub.
     } {
         if {[empty_string_p $date]} {
             set date [dt_systime]
@@ -39,6 +44,11 @@ namespace eval calendar {
         # Loop through calendars
         foreach calendar_id $calendar_id_list {
             set calendar_name [calendar_get_name $calendar_id]
+
+            # In case we need to dispatch to a different URL (ben)
+            if {![empty_string_p $url_stub_callback]} {
+                set url_stub [eval $url_stub_callback $calendar_id]
+            }
 
             db_foreach select_monthly_items {} {
                 set item "$name"
@@ -73,8 +83,13 @@ namespace eval calendar {
         {-item_template "<a href=?action=edit&cal_item_id=\$item_id>\$item</a>"}
         {-item_add_template ""}
         {-date ""}
+        {-url_stub_callback ""}
     } {
         Creates a week widget
+
+        The url_stub_callback parameter allows a parameterizable URL stub
+        for each calendar_id. If the parameter is non-null, it is considered a proc
+        that can be called on a calendar_id to generate a URL stub.
     } {
         if {[empty_string_p $date]} {
             set date [dt_sysdate]
@@ -99,9 +114,15 @@ namespace eval calendar {
         foreach calendar_id $calendar_id_list {
             set calendar_name [calendar_get_name $calendar_id]
 
+            # In case we need to dispatch to a different URL (ben)
+            if {![empty_string_p $url_stub_callback]} {
+                set url_stub [eval $url_stub_callback $calendar_id]
+            }
+
             db_foreach select_week_items {} {
                 set item "$pretty_start_date - $pretty_end_date: $name ($calendar_name)"
                 set item "[subst $item_template]<br>"
+
                 if { [string length $status_summary] > 0 } {
                     append item " <font color=\"red\">$status_summary</font> "
                 }
@@ -133,8 +154,13 @@ namespace eval calendar {
         {-next_nav_template {<a href="?date=$tomorrow">&gt;</a>}}
         {-start_hour 0}
         {-end_hour 23}
+        {-url_stub_callback ""}
     } {
         Creates a day widget
+
+        The url_stub_callback parameter allows a parameterizable URL stub
+        for each calendar_id. If the parameter is non-null, it is considered a proc
+        that can be called on a calendar_id to generate a URL stub.
     } {
         set widget_start_hour $start_hour
         set widget_end_hour $end_hour
@@ -160,6 +186,11 @@ namespace eval calendar {
         foreach calendar_id $calendar_id_list {
             set calendar_name [calendar_get_name $calendar_id]
             # ns_log Notice "bma: one calendar $calendar_name"
+
+            # In case we need to dispatch to a different URL (ben)
+            if {![empty_string_p $url_stub_callback]} {
+                set url_stub [eval $url_stub_callback $calendar_id]
+            }
 
             db_foreach select_day_items {} {
                 if {[empty_string_p $item_type]} {
@@ -207,6 +238,7 @@ namespace eval calendar {
        {-date ""}
        {-calendar_id_list ""}
        {-item_template {$item}}
+       {-url_stub_callback ""}
    } {
        Creates a list widget
    } {

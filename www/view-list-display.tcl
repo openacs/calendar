@@ -1,6 +1,4 @@
 # Calendar-portlet makes use of this stuff
-
-# Calendar-portlet makes use of this stuff
 if { ![info exists url_stub_callback] } {
     set url_stub_callback ""
 }

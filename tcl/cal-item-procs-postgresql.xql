@@ -80,7 +80,7 @@
                                         null,
 					:timespan_id,
 					:activity_id,
-					null,
+					:on_which_calendar,
 					'cal_item',
 					null,
 					now(),

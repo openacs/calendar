@@ -127,77 +127,23 @@ ad_proc cal_item_create { start_date
     # blank to abide by the definition that an acs_event is an acs_activity
     # with added on temperoal information
 
+    # by default, the cal_item permissions 
+    # are going to be inherited from the calendar permissions
+
     set cal_item_id [db_exec_plsql cal_item_add {
 	begin
 	:1 := cal_item.new(
 	  on_which_calendar  => :on_which_calendar,
 	  activity_id        => :activity_id,
           timespan_id        => :timespan_id,
-        item_type_id        => :item_type_id,
+          item_type_id       => :item_type_id,
 	  creation_user      => :creation_user,
-	  creation_ip        => :creation_ip
+	  creation_ip        => :creation_ip,
+          context_id         => :on_which_calendar
 	);
 	end;
     }
     ]
-
-    # getting the permissions out 
-    # all this is because cal-item is not a child 
-    # of the calendar. 
-    
-    # by default, the cal_item permissions 
-    # are going to be inherited from the calendar permissions
-    #
-    # i.e.: party with calendar_admin can create, read, write, delete
-    #       all items on the calendar, but a party with only calendar_read
-    #       cannot added items to the specific calendar
-    #
-    # NOTE: this default permissions can be circumvented by assign item
-    #       specific permission on a party basis
-
-    # the stuff in pl/sql layer didn't work
-    # NOTE: need to fold the following back in into pl/sql.
-
-    # Fix by Ben to prevent possible deadlock
-    # FIXME: this should all be moved into on PL/SQL statement (ben)
-
-    set permissions_to_add [db_list_of_lists get_permissions_to_items {
-	select          grantee_id,
-                  	privilege
-	from            acs_permissions
-	where           object_id = :on_which_calendar
-    }]
-
-    foreach perm $permissions_to_add {
-        set grantee_id [lindex $perm 0]
-        set privilege [lindex $perm 1]
-
-	# setting the permission
-
-	db_exec_plsql 4_grant_calendar_permissions_to_items {
-	    begin
-  	      acs_permission.grant_permission (
-                object_id       =>      :cal_item_id,
-                grantee_id      =>      :grantee_id,
-                privilege       =>      :privilege
-              );
-	    end;
-	}
-
-    }
-    
-    # grant default read, write, delete permissions. 
-    # should roll into pl/sql
-
-#    db_exec_plsql grant_cal_item_permissions {
-	#begin
-	#acs_permission.grant_permission (
-	#  object_id       =>      :cal_item_id,
-	#  grantee_id      =>      :grantee_id,
-	#  privilege       =>      'cal_item_invite'
-	#);
-	#end;
-   # }
 
     return $cal_item_id
 

@@ -62,12 +62,15 @@ namespace eval calendar::item {
         }
         
         db_1row $query_name {} -column_array row
-        
         # Timezonize
-
-
         set row(start_date_ansi) [lc_time_system_to_conn $row(start_date_ansi)]
         set row(end_date_ansi) [lc_time_system_to_conn $row(end_date_ansi)]
+
+        if { $row(start_date_ansi) ==  $row(end_date_ansi) && [string equal [lc_time_fmt $row(start_date_ansi) "%X" de_DE] "00:00"]} {
+	    set row(time_p) 0
+	} else {
+	    set row(time_p) 1
+	}
 
         # Localize
         set row(start_time) [lc_time_fmt $row(start_date_ansi) "%X"]

@@ -133,12 +133,7 @@ ad_form -extend -name cal_item -validate {
     set item_type $cal_item(item_type)
     set item_type_id $cal_item(item_type_id)
     set calendar_id $cal_item(calendar_id)
-
-    if {[string equal $start_time "12:00 AM"] && [string equal $end_time "12:00 AM"]} {
-        set time_p 0
-    } else {
-        set time_p 1
-    }
+    set time_p $cal_item(time_p)
 
     if {[empty_string_p $repeat_p]} {
         set repeat_p 0

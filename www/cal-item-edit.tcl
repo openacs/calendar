@@ -39,6 +39,7 @@ if { $action == "delete" } {
 # extract the time info 
 
 set start_datetime [calendar_make_datetime [array get event_date] [array get start_time]]
+
 set end_datetime [calendar_make_datetime [array get event_date] [array get end_time]]
 
 

@@ -27,7 +27,7 @@ if { $date ==  "now"} {
 set user_id [ad_verify_and_get_user_id]
 
 set current_date $date
-set date_format "YYYY-MM-DD"
+set date_format "YYYY-MM-DD HH24:MI"
 
 # get the week info from oracle
 # this should be part of the proc

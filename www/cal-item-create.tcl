@@ -20,7 +20,7 @@ ad_page_contract {
 } 
 
 if { $date == "now" } {
-    set date [dt_sysdate]
+    set date [dt_sysdate] 
 }
 
 
@@ -29,7 +29,9 @@ if { $date == "now" } {
 #
 
 set start_datetime [calendar_make_datetime [array get event_date] [array get start_time]]
+
 set end_datetime [calendar_make_datetime [array get event_date] [array get end_time]]
+
 
 #-----------------------------------------------------------------
 # validate time interval ( start_time <= end_time )
@@ -110,7 +112,6 @@ set cal_item_id [cal_item_create $start_datetime \
 # set the date to be the date of the event
 set date [calendar_make_date [array get event_date]]
 ad_returnredirect "?[export_url_vars date action view calendar_id]"
-
 
 
 

@@ -26,9 +26,8 @@ if { $date ==  "now"} {
 # find out the user_id 
 set user_id [ad_verify_and_get_user_id]
 
-
 set current_date $date
-set date_format "YYYY-MM-DD"
+set date_format "YYYY-MM-DD HH24:MI"
 
 #get cal-item
 set sql "
@@ -44,7 +43,7 @@ from     acs_activities a,
 where 	 e.timespan_id = s.timespan_id
 and 	 s.interval_id = t.interval_id
 and      e.activity_id = a.activity_id
-and      start_date between
+and 	 start_date between
 	 to_date(:current_date,:date_format) and
 	 to_date(:current_date,:date_format) + (24 - 1/3600)/24
 and      e.event_id
@@ -86,7 +85,6 @@ set mlist ""
 set set_id [ns_set new day_items]
 
 
-
 #-------------------------------------------------
 # verifiy if the calendar_list has elements or not
 
@@ -106,10 +104,11 @@ if {[llength $calendar_list] == 0} {
 	# otherwise, get the calendar_name for the give_id
 	set calendar_name [calendar_get_name $calendar_id]
     }
-
+    
     db_foreach get_day_items $sql {
 	ns_set put $set_id  $start_hour "<a href=?date=$date&action=edit&cal_item_id=$item_id>
-                                         $pretty_start_date - $pretty_end_date $name ($calendar_name)
+                                     $pretty_start_date - $pretty_end_date $name ($calendar_name)
+
                                      </a><br>"
     }  
 } else {
@@ -133,8 +132,8 @@ if {[llength $calendar_list] == 0} {
 
 	db_foreach get_day_items $sql {
 	    ns_set put $set_id  $start_hour "<a href=?action=edit&cal_item_id=$item_id>
-	    $pretty_start_date - $pretty_end_date $name ($calendar_name)
-	    </a><br>"
+	    $pretty_start_time - $pretty_end_date $name ($calendar_name)
+	    </a><br>" 
 	} 
 
     }
@@ -211,7 +210,6 @@ while {$i < $num_hour_rows} {
     while {$cal_item_index > -1} {
 
 	append row_html "[ns_set value $set_id $cal_item_index]"
-
 	ns_set delete $set_id $cal_item_index
 	set cal_item_index [ns_set find $set_id $cal_hour]     
     }
@@ -219,7 +217,7 @@ while {$i < $num_hour_rows} {
 
     append row_html "
     </td>
-    
+      
     </tr>
     "
 

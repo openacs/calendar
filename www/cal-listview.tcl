@@ -21,7 +21,7 @@ if { $date ==  "now"} {
 }
 
 set current_date $date
-set date_format "YYYY-MM-DD"
+set date_format "YYYY-MM-DD HH24:MI"
 
 
 set items ""
@@ -38,7 +38,7 @@ set user_id [ad_verify_and_get_user_id]
 
 #get cal-item
 set sql "
-select   to_char(start_date, 'j') as start_date,
+select   to_char(start_date, 'J') as start_date,
          to_char(start_date, 'HH24:MI') as pretty_start_date,
          to_char(end_date, 'HH24:MI') as pretty_end_date,
          coalesce(e.name, a.name) as name,

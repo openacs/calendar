@@ -48,9 +48,8 @@ set description ""
 if {$date == "now"} {
     set start_date "now"
 } else {
-    set start_date $date
+    set start_date $date 
 }
-
 
 #------------------------------------------------
 # check the permission on the party to the object
@@ -78,8 +77,8 @@ if { $action == "edit" } {
 
     # get data time
     db_1row get_item_data { 
-	select   to_char(start_date, 'MM/DD/YYYY') as start_date,
-	         to_char(start_date, 'HH24:MI') as start_time,
+	select   to_char(start_date,'HH24:MI')as start_time,
+		 to_char(start_date, 'MM/DD/YYYY') as start_date,
 	         to_char(end_date, 'HH24:MI') as end_time,
 	         nvl(a. name, e.name) as name,
 	         nvl(e.description, a.description) as description
@@ -136,7 +135,6 @@ if { $action == "edit" } {
 }
 
 ad_return_template
-
 
 
 

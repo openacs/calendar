@@ -19,15 +19,13 @@ ad_page_contract {
     month_items
 }
 
-
-
 # find out the user_id 
 set user_id [ad_verify_and_get_user_id]
 
 # extract all the cal-item that's occuring within the given month
 
 set sql "
-select   to_char(start_date, 'j') as start_date,
+select   to_char(start_date, 'J') as start_date,
          coalesce(e.name, a.name) as name,
          coalesce(e.description, a.description) as description,
          e.event_id as item_id

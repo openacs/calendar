@@ -6,8 +6,8 @@
 <fullquery name="get_item_data">      
       <querytext>
        
-	select   to_char(start_date, 'MM/DD/YYYY') as start_date,
-	         to_char(start_date, 'HH24:MI') as start_time,
+	select   to_char(start_date, 'HH24:MI') as start_time,
+		 to_char(start_date, 'MM/DD/YYYY') as start_date,
 	         to_char(end_date, 'HH24:MI') as end_time,
 	         coalesce(a. name, e.name) as name,
 	         coalesce(e.description, a.description) as description

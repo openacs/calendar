@@ -26,10 +26,10 @@ and      start_date between
 and      ci.cal_item_id = e.event_id
 and      to_char(start_date, 'HH24:MI') = '00:00'
 and      to_char(end_date, 'HH24:MI') = '00:00'
-and      cals.package_id= :package_id
 and      (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))
 and      cals.calendar_id = ci.on_which_calendar
 and      e.event_id = ci.cal_item_id
+$calendars_clause
 </querytext>
 </fullquery>
 
@@ -58,10 +58,12 @@ and      start_date between
 and      ci.cal_item_id = e.event_id
 and      (to_char(start_date, 'HH24:MI') <> '00:00' or
           to_char(end_date, 'HH24:MI') <> '00:00')
-and      cals.package_id= :package_id
 and      (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))
 and      cals.calendar_id = ci.on_which_calendar
 and      e.event_id = ci.cal_item_id
+$calendars_clause
+$start_clause
+$end_clause
 order by to_char(start_date,'HH24')
 </querytext>
 </fullquery>

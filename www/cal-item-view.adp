@@ -9,7 +9,7 @@
 
 <master src="master">
 <property name="title">Calendar Item: @item_data.name@</property>
-<property name="context_bar">One Item</property>
+<property name="context_bar">Item</property>
 
 <table>
 

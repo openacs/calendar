@@ -23,7 +23,7 @@ set list_of_vars [list]
 if {[catch {
     dt_get_info $date
 } errmsg]} {
-    set date "[lindex $date 0]-[lindex $date 1]-[lindex $date 2]"
+    set date [dt_sysdate]
     dt_get_info $date
 }
 

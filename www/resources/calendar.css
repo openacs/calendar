@@ -57,12 +57,30 @@
 	BORDER: 0px none;
 	color: #003366;
 	font-weight: bold;
-	font-size: 90%;
+	font-size: 80%;
+	vertical-align: top;
+        height: 60px;
+}
+.cal-month-day:hover {
+	BACKGROUND: #cccccc;
+        cursor: pointer;
+}
+.cal-month-today {
+	font-weight: bold;
+	background-color: #003366;
+	text-align: left;
+	color: #FFFFFF;
+	border: 0px solid;
+	font-size: 80%;
 	vertical-align: top;
 
-
-
-
+}
+.cal-month-today:hover {
+	BACKGROUND: #666666;
+        cursor: pointer;
+}
+.cal-month-today a {
+	color: #DDEEFF;
 }
 
 .cal-no-border {
@@ -366,19 +384,6 @@
 	font-size: 90%;
 
 }
-.cal-month-today {
-	font-weight: bold;
-	background-color: #003366;
-	text-align: left;
-	color: #FFFFFF;
-	border: 0px solid;
-	font-size: 90%;
-	vertical-align: top;
-
-}
-.cal-month-today a {
-	color: #DDEEFF;
-}
 .cal-month {
 	font-weight: bold;
 	background-color: #DDEEFF;
@@ -418,7 +423,6 @@
 .cal-month-event {
 	text-align: left;
 	font-weight: normal;
-	font-size: 120%;
 }
 .cal-month-event a {
 	font-weight: normal;
@@ -451,17 +455,13 @@
 .cal-day-time {
 	font-weight: bold;
 	text-align: right;
-
-
-
-
-
-
+        font-size: 80%;
 }
 .cal-day-event {
 	text-align: left;
 	white-space: nowrap;
 	vertical-align: top;
+        font-size: 80%;
 }
 .cal-week-event-notime {
 	background-color: #DDEEFF;

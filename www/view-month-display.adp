@@ -40,20 +40,18 @@
               </if>     
               <else>
                 <if @days_of_a_month.today_p@ eq "t">
-                  <td class="cal-month-today">
+                  <td class="cal-month-today" onclick="javascript:location.href='@base_url@cal-item-new?date=@days_of_a_month.ansi_start_date@&start_time=&end_time=';">
                 </if>
                 <else>
-                  <td class="cal-month-day">
+                  <td class="cal-month-day" onclick="javascript:location.href='@base_url@cal-item-new?date=@days_of_a_month.ansi_start_date@&start_time=&end_time=';">
                 </else>
 
-                  <a
-                  href="@base_url@cal-item-new?date=@days_of_a_month.ansi_start_date@&start_time=&end_time=">
-                  <img border="0" align="right" height="7" width="7" src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#"></a>
                   <a href="?view=day&date=@days_of_a_month.ansi_start_date@@page_num@">@days_of_a_month.day_number@</a>
 
                   <group column="ansi_start_date">
                     <if @days_of_a_month.item_id@ ne "">
-                      <div class="cal-month-event">@days_of_a_month.ansi_start_time@
+                      <div class="cal-month-event">
+                        <if @days_of_a_month.time_p@ true>@days_of_a_month.ansi_start_time@</if>
                         <a
                         href=cal-item-view?cal_item_id=@days_of_a_month.item_id@>@days_of_a_month.full_item;noquote@</a>
                         <span class="cal-text-grey-sml"> [@days_of_a_month.calendar_name@]</span>

@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="calendar" package_version="2.0d1" locale="de_DE" charset="ISO-8859-1">
+<message_catalog package_key="calendar" package_version="2.0b2" locale="de_DE" charset="ISO-8859-1">
 
   <msg key="_You_may_choose_to">. Sie können</msg>
   <msg key="Add">Hinzufügen</msg>
-  <msg key="add">hinzufügen</msg>
-  <msg key="Add_a_new_Audience">Hinzufügen einer neuen Zielgruppe</msg>
-  <msg key="add_an_event">Eintrag hinzufügen</msg>
+  <msg key="add">Hinzufügen</msg>
+  <msg key="Add_a_new_Audience">Neue Zielgruppe hinzufügen</msg>
+  <msg key="add_an_event">Neuen Eintrag hinzufügen</msg>
   <msg key="Add_Item">Eintrag hinzufügen</msg>
   <msg key="Add_Recurrence">OK</msg>
   <msg key="All_Day_Event">Ganztägig</msg>
-  <msg key="all_events">Alle Termine</msg>
+  <msg key="all_events">Alle Ereignisse</msg>
   <msg key="and_Time">und Uhrzeit</msg>
+  <msg key="Apply_to_all">Auf alle Ereignisse anwenden</msg>
   <msg key="Attachments">Anhänge:</msg>
   <msg key="Audiences_for_item">Zielgruppen für den Eintrag %cal_item_name%</msg>
   <msg key="Calendar">Kalender</msg>
-  <msg key="Calendar_Add_Item">Kalender: Eintrag Hinzufügen</msg>
-  <msg key="Calendar_Edit_Item">Kalender: Eintrag Bearbeiten</msg>
+  <msg key="Calendar_Add_Item">Kalender: Eintrag hinzufügen</msg>
+  <msg key="Calendar_Edit_Item">Kalender: Eintrag bearbeiten</msg>
   <msg key="Calendar_Item">Kalendereintrag</msg>
   <msg key="Calendar_Item_Delete">Kalendereintrag löschen</msg>
   <msg key="Calendar_Item_Types">Eintragskategorien für Kalender</msg>
@@ -39,14 +40,15 @@
   <msg key="Edit">Bearbeiten</msg>
   <msg key="edit">Bearbeiten</msg>
   <msg key="End_Time">Endet</msg>
-  <msg key="Events_over_a">Termine innerhalb eines Zeitraums von</msg>
+  <msg key="Events_over_a">Ereignisse innerhalb eines Zeitraums von</msg>
   <msg key="Friday">Freitag</msg>
   <msg key="from">von</msg>
   <msg key="Grant">Erteilen</msg>
   <msg key="Grant_Permissions">Berechtigungen erteilen</msg>
+  <msg key="is_recurring">Wiederkehrendes Ereignis</msg>
   <msg key="Item">Eintrag</msg>
   <msg key="lt_Are_you_sure_you_want">Wollen Sie diesen Kalender wirklich löschen? Alle Einträge und die mit dem Kalender verbundenen Berechtigungen werden dann ebenfalls gelöscht.</msg>
-  <msg key="lt_Are_you_sure_you_want_1">Wollen Sie diesen Termin wirklich löschen?</msg>
+  <msg key="lt_Are_you_sure_you_want_1">Wollen Sie dieses Ereignis wirklich löschen?</msg>
   <msg key="lt_Audiences_for_calenda">Zielgruppen für Kalender</msg>
   <msg key="lt_Calendar_Administrati">Kalender verwalten</msg>
   <msg key="lt_Calendar_Administrati_1">Kalender verwalten für Benutzer</msg>
@@ -54,10 +56,10 @@
   <msg key="lt_Calendar_detail_listi">Details für Kalender: Alle Angaben über den einzelnen Kalender anzeigen</msg>
   <msg key="lt_Calendar_Item_Adminis">Kalendereinträge verwalten</msg>
   <msg key="lt_Calendar_Item_Permiss">&quot;Berechtigungen für Kalendereinträge&quot;</msg>
-  <msg key="lt_Calendars_Repeating_E">Kalender: Wiederkehrender Termin</msg>
+  <msg key="lt_Calendars_Repeating_E">Kalender: Wiederkehrendes Ereignis</msg>
   <msg key="lt_Create_a_new_calendar">Neuen Kalender erstellen</msg>
-  <msg key="lt_delete_all_occurrence">Alle Wiederholungen des Termins löschen</msg>
-  <msg key="lt_delete_only_this_inst">Nur diesen Einzeltermin löschen</msg>
+  <msg key="lt_delete_all_occurrence">Alle Wiederholungen des Ereignisses löschen</msg>
+  <msg key="lt_delete_only_this_inst">Nur dieses einzelne Ereignis löschen</msg>
   <msg key="lt_Edit_your_Calendar_Pr">Eigene Kalendereinstellungen bearbeiten</msg>
   <msg key="lt_everyone_have_read_pe">Jeder hat Leserecht und kann die Einträge sehen, sowohl registrierte als auch nicht registrierte Benutzer.</msg>
   <msg key="lt_Hide_Checked_Calendar">Ausgewählte Kalender verbergen</msg>
@@ -65,12 +67,12 @@
   <msg key="lt_no_parties_exist_cont">Es sind keine Zielgruppen vorhanden. Wenden Sie sich an den Systemadministrator.</msg>
   <msg key="lt_no_privilege_exist_co">Es sind keine Sonderberechtigungen vorhanden. Wenden Sie sich an den Systemadministrator. </msg>
   <msg key="lt_no_privilege_has_been">Es wurden keine Sonderberechtigungen erteilt.</msg>
-  <msg key="lt_only_those_you_choose">Die Einträge sind nur für die zusammengestellte Zielgruppe sichtbar.</msg>
+  <msg key="lt_only_those_you_choose">Die Einträge sind nur für Personen sichtbar, die Sie als Zielgruppe ausgewählt haben.</msg>
   <msg key="lt_Repeat_this_event_unt">Endet am:</msg>
-  <msg key="lt_The_following_is_a__l">The following is a list of calendars that is accessible to you. This list will show up on your calendar as an option for you to see events between these calendars. You can select which calendar you want to keep on that list. </msg>
+  <msg key="lt_The_following_is_a__l">Die folgende Liste enthält die Kalender, auf die Sie Zugriff haben. In Ihrem eigenen Kalender haben Sie die Option, die Ereignisse aus verschiedenen Kalendern gleichzeitig anzeigen zu lassen. Hier können Sie auswählen, welche Kalender in die Anzeige mit einbezogen werden sollen.</msg>
   <msg key="lt_There_are_no_audience">Es gibt keine Zielgruppen für diesen Kalender.</msg>
-  <msg key="lt_This_is_a_repeating_e">Dies ist ein wiederkehrender Termin.</msg>
-  <msg key="lt_You_are_choosing_to_m">Hier legen Sie die Kriterien der Terminwiederholung fest:</msg>
+  <msg key="lt_This_is_a_repeating_e">Dies ist ein wiederkehrendes Ereignis.</msg>
+  <msg key="lt_You_are_choosing_to_m">Hier legen Sie die Kriterien für die Wiederholung des Ereignisses fest:</msg>
   <msg key="lt_You_can_manage_the_fo">Sie können folgende Kalender verwalten:</msg>
   <msg key="lt_You_have_no_party_wid">You have no party wide calendars</msg>
   <msg key="Monday">Montag</msg>
@@ -93,6 +95,7 @@
   <msg key="same">Am gleichen</msg>
   <msg key="Saturday">Samstag</msg>
   <msg key="Select_Calendars">Kalender auswählen</msg>
+  <msg key="Sharing">Freigabe</msg>
   <msg key="Start_Time">Beginnt</msg>
   <msg key="Submit_query">Anfrage senden</msg>
   <msg key="Sunday">Sonntag</msg>

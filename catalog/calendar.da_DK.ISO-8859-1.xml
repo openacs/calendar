@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="calendar" package_version="2.0d1" locale="da_DK" charset="ISO-8859-1">
+<message_catalog package_key="calendar" package_version="2.0b2" locale="da_DK" charset="ISO-8859-1">
 
   <msg key="_You_may_choose_to">. Du kan vælge at:</msg>
   <msg key="Add">Tilføj</msg>
@@ -11,6 +11,7 @@
   <msg key="All_Day_Event">Heldagsbegivenhed</msg>
   <msg key="all_events">alle begivenheder</msg>
   <msg key="and_Time">og Tidspunkt</msg>
+  <msg key="Apply_to_all">Gælder for alle begivenheder</msg>
   <msg key="Attachments">Vedhæftelser:</msg>
   <msg key="Audiences_for_item">Publikum til emnet</msg>
   <msg key="Calendar">Kalender</msg>
@@ -44,6 +45,7 @@
   <msg key="from">fra</msg>
   <msg key="Grant">Tildel</msg>
   <msg key="Grant_Permissions">Tildel Rettigheder</msg>
+  <msg key="is_recurring">Kalenderposten er gentagende.</msg>
   <msg key="Item">Emne</msg>
   <msg key="lt_Are_you_sure_you_want">Er du sikker på, at du ønsker at slette denne kalender? Alle poster i kalenderen og alle tilladelser  der er forbundet med disse, vil også blive slettet.</msg>
   <msg key="lt_Are_you_sure_you_want_1">Er du sikker på at du ønsker at redigere denne begivenhed?</msg>
@@ -93,6 +95,7 @@
   <msg key="same">samme</msg>
   <msg key="Saturday">Lørdag</msg>
   <msg key="Select_Calendars">Vælg Kalendere</msg>
+  <msg key="Sharing">Deler</msg>
   <msg key="Start_Time">Starttidspunkt</msg>
   <msg key="Submit_query">Indsend</msg>
   <msg key="Sunday">Søndag</msg>

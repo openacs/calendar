@@ -7,8 +7,8 @@
 -->
 
 
-<master>
-<property name="title">Calendar Item</property>
+<master src="master">
+<property name="title">Calendar Item: @item_data.name@</property>
 <property name="context_bar">One Item</property>
 
 <table>

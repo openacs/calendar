@@ -205,7 +205,7 @@ ad_proc -public calendar::item::edit {
         calendar::do_notifications -mode Edited -cal_item_id $cal_item_id
         }
     } else {
-        ad_return_complaint 1 "Start Time must be before End Time"
+        ad_return_complaint 1 [_ calendar.start_time_before_end_time]
         ad_script_abort
     }
 }

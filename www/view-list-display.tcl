@@ -30,6 +30,15 @@ if {[exists_and_not_null calendar_id_list]} {
 if { ![info exists period_days] } {
     set period_days 31
 }
+
+if {[exists_and_not_null page_num]} {
+    set page_num_formvar [export_form_vars page_num]
+    set page_num "&page_num=$page_num"
+} else {
+    set page_num_formvar ""
+    set page_num ""
+}
+
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 # sort by cannot be empty
@@ -60,8 +69,8 @@ set today_date [dt_sysdate]
 set today_ansi_list [dt_ansi_to_list $today_date]
 set today_julian_date [dt_ansi_to_julian [lindex $today_ansi_list 0] [lindex $today_ansi_list 1] [lindex $today_ansi_list 2]]
 
-set item_type_url "view?view=list&sort_by=item_type&start_date=$start_date&period_days=$period_days"
-set start_date_url "view?view=list&sort_by=start_date&start_date=$start_date&period_days=$period_days"
+set item_type_url "?view=list&sort_by=item_type&start_date=$start_date&period_days=$period_days$page_num"
+set start_date_url "?view=list&sort_by=start_date&start_date=$start_date&period_days=$period_days$page_num"
 
 set view list
 set form_vars [export_form_vars start_date sort_by view]

@@ -1,6 +1,6 @@
 <table CELLPADDING=0 CELLSPACING=0 width="100%">
   <tr>
-    <td class="cla-no-border" colspan=7>
+    <td class="cla-no-border" colspan="7">
 
       <table width="100%" cellpadding=0 cellspacing=0 border=0 class="cal-table-display">
         <tr class="cal-table-header" bgcolor=lavender>
@@ -48,7 +48,7 @@
 
                   <a
                   href="@base_url@cal-item-new?date=@days_of_a_month.ansi_start_date@&start_time=&end_time=">
-                  <img border="0" align="right" height="16" width="16" src="/shared/images/add.gif" alt="#calendar.Add_Item#"></a>
+                  <img border="0" align="right" height="8" width="8" src="/shared/images/add.gif" alt="#calendar.Add_Item#"></a>
                   <a href="?view=day&date=@days_of_a_month.ansi_start_date@@page_num@">@days_of_a_month.day_number@</a>
 
                   <group column="ansi_start_date">

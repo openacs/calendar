@@ -118,6 +118,7 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Submit_query">Submit query</msg>
   <msg key="Sunday">Sunday</msg>
   <msg key="sync_with_Outlook">sync with Outlook</msg>
+  <msg key="Today_is_label">Today is</msg>
   <msg key="This_event_is">This event is</msg>
   <msg key="Thursday">Thursday</msg>
   <msg key="Time">Time:</msg>

@@ -1,4 +1,4 @@
-<table class="cal-table" cellpadding=0 cellspacing=0>
+<table class="cal-table" cellpadding="0" cellspacing="0">
   <!-- Navigation bar views-->
   <tr>
   <multiple name=views>
@@ -126,15 +126,14 @@
   <tr><td nowrap>
   <font size=-2>
   
-  <if @today_p@ eq t>
-    <b>#acs_datetime.Today#</b>
+  <if @today_p@ true>
+    <b>#acs-datetime.Today#</b>
   </if>
   <else>
-    <a href="@today_url;noquote@">
-    <b>#acs_datetime.Today#</b></a> 
+    <a href="@today_url@"><b>#acs-datetime.Today#</b></a> 
   </else>
   
-  #acs_datetime.is# <%=[dt_ansi_to_pretty]%></font></td></tr>
+  #acs-datetime.is# <%=[dt_ansi_to_pretty]%></font></td></tr>
   <tr><td align=center><br>
   <form method=get action=@base_url@>
   <INPUT TYPE=text name=date size=10> <INPUT type=image src="/shared/images/go.gif" alt="Go" border=0><br><font size=-2>#acs-datetime.Date_as_YYYYMMDD#</font>

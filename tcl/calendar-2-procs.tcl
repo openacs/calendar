@@ -190,4 +190,13 @@ namespace eval calendar {
         ]
     }
 
+    ad_proc -public rename {
+        {-calendar_id:required}
+        {-name:required}
+    } {
+        rename a calendar
+    } {
+        db_dml rename_calendar {}
+    }
+
 }

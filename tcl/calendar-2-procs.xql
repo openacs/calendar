@@ -42,4 +42,12 @@ and calendar_id= :calendar_id
 </querytext>
 </fullquery>
 
+    <fullquery name="calendar::rename.rename_calendar">
+        <querytext>
+            update calendars
+            set calendar_name = :name
+            where calendar_id = :calendar_id
+        </querytext>
+    </fullquery>
+
 </queryset>

@@ -27,7 +27,7 @@
          end_date as end_date,
          to_char(start_date, 'YYYY-MM-DD HH24:MI:SS') as full_start_date,
          to_char(end_date, 'YYYY-MM-DD HH24:MI:SS') as full_end_date,
-         coalesce(a.name, e.name) as name,
+         coalesce(e.name, a.name) as name,
          coalesce(e.description, a.description) as description,
          recurrence_id,
          i.item_type_id,

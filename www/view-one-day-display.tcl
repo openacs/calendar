@@ -5,15 +5,15 @@
 # date (YYYY-MM-DD) - optional
 # start_display_hour and end_display_hour
 
-# calendar-portlet uses this stuff
+
+# Calendar-portlet makes use of this stuff
 if { ![info exists url_stub_callback] } {
     set url_stub_callback ""
 }
 
 if { ![info exists hour_template] } {
-    set hour_template {$localized_day_current_hour}
+    set hour_template {<a href=cal-item-new?date=$current_date&start_time=$localized_day_current_hour>$localized_day_current_hour</a>}
 }
-
 
 if { ![info exists day_template] } {
     set day_template "<a href=?julian_date=\$julian_date>\$day_number</a>"
@@ -31,16 +31,33 @@ if { ![info exists next_nav_template] } {
     set next_nav_template {<a href=".?date=[ns_urlencode $tomorrow]"><img border=0 src=\"[dt_right_arrow]\" alt=\"forward one day\"></a>}
 }
 
-# --calendar-portlet
+if { ![info exists show_calendar_name_p] } {
+    set show_calendar_name_p 1
+}
 
-if { ![info exists start_display_hour] } {
+if { [info exists start_display_hour] && $start_display_hour > 0 } {
+    set start_clause "and to_char(start_date, 'HH') > :start_display_hour"
+} else {
+    set start_clause ""
     set start_display_hour 0
 }
 
-if { ![info exists end_display_hour] } {
+if { [info exists end_display_hour]  && $end_display_hour < 23 } {
+    set start_clause "and to_char(start_date, 'HH') < :end_display_hour"
+} else {
+    set end_clause ""
     set end_display_hour 23
 }
 
+if {[exists_and_not_null $calendar_id_list]} {
+    set calendars_clause "and on_which_calendar in ([join $calendar_id_list ","]) and (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))"
+} else {
+    set calendars_clause "and (cals.package_id= :package_id or (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id)))"
+}
+# --calendar-portlet
+
+
+# The database needs this for proper formatting.
 set ansi_date_format "YYYY-MM-DD HH24:MI:SS"
 
 if {[empty_string_p $date]} {
@@ -53,12 +70,11 @@ if {[empty_string_p $date]} {
 set current_date $date
 
 set current_date_system "$current_date 00:00:00"
-#set current_date_system [lc_time_conn_to_system "$date 00:00:00"]
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
-# Loop through the calendars
+# Loop through the items without time
 multirow create day_items_without_time name status_summary item_id calendar_name full_item
 
 db_foreach select_day_items {} {
@@ -81,7 +97,10 @@ db_foreach select_day_items {} {
     multirow append day_items_without_time $name $status_summary $item_id $calendar_name $full_item
 }
 
-# Quite some extra code here to be able to display overlapping items.
+# Now items with time
+
+# There's quite some extra code here to be able to display overlapping
+# items. Will be properly implemented in OpenACS 5.1 (or so) -- Dirk
 multirow create day_items_with_time current_hour_link current_hour localized_current_hour name item_id calendar_name status_summary start_hour end_hour start_time end_time colspan rowspan full_item
 
 for {set i $start_display_hour } { $i < $end_display_hour } { incr i } {
@@ -91,7 +110,6 @@ for {set i $start_display_hour } { $i < $end_display_hour } { incr i } {
 
 set day_items_per_hour {}
 db_foreach select_day_items_with_time {} {
-    # Convert to user's timezone
     set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
     set ansi_end_date [lc_time_system_to_conn $ansi_end_date]
 
@@ -106,7 +124,7 @@ db_foreach select_day_items_with_time {} {
             lappend day_items_per_hour [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
         } elseif { $end_hour <= $end_display_hour } {
             lappend day_items_per_hour [list $item_current_hour "" $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
-        }
+            }
         incr items_per_hour($item_current_hour)
     }
 }
@@ -129,12 +147,12 @@ foreach this_item $day_items_per_hour {
     if {$item_start_hour > $day_current_hour} {
         # need to add dummy entries to show all hours
         for {  } { $day_current_hour < $item_start_hour } { incr day_current_hour } {
-	    set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%r"]
+	    set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%X"]
             multirow append day_items_with_time  "[subst $hour_template]" $day_current_hour $localized_day_current_hour "" "" "" "" "" "" "" "" 0 0 ""
         }
     }
 
-    set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%r"]
+    set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%X"]
 
     # reset url stub
     set url_stub ""
@@ -164,7 +182,7 @@ foreach this_item $day_items_per_hour {
 if {$day_current_hour < $end_display_hour } {
     # need to add dummy entries to show all hours
     for {  } { $day_current_hour <= $end_display_hour } { incr day_current_hour } {
-	set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%r"]
+	set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%X" [ad_conn locale]]
         multirow append day_items_with_time  "[subst $hour_template]"  $day_current_hour $localized_day_current_hour "" "" "" "" "" 0 0 ""
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="calendar" package_version="2.0b2" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="calendar" package_version="2.0.1" locale="en_US" charset="ISO-8859-1">
 
   <msg key="_You_may_choose_to">. You may choose to:</msg>
   <msg key="Add">Add</msg>
@@ -132,7 +132,4 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Yes">Yes</msg>
   <msg key="yes_delete_it">yes, delete it</msg>
   <msg key="Yes_I_am_sure">Yes, I am sure!</msg>
-  <msg key="is_recurring">Item is recurring.</msg>
-  <msg key="start_date_before_end_date">Start date is before end date.</msg>
-
 </message_catalog>

@@ -5,13 +5,14 @@
 <querytext>
 select calendar_id from calendars
 where package_id= :package_id
+and (private_p='f' or (private_p='t' and owner_id= :user_id))
 $sql_clause
 </querytext>
 </fullquery>
 
 <fullquery name="calendar::get_item_types.select_item_types">
 <querytext>
-select item_type_id, type from cal_item_types
+select type, item_type_id from cal_item_types
 where calendar_id= :calendar_id
 </querytext>
 </fullquery>

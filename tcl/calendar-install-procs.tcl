@@ -20,7 +20,7 @@ ad_proc -private calendar::install::package_uninstall {} {
     calendar::sc::unregister_implementations
 }
 
-ad_proc -private calendar::install::package_upgrade {} {
+ad_proc -private calendar::install::package_upgrade {
     {-from_version_name:required}
     {-to_version_name:required}
 } {

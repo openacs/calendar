@@ -11,6 +11,7 @@
   <msg key="All_Day_Event">Cita para todo el día</msg>
   <msg key="all_events">Todas las citas</msg>
   <msg key="and_Time">y Hora</msg>
+  <msg key="Apply_to_all">Aplicar a todos los eventos</msg>
   <msg key="Attachments">Archivos Adjuntos:</msg>
   <msg key="Audiences_for_item">Audiencia para la cita</msg>
   <msg key="Calendar">Calendario</msg>
@@ -44,6 +45,7 @@
   <msg key="from">de</msg>
   <msg key="Grant">Otorgar</msg>
   <msg key="Grant_Permissions">Autorizar</msg>
+  <msg key="is_recurring">El evento es recurrente</msg>
   <msg key="Item">Cita</msg>
   <msg key="lt_Are_you_sure_you_want">¿Desea realmente borrar este calendario? Todos los eventos y permisos asociados serán borrados también.</msg>
   <msg key="lt_Are_you_sure_you_want_1">¿Desea realmente borrar este evento?</msg>
@@ -93,6 +95,7 @@
   <msg key="same">cada</msg>
   <msg key="Saturday">Sábado</msg>
   <msg key="Select_Calendars">Elegir Calendarios</msg>
+  <msg key="Sharing">Compartiendo</msg>
   <msg key="Start_Time">Inicio</msg>
   <msg key="Submit_query">Enviar solicitud</msg>
   <msg key="Sunday">Domingo</msg>

@@ -26,26 +26,15 @@
  
 <fullquery name="list_calendars">      
       <querytext>
-      
 
-	select    object_id as calendar_id,
-    	          calendar.name(object_id) as calendar_name
-	from      acs_permissions
-	where     privilege in ( 
-	            'calendar_write',
-	            'calendar_admin'
-	          )
-	and       grantee_id = :user_id
-        and       acs_object_util.object_type_p(
-                    object_id, 
-                    'calendar'
-                  ) = 't'
-        and       calendar.private_p(
-                    object_id
-                  ) = 'f'
-	          
 
-    
+        select    calendar_id, calendar_name
+        from      calendars
+        where     acs_permission.permission_p(calendar_id, :user_id, 'calendar_write') = 't'
+        and       private_p = 'f'        
+
+
+
       </querytext>
 </fullquery>
 

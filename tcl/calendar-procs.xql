@@ -1,15 +1,14 @@
 <?xml version="1.0"?>
 <queryset>
 
-<fullquery name="calendar_update.update_calendar">      
-      <querytext>
-      
-	update   calendars
-	set      calendar_name = :calendar_name
-	where    calendar_id = :calendar_id	
-    
-      </querytext>
-</fullquery>
+<fullquery name="calendar::rename.rename_calendar">
+   <querytext>
+       update calendars
+            set calendar_name = :calendar_name
+            where calendar_id = :calendar_id
+        </querytext>
+    </fullquery>
+
 
 <fullquery name="calendar_have_group_cal_p.get_calendar_info">
     <querytext>
@@ -70,13 +69,14 @@ and calendar_id= :calendar_id
 </querytext>
 </fullquery>
 
-    <fullquery name="calendar::rename.rename_calendar">
-        <querytext>
-            update calendars
-            set calendar_name = :name
-            where calendar_id = :calendar_id
-        </querytext>
-    </fullquery>
+<fullquery name="calendar::name.get_calendar_name">      
+  <querytext>
+    select calendar_name
+      from    calendars
+      where   calendar_id = :calendar_id;
+  </querytext>
+</fullquery>
+
 
 <fullquery name="calendar::get.select_calendar">      
       <querytext>

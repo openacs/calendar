@@ -18,13 +18,13 @@ ad_form -name calendar -form {
         {html {size 50}}
     }
 } -edit_request {
-    set calendar_name [calendar_get_name $calendar_id]
+    set calendar_name [calendar::name $calendar_id]
 } -new_data {
     calendar::new \
         -owner_id [ad_conn user_id] \
         -calendar_name $calendar_name 
 } -edit_data {
-    calendar::update \
+    calendar::rename \
         -calendar_id $calendar_id \
         -calendar_name $calendar_name 
 } -after_submit {

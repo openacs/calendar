@@ -16,7 +16,8 @@ namespace eval calendar {}
 
 
 #------------------------------------------------
-# datetime info extraction
+# Should be moved into the calendar:: namespace. Will do after .LRN 2.0 release 
+# (Dirk 9-Jan-2003)
 
 ad_proc calendar_make_datetime {
     event_date
@@ -82,8 +83,8 @@ ad_proc calendar_make_datetime {
 
 
 #------------------------------------------------
-# figure out if user have a private calendar or not
-# again, best suited to be rolled into the pl/sql
+# Should be moved into the calendar:: namespace. Will do after .LRN 2.0 release 
+# (Dirk 9-Jan-2003)
 
 ad_proc calendar_have_private_p { 
     {-return_id 0} 
@@ -119,7 +120,8 @@ ad_proc calendar_have_private_p {
 
 
 #------------------------------------------------
-# creating a new calendar
+# Should be moved into the calendar:: namespace. Will do after .LRN 2.0 release 
+# (Dirk 9-Jan-2003)
 
 ad_proc calendar_create { owner_id
                           private_p          
@@ -161,7 +163,8 @@ ad_proc calendar_create { owner_id
 
 
 #------------------------------------------------
-# assign the permission of the calendar to a party
+# Should be moved into the calendar:: namespace. Will do after .LRN 2.0 release 
+# (Dirk 9-Jan-2003)
 
 ad_proc calendar_assign_permissions { calendar_id
                                       party_id
@@ -206,44 +209,13 @@ ad_proc calendar_assign_permissions { calendar_id
 }
 
 
-#------------------------------------------------
-# find out the name of a calendar 
-# NOTE: calendar.name()
-
-ad_proc calendar_get_name { calendar_id } {
-    
-    find out the name of a calendar
+ad_proc -public calendar::name { calendar_id } {
+    Return a calendar's name
 } {
-    
-    return [db_string get_calendar_name {
-	       select  calendar.name(:calendar_id)
-	       from    dual
-    } -default ""]
-
+    return [db_string get_calendar_name {} -default ""]
 }
 
                           
-
-#------------------------------------------------
-# figures out if a given calendar is public or not
-
-ad_proc calendar_public_p { calendar_id } {
-
-    returns 't' if a given calendar is public 
-    and 'f' if it is not 
-
-} {
-    set private_p [db_string check_calendar_p "select private_p from calendars where calendar_id = :calendar_id"]
-
-    if { $private_p == "t" } {
-        return "f"
-    } else {
-        return "t"
-    }
-
-}
-
-
 ad_proc -public calendar::get_month_multirow_information {
     {-current_day:required}
     {-today_julian_date:required}
@@ -428,21 +400,6 @@ ad_proc -public calendar::personal_p {
     } 
 }
 
-ad_proc -public calendar::update { 
-    {-calendar_id:required}
-    {-calendar_name:required}
-} {
-    Edit calendar
-} {
-    
-    # Update the calendar table
-    db_dml update_calendar {
-	update   calendars
-	set      calendar_name = :calendar_name
-	where    calendar_id = :calendar_id	
-    }
-}
-
 ad_proc -public calendar::get {
     {-calendar_id:required}
     {-array:required}
@@ -508,7 +465,7 @@ ad_proc -public calendar::attachments_enabled_p {} {
 
 ad_proc -public calendar::rename {
     {-calendar_id:required}
-    {-name:required}
+    {-calendar_name:required}
 } {
     rename a calendar
 } {
@@ -516,7 +473,8 @@ ad_proc -public calendar::rename {
 }
 
 ad_proc -private calendar::compare_day_items_by_current_hour {a b} {
-    Compare a day item by the current hour (field 0)
+    Compare a day item by the current hour (field 0).
+    This is needed by the one-day view for sorting.
 } {
     set a_criterium [lindex $a 0]
     set b_criterium [lindex $b 0]

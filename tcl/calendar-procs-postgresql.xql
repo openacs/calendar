@@ -21,14 +21,6 @@
 </fullquery>
 
  
-<fullquery name="calendar_get_name.get_calendar_name">      
-  <querytext>
-     select  calendar__name(:calendar_id)
-       from    dual
-  </querytext>
-</fullquery>
-
- 
 <fullquery name="calendar::calendar_list.select_calendar_list">
   <querytext>
     select calendar_name, 

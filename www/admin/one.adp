@@ -70,17 +70,7 @@
 <else>
   <if @action@ eq add>
     <p>
-
-    <b>#calendar.DEVELOPER_NOTE#</b>
-
-    #calendar.lt_the_calendar_creation#
-
-    <ol>
-      <li> #calendar.lt_create_the_calendar_o#
-      <li> #calendar.lt_select_groups_andor_u#
-      <li> #calendar.lt_apply_group_user_spec#
-    </ol>
-
+      #calendar.developer_note_calendar_add#
     </p>
 
     <form action="calendar-create" method=post>

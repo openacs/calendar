@@ -72,7 +72,12 @@ set user_id [ad_conn user_id]
 multirow create day_items_without_time name status_summary item_id calendar_name full_item
 
 # Set the necessary variables for the unified calendar query in views.xql.
-set interval_limitation_clause " to_date(:current_date_system,'YYYY-MM-DD HH24:MI:SS') and to_date(:current_date_system,'YYYY-MM-DD HH24:MI:SS') + cast('23 hours 59 minutes 59 seconds' as interval)"
+if {[string match [db_type] "postgresql"]} {
+    set interval_limitation_clause " to_date(:current_date_system,'YYYY-MM-DD HH24:MI:SS') and to_date(:current_date_system,'YYYY-MM-DD HH24:MI:SS') + cast('23 hours 59 minutes 59 seconds' as interval)"
+} else {
+    set interval_limitation_clause " to_date(:current_date_system,'YYYY-MM-DD HH24:MI:SS') and (to_date(:current_date_system,'YYYY-MM-DD HH24:MI:SS') + (24 - 1/3600)/24) "
+}
+
 set additional_limitations_clause " and to_char(start_date, 'HH24:MI') = '00:00' and  to_char(end_date, 'HH24:MI') = '00:00'"
 set additional_select_clause ""
 set order_by_clause " order by name"

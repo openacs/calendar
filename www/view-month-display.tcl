@@ -104,7 +104,11 @@ for {set current_day 0} {$current_day < $greyed_days_before_month} {incr current
 set current_day $first_julian_date_of_month
 
 # Set the necessary variables for the unified calendar query in views.xql.
-set interval_limitation_clause " to_timestamp(:first_date_of_month_system,'YYYY-MM-DD HH24:MI:SS')  and      to_timestamp(:last_date_in_month_system, 'YYYY-MM-DD HH24:MI:SS')"
+if {[string match [db_type] "postgresql"]} {
+    set interval_limitation_clause " to_timestamp(:first_date_of_month_system,'YYYY-MM-DD HH24:MI:SS')  and      to_timestamp(:last_date_in_month_system, 'YYYY-MM-DD HH24:MI:SS')"
+} else {
+    set interval_limitation_clause " to_date(:first_date_of_month_system,'YYYY-MM-DD HH24:MI:SS')  and      to_date(:last_date_in_month_system, 'YYYY-MM-DD HH24:MI:SS')"
+}
 set order_by_clause " order by ansi_start_date, ansi_end_date"
 set additional_limitations_clause ""
 set additional_select_clause ""

@@ -77,8 +77,11 @@ multirow create calendar_items calendar_name item_id name item_type pretty_weekd
 set last_pretty_start_date ""
 # Loop through the events, and add them
 
-set interval_limitation_clause " to_timestamp(:start_date,'YYYY-MM-DD HH24:MI:SS')  and      to_timestamp(:end_date, 'YYYY-MM-DD HH24:MI:SS')"
-
+if {[string match [db_type] "postgresql"]} {
+    set interval_limitation_clause " to_timestamp(:start_date,'YYYY-MM-DD HH24:MI:SS')  and      to_timestamp(:end_date, 'YYYY-MM-DD HH24:MI:SS')"
+} else {
+    set interval_limitation_clause " to_date(:start_date,'YYYY-MM-DD HH24:MI:SS')  and      to_date(:end_date, 'YYYY-MM-DD HH24:MI:SS')"
+}
 set order_by_clause " order by $sort_by"
 set additional_limitations_clause ""
 

@@ -49,7 +49,7 @@
     </td>
 
     <td valign=top align=left> 
-      <%= [dt_widget_datetime -show_date 0 -date_time_sep "<br>"  -default @start_time@ start_time minutes] %>
+      <%= [dt_widget_datetime -use_am_pm 1 -show_date 0 -date_time_sep "<br>"  -default @start_time@ start_time quarters] %>
     </td>
   </tr>
 
@@ -59,7 +59,7 @@
     </td>
 
     <td valign=top align=left> 
-      <%= [dt_widget_datetime -show_date 0 -date_time_sep "<br>"  -default @end_time@  end_time minutes] %>
+      <%= [dt_widget_datetime -use_am_pm 1 -show_date 0 -date_time_sep "<br>"  -default @end_time@  end_time quarters] %>
     </td>
   </tr>
 
@@ -106,9 +106,14 @@
 
 
   <tr>
-    <td valign=top align=right>
+    <td valign=top colspan=2 align=right>
       <if @edit_p@ eq 1>
-        <input type=submit>
+        <if @action@ eq add>
+        <input type=submit value="Add Item <if @force_calendar_id@ not nil>to @force_calendar_name@</if>">
+        </if>
+        <else>
+        <input type=submit value="Edit Item">
+        </else>
       </if>
     </td>
     </form>

@@ -8,7 +8,7 @@
 
 
 <master src="master">
-<property name="title">Calendars for @name@</property>
+<property name="title">Calendars for @name@: @action@</property>
 <property name="context_bar"></property>
 
 <table>

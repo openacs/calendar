@@ -29,16 +29,14 @@
   <msg key="Date">Dato:</msg>
   <msg key="Date_1">Dato</msg>
   <msg key="day">dag</msg>
-  <msg key="day_rolling_period">dage</msg>
   <msg key="day_s">dag(e)</msg>
   <msg key="Delete">Slet</msg>
-  <msg key="delete">Slet</msg>
+  <msg key="delete">slet</msg>
   <msg key="Description">Beskrivelse</msg>
   <msg key="Details">Detaljer:</msg>
   <msg key="Edit">Redigér</msg>
-  <msg key="edit">Redigér</msg>
-  <msg key="End_Time">Slut</msg>
-  <msg key="Events_over_a">Vis de næste</msg>
+  <msg key="edit">redigér</msg>
+  <msg key="End_Time">Sluttidspunkt</msg>
   <msg key="Friday">Fredag</msg>
   <msg key="from">fra</msg>
   <msg key="Grant">Giv</msg>
@@ -76,8 +74,7 @@
   <msg key="New_Type">Ny Type:</msg>
   <msg key="No">Nej</msg>
   <msg key="No_Calendars">Ingen Kalendere</msg>
-  <msg key="No_Items">Ingen emner</msg>
-  <msg key="no_keep_it">Nej, behold</msg>
+  <msg key="no_keep_it">nej, behold den</msg>
   <msg key="Note">Bemærkning</msg>
   <msg key="of_the_month">af måneden</msg>
   <msg key="of_the_week">i ugen</msg>
@@ -92,10 +89,10 @@
   <msg key="same">samme</msg>
   <msg key="Saturday">Lørdag</msg>
   <msg key="Select_Calendars">Vælg Kalendere</msg>
-  <msg key="Start_Time">Start</msg>
+  <msg key="Start_Time">Starttidspunkt</msg>
   <msg key="Submit_query">Indsend</msg>
   <msg key="Sunday">Søndag</msg>
-  <msg key="sync_with_Outlook">Synkronisér med Outlook</msg>
+  <msg key="sync_with_Outlook">synkronisér med Outlook:</msg>
   <msg key="Thursday">Torsdag</msg>
   <msg key="Time">Tidspunkt:</msg>
   <msg key="Title">Titel:</msg>
@@ -108,6 +105,6 @@
   <msg key="Wednesday">Onsdag</msg>
   <msg key="year">år</msg>
   <msg key="Yes">Ja</msg>
-  <msg key="yes_delete_it">Ja, slet</msg>
+  <msg key="yes_delete_it">ja, slet det</msg>
   <msg key="Yes_I_am_sure">Ja, jeg er sikker!</msg>
 </message_catalog>

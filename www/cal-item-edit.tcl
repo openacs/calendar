@@ -16,6 +16,7 @@ ad_page_contract {
     {end_time:array ""}
     {name ""}
     {description ""}
+    {return_url ""}
 } 
 
 # find out the user_id 
@@ -31,7 +32,7 @@ if { $action == "delete" } {
 
  cal_item_delete $cal_item_id
 
- ad_returnredirect "?[export_url_vars date action view]"
+    ad_returnredirect "${return_url}?[export_url_vars date action view]"
 
 }
 
@@ -64,41 +65,4 @@ set cal_item_id [cal_item_update $cal_item_id \
 set action "view"
 set date [calendar_make_date [array get event_date]]
 
-ad_returnredirect "?[export_url_vars date action view]"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ad_returnredirect "${return_url}?[export_url_vars date action view]"

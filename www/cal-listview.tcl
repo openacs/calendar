@@ -155,7 +155,8 @@ if {[llength $calendar_list] == 0} {
 
 #-------------------------------------------------
 # date info
-dt_get_info_from_db $date
+#dt_get_info_from_db $date
+dt_get_info $date
 
 set day_of_week $first_day_of_month
 set julian_date $first_julian_date

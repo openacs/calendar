@@ -66,8 +66,8 @@ namespace eval calendar::item {
         # Timezonize
 
 
-        set row(start_date_ansi) [lc_time_utc_to_local $row(start_date_ansi)]
-        set row(end_date_ansi) [lc_time_utc_to_local $row(end_date_ansi)]
+        set row(start_date_ansi) [lc_time_system_to_conn $row(start_date_ansi)]
+        set row(end_date_ansi) [lc_time_system_to_conn $row(end_date_ansi)]
 
         # Localize
         set row(start_time) [lc_time_fmt $row(start_date_ansi) "%X"]
@@ -122,6 +122,7 @@ namespace eval calendar::item {
         {-edit_all_p 0}
     } {
         Edit the item
+
     } {
         cal_item_update $cal_item_id $start_date $end_date $name $description $item_type_id $edit_all_p
     }

@@ -14,7 +14,7 @@
 
     <fullquery name="calendar::item::get.select_item_data">      
       <querytext>
-       select
+      select
          i.cal_item_id,
          0 as n_attachments,
          to_char(start_date, 'YYYY-MM-DD HH24:MI:SS') as start_date_ansi,

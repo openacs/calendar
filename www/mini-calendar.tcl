@@ -4,7 +4,7 @@ if {![exists_and_not_null base_url]} {
 
 if {![exists_and_not_null date]} {
     set date [dt_sysdate]
-}
+} 
 
 # Create row with existing views
 multirow create views name text active_p
@@ -20,8 +20,12 @@ foreach viewname {list day week month} {
 set list_of_vars [list]
 
 # Get the current month, day, and the first day of the month
-
-dt_get_info $date
+if {[catch {
+    dt_get_info $date
+} errmsg]} {
+    set date "[lindex $date 0]-[lindex $date 1]-[lindex $date 2]"
+    dt_get_info $date
+}
 
 
 set now        [clock scan $date]

@@ -86,8 +86,8 @@ ad_proc cal_item_create { start_date
     set date_format "YYYY-MM-DD HH24:MI"
 
     # Convert from user timezone to system timezone
-    set start_date [lc_time_local_to_utc $start_date]
-    set end_date [lc_time_local_to_utc $end_date]        
+    set start_date [lc_time_conn_to_system $start_date]
+    set end_date [lc_time_conn_to_system $end_date]        
 
     # find out the timespan_id
     set timespan_id [db_exec_plsql insert_timespan {
@@ -164,8 +164,8 @@ ad_proc cal_item_update { cal_item_id
     set date_format "YYYY-MM-DD HH24:MI"
 
     # Convert from user timezone to system timezone
-    set start_date [lc_time_local_to_utc $start_date]
-    set end_date [lc_time_local_to_utc $end_date]        
+    set start_date [lc_time_conn_to_system $start_date]
+    set end_date [lc_time_conn_to_system $end_date]        
 
     # update the events
     db_dml update_event ""

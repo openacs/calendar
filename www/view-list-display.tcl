@@ -50,9 +50,9 @@ set last_pretty_start_date ""
     
 db_foreach select_list_items {} {
     # Timezonize
-    set ansi_start_date [lc_time_utc_to_local $ansi_start_date]
-    set ansi_end_date [lc_time_utc_to_local $ansi_end_date]
-    set ansi_today [lc_time_utc_to_local $ansi_today]
+    set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
+    set ansi_end_date [lc_time_system_to_conn $ansi_end_date]
+    set ansi_today [lc_time_system_to_conn $ansi_today]
 
     # Localize
     set pretty_weekday [lc_time_fmt $ansi_start_date "%A"]

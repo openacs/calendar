@@ -52,7 +52,7 @@
 					:creation_ip
 	)
 
-      </querytext>
+     </querytext>
 </fullquery>
 
  

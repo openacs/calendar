@@ -12,6 +12,8 @@ ad_page_contract {
     cal_item_id:integer,notnull
 } 
 
+set calendar_list [calendar::calendar_list]
+
 # Permissions
 # FIXME: we need to add a permissions check here!
 

@@ -10,9 +10,6 @@ set current_date $date
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
-# LARS: ERROR:
-# calendar_id_list now contains {Personal 1961 t}
-
 # Loop through the calendars
 multirow create day_items_without_time name status_summary item_id calendar_name
 

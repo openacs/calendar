@@ -81,7 +81,7 @@
     <tr>
     <td class="table-data-action">
     <a
-    href="cal-item-edit?cal_item_id=@cal_item_id@&return_url=@return_url@">#calendar.edit#</a>
+    href="cal-item-new?cal_item_id=@cal_item_id@&return_url=@return_url@">#calendar.edit#</a>
     </td>
     <td>Edit this calendar event</td>
     </tr>

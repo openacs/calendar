@@ -5,8 +5,12 @@
 <ul>
 <%
 foreach item_type $item_types {
-        set item_type_id [lindex $item_type 0]
-        set type [lindex $item_type 1]
+        set item_type_id [lindex $item_type 1]
+        set type [lindex $item_type 0]
+
+        if {[empty_string_p $item_type_id]} {
+            continue
+        }
 
         template::adp_puts "<li> \[ <a href=\"item-type-delete?calendar_id=$calendar_id&item_type_id=$item_type_id\">delete</a> \]  &nbsp; $type\n"
 }

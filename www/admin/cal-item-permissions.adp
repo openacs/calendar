@@ -15,7 +15,7 @@
     <tr>
        <td>
         <p>
-          <b> #calendar.Audiences_for_item#: @cal_item_name@ </b>
+          <b> #calendar.Audiences_for_item#</b>
         </p>
 	
         <if @audiences:rowcount@ eq 0>

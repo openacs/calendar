@@ -34,7 +34,7 @@ ad_proc cal_assign_item_permission { cal_item_id
 
 	    # grant read permission first
 
-	    db_exec_plsql grant_calendar_permissions_to_items {
+	    db_exec_plsql 1_grant_calendar_permissions_to_items {
 		begin
 		acs_permission.grant_permission (
 		  object_id       =>      :cal_item_id,
@@ -48,7 +48,7 @@ ad_proc cal_assign_item_permission { cal_item_id
 	
 	# grant other permission
 
-	db_exec_plsql grant_calendar_permissions_to_items {
+	db_exec_plsql 2_grant_calendar_permissions_to_items {
 	    begin
 	    acs_permission.grant_permission (
 	      object_id       =>      :cal_item_id,
@@ -63,7 +63,7 @@ ad_proc cal_assign_item_permission { cal_item_id
 	
 	# revoke the permissions
 
-	db_exec_plsql grant_calendar_permissions_to_items {
+	db_exec_plsql 3_grant_calendar_permissions_to_items {
 	    begin
 	    acs_permission.revoke_permission (
 	      object_id       =>      :cal_item_id,
@@ -166,7 +166,7 @@ ad_proc cal_item_create { start_date
 
 	# setting the permission
 
-	db_exec_plsql grant_calendar_permissions_to_items {
+	db_exec_plsql 4_grant_calendar_permissions_to_items {
 	    begin
   	      acs_permission.grant_permission (
                 object_id       =>      :cal_item_id,

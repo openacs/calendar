@@ -24,7 +24,7 @@
 </fullquery>
 
  
-<fullquery name="cc_is_party_group_p.get_group_result">      
+<fullquery name="cc_is_party_user_p.get_group_result">      
       <querytext>
       
 	select    acs_object_util__get_object_type(:party_id)

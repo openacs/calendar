@@ -3,7 +3,7 @@
 <queryset>
    <rdbms><type>postgresql</type><version>7.1</version></rdbms>
 
-<fullquery name="cal_assign_item_permission.grant_calendar_permissions_to_items_1">      
+<fullquery name="cal_assign_item_permission.1_grant_calendar_permissions_to_items">      
       <querytext>
 	select acs_permission__grant_permission (
 					:cal_item_id,
@@ -15,7 +15,7 @@
 </fullquery>
 
 
-<fullquery name="cal_assign_item_permission.grant_calendar_permissions_to_items_2">      
+<fullquery name="cal_assign_item_permission.2_grant_calendar_permissions_to_items">      
       <querytext>
 	select acs_permission__grant_permission (
 					:cal_item_id,
@@ -27,9 +27,9 @@
 </fullquery>
 
  
-<fullquery name="cal_assign_item_permission.grant_calendar_permissions_to_items_3"> 
+<fullquery name="cal_assign_item_permission.3_grant_calendar_permissions_to_items"> 
       <querytext>
-	select acs_permission__revokke_permission (
+	select acs_permission__revoke_permission (
 					:cal_item_id,
 					:party_id,
 					:permission
@@ -60,8 +60,8 @@
 <fullquery name="cal_item_create.insert_timespan">      
       <querytext>
 	select timespan__new (    
-					:to_date(:start_date,:date_format),
-					:to_date(:end_date,:date_format)
+					to_date(:start_date,:date_format),
+					to_date(:end_date,:date_format)
 	) 
 
       </querytext>
@@ -89,7 +89,7 @@
 </fullquery>
 
  
-<fullquery name="cal_item_create.grant_calendar_permissions_to_items_4">      
+<fullquery name="cal_item_create.4_grant_calendar_permissions_to_items">      
       <querytext>
 	select acs_permission__grant_permission (
 					:cal_item_id,

@@ -262,7 +262,7 @@ CREATE FUNCTION calendar__new (
        varchar(200),            -- calendar.calendar_name%TYPE
        varchar,            -- acs_objects.object_type%TYPE
        integer,            -- calendar.owner_id%TYPE
-       integer,            -- calendar.private_p
+       boolean,            -- calendar.private_p
        integer,            -- calendar.package_id
        integer,            -- acs_objects.context_id%TYPE
        timestamp,          -- acs_objects.creation_date%TYPE
@@ -280,8 +280,8 @@ AS 'declare
 	new__package_id		alias for $6;
 	new__context_id		alias for $7;
 	new__creation_date	alias for $8;
-	new__createion_user	alias for $9;
-	new__createion_ip	alias for $10;
+	new__creation_user	alias for $9;
+	new__creation_ip	alias for $10;
 
     begin
         v_calendar_id := acs_object__new(
@@ -296,12 +296,13 @@ AS 'declare
 	insert into     calendars
                         (calendar_id, calendar_name, owner_id, package_id, private_p)
 	values          (v_calendar_id, new__calendar_name, new__owner_id, new__package_id, new__private_p);
-
+      
 	PERFORM acs_permission__grant_permission (
-		v_calendar_id,
-	        new__owner_id,
-		"calendar_admin"
-	);
+              v_calendar_id,
+              new__owner_id,
+              ''calendar_admin''
+        );
+
 
 	return v_calendar_id;
     end;'

@@ -134,7 +134,7 @@ DROP FUNCTION calendar__new (
        varchar,            -- calendar.calendar_name%TYPE
        varchar,            -- acs_objects.object_type%TYPE
        integer,            -- calendar.owner_id%TYPE
-       integer,            -- calendar.private_p
+       boolean,            -- calendar.private_p
        integer,            -- calendar.package_id
        integer,            -- acs_objects.context_id%TYPE
        timestamp,          -- acs_objects.creation_date%TYPE

@@ -95,7 +95,7 @@ namespace eval calendar {
         if {[empty_string_p $item_add_template]} {
             set day_number_template "<font size=1>$day_template</font>"
         } else {
-            set day_number_template "<font size=1>$day_template &nbsp; &nbsp; $item_add_template</font>"
+            set day_number_template "<font size=1>$day_template&nbsp;$item_add_template</font>"
         }
 
         return [dt_widget_month -calendar_details $items -date $date \

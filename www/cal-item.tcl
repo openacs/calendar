@@ -16,6 +16,7 @@ ad_page_contract {
     {end_time "now"}
     {return_url ""}
     {force_calendar_id ""}
+    {show_cal_nav 1}
 } -properties {
     cal_item_id:onevalue
 

@@ -10,12 +10,14 @@
 <if @action@ eq edit or @action@ eq delete>
   <form action="cal-item-edit" method=post>
     <input type=hidden name=cal_item_id value=@cal_item_id@>	
+    <input type=hidden name=show_cal_nav value=@show_cal_nav@>	
     <input type=hidden name=return_url value=@return_url@>
 </if>
 
 <else>
   <if @action@ eq add>
     <form action="cal-item-create" method=post>
+    <input type=hidden name=show_cal_nav value=@show_cal_nav@>	
     <input type=hidden name=return_url value="@return_url@">
 </if>
 </else>

@@ -263,6 +263,11 @@ namespace eval calendar {
            set calendar_name [calendar_get_name $calendar_id]
            # ns_log Notice "bma: one calendar $calendar_name"
 
+           # In case we need to dispatch to a different URL (ben)
+           if {![empty_string_p $url_stub_callback]} {
+               set url_stub [eval $url_stub_callback $calendar_id]
+           }
+
            db_foreach select_day_items {} {
                # ns_log Notice "bma: one item"
                set item "$pretty_start_date - $pretty_end_date: $name ($calendar_name)"

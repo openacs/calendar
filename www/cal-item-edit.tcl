@@ -23,7 +23,7 @@ ad_page_contract {
 
 # Fix up the return URL
 if {[empty_string_p $return_url]} {
-    set return_url "?[export_url_vars date action view]"
+    set return_url "?[export_url_vars date view]"
 }
 
 # find out the user_id 

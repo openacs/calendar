@@ -52,10 +52,10 @@
               </tr><tr>
             </if>
              <if @months.current_month_p@ true>
-              <td class="months selected"><a href="@base_url@?view=month&date=@months.target_date@@page_num@">@months.name@</a></td>
+              <td class="months selected"><a href="@months.url@">@months.name@</a></td>
             </if>
             <else>
-              <td class="months"><a href="@base_url@?view=month&date=@months.target_date@@page_num@">@months.name@</a></td>
+              <td class="months"><a href="@months.url@">@months.name@</a></td>
             </else>         
            </multiple>
         </if>

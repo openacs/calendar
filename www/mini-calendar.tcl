@@ -43,13 +43,11 @@ if {[catch {
     dt_get_info $date
 }
 
-set date_list [dt_ansi_to_list $date]
-set year [dt_trim_leading_zeros [lindex $date_list 0]]
-set month [dt_trim_leading_zeros [lindex $date_list 1]]
-set day [dt_trim_leading_zeros [lindex $date_list 2]]
-
 set now        [clock scan $date]
-set output ""
+    set date_list [dt_ansi_to_list $date]
+    set year [dt_trim_leading_zeros [lindex $date_list 0]]
+    set month [dt_trim_leading_zeros [lindex $date_list 1]]
+    set day [dt_trim_leading_zeros [lindex $date_list 2]]
 
 set months_list [dt_month_names]
 set curr_month_idx  [expr [dt_trim_leading_zeros [clock format $now -format "%m"]]-1]
@@ -62,7 +60,7 @@ if [string equal $view month] {
 
     set now         [clock scan $date]
 
-    multirow create months name current_month_p new_row_p target_date url
+    multirow create months name current_month_p new_row_p url
 
     for {set i 0} {$i < 12} {incr i} {
 
@@ -78,14 +76,12 @@ if [string equal $view month] {
 
         if {$i == $curr_month_idx} {
             set current_month_p t 
-            set encoded_target_date ""
         } else {
             set current_month_p f
             set target_date [clock format \
                                  [clock scan "[expr $i-$curr_month_idx] month" -base $now] -format "%Y-%m-%d"]
-            set encoded_target_date [ad_urlencode $target_date]
         }
-        multirow append months $month $current_month_p $new_row_p $encoded_target_date \
+        multirow append months $month $current_month_p $new_row_p  \
             "[export_vars -base $base_url {{date $target_date} view}]$page_num"
         
     }
@@ -104,13 +100,12 @@ if [string equal $view month] {
     }
 
 
-    multirow create days day_number ansi_date beginning_of_week_p end_of_week_p today_p active_p url
+    multirow create days day_number beginning_of_week_p end_of_week_p today_p active_p url
 
     set day_of_week 1
 
     # Calculate number of active days
     set active_days_before_month [expr [expr [dt_first_day_of_month $year $month]] -1 ]
-    # Adjust for i18n
     set active_days_before_month [expr [expr $active_days_before_month + 7 - $first_day_of_week] % 7]
 
     set calendar_starts_with_julian_date [expr $first_julian_date_of_month - $active_days_before_month]
@@ -153,7 +148,7 @@ if [string equal $view month] {
             set end_of_week_p f
         }
 
-        multirow append days $day_number [ad_urlencode $ansi_date] $beginning_of_week_p $end_of_week_p $today_p $active_p \
+        multirow append days $day_number $beginning_of_week_p $end_of_week_p $today_p $active_p \
             "[export_vars -base $base_url {{date $ansi_date} view}]$page_num"
         incr day_number
         incr day_of_week

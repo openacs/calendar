@@ -1,10 +1,9 @@
 .cal-table-header {
-	BACKGROUND: #99CCFF;
+	background: #99CCFF;
 	color: #000000;
 	margin: 0px;
 	padding: 0px;
 	font-weight: bold;
-
 }
 
 .cal-month-title-text {
@@ -15,63 +14,43 @@
         color: #FFFFFF;
 }
 
-
 .cal-table-header a {
 	color: #0055AA;
 }
+
 .cal-table-header a:hover {
-	TEXT-DECORATION: underline;
+	text-decoration: underline;
 }
 
 .cal-table-title {
 	background: #FFFFFF;
 	font-weight: bold;
-	border-top-width: 0px;
-	border-right-width: 0px;
-	border-bottom-width: 1px;
-	border-left-width: 0px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-top-color: #99CCFF;
-	border-right-color: #99CCFF;
-	border-bottom-color: #99CCFF;
-	border-left-color: #99CCFF;
+	border-width: 0px 0px 1px 0px;
+	border-style: solid;
+	border-color: #99CCFF;
 }
 
 .cal-week {
-	BACKGROUND: #FFFFFF;
-	VALIGN: top;
+	background: #FFFFFF;
+	valign: top;
 	font-weight: bold;
-	border-top-width: 0px;
-	border-right-width: 0px;
-	border-bottom-width: 1px;
-	border-left-width: 0px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-top-color: #99CCFF;
-	border-right-color: #99CCFF;
-	border-bottom-color: #99CCFF;
-	border-left-color: #99CCFF;
-
-
-
+	border-width: 0px 0px 1px 0px;
+	border-style: solid;
+	border-color: #99CCFF;
 }
 
 .cal-month-day {
-	BACKGROUND: #DDEEFF;
-	BORDER: 0px none;
+	background: #DDEEFF;
+	border: 0px none;
 	color: #003366;
 	font-weight: bold;
 	font-size: 80%;
 	vertical-align: top;
         height: 60px;
 }
+
 .cal-month-day:hover {
-	BACKGROUND: #cccccc;
+	background: #cccccc;
         cursor: pointer;
 }
 
@@ -86,7 +65,7 @@
 
 }
 .cal-month-today:hover {
-	BACKGROUND: #666666;
+	background: #666666;
         cursor: pointer;
 }
 .cal-month-today a {
@@ -94,13 +73,13 @@
 }
 
 .cal-no-border {
-    BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none;
+        border: medium none; 
 }
 
 .mini-calendar .view-list {
-	COLOR: #999999;
-	TEXT-DECORATION: none;
-	FONT-SIZE: 8pt;
+	color: #999999;
+	text-decoration: none;
+	font-size: 8pt;
 	white-space: nowrap;
 	font-weight: bold;
 	border-top: 0px solid #99CCFF;
@@ -134,16 +113,13 @@
 }
 
 .mini-calendar .view-list a:visited {
-	COLOR: #999999;
+	color: #999999;
 }
 
 .mini-calendar .view-list a:hover {
-	COLOR: #000000;
-	TEXT-DECORATION: none;
+	color: #000000;
+	text-decoration: none;
 }
-
-
-
 
 .mini-calendar a {
         text-decoration: none;
@@ -168,11 +144,11 @@
 }
 
 .cal-navbar-spacer {
-	COLOR: #000000;
-	FONT-SIZE: 8pt;
+	color: #000000;
+	font-size: 8pt;
 	text-align: center;
 	font-weight: bold;
-	TEXT-DECORATION: none;
+	text-decoration: none;
 	padding-top: 4px;
 	padding-bottom:4px;
 	padding-right: 8px;
@@ -186,11 +162,11 @@
 }
 
 .cal-navbar-spacer-end {
-	COLOR: #000000;
-	FONT-SIZE: 8pt;
+	color: #000000;
+	font-size: 8pt;
 	text-align: center;
 	font-weight: bold;
-	TEXT-DECORATION: none;
+	text-decoration: none;
 	padding-top: 4px;
 	padding-bottom:4px;
 	padding-right: 8px;
@@ -204,89 +180,58 @@
 }
 
 .cal-navbar-end {
-	COLOR: #000000;
-	FONT-SIZE: 8pt;
+	color: #000000;
+	font-size: 8pt;
 	text-align: center;
 	font-weight: bold;
-	TEXT-DECORATION: none;
+	text-decoration: none;
 	padding-top: 4px;
 	padding-bottom:4px;
 	padding-right: 8px;
 	padding-left: 8px;
 	white-space: nowrap;
-	border-top: 0px solid #99CCFF;
-	border-right: 0px solid #99CCFF;
-	border-bottom: 0px solid #99CCFF;
-	border-left: 1px solid #99CCFF;
+	border-width: 0px 0px 0px 1px;
+	border-style: solid;
+	border-color: #99CCFF;
 }
 
 .cal-navbar-spacer-start {
-	border-top-width: 1px;
-	border-right-width: 0px;
-	border-bottom-width: 0px;
-	border-left-width: 0px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-top-color: #000000;
-	border-left-color: #000000;
-	border-right-color: #000000;
-	border-bottom-color: #000000;
+	border-width: 1px 0px 0px 0px;
+	border-style: solid;
+	border-color: #000000;
 	background-color: #CEE6FF;
 }
 
 .cal-navbar-spacer-selected {
-	COLOR: #000000;
-	FONT-SIZE: 8pt;
+	color: #000000;
+	font-size: 8pt;
 	text-align: center;
 	font-weight: bold;
-	TEXT-DECORATION: none;
-	padding-top: 4px;
-	padding-bottom:4px;
-	padding-right: 8px;
-	padding-left: 8px;
+	text-decoration: none;
 	white-space: nowrap;
+	padding: 4px 8px;
 	background-color: #CEE6FF;
 	border: 0px solid #000000;
 }
 
 .cal-navbar-spacer-body {
 	background-color: #DDDDFF;
-	COLOR: #000000;
-	FONT-SIZE: 8pt;
-	TEXT-DECORATION: none;
-	padding-top: 4px;
-	padding-bottom:4px;
-	padding-right: 8px;
-	padding-left: 8px;
+	color: #000000;
+	font-size: 8pt;
+	text-decoration: none;
+	padding: 4px 8px;
 	white-space: nowrap;
-	border-top-width: 0px;
-	border-right-width: 1px;
-	border-bottom-width: 0px;
-	border-left-width: 1px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
+	border-width: 0px 1px;
+	border-style: solid;
 	border-right-color: #663399;
 	border-left-color: #FFFFFF;
 }
 
 .cal-navbar-spacer-selected-start {
 	background-color: #CEE6FF;
-	border-top-width: 0px;
-	border-right-width: 0px;
-	border-bottom-width: 0px;
-	border-left-width: 1px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-top-color: #FFFFFF;
-	border-right-color: #FFFFFF;
-	border-bottom-color: #FFFFFF;
-	border-left-color: #FFFFFF;
+	border-width: 0px 0px 0px 1px;
+	border-style: solid;
+	border-color: #FFFFFF;
 }
 
 .cal-button-sml {
@@ -302,17 +247,16 @@
 }
 
 .cal-row-dark {
-    BACKGROUND: #DDEEFF;
+        background: #DDEEFF;
 }
 
 .cal-row-light {
-    BACKGROUND: #FFFFFF;
+        background: #FFFFFF;
 }
 
 .cal-row-hi {
 	font-weight: bold;
 	border: 0px solid #7D7DFF;
-
 }
 
 .cal-row-lo {
@@ -400,7 +344,7 @@
 }
 
 #jump {
-	BACKGROUND: #99CCFF;
+	background: #99CCFF;
 	color: #000000;
 	margin: 0px;
 	padding: 0px;
@@ -411,7 +355,7 @@
 }
 
 #jump a:hover {
-	TEXT-DECORATION: underline;
+	text-decoration: underline;
 }
 
 #jump tr {
@@ -495,23 +439,24 @@
 
 }
 .cal-month-day-title {
-	BACKGROUND: #FFFFFF;
-	BORDER: 0px none;
+	background: #FFFFFF;
+	border: 0px none;
 	color: #000000;
 	font-weight: bold;
 	text-align: center;
 	margin: 0px;
 	padding: 0px;
-
-
 }
+
 .cal-month-event {
 	text-align: left;
 	font-weight: normal;
 }
+
 .cal-month-event a {
 	font-weight: normal;
 }
+
 .cal-month-table {
 
 	width: 100%;
@@ -519,6 +464,7 @@
 	margin: 0px;
 	padding: 0px;
 }
+
 .cal-month-thismonth {
 	font-weight: bold;
 	background-color: #003366;
@@ -527,70 +473,68 @@
 	line-height: 160%;
 	border: 0px solid;
 }
+
 .cal-month-day-inactive {
-	BACKGROUND: #EEEEEE;
-	BORDER: 0px none;
+	background: #EEEEEE;
+	border: 0px none;
 	color: #999999;
 }
+
 .cal-month-event-notime {
 	text-align: left;
 	font-weight: bold;
 	font-size: 120%;
 }
+
 .cal-day-time {
 	font-weight: bold;
 	text-align: right;
         font-size: 80%;
 }
+
 .cal-day-event {
 	text-align: left;
 	white-space: nowrap;
 	vertical-align: top;
         font-size: 80%;
 }
+
 .cal-week-event-notime {
 	background-color: #DDEEFF;
 	font-weight: bold;
 }
+
 .cal-week-event-notime a {
 	background-color: #DDEEFF;
 }
+
 .cal-day-event-notime {
 	font-weight: bold;
 }
+
 .cal-day-event-notime a {
 	font-weight: bold;
 }
+
 .cal-day-event-spans {
 	text-align: left;
 	white-space: nowrap;
 	vertical-align: top;
-	border-top-width: 0px;
-	border-right-width: 0px;
-	border-bottom-width: 0px;
-	border-left-width: 2px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-top-color: #000066;
-	border-right-color: #000066;
-	border-bottom-color: #000066;
-	border-left-color: #000066;
-
+	border-width: 0px 0px 0px 2px;
+	border-style: solid;
+	border-color: #000066;
 }
+
 .cal-table-data-title {
 	background: #FFFFFF;
 	font-weight: bold;
 	border: 0px solid #99CCFF;
 	text-align: right;
-	padding-top: 0px;
-	padding-right: 10px;
-	padding-bottom: 0px;
-	padding-left: 0px;
+	padding-top: 0px 10px 0px 0px;
 	width: 1%;
 	white-space: nowrap;
 }
+
 .cal-table-data-action {
 	background: #DDEEFF;
 	font-weight: bold;
@@ -602,8 +546,6 @@
 	font-size: 95%;
 }
 
-
-/* view.adp styles */
 #viewadp-mini-calendar {
          width: 240px;
          float: left;

@@ -1,33 +1,18 @@
-# Show calendar items per one day.
-#
-# Parameters:
-# hour_item
-# date (YYYY-MM-DD) - optional
-# start_display_hour and end_display_hour
+if {[info exists url_stub_callback]} {
+    # This parameter is only set if this file is called from .LRN.
+    # This way I make sure that for the time being this adp/tcl
+    # snippet is backwards-compatible.  Will be fixed in OpenACS 5.1.
+    set portled_mode_p 1
+}
 
-# Calendar-portlet makes use of this stuff
-if { ![info exists url_stub_callback] } {
+if {[info exists portlet_mode_p] && $portlet_mode_p} {
+    set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=$encoded_return_url&action=edit&cal_item_id=\$item_id>"
+    set url_stub_callback "calendar_portlet_display::get_url_stub"
+    set hour_template "calendar/cal-item-new?date=$current_date&start_time=\$localized_day_current_hour"
+} else {
+    set item_template "cal-item-view?cal_item_id=\$item_id"
     set url_stub_callback ""
-}
-
-if { ![info exists hour_template] } {
-    set hour_template {<a href=cal-item-new?date=$current_date&start_time=$day_current_hour>$localized_day_current_hour</a>}
-}
-
-if { ![info exists day_template] } {
-    set day_template "<a href=?julian_date=\$julian_date>\$day_number</a>"
-}
-
-if { ![info exists item_template] } {
-    set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\[ad_quotehtml \$item\]</a>"
-}
-
-if { ![info exists prev_nav_template] } {
-    set prev_nav_template {<a href="view?view=day&date=[ns_urlencode $yesterday]"><img border=0 src=\"[dt_left_arrow]\" alt=\"back one day\"></a>}
-}
-
-if { ![info exists next_nav_template] } {
-    set next_nav_template {<a href="view?view=day&date=[ns_urlencode $tomorrow]"><img border=0 src=\"[dt_right_arrow]\" alt=\"forward one day\"></a>}
+    set hour_template {cal-item-new?date=$current_date&start_time=$day_current_hour}
 }
 
 if { ![info exists show_calendar_name_p] } {
@@ -39,20 +24,16 @@ if { ![info exists start_display_hour]} {
 }
 
 if { ![info exists end_display_hour]} {
-    set end_display_hour 24
+    set end_display_hour 23
 }
 
 if {[exists_and_not_null calendar_id_list]} {
-    set calendars_clause "and on_which_calendar in ([join $calendar_id_list ","]) and (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))"
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {
-    set calendars_clause {
-        and ((cals.package_id = :package_id and cals.private_p = 'f') 
-             or (cals.private_p = 't' and cals.owner_id = :user_id))
-    }
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
 }
 
 set current_date $date
-set current_date_system "$date 00:00:00"
 if {[empty_string_p $date]} {
     # Default to todays date in the users (the connection) timezone
     set server_now_time [dt_systime]
@@ -65,18 +46,16 @@ set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
 # Loop through the items without time
-multirow create day_items_without_time name status_summary item_id calendar_name full_item
-
-# Set the necessary variables for the unified calendar query in views.xql.
-if {[string match [db_type] "postgresql"]} {
-    set interval_limitation_clause " to_date(:current_date_system,'YYYY-MM-DD HH24:MI:SS') and to_date(:current_date_system,'YYYY-MM-DD HH24:MI:SS') + cast('23 hours 59 minutes 59 seconds' as interval)"
-} else {
-    set interval_limitation_clause " to_date(:current_date_system,'YYYY-MM-DD HH24:MI:SS') and (to_date(:current_date_system,'YYYY-MM-DD HH24:MI:SS') + (24 - 1/3600)/24) "
-}
+multirow create items_without_time \
+    event_name \
+    event_url \
+    calendar_name \
+    status_summary 
 
 set additional_limitations_clause " and to_char(start_date, 'HH24:MI') = '00:00' and  to_char(end_date, 'HH24:MI') = '00:00'"
 set additional_select_clause ""
 set order_by_clause " order by name"
+set interval_limitation_clause [db_map dbqd.calendar.www.views.day_interval_limitation] 
 
 db_foreach dbqd.calendar.www.views.select_items {} {
     # reset url stub
@@ -92,22 +71,28 @@ db_foreach dbqd.calendar.www.views.select_items {} {
 	set url_stub $url_stubs($calendar_id)
     }
 
-    set item $name
-    set full_item [subst $item_template]
-
-    multirow append day_items_without_time $name $status_summary $item_id $calendar_name $full_item
+    set event_url [subst $item_template]
+    multirow append items_without_time $name $event_url $calendar_name $status_summary 
 }
 
 
 set day_current_hour 0
-set localized_day_current_hour {<img border="0" align="left" src="/resources/acs-subsite/add.gif" alt="No Time">}
+set localized_day_current_hour ""
 set item_add_without_time [subst $hour_template]
 
 # Now items with time
-
-# There's quite some extra code here to be able to display overlapping
-# items. Will be properly implemented in OpenACS 5.1 (or so) -- Dirk
-multirow create day_items_with_time current_hour_link current_hour localized_current_hour name item_id calendar_name status_summary start_hour end_hour start_time end_time colspan rowspan full_item
+multirow create items \
+    event_name \
+    event_url \
+    calendar_name \
+    status_summary \
+    add_url \
+    localized_current_hour \
+    current_hour \
+    start_time \
+    end_time \
+    colspan \
+    rowspan 
 
 for {set i 0 } { $i < 24 } { incr i } {
     set items_per_hour($i) 0
@@ -126,14 +111,17 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     set start_time [lc_time_fmt $ansi_start_date "%X"]
     set end_time [lc_time_fmt $ansi_end_date "%X"]
 
-    regexp {([1-9][0-9]*)} $start_hour match start_hour_no
-    regexp {([1-9][0-9]*)} $end_hour match end_hour_no
+    if {![regexp {([1-9][0-9]*)} $start_hour match start_hour_no]} {
+        set start_hour_no 0
+    }
+    if {![regexp {([1-9][0-9]*)} $end_hour match end_hour_no]} {
+        set end_hour_no 0
+    }
 
     for { set item_current_hour $start_hour } { $item_current_hour < $end_hour } { incr item_current_hour } {
         set item_current_hour [expr [string trimleft $item_current_hour 0]+0]
 
         if { $start_hour_no == $item_current_hour } {
-
             lappend day_items_per_hour \
                 [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
         } else {
@@ -161,11 +149,23 @@ foreach this_item $day_items_per_hour {
     set rowspan [expr $item_end_hour - $item_start_hour]
 
     if {$item_start_hour > $day_current_hour && \
-                 $item_start_hour >= $start_display_hour && $item_end_hour <= $end_display_hour} {
+            $item_start_hour >= $start_display_hour && \
+            $item_end_hour <= $end_display_hour} {
         # need to add dummy entries to show all hours
         for {  } { $day_current_hour < $item_start_hour } { incr day_current_hour } {
 	    set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%X"]
-            multirow append day_items_with_time [subst $hour_template] $day_current_hour $localized_day_current_hour "" "" "" "" "" "" "" "" 0 0 ""
+            multirow append items \
+                "" \
+                "" \
+                "" \
+                "" \
+                [subst $hour_template] \
+                $localized_day_current_hour \
+                $day_current_hour \
+                0 \
+                0 \
+                "" \
+                "" 
         }
     }
 
@@ -184,20 +184,23 @@ foreach this_item $day_items_per_hour {
         set url_stub $url_stubs($calendar_id)
     }
 
-    set start_time [lindex $this_item 7] 
-    set end_time [lindex $this_item 8]
-
     set item [lindex $this_item 1]
     set item_id [lindex $this_item 2]
-    set full_item [subst $item_template]
 
     set current_hour_link [subst $hour_template]
 
-    multirow append day_items_with_time \
-        $current_hour_link $day_current_hour $localized_day_current_hour \
-        [lindex $this_item 1] [lindex $this_item 2] [lindex $this_item 3] \
-        [lindex $this_item 4] [lindex $this_item 5] [lindex $this_item 6] \
-        [lindex $this_item 7] [lindex $this_item 8] 0 $rowspan $full_item
+    multirow append items \
+        $item \
+        [subst $item_template] \
+        [lindex $this_item 3] \
+        [lindex $this_item 4] \
+        $current_hour_link \
+        $localized_day_current_hour \
+        $day_current_hour \
+        [lindex $this_item 7] \
+        [lindex $this_item 8] \
+        0 \
+        $rowspan 
 
     set day_current_hour [expr [lindex $this_item 0] +1 ]
 }
@@ -206,41 +209,23 @@ if {$day_current_hour < $end_display_hour } {
     # need to add dummy entries to show all hours
     for {  } { $day_current_hour <= $end_display_hour } { incr day_current_hour } {
 	set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%X" [ad_conn locale]]
-        multirow append day_items_with_time  "[subst $hour_template]"  $day_current_hour $localized_day_current_hour "" "" "" "" "" 0 0 ""
+        multirow append items \
+            "" \
+            "" \
+            "" \
+            "" \
+            "[subst $hour_template]" \
+            $localized_day_current_hour \
+            $day_current_hour \
+            "" \
+            0 \
+            0     
     }
 }
 
 db_1row dbqd.calendar.www.views.select_day_info {}
 
-# Check that the previous and next days are in the tcl boundaries
-# so that the calendar widget doesn't bomb when it creates the next/prev links
-if {[catch {set yest [clock format [clock scan "1 day ago" -base [clock scan $date]] -format "%Y-%m-%d"]}]} {
-    set previous_link ""
-} else {
-    if {[catch {clock scan $yest}]} {
-	set previous_link ""
-    } else {
-	set previous_link "<a href=\"view?view=day&date=[ns_urlencode $yesterday]\">&lt;</a>"
-    }
-}
-
-if {[catch {set tomor [clock format [clock scan "1 day" -base [clock scan $date]] -format "%Y-%m-%d"]}]} {
-    set next_link ""
-} else {
-    if {[catch {clock scan $tomor}]} {
-	set next_link ""
-    } else {
-	set next_link "<a href=\"view?view=day&date=[ns_urlencode $tomorrow]\">&gt;</a>"
-    }
-}
+set previous_week_url "view?view=day&date=[ns_urlencode $yesterday]"
+set next_week_url "view?view=day&date=[ns_urlencode $tomorrow]"
 
 set dates [lc_time_fmt $date "%q"]
-set ansi_list [split $date "- "]
-set ansi_year [lindex $ansi_list 0]
-set ansi_month [string trimleft [lindex $ansi_list 1] "0"]
-set ansi_day [string trimleft [lindex $ansi_list 2] "0"]
-set julian_date [dt_ansi_to_julian $ansi_year $ansi_month $ansi_day]
-
-set url_previous_week [subst $prev_nav_template]
-set url_next_week [subst $next_nav_template]
-

@@ -1,3 +1,6 @@
+ <table class="cal-table-display" cellpadding="0" cellspacing="0" border="0" width="99%">
+<tr>
+<td>
           <form name="frmdays" class="cal-frm-compact">
             <table width="100%" cellspacing="0" cellpadding="0" border="0">
               <tbody><tr valign="middle">
@@ -16,7 +19,7 @@
           </form>
 
 
-<if @calendar_items:rowcount@ gt 0>
+<if @items:rowcount@ gt 0>
         
 <table class="cal-table-display" border=0 cellspacing=0 cellpadding=2>
   <tr class="cal-table-header">
@@ -27,27 +30,27 @@
   <th align="center"><a href="@item_type_url@">#calendar.Type_1#</a></th>
   <th align=left>Title</th></tr>
 
-  <multiple name="calendar_items">
+  <multiple name="items">
 
-  <group column="pretty_weekday">
+  <group column="weekday">
 
-  <if @calendar_items.flip@ odd>
+  <if @items.flip@ odd>
     <tr class="cal-row-dark">
   </if>
   <else>
     <tr class="cal-row-light">
   </else>  
 
-  <td class="@calendar_items.today@" align=left>@calendar_items.pretty_weekday@</td>
-  <td class="@calendar_items.today@" align="center">@calendar_items.pretty_start_date@</td>
-  <td class="@calendar_items.today@" align="center">@calendar_items.pretty_start_time@</td>
-  <td class="@calendar_items.today@" align="center">@calendar_items.pretty_end_time@</td>
-  <td class="@calendar_items.today@" align="center">@calendar_items.item_type@</td>
-  <td class="@calendar_items.today@"
-  align=left>@calendar_items.full_item;noquote@</a>
+  <td class="@items.today@" align=left>@items.weekday@</td>
+  <td class="@items.today@" align="center">@items.start_date@</td>
+  <td class="@items.today@" align="center">@items.start_time@</td>
+  <td class="@items.today@" align="center">@items.end_time@</td>
+  <td class="@items.today@" align="center">@items.item_type@</td>
+  <td class="@items.today@"
+  align=left><a href="@items.event_url@">@items.event_name@</a>
 
   <if @show_calendar_name_p@>
-  (@calendar_items.calendar_name@)
+  (@items.calendar_name@)
   </if>
   </td>
 
@@ -60,4 +63,6 @@
 <else>
 <i>#calendar.No_Items#</i>
 </else>
-
+</td>
+</tr>
+</table>

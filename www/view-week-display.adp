@@ -1,56 +1,50 @@
- <table CELLPADDING=0 CELLSPACING=0 BORDER=0 width="100%">
-
-  <tr><td>
-  <table cellpadding=3 cellspacing=0 border=0 width="100%" class="cal-table-display">
-    <tr class="cal-table-header" bgcolor=lavender>
+ <table class="cal-table-display" cellpadding="0" cellspacing="0" border="0" width="99%">
+  <tr>
     <td class="cal-month-title-text">
-    @url_previous_week;noquote@
-    </a>
-    <B>@dates;noquote@</B>
-    @url_next_week;noquote@
-    </a>
+      <a href="@previous_week_url@"><img border=0 src="<%=[dt_left_arrow]%>" alt="back one week"></a>
+      @dates@
+      <a href="@next_week_url@"><img border=0 src="<%=[dt_right_arrow]%>" alt="forward one week"></a>
     </td>
-    </tr>
-    </table>
-  </td>
   </tr>
   <tr>
   <td>
   
-    <table class="cal-table-display" cellpadding=0 cellspacing=0 border=0>
-    <multiple name="week_items">
+    <table cellpadding="0" cellspacing="0" border="0">
+    <multiple name="items">
       <tr>
       <td valign=top class="cal-week">
-      <strong>@week_items.start_date_weekday@</strong>:
+      @items.start_date_weekday@:
       </td>
 
       <td width="95%" class="cal-week">
-      <a href="@base_url@cal-item-new?date=@week_items.ansi_start_date@&start_time=&end_time=">
-      <img border="0" align="right" height="7" width="7" src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#"></a><a
-      href="?view=day&date=@week_items.ansi_start_date@@page_num@">@week_items.start_date@</a>
+      <a href="@items.add_url@">
+         <img border="0" align="right" height="7" width="7"
+           src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#">
+      </a>
+      <a href="@items.day_url@">@items.start_date@</a>
       </td>
       </tr>
     
       <tr>
         <td class="cal-week-event" colspan=3>
-        <if @week_items.name@ ne "">
-        <table class="cal-week-events" cellpadding=0 cellspacing=0 border=0>
+        <if @items.event_name@ true>
+        <table class="cal-week-events" cellpadding="0" cellspacing="0">
         <tbody>
         <group column="day_of_week">
-          <if @week_items.name@ ne "">
+          <if @items.event_name@ true>
             <tr>
             <td>
-            <if @week_items.no_time_p@ eq "t">
+            <if @items.no_time_p@ true>
             <span class="cal-week-event-notime">
             </if>
-            <if @week_items.no_time_p@ ne "t">
-            @week_items.start_time@ -  @week_items.end_time@
+            <if @items.no_time_p@ false>
+            @items.start_time@ - @items.end_time@
             </if>
-            @week_items.full_item;noquote@
-            <if @week_items.no_time_p@ eq "t">
+            <a href="@items.event_url@">@items.event_name@</a>
+            <if @items.no_time_p@ true>
             </span>
             </if>
-            <span class="cal-text-grey-sml">[@week_items.calendar_name@]</span>
+            <span class="cal-text-grey-sml">[@items.calendar_name@]</span>
             </td>
             </tr>
            </if>
@@ -68,8 +62,3 @@
   </td>
   </tr>
 </table>
-
-
-
-
-

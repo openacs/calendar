@@ -1,35 +1,27 @@
-if { ![info exists url_stub_callback] } {
-    set url_stub_callback ""
+if {[info exists url_stub_callback]} {
+    # This parameter is only set if this file is called from .LRN.
+    # This way I make sure that for the time being this adp/tcl
+    # snippet is backwards-compatible.  Will be fixed in OpenACS 5.1.
+    set portled_mode_p 1
 }
 
-if { ![info exists day_template] } {
-    set day_template "<a href=?date=\$date>\$day &nbsp; - &nbsp; \$pretty_date</a>"
-}
-
-if { ![info exists item_template] } {
-    set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\[ad_quotehtml \$item\]</a>"
-}
-
-if {[exists_and_not_null page_num]} {
+if {[info exists portlet_mode_p] && $portlet_mode_p} {
+    set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=$encoded_return_url&action=edit&cal_item_id=\$item_id>"
+    set url_stub_callback "calendar_portlet_display::get_url_stub"
     set page_num_formvar [export_form_vars page_num]
     set page_num "&page_num=$page_num"
 } else {
+    set item_template "cal-item-view?cal_item_id=\$item_id"
+    set url_stub_callback ""
     set page_num_formvar ""
     set page_num ""
-}
-
-if {![exists_and_not_null base_url]} {
     set base_url ""
 }
 
-if { ![info exists url_stub_callback] } {
-    set url_stub_callback ""
-}
-
 if {[exists_and_not_null calendar_id_list]} {
-    set calendars_clause "and on_which_calendar in ([join $calendar_id_list ","]) and (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))"
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {
-    set calendars_clause "and ((cals.package_id= :package_id and cals.private_p='f') or (cals.private_p='t' and cals.owner_id= :user_id))"
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
 }
 
 if {[empty_string_p $date]} {
@@ -56,16 +48,30 @@ db_1row select_week_info {}
     
 set current_weekday 0
 
-multirow create week_items name item_id ansi_start_date start_date calendar_name status_summary day_of_week start_date_weekday start_time end_time no_time_p full_item
+#s/item_id/url
+multirow create items \
+    event_name \
+    event_url \
+    calendar_name \
+    status_summary \
+    start_date \
+    day_of_week \
+    start_date_weekday \
+    start_time \
+    end_time \
+    no_time_p \
+    add_url \
+    day_url
 
 # Convert date from user timezone to system timezone
 set first_weekday_of_the_week_tz [lc_time_conn_to_system "$first_weekday_of_the_week 00:00:00"]
 set last_weekday_of_the_week_tz [lc_time_conn_to_system "$last_weekday_of_the_week 00:00:00"]
 
 set order_by_clause " order by to_char(start_date, 'J'), to_char(start_date,'HH24:MI')"
-set interval_limitation_clause " to_date(:first_weekday_of_the_week_tz, 'YYYY-MM-DD HH24:MI:SS') and to_date(:last_weekday_of_the_week_tz, 'YYYY-MM-DD HH24:MI:SS')"
+set interval_limitation_clause [db_map dbqd.calendar.www.views.week_interval_limitation]
 set additional_limitations_clause ""
 set additional_select_clause " , (to_date(start_date,'YYYY-MM-DD HH24:MI:SS')  - to_date(:first_weekday_of_the_week_tz,         'YYYY-MM-DD HH24:MI:SS')) as day_of_week"
+
 db_foreach dbqd.calendar.www.views.select_items {} {
     # Convert from system timezone to user timezone
     set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
@@ -82,9 +88,22 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     # need to add dummy entries to show all days
     for {  } { $current_weekday < $day_of_week } { incr current_weekday } {
         set ansi_this_date [dt_julian_to_ansi [expr $first_weekday_julian + $current_weekday]]
-        multirow append week_items "" "" $ansi_this_date [lc_time_fmt $ansi_this_date "%x"] "" "" $current_weekday [lc_time_fmt $ansi_this_date %A] "" "" "" ""
+        multirow append items \
+            "" \
+            "" \
+            "" \
+            "" \
+            [lc_time_fmt $ansi_this_date "%x"] \
+            $current_weekday \
+            [lc_time_fmt $ansi_this_date %A] \
+            "" \
+            "" \
+            "" \
+            "${base_url}cal-item-new?date=${ansi_this_date}&start_time=&end_time=" \
+            "?view=day&date=$ansi_this_date&page_num=${page_num}"
     }
 
+    set ansi_this_date [dt_julian_to_ansi [expr $first_weekday_julian + $current_weekday]]
     if {[string equal $start_time "12:00 AM"] && [string equal $end_time "12:00 AM"]} {
         set no_time_p t
     } else {
@@ -100,10 +119,20 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         
         set url_stub $url_stubs($calendar_id)
     }
-    
-    set item "$name"
-    set full_item "[subst $item_template]"
-    multirow append week_items $name $item_id $ansi_start_date $start_date $calendar_name $status_summary $day_of_week $start_date_weekday $start_time $end_time $no_time_p $full_item
+
+    multirow append items \
+        $name \
+        [subst $item_template] \
+        $calendar_name \
+        $status_summary \
+        $start_date \
+        $day_of_week \
+        $start_date_weekday \
+        $start_time \
+        $end_time \
+        $no_time_p \
+        "?view=day&date=$ansi_start_date&page_num=${page_num}" \
+        "${base_url}cal-item-new?date=${ansi_this_date}&start_time=&end_time=" 
     set current_weekday $day_of_week
 }
 
@@ -111,23 +140,23 @@ if {$current_weekday < 7} {
     # need to add dummy entries to show all hours
     for {  } { $current_weekday < 7 } { incr current_weekday } {
 	set ansi_this_date [dt_julian_to_ansi [expr $first_weekday_julian + $current_weekday]]
-	multirow append week_items "" "" $ansi_this_date [lc_time_fmt $ansi_this_date "%x"] "" "" $current_weekday [lc_time_fmt $ansi_this_date %A] "" "" "" ""
+	multirow append items \
+            "" \
+            "" \
+            "" \
+            "" \
+            [lc_time_fmt $ansi_this_date "%x"] \
+            $current_weekday \
+            [lc_time_fmt $ansi_this_date %A] \
+            "" \
+            "" \
+            "" \
+            "${base_url}cal-item-new?date=${ansi_this_date}&start_time=&end_time=" \
+            "?view=day&date=$ansi_this_date&page_num=${page_num}" 
     }
 }
 
 # Navigation Bar
 set dates "[lc_time_fmt $first_weekday_date "%q"] - [lc_time_fmt $last_weekday_date "%q"]"
-if { ![info exists prev_week_template] } {
-    set url_previous_week "<a href=\"view?view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian - 7]]]\"><img src=\"/resources/acs-subsite/left.gif\" alt=\"back one week\" border=\"0\">"
-} else {
-    set url_previous_week [subst $prev_week_template]
-}
-
-if { ![info exists next_week_template] } {
-    set url_next_week "<a href=\"view?view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian + 7]]]\"><img src=\"/resources/acs-subsite/right.gif\" alt=\"forward one week\" border=\"0\">"
-    set next_week_template ""
-} else {
-    set url_next_week [subst $next_week_template]
-}
-
-
+set previous_week_url "view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian - 7]]]"
+set next_week_url "view?view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian + 7]]]"

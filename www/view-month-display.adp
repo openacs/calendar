@@ -1,9 +1,9 @@
-<table cellpadding="0" cellspacing="0" width="100%">
+ <table class="cal-table-display" cellpadding="0" cellspacing="0" border="0" width="99%">
   <tr>
     <td class="cal-month-title-text" colspan="7">
-      @prev_month_url;noquote@
+      <a href="@previous_month_url@"><img border=0 src="<%=[dt_left_arrow]%>" alt="back one month"></a>
       @month_string@ @year@
-      @next_month_url;noquote@
+      <a href="@next_month_url@"><img border=0 src="<%=[dt_right_arrow]%>" alt="forward one month"></a>
     </td>
   </tr>
   <tr>
@@ -20,37 +20,36 @@
           </tr>
 
           <tr>
-            <multiple name="days_of_a_month">
-              <if @days_of_a_month.beginning_of_week_p@ true>
+            <multiple name="items">
+              <if @items.beginning_of_week_p@ true>
                 <tr>
               </if>
 
-              <if @days_of_a_month.outside_month_p@ true>
+              <if @items.outside_month_p@ true>
                 <td class="cal-month-day-inactive">&nbsp;</td>
               </if>     
               <else>
-                <if @days_of_a_month.today_p@ true>
-                  <td class="cal-month-today" onclick="javascript:location.href='@days_of_a_month.url@';">
+                <if @items.today_p@ true>
+                  <td class="cal-month-today" onclick="javascript:location.href='@items.add_url@';">
                 </if>
                 <else>
-                  <td class="cal-month-day" onclick="javascript:location.href='@days_of_a_month.url@';">
+                  <td class="cal-month-day" onclick="javascript:location.href='@items.add_url@';">
                 </else>
+                  <a href="@items.day_url@">@items.day_number@</a>
 
-                  <a href="?view=day&date=@days_of_a_month.ansi_start_date@@page_num@">@days_of_a_month.day_number@</a>
-
-                  <group column="ansi_start_date">
-                    <if @days_of_a_month.calendar_item@ ne "">
+                  <group column="day_number">
+                    <if @items.event_name@ true>
                       <div class="cal-month-event">
-                        <if @days_of_a_month.time_p@ true>@days_of_a_month.ansi_start_time@</if>
-                        <a href=@days_of_a_month.item_url@>@days_of_a_month.calendar_item;noquote@</a>
-                        <span class="cal-text-grey-sml"> [@days_of_a_month.calendar_name@]</span>
+                        <if @items.time_p@ true>@items.ansi_start_time@</if>
+                        <a href=@items.event_url@>@items.event_name@</a>
+                        <span class="cal-text-grey-sml"> [@items.calendar_name@]</span>
                       </div>
                     </if>
                   </group>
 
                 </td>
               </else>
-              <if @days_of_a_month.end_of_week_p@ true>
+              <if @items.end_of_week_p@ true>
                 </tr>
               </if>
             </multiple>

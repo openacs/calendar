@@ -1,13 +1,27 @@
-# Calendar-portlet makes use of this stuff
-if { ![info exists url_stub_callback] } {
-    set url_stub_callback ""
+if {[info exists url_stub_callback]} {
+    # This parameter is only set if this file is called from .LRN.
+    # This way I make sure that for the time being this adp/tcl
+    # snippet is backwards-compatible.  Will be fixed in OpenACS 5.1.
+    set portled_mode_p 1
 }
+
+if {[info exists portlet_mode_p] && $portlet_mode_p} {
+    set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=$encoded_return_url&action=edit&cal_item_id=\$item_id>"
+    set url_stub_callback "calendar_portlet_display::get_url_stub"
+    set page_num_formvar [export_form_vars page_num]
+    set page_num "&page_num=$page_num"
+} else {
+    set item_template "cal-item-view?cal_item_id=\$item_id"
+    set url_stub_callback ""
+    set page_num_formvar ""
+    set page_num ""
+    set base_url ""
+}
+
 if { ![info exists url_template] } {
     set url_template {?sort_by=$sort_by}
 }
-if { ![info exists item_template] } {
-    set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\[ad_quotehtml \$item\]</a>"
-}
+
 if { ![info exists show_calendar_name_p] } {
     set show_calendar_name_p 1
 }
@@ -21,11 +35,10 @@ if { ![exists_and_not_null end_date] } {
     set end_date [clock format [clock scan "+30 days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
 }
 
-
 if {[exists_and_not_null calendar_id_list]} {
-    set calendars_clause "and on_which_calendar in ([join $calendar_id_list ","]) and (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))"
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {
-    set calendars_clause "and ((cals.package_id= :package_id and cals.private_p='f') or (cals.private_p='t' and cals.owner_id= :user_id))"
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
 }
 
 if { ![info exists period_days] } {
@@ -72,16 +85,23 @@ set form_vars [export_form_vars start_date sort_by view]
 
 set flip -1
 
-multirow create calendar_items calendar_name item_id name item_type pretty_weekday pretty_start_date pretty_end_date pretty_start_time pretty_end_time flip today full_item
+multirow create items \
+    event_name \
+    event_url \
+    calendar_name \
+    item_type \
+    weekday \
+    start_date \
+    end_date \
+    start_time \
+    end_time \
+    flip \
+    today 
 
 set last_pretty_start_date ""
 # Loop through the events, and add them
 
-if {[string match [db_type] "postgresql"]} {
-    set interval_limitation_clause " to_timestamp(:start_date,'YYYY-MM-DD HH24:MI:SS')  and      to_timestamp(:end_date, 'YYYY-MM-DD HH24:MI:SS')"
-} else {
-    set interval_limitation_clause " to_date(:start_date,'YYYY-MM-DD HH24:MI:SS')  and      to_date(:end_date, 'YYYY-MM-DD HH24:MI:SS')"
-}
+set interval_limitation_clause [db_map dbqd.calendar.www.views.list_interval_limitation]
 set order_by_clause " order by $sort_by"
 set additional_limitations_clause ""
 
@@ -149,9 +169,16 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         set url_stub $url_stubs($calendar_id)
     }
     
-    set item "$name"
-    set full_item "[subst $item_template]"
-
-    multirow append calendar_items $calendar_name $item_id $name $item_type $pretty_weekday $pretty_start_date $pretty_end_date $pretty_start_time $pretty_end_time $flip $today $full_item
-
+    multirow append items \
+	$name \
+	[subst $item_template] \
+	$calendar_name \
+	$item_type \
+	$pretty_weekday \
+	$pretty_start_date \
+	$pretty_end_date \
+	$pretty_start_time \
+	$pretty_end_time \
+	$flip \
+	$today 
 }

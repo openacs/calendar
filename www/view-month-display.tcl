@@ -5,37 +5,36 @@ if {![info exists date] || [empty_string_p $date]} {
     set date [lc_time_fmt $user_now_time "%x"]
 }
 
-if { ![info exists url_stub_callback] } {
-    set url_stub_callback ""
+dt_get_info $date
+
+if {[info exists url_stub_callback]} {
+    # This parameter is only set if this file is called from .LRN.
+    # This way I make sure that for the time being this adp/tcl
+    # snippet is backwards-compatible.  Will be fixed in OpenACS 5.1.
+    set portled_mode_p 1
 }
 
-if { ![info exists day_template] } {
-    set day_template "<a href=?date=\$date>\$day &nbsp; - &nbsp; \$pretty_date</a>"
-}
-
-if { ![info exists item_template] } {
-    set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\[ad_quotehtml \$item\]</a>"
-}
-
-if {[exists_and_not_null page_num]} {
+if {[info exists portlet_mode_p] && $portlet_mode_p} {
     set page_num "&page_num=$page_num"
+    set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=$encoded_return_url&action=edit&cal_item_id=\$item_id>"
+    set prev_month_template "?view=month&date=\[ad_urlencode \$prev_month\]&page_num=$page_num"
+    set prev_month_template "?view=month&date=\[ad_urlencode \$next_month\]&page_num=$page_num"
+    set url_stub_callback "calendar_portlet_display::get_url_stub"
 } else {
+    set item_template "cal-item-view?cal_item_id=\$item_id"
+    set prev_month_template "view?view=month&\date=[ad_urlencode $prev_month]"
+    set next_month_template "view?view=month&\date=[ad_urlencode $next_month]"
+    set url_stub_callback ""
     set page_num ""
-}
- 
-if {![exists_and_not_null base_url]} {
     set base_url ""
 }
 
 if {[exists_and_not_null calendar_id_list]} {
-    set calendars_clause "and on_which_calendar in ([join $calendar_id_list ","]) \
-      and (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))"
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {
-    set calendars_clause "and ((cals.package_id= :package_id and cals.private_p='f') \
-      or (cals.private_p='t' and cals.owner_id= :user_id))"
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
 }
 
-dt_get_info $date
 set date_list [dt_ansi_to_list $date]
 set this_year [dt_trim_leading_zeros [lindex $date_list 0]]
 set this_month [dt_trim_leading_zeros [lindex $date_list 1]]
@@ -47,23 +46,8 @@ set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 set today_date [dt_sysdate]    
 
-if { [info exists prev_month_template] } {
-    set prev_month_url "[subst $prev_month_template]"
-} else {
-    set prev_month_url "<a href=\"view?calendar_list=&view=month&\
-      date=[ad_urlencode $prev_month]\"><img src=\"/resources/acs-subsite/left.gif\"\
-      alt=\"back one month\" border=\"0\"></a>"
-}
-    
-
-if { [info exists next_month_template] } {
-    set next_month_url "[subst $next_month_template]"
-} else {
-    set next_month_url "<a href=\"view?calendar_list=&view=month&\
-      date=[ad_urlencode $next_month]\"><img src=\"/resources/acs-subsite/right.gif\"\
-      alt=\"forward one month\" border=\"0\"</a>"
-}
-
+set previous_month_url "[subst $prev_month_template]"
+set next_month_url "[subst $next_month_template]"
 
 set first_day_of_week [lc_get firstdayofweek]
 set last_day_of_week [expr [expr $first_day_of_week + 7] % 7]
@@ -88,9 +72,20 @@ set today_julian_date [dt_ansi_to_julian [lindex $today_ansi_list 0] [lindex $to
 
 
 # Create the multirow that holds the calendar information
-multirow create days_of_a_month calendar_item item_url ansi_start_date \
-  ansi_start_time day_number calendar_name beginning_of_week_p end_of_week_p \
-  today_p outside_month_p time_p url
+multirow create items \
+    event_name \
+    event_url \
+    calendar_name \
+    status_summary \
+    ansi_start_time \
+    day_number \
+    beginning_of_week_p \
+    end_of_week_p \
+    today_p \
+    outside_month_p \
+    time_p \
+    add_url \
+    day_url
 
 # Calculate number of greyed days and then add them to the calendar mulitrow
 set greyed_days_before_month [expr [expr [dt_first_day_of_month $this_year $this_month]] -1 ]
@@ -102,9 +97,20 @@ for {set current_day 0} {$current_day < $greyed_days_before_month} {incr current
     } else {
         set beginning_of_week_p f
     }
-    multirow append days_of_a_month "" "" \
-      [dt_julian_to_ansi [expr $first_julian_date_of_month + $current_day -1]] \
-      "" "" "" $beginning_of_week_p f "" t  "" "" 
+    multirow append items \
+	"" \
+	"" \
+	"" \
+	"" \
+	"" \
+	"" \
+	$beginning_of_week_p \
+	f \
+	"" \
+	t \
+	"" \
+	"" \
+	""
 }
 
 set current_day $first_julian_date_of_month
@@ -138,12 +144,20 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                      -current_day $current_day \
                      -today_julian_date $today_julian_date \
                      -first_julian_date_of_month $first_julian_date_of_month]
-            multirow append days_of_a_month "" "" [dt_julian_to_ansi $current_day] \
-                "" $display_information(day_number) "" \
+            multirow append items \
+		"" \
+		"" \
+		"" \
+		"" \
+                "" \
+		$display_information(day_number) \
                 $display_information(beginning_of_week_p) \
                 $display_information(end_of_week_p) \
-                $display_information(today_p) f 0  \
-                "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time"
+                $display_information(today_p) \
+		f \
+		0 \
+                "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
+		"?view=day&date=[dt_julian_to_ansi $current_day]&page_num=${page_num}"
         } 
     }
 
@@ -164,22 +178,26 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         set url_stub $url_stubs($calendar_id)
     }
     
-    set item "$name"
-    set full_item "[subst $item_template]"
-
     array set display_information \
         [calendar::get_month_multirow_information \
              -current_day $current_day \
              -today_julian_date $today_julian_date \
              -first_julian_date_of_month $first_julian_date_of_month]
 
-    multirow append days_of_a_month $full_item \
-        "cal-item-view?cal_item_id=$item_id" [dt_julian_to_ansi $current_day] \
-        $ansi_start_time $display_information(day_number) $calendar_name \
+    multirow append items \
+	$name \
+	[subst $item_template] \
+	$calendar_name \
+	"" \
+        $ansi_start_time \
+	$display_information(day_number) \
         $display_information(beginning_of_week_p) \
         $display_information(end_of_week_p) \
-        $display_information(today_p)  f  $time_p \
-        "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time"
+        $display_information(today_p) \
+	f \
+	$time_p \
+        "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
+	"?view=day&date=[dt_julian_to_ansi $current_day]&page_num=${page_num}"
 }
 
 # Add cells for remaining days inside the month
@@ -190,10 +208,20 @@ for {} {$current_day <= $last_julian_date_in_month} {incr current_day} {
              -today_julian_date $today_julian_date \
              -first_julian_date_of_month $first_julian_date_of_month]
 
-    multirow append days_of_a_month "" "" [dt_julian_to_ansi $current_day] ""\
-        $display_information(day_number) "" $display_information(beginning_of_week_p) \
-        $display_information(end_of_week_p) $display_information(today_p) f \
-        0 "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time"
+    multirow append items \
+	"" \
+	"" \
+	"" \
+	"" \
+	"" \
+        $display_information(day_number) \
+	$display_information(beginning_of_week_p) \
+        $display_information(end_of_week_p) \
+	$display_information(today_p) \
+	f \
+        0 \
+	"${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
+	"?view=day&date=[dt_julian_to_ansi $current_day]&page_num=${page_num}"
 }
 
 # Add cells for remaining days outside the month
@@ -201,6 +229,19 @@ set remaining_days [expr [expr $first_day_of_week + 6 - $current_day % 7] % 7]
 
 if {$remaining_days > 0} {
     for {} {$current_day <= [expr $last_julian_date_in_month + $remaining_days]} {incr current_day} {
-        multirow append days_of_a_month "" "" "" "" "" "" f f "" t 0
+        multirow append items \
+	    "" \
+	    "" \
+	    "" \
+	    "" \
+	    "" \
+	    "" \
+	    f \
+	    f \
+	    "" \
+	    t \
+	    0 \
+	    "" \
+	    ""
     }
 }

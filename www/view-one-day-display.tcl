@@ -63,7 +63,7 @@ set interval_limitation_clause [db_map dbqd.calendar.www.views.day_interval_limi
 #AG: the "select_all_day_items" query is identical to "select_items"
 #just without the Oracle +ORDERED hint, which speeds every other
 #query but slows this one.
-db_foreach dbqd.calendar.www.views.select_all_day_items {} {
+db_foreach dbqd.calendar.www.views.select_items {} {
     # reset url stub
     set url_stub ""
     

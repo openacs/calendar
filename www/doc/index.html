@@ -8,16 +8,61 @@
     <h2>OpenACS Calendar package</h2>
     <a href="../">OpenACS documentation</a>
     <hr>
+      <p>
+      Maintainer: <a href="mailto:openacs-calendar@dirkgomez.de">Dirk
+      Gomez</a>
+      <p>
+      I took over calendar package maintainership in May 2003 and am currently
+      moving html generation into the adp pages. Calendar is currently
+      <strong>not</strong> recommended for production use. Here's the wish
+      list of things - in no particular order:
+
       <ul>
-        <li><a href="requirements.html">Original Requirements Document</a> </li>
-        <li><a href="permissions.html">permissions</a></li>
-        <li><a href="regressionTest.htm">Regression Test</a></li>
-        <li><a href="thesisUsabilityTest.htm">Usability Test thesis</a></li>
+      <li>Proper I18N:
+        <ul>
+        <li>Choose when a week starts
+        <li>Day and month names
+        <li>Time and date format
+        </ul>
+      <li>Notifications
+      <li>Reminders
+      <li>Multi-day events
+      <li>iCal format compatible. Ideally, import/export to
+      Outlook/iCalendar/etc.. via iCal format (by Jade)
+      <li>Ability to map any sort of date information in a database to the
+      calendar, this means tickets, bugs, etc. perhaps via a service contract
+      (by Jade)
+
+      <li>There should be any easy UI for specifying what is shown. Both the
+      user and the admin should be able to select these things (the admin sets
+      the range of what is possible, the user can select from those choices)
+      (by Jade)
+
+      <li>Events should be able to span more than a day. Ideally, the UI for
+      this should look good. (by Jade)
+
+      <li>An ability to be able to add data via the calendar as well. Anything
+      that implements the service contract should allow you +to add
+      information on that date as well. For example, add a ticket due that
+      day, or add an event for that day, etc.. (by Jade)
+
+      <li>The calendar needs to be printable (at least for where I work)
+
+
       </ul>
+
+      <p>This is old stuff and will probably disappear in the near
+      future. (June-2003)
+
+      <ul>
+        <li><a href="requirements.html">Original Requirements Document</a>
+        </li> <li><a href="permissions.html">permissions</a></li> <li><a
+        href="regressionTest.htm">Regression Test</a></li> <li><a
+        href="thesisUsabilityTest.htm">Usability Test thesis</a></li> </ul>
 
 
     <hr>
-    <address><a href="mailto:vkurup@massmed.org">Vinod Kurup</a></address>
+    <address><a href="mailto:openacs-calendar@dirkgomez.de">Dirk Gomez</a></address>
 <!-- Created: Mon Aug 13 14:17:34 EDT 2001 -->
 <!-- hhmts start -->
 Last modified: Fri Sep 13 08:44:30 EDT 2002

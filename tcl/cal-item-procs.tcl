@@ -76,8 +76,10 @@ ad_proc -public calendar::item::new {
 ad_proc -public calendar::item::get {
     {-cal_item_id:required}
     {-array:required}
+    {-normalize_system_time 1}
 } {
     Get the data for a calendar item
+
 } {
     upvar $array row
 
@@ -86,11 +88,15 @@ ad_proc -public calendar::item::get {
     } else {
         set query_name select_item_data
     }
-    
+
     db_1row $query_name {} -column_array row
-    # Timezonize
-    set row(start_date_ansi) [lc_time_system_to_conn $row(start_date_ansi)]
-    set row(end_date_ansi) [lc_time_system_to_conn $row(end_date_ansi)]
+    if {$normalize_system_time} {
+	set row(start_date_ansi) [lc_time_system_to_conn $row(start_date_ansi)]
+	set row(end_date_ansi) [lc_time_system_to_conn $row(end_date_ansi)]
+    } else {
+	set row(start_date_ansi) [lc_time_conn_to_system $row(start_date_ansi)]
+	set row(end_date_ansi) [lc_time_conn_to_system $row(end_date_ansi)]
+    }
 
     if { $row(start_date_ansi) ==  $row(end_date_ansi) && [string equal [lc_time_fmt $row(start_date_ansi) "%T"] "00:00:00"]} {
         set row(time_p) 0
@@ -205,7 +211,7 @@ ad_proc -public calendar::item::edit {
         calendar::do_notifications -mode Edited -cal_item_id $cal_item_id
         }
     } else {
-        ad_return_complaint 1 "Start Time must be before End Time"
+        ad_return_complaint 1 [_ calendar.start_time_before_end_time]
         ad_script_abort
     }
 }

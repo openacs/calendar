@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<message_catalog package_key="calendar" package_version="2.0.1" locale="AR_LB" charset="utf-8">
+<message_catalog package_key="calendar" package_version="2.0.1" locale="ar_LB" charset="utf-8">
 
   <msg key="_You_may_choose_to">. يمكنك أن تختار:</msg>
   <msg key="Add">أضفّ</msg>
@@ -30,18 +30,23 @@
   <msg key="Date">التاريخُ:</msg>
   <msg key="Date_1">التاريخ</msg>
   <msg key="day">يوم</msg>
-  <msg key="day_s">يوم (ج)</msg>
+  <msg key="day_rolling_period">الفترة المنحدرة من اليوم</msg>
+  <msg key="day_s">يوم /ايام</msg>
   <msg key="Delete">أحذف</msg>
   <msg key="delete">إحذفْ</msg>
   <msg key="Description">الوصفُ</msg>
   <msg key="Details">التفاصيل:</msg>
-  <msg key="Edit">عدّلْ</msg>
-  <msg key="edit">عدّلْ</msg>
+  <msg key="developer_note_calendar_add">ملاحظة للمطور  إنشاء المفكرة يتظمن الخطوات التالية : &lt;ol&gt;  &lt;li&gt; أنشئ مفكرة ثم 
+غير الصلاحيات الاصلية إذا اردت ذلك &lt;li&gt; ثم إختار المجموعة أو المستخدم الذي سوف يتطلع على المفكرة  &lt;li&gt;  ثم إمنح صلاحيات خاصة للمجموعة أو المستخدم إذا أردت &lt;/ol&gt;</msg>
+  <msg key="Edit">تحرير</msg>
+  <msg key="edit">تحرير</msg>
   <msg key="End_Time">وقت النّهاية</msg>
+  <msg key="Events_over_a">أحداث خلال</msg>
   <msg key="Friday">الجمعة</msg>
   <msg key="from">من</msg>
   <msg key="Grant">إمنَحْ</msg>
-  <msg key="Grant_Permissions">إمنَحْ الأذون</msg>
+  <msg key="Grant_Permissions">إمنَحْ الصلاحيات</msg>
+  <msg key="is_recurring">البند يتكرر ظهوره</msg>
   <msg key="Item">بند</msg>
   <msg key="lt_Are_you_sure_you_want">هل أنت متأكّد أنّك تريد حذف هذه المفكرة . كلّ بنود المفكرة و كلّ الإذون المرتبطة بهذه المفكرة ستُحْذَف أيضًا.</msg>
   <msg key="lt_Are_you_sure_you_want_1">هل أنت متأكّد أنّك تريد حذف هذا الحدث ؟</msg>
@@ -91,6 +96,7 @@
   <msg key="same">نفسه</msg>
   <msg key="Saturday">السبت</msg>
   <msg key="Select_Calendars">اِخْتارْ مفكرات</msg>
+  <msg key="Sharing">مشاركة</msg>
   <msg key="Start_Time">بداية التوقيت</msg>
   <msg key="Submit_query">إرسُلْ إستعلامْ</msg>
   <msg key="Sunday">الأحد</msg>

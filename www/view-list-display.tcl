@@ -33,6 +33,7 @@ if { ![exists_and_not_null sort_by] } {
 if { ![exists_and_not_null start_date] } {
     set start_date [clock format [clock seconds] -format "%Y-%m-%d 00:00"]
 }
+
 if { ![exists_and_not_null end_date] } {
     set end_date [clock format [clock scan "+30 days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
 }
@@ -45,6 +46,8 @@ if {[exists_and_not_null calendar_id_list]} {
 
 if { ![info exists period_days] } {
     set period_days [parameter::get -parameter ListView_DefaultPeriodDays -default 31]
+}  else {
+    set end_date [clock format [clock scan "+${period_days} days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
 }
 
 if {[exists_and_not_null page_num]} {

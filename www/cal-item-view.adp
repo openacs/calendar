@@ -27,7 +27,7 @@
     </tr>
 
     <tr>
-    <td class="cal-table-data-title">Description:
+    <td class="cal-table-data-title">#calendar.Description#:
     </td>
     <td>@cal_item.description@
     </tr>
@@ -75,41 +75,24 @@
 
   <tr>
   <td colspan="2" class="cal-table-title">
-  Actions:
   </td>
   </tr>
-  <if @edit_p@ eq 1>
-    <tr>
-    <td class="cal-table-data-action">
-    <a
-    href="cal-item-new?cal_item_id=@cal_item_id@&return_url=@return_url@">#calendar.edit#</a>
-    </td>
-    <td>&nbsp;</td>
-    </tr>
-  </if>
-
-  <if @delete_p@ eq 1>
-    <tr>
-    <td class="cal-table-data-action">
-    <a
-    href="./cal-item-delete?cal_item_id=@cal_item_id@&return_url=@return_url@">#calendar.delete#</a> 
-    </td>
-    <td>&nbsp;</td>
-    </tr>
-  </if>
- 
   <tr>
-  <td class="cal-table-data-action">
-  <a href="ics/@cal_item_id@.ics">#calendar.sync_with_Outlook#</a> 
-  </td>
-  <td>&nbsp;</td>
+    <td colspan="2">
+      <if @edit_p@ eq 1>
+        <a href="cal-item-new?cal_item_id=@cal_item_id@&return_url=@return_url@" class="button">#calendar.edit#</a>
+      </if>
+      <if @delete_p@ eq 1>
+        <a href="./cal-item-delete?cal_item_id=@cal_item_id@&return_url=@return_url@" class="button">#calendar.delete#</a>
+      </if>
+      <p><a href="ics/@cal_item_id@.ics" class="button">Synkroniser med Outlook</a> 
+    </td>
   </tr>
 
   <if @cal_item.recurrence_id@ not nil>
     <tr>
     <td class="cal-table-data-action">
-    <a
-    href="ics/@cal_item_id@.ics?all_occurences_p=1">#calendar.all_events#</a>
+    <a  href="ics/@cal_item_id@.ics?all_occurences_p=1">#calendar.all_events#</a>
     </td>
     <td>Sync all events with Outlook</td>
     </tr>

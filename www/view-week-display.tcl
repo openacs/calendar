@@ -60,7 +60,7 @@ db_foreach select_week_items {} {
     if {$day_of_week > $current_weekday} {
         # need to add dummy entries to show all days
         for {  } { $current_weekday < $day_of_week } { incr current_weekday } {
-            multirow append week_items "" "" [dt_julian_to_ansi [expr $sunday_julian + $current_weekday -1]] "" "" $current_weekday [lindex $weekday_english_names [expr $current_weekday -1]] "" "" ""
+            multirow append week_items "" "" [lc_time_fmt [dt_julian_to_ansi [expr $sunday_julian + $current_weekday -1]] "%x"] "" "" $current_weekday [lindex $weekday_english_names [expr $current_weekday -1]] "" "" ""
         }
     }
     if {[string equal $start_time "00:00"]} {
@@ -76,7 +76,7 @@ db_foreach select_week_items {} {
 if {$current_weekday < 8} {
     # need to add dummy entries to show all hours
     for {  } { $current_weekday < 8 } { incr current_weekday } {
-        multirow append week_items "" "" [dt_julian_to_ansi [expr $sunday_julian + $current_weekday -1]] "" "" $current_weekday [lindex $weekday_english_names [expr $current_weekday -1]] "" "" ""
+        multirow append week_items "" "" [lc_time_fmt [dt_julian_to_ansi [expr $sunday_julian + $current_weekday -1]] "%x"] "" "" $current_weekday [lindex $weekday_english_names [expr $current_weekday -1]] "" "" ""
     }
 }
 

@@ -36,11 +36,12 @@ db_foreach select_day_items {} {
     multirow append day_items_without_time $name $status_summary $item_id $calendar_name
 }
 
-multirow create day_items_with_time current_hour name item_id calendar_name status_summary start_hour end_hour start_time end_time colspan rowspan
+multirow create day_items_with_time current_hour localized_current_hour name item_id calendar_name status_summary start_hour end_hour start_time end_time colspan rowspan
 
 for {set i $start_display_hour } { $i < $end_display_hour } { incr i } {
     set items_per_hour($i) 0
 }
+
 
 set day_items_per_hour {}
 db_foreach select_day_items_with_time {} {
@@ -50,12 +51,12 @@ db_foreach select_day_items_with_time {} {
 
     set start_hour [lc_time_fmt $ansi_start_date "%H"]
     set end_hour [lc_time_fmt $ansi_end_date "%H"]
-
-    set start_time [lc_time_fmt $ansi_start_date "%H:%M"]
-    set end_time [lc_time_fmt $ansi_end_date "%H:%M"]
+    set start_time [lc_time_fmt $ansi_start_date "%X"]
+    set end_time [lc_time_fmt $ansi_end_date "%X"]
 
     for { set item_current_hour $start_hour } { $item_current_hour < $end_hour } { incr item_current_hour } {
 	set item_current_hour [expr int($item_current_hour)]
+
         if {$start_hour == $item_current_hour && $start_hour >= $start_display_hour } {
             lappend day_items_per_hour [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
         } elseif { $end_hour <= $end_display_hour } {
@@ -84,18 +85,21 @@ foreach item $day_items_per_hour {
     if {$item_start_hour > $day_current_hour} {
         # need to add dummy entries to show all hours
         for {  } { $day_current_hour < $item_start_hour } { incr day_current_hour } {
-            multirow append day_items_with_time $day_current_hour "" "" "" "" "" "" "" "" 0 0
+	    set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%r"]
+            multirow append day_items_with_time $day_current_hour $localized_day_current_hour "" "" "" "" "" "" "" "" 0 0
         }
     }
 
-    multirow append day_items_with_time [lindex $item 0] [lindex $item 1] [lindex $item 2] [lindex $item 3] [lindex $item 4] [lindex $item 5] [lindex $item 6] [lindex $item 7] [lindex $item 8] 0 $rowspan
+    set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%r"]
+    multirow append day_items_with_time [lindex $item 0] $localized_day_current_hour [lindex $item 1] [lindex $item 2] [lindex $item 3] [lindex $item 4] [lindex $item 5] [lindex $item 6] [lindex $item 7] [lindex $item 8] 0 $rowspan
     set day_current_hour [expr [lindex $item 0] +1 ]
 }
 
 if {$day_current_hour < $end_display_hour } {
     # need to add dummy entries to show all hours
     for {  } { $day_current_hour <= $end_display_hour } { incr day_current_hour } {
-        multirow append day_items_with_time $day_current_hour "" "" "" "" "" 0 0
+	set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%r"]
+        multirow append day_items_with_time $day_current_hour $localized_day_current_hour "" "" "" "" "" 0 0
     }
 }
 

@@ -1,10 +1,6 @@
-if { ![exists_and_not_null calendar_id]} {
-    set calendar_list [calendar::calendar_list]
+# Calendar-portlet makes use of this stuff
 
-    set calendar_id [lindex [lindex $calendar_list 0] 1]
-}
-
-# calendar-portlet uses this stuff
+# Calendar-portlet makes use of this stuff
 if { ![info exists url_stub_callback] } {
     set url_stub_callback ""
 }
@@ -12,9 +8,17 @@ if { ![info exists url_stub_callback] } {
 if { ![info exists item_template] } {
     set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\$item</a>"
 }
-# calendar-portlet
 
-set calendar_name [calendar_get_name $calendar_id]
+if { ![info exists show_calendar_name_p] } {
+    set show_calendar_name_p 1
+}
+
+if {[exists_and_not_null $calendar_id_list]} {
+    set calendars_clause "and on_which_calendar in ([join $calendar_id_list ","]) and (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))"
+} else {
+    set calendars_clause "and (cals.package_id= :package_id or (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id)))"
+}
+# --calendar-portlet
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]

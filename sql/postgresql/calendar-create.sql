@@ -16,65 +16,60 @@
   -- 3. write: edit an existing cal_item
   -- 4. delete: can delete the cal_item
   -- 5. invite: can allow other parties to view or edit the cal_item
-CREATE FUNCTION inline_0 ()
-RETURNS integer
-AS 'begin
-        PERFORM acs_privilege__create_privilege(''cal_item_create'', ''Add an new item'', null); 
-        PERFORM acs_privilege__create_privilege(''cal_item_read'',   ''view an cal_item'', null);
-        PERFORM acs_privilege__create_privilege(''cal_item_write'',  ''Edit an exsiting cal_item'', null);
-        PERFORM acs_privilege__create_privilege(''cal_item_delete'', ''Delete cal_item'', null );
-        PERFORM acs_privilege__create_privilege(''cal_item_invite'', ''Allow others to view cal_item'', null); 
-
-        PERFORM acs_privilege__add_child(''create'', ''cal_item_create''); 
-        PERFORM acs_privilege__add_child(''read'', ''cal_item_read''); 
-        PERFORM acs_privilege__add_child(''write'', ''cal_item_write''); 
-
-        PERFORM acs_privilege__add_child(''delete'', ''cal_item_delete''); 
-
-        PERFORM acs_privilege__create_privilege(''calendar_on'', ''Implies that a calendar is selected'', null); 
-        PERFORM acs_privilege__create_privilege(''calendar_show'', ''Show a calendar'', null);
-
-        PERFORM acs_privilege__add_child(''read'', ''calendar_on''); 
-        PERFORM acs_privilege__add_child(''read'', ''calendar_show'');         
-
-        PERFORM acs_privilege__create_privilege(''calendar_create'', ''Create a new calendar'', null); 
-        PERFORM acs_privilege__create_privilege(''calendar_read'', ''View items on an exsiting calendar'', null);
-        PERFORM acs_privilege__create_privilege(''calendar_write'', ''Edit items of an exsiting calendar'', null);
-        PERFORM acs_privilege__create_privilege(''calendar_delete'',''Delete an calendar'', null);
 
 
-        PERFORM acs_privilege__add_child(''create'', ''calendar_create'');
-        PERFORM acs_privilege__add_child(''read'', ''calendar_read'');
-        PERFORM acs_privilege__add_child(''write'', ''calendar_write'');
-        PERFORM acs_privilege__add_child(''delete'', ''calendar_delete'');
 
+  select acs_privilege__create_privilege('cal_item_create', 'Add an new item', null); 
+  select acs_privilege__create_privilege('cal_item_read',   'view an 
+cal_item', null);
+  select acs_privilege__create_privilege('cal_item_write',  'Edit an exsiting cal_item', null);
+  select acs_privilege__create_privilege('cal_item_delete', 'Delete cal_item', null );
+  select acs_privilege__create_privilege('cal_item_invite', 'Allow others to view cal_item', null); 
 
-        PERFORM acs_privilege__add_child(''calendar_create'', ''cal_item_create'');
-        PERFORM acs_privilege__add_child(''calendar_read'', ''cal_item_read'');
-        PERFORM acs_privilege__add_child(''calendar_write'', ''cal_item_write'');
-        PERFORM acs_privilege__add_child(''calendar_delete'', ''cal_item_delete'');
+  select acs_privilege__add_child('create', 'cal_item_create'); 
+  select acs_privilege__add_child('read', 'cal_item_read'); 
+  select acs_privilege__add_child('write', 'cal_item_write'); 
+
+  select acs_privilege__add_child('delete', 'cal_item_delete'); 
+        
+  select acs_privilege__create_privilege('calendar_on', 'Implies that a
+calendar is selected', null); 
+  select acs_privilege__create_privilege('calendar_show', 'Show a calendar', null);
+
+  select acs_privilege__add_child('read', 'calendar_on'); 
+  select acs_privilege__add_child('read', 'calendar_show');         
+	
+  select acs_privilege__create_privilege('calendar_create', 'Create a new
+calendar', null);
+  select acs_privilege__create_privilege('calendar_read', 'View items on
+an exsiting calendar', null);	
+  select acs_privilege__create_privilege('calendar_write', 'Edit items of
+an exsiting calendar', null);
+  select acs_privilege__create_privilege('calendar_delete','Delete an calendar', null);
+
+  select acs_privilege__add_child('create', 'calendar_create');
+  select acs_privilege__add_child('read', 'calendar_read');
+  select acs_privilege__add_child('write', 'calendar_write');
+  select acs_privilege__add_child('delete', 'calendar_delete');
+
+  select acs_privilege__add_child('calendar_create', 'cal_item_create');
+  select acs_privilege__add_child('calendar_read', 'cal_item_read');
+  select acs_privilege__add_child('calendar_write', 'cal_item_write');
+  select acs_privilege__add_child('calendar_delete', 'cal_item_delete');
        
-        PERFORM acs_privilege__create_privilege(''calendar_admin'', ''calendar adminstrator'', null);
-        PERFORM acs_privilege__add_child(''admin'', ''calendar_admin'');
-        PERFORM acs_privilege__add_child(''calendar_admin'', ''calendar_read'');
-        PERFORM acs_privilege__add_child(''calendar_admin'', ''calendar_write'');
-        PERFORM acs_privilege__add_child(''calendar_admin'', ''calendar_delete'');
-        PERFORM acs_privilege__add_child(''calendar_admin'', ''calendar_create'');
-        PERFORM acs_privilege__add_child(''calendar_admin'', ''cal_item_invite'');
-
-        return 0;
-    end;' 
-LANGUAGE 'plpgsql';
-
-SELECT inline_0 ();
-
-drop function inline_0 ();
+  select acs_privilege__create_privilege('calendar_admin', 'calendar adminstrator', null);
+  select acs_privilege__add_child('admin', 'calendar_admin');
+  select acs_privilege__add_child('calendar_admin', 'calendar_read');
+  select acs_privilege__add_child('calendar_admin', 'calendar_write');
+  select acs_privilege__add_child('calendar_admin', 'calendar_delete');
+  select acs_privilege__add_child('calendar_admin', 'calendar_create');
+  select acs_privilege__add_child('calendar_admin', 'cal_item_invite');
 
 ---------------------------------------------------------- 
 --  calendar_ojbect 
 ----------------------------------------------------------- 
 
-CREATE FUNCTION inline_1()
+CREATE FUNCTION inline_0()
 RETURNS integer
 AS 'declare
 	attr_id acs_attributes.attribute_id%TYPE;
@@ -145,9 +140,9 @@ AS 'declare
     end;' 
 LANGUAGE 'plpgsql';
 
-SELECT inline_1();
+SELECT inline_0();
 
-DROP function inline_1();
+DROP function inline_0();
 
 --begin
           -- create the calendar object
@@ -257,7 +252,7 @@ comment on column calendars.package_id is '
 -- Load cal_item_object
 -------------------------------------------------------------
 --@@cal-item-create
-\i cal-item-create.sql
+--\i cal-item-create.sql
 -------------------------------------------------------------
 -- create package calendar
 -------------------------------------------------------------
@@ -907,6 +902,7 @@ LANGUAGE 'plpgsql';
 -----------------------------------------------------------------
 -- load related sql files
 -----------------------------------------------------------------
+--\i cal-item-create.sql
 -- 
 --@@cal-table-create
 \i cal-table-create.sql

@@ -59,8 +59,8 @@ create table cal_party_prefs (
         time_zone               integer 
                                 constraint cal_pty_prefs_time_zone_fk
                                 --references timezones
-                                --on delete cascade,
-				check (daily_end < 24 and daily_end > 0),
+                                --on delete cascade
+				check (time_zone > 0),
           -- which day to start the week, monday or sunday
         first_day_of_week       varchar(9)
                                 default 'Sunday'

@@ -15,13 +15,27 @@ ad_page_contract {
     {start_time ""}
     {end_time ""}
 }
+auth::require_login
+
+set package_id [ad_conn package_id]
+set user_id [ad_conn user_id]
+
+if { [string equal $calendar_id "-1"] || [empty_string_p $calendar_id]} {
+    # Seamlessly create a private calendar if the user doesn't have one
+
+    if { ![calendar_have_private_p $user_id] } {
+	calendar::new -owner_id $user_id -private_p "t" -calendar_name "Personal" -package_id $package_id
+    } 
+    set calendar_id [calendar_have_private_p -return_id 1 $user_id]
+} else {
+    ad_require_permission $calendar_id cal_item_create
+}
+
+
 
 if {![info exists item_type_id]} {
     set item_type_id ""
 }
-
-set package_id [ad_conn package_id]
-set user_id [ad_conn user_id]
 
 set date [calendar::adjust_date -date $date -julian_date $julian_date]
 set calendar_list [calendar::calendar_list]

@@ -313,3 +313,15 @@ ad_proc calendar_public_p { calendar_id } {
 
 }
 
+ad_proc dt_valid_date_p {
+    date
+} {
+    Returns 1 if "date" is a valid date specification, 0 otherwise.
+} {
+    if [catch { clock scan $date }] {
+        return 0
+    } else {
+        return 1
+    }
+}
+

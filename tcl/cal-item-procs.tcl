@@ -123,6 +123,11 @@ ad_proc cal_item_create { start_date
     }
     ]
 
+    cal_assign_item_permission  $cal_item_id  $creation_user read
+    cal_assign_item_permission  $cal_item_id  $creation_user write
+    cal_assign_item_permission  $cal_item_id  $creation_user delete
+    cal_assign_item_permission  $cal_item_id  $creation_user admin
+
     return $cal_item_id
 
 }

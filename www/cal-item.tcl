@@ -115,8 +115,6 @@ if { $action == "edit" } {
     
     set cal_item_types [calendar::get_item_types -calendar_id $force_calendar_id]    
     # forced error checking
-    set name [ad_quotehtml $name]
-    set description [ad_quotehtml $description]
 
 } elseif { [string equal $action "add"] } {
     # get calendar names that user has calendar

@@ -60,15 +60,6 @@ if {$view == "day"} {
 	    set next_link "<a href=\"view?view=$view&date=\[ns_urlencode \$tomorrow]\">&gt;</a>"
 	}
     }
-
-    set cal_stuff [calendar::one_day_display \
-	    -prev_nav_template $previous_link \
-	    -next_nav_template $next_link \
-            -item_template $item_template \
-            -hour_template $hour_template \
-            -date $date -start_hour 7 -end_hour 22 \
-            -calendar_id_list $calendar_list]
-
 }
 
 if {$view == "week"} {
@@ -94,15 +85,6 @@ if {$view == "week"} {
 	    set next_link "<a href=\"view?date=\[ns_urlencode \$next_week]&view=week\">&gt;</a>"
 	}
     }
-
-    set cal_stuff [calendar::one_week_display \
-            -item_template $item_template \
-            -day_template "<font size=-1><b>\$day</b> - <a href=\"view?date=\[ns_urlencode \$date]&view=day\">\$pretty_date</a> &nbsp; &nbsp; <a href=\"cal-item-new?date=\$date&start_time=&end_time=\">([_ calendar.Add_Item])</a></font>" \
-            -date $date \
-            -calendar_id_list $calendar_list \
-            -prev_week_template $previous_link \
-            -next_week_template $next_link]
-
 }
 
 if {$view == "month"} {
@@ -129,14 +111,6 @@ if {$view == "month"} {
 	}
     }
 
-    set cal_stuff [calendar::one_month_display \
-            -item_template "<font size=-2>$item_template</font>" \
-            -day_template "<font size=-1><b><a href=view?julian_date=\$julian_date&view=day>\$day_number</a></b></font>" \
-            -date $date \
-            -item_add_template "<font size=-3>$item_add_template</font>" \
-            -calendar_id_list $calendar_list \
-	    -prev_month_template $previous_link \
-            -next_month_template $next_link]
 }
 
 if {$view == "list"} {
@@ -145,15 +119,7 @@ if {$view == "list"} {
     set ansi_year [lindex $ansi_list 0]
     set ansi_month [string trimleft [lindex $ansi_list 1] "0"]
     set ansi_day [string trimleft [lindex $ansi_list 2] "0"]
-    set end_date [dt_julian_to_ansi [expr [dt_ansi_to_julian $ansi_year $ansi_month $ansi_day ] + 1]]
-    set cal_stuff [calendar::list_display \
-            -item_template $item_template \
-            -start_date $start_date \
-            -end_date $end_date \
-            -date $date \
-            -calendar_id_list $calendar_list \
-            -sort_by $sort_by \
-            -url_template "view?view=list&sort_by=\$order_by"]
+    set end_date [dt_julian_to_ansi [expr [dt_ansi_to_julian $ansi_year $ansi_month $ansi_day ] + 31]]
 }
 
 set cal_nav [dt_widget_calendar_navigation "view" $view $date "calendar_list="]

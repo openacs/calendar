@@ -26,7 +26,7 @@ if {!$user_id} {
 
 if {![db_string private_calendar_count_qry {}]} {
     # Create a personal calendar for the user
-    calendar::new -owner_id $user_id -private_p "t" -calendar_name "Personal" -package_id $package_id
+#    calendar::new -owner_id $user_id -private_p "t" -calendar_name "Personal" -package_id $package_id
 }
 
 ad_returnredirect "view"    

@@ -115,6 +115,6 @@ if { [form is_request cal_item] } {
     }
 }
 
-set cal_nav [dt_widget_calendar_navigation -link_current_view "view" day $date "calendar_id=$calendar_id"]
+set cal_nav [dt_widget_calendar_navigation "view" day $date "calendar_id=$calendar_id"]
 
 ad_return_template

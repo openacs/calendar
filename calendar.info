@@ -18,6 +18,7 @@
         <vendor>University of Sydney</vendor>
         <description format="text/html">straight port of calendar</description>
 
+        <provides url="calendar" version="1.0"/>
         <requires url="acs-datetime" version="4.0"/>
         <requires url="acs-event" version="0.1d"/>
         <requires url="ref-timezones" version="0.1d"/>

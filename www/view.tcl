@@ -29,6 +29,8 @@ ad_page_contract {
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
+set admin_p [ad_permission_p $package_id calendar_admin]
+
 set calendar_list [calendar::adjust_calendar_list -calendar_list $calendar_list -package_id $package_id -user_id $user_id]
 set date [calendar::adjust_date -date $date -julian_date $julian_date]
 

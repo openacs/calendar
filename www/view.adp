@@ -12,8 +12,10 @@
 </center>
 <p>
     <a href="cal-item-new?julian_date=@julian_date@" title="#calendar.Add_Item#"><img border=0 align="left" valign="top" src="/shared/images/add.gif" alt="#calendar.Add_Item#">#calendar.Add_Item#</a>
-
 <p>
+<if @admin_p@ eq 1>
+    <a href="admin/">Administer Calendar</a>
+</if>
 <include src="cal-options">	
 
     </td>	

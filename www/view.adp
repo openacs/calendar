@@ -1,6 +1,5 @@
 <master>
 <property name="title">#calendar.Calendars#</property>
-<property name="context">#calendar.Calendar#</property>
 <property name="header_stuff">
   <link href="/resources/calendar/calendar.css" rel="stylesheet" type="text/css">
 </property>

@@ -9,7 +9,7 @@
 
 <master>
 <property name="title">#calendar.lt_Calendar_Administrati_1# # @user_id;noquote@</property>
-<property name="context">@context_bar;noquote@</property>
+<property name="context">@context;noquote@</property>
 
 
 <if @calendars:rowcount@ eq 0>

@@ -24,7 +24,7 @@ ad_page_contract {
 set user_id [ad_verify_and_get_user_id]
 
 set package_id [ad_conn package_id]
-set context_bar "Admin"
+set context [list]
 
 
 db_multirow calendars calendar_list {

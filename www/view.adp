@@ -8,7 +8,7 @@
     <include src="mini-calendar" base_url="view" view="@view@" date="@date@">
 
     <p>
-    <a href="cal-item-new?date=@date@" title="#calendar.Add_Item#">
+    <a href="cal-item-new?date=@date@&view=@view@" title="#calendar.Add_Item#">
     <img border=0 align="left" valign="top" src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#">#calendar.Add_Item#</a>
     </p>
   

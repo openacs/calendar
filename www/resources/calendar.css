@@ -7,6 +7,15 @@
 
 }
 
+.cal-month-title-text {
+        font-size: 140%;
+        font-weight: bold;
+        background-color: #003366;
+        text-align: center;
+        color: #FFFFFF;
+}
+
+
 .cal-table-header a {
 	color: #0055AA;
 }
@@ -65,6 +74,7 @@
 	BACKGROUND: #cccccc;
         cursor: pointer;
 }
+
 .cal-month-today {
 	font-weight: bold;
 	background-color: #003366;

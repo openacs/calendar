@@ -14,6 +14,7 @@ ad_page_contract {
     {julian_date ""}
     {start_time ""}
     {end_time ""}
+    {view "month"}
 }
 auth::require_login
 

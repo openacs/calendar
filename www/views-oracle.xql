@@ -45,4 +45,11 @@ from     dual
 </querytext>
 </fullquery>
 
+<partialquery name="month_interval_limitation">      
+ <querytext>
+    to_date(:first_date_of_month_system,'YYYY-MM-DD HH24:MI:SS') 
+    and to_date(:last_date_in_month_system, 'YYYY-MM-DD HH24:MI:SS')
+</querytext>
+</partialquery>
+
 </queryset>

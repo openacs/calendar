@@ -37,22 +37,13 @@
   }
 </script>
 
-<table width="95%">
+  <div id="viewadp-mini-calendar">
+    <include src="mini-calendar" base_url="view" view="@view@" date="@ansi_date@">
+  </div>
 
-  <tr>
-    <td valign=top width=150>
-      <p>
-      <include src="mini-calendar" base_url="view" view="day" date="@ansi_date@">
-      <p>
-	<include src="cal-options" calendar_list="@calendar_list;noquote@">	
-    </td>	
-
-    <td valign=top> 
+  <div id="events">   
     <formtemplate id="cal_item"></formtemplate>
-
-    </td>
-  </tr>
-</table>
+  </div>
 </if>
 
 <script language="JavaScript">

@@ -1,7 +1,7 @@
 # Show calendar items per one day.
 #
 # Parameters:
-#shour_tem
+# hour_item
 # date (YYYY-MM-DD) - optional
 # start_display_hour and end_display_hour
 
@@ -32,10 +32,6 @@ if { ![info exists next_nav_template] } {
 
 if { ![info exists show_calendar_name_p] } {
     set show_calendar_name_p 1
-}
-
-if {![exists_and_not_null base_url]} {
-    set base_url ""
 }
 
 if { ![info exists start_display_hour]} {

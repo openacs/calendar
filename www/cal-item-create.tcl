@@ -19,7 +19,14 @@ ad_page_contract {
     {date now}
     {calendar_id "-1"}
     {return_url ""}
+    {recurrence_p 0}
 } 
+
+if {$recurrence_p} {
+    # We must ask for recurrence information
+    ad_returntemplate cal-item-create-recurrence
+    ad_script_abort
+}
 
 if { $date == "now" } {
     set date [dt_sysdate] 

@@ -21,14 +21,27 @@ ad_proc calendar_make_datetime { event_date
     to be imported into oracle. (yyyy-mm-dd hh24:mi format)s
 } {
 
+    # MUST CONVERT TO ARRAYS! (ben)
+    array set event_date_arr $event_date
+    array set event_time_arr $event_time
+
     # extract from even-date 
-    set year   [lindex $event_date 5]
-    set day    [lindex $event_date 7]
-    set month  [lindex $event_date 9]
+    set year   $event_date_arr(year)
+    set day    $event_date_arr(day)
+    set month  $event_date_arr(month)
 
     # extract from event_time
-    set hours [lindex $event_time 3]
-    set minutes [lindex $event_time 1]
+    set hours $event_time_arr(hours)
+    set minutes $event_time_arr(minutes)
+
+    # AM/PM? (ben - openacs fix)
+    if {[info exists event_time_arr(ampm)]} {
+        if {$event_time_arr(ampm)} {
+            if {$hours < 12} {
+                incr hours 12
+            }
+        }
+    }
 
     if {$month < 10} {
 	set month "0$month"

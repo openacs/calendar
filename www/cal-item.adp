@@ -109,6 +109,17 @@
     </tr>
   </if>
 
+  <if @action@ eq add>
+  <tr>
+  <td valign=top align=right>
+  Recurrence?
+  </td>
+  <td>
+  <INPUT TYPE=radio CHECKED name=recurrence_p value=0> No &nbsp; &nbsp; &nbsp;
+  <INPUT TYPE=radio name=recurrence_p value=1> Yes
+  </td>
+  </tr>
+  </if>
 
   <tr>
     <td valign=top colspan=2 align=left>

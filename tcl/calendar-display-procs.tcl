@@ -172,7 +172,7 @@ namespace eval calendar {
         
         return [dt_widget_day -hour_template $hour_template \
                 -start_hour $widget_start_hour -end_hour $widget_end_hour \
-                -calendar_details $items -date $date]
+                -calendar_details $items -date $date -overlap_p 1]
         
     }
 

@@ -49,14 +49,14 @@ set today_date [dt_sysdate]
 if { [info exists prev_month_template] } {
     set prev_month_url "[subst $prev_month_template]"
 } else {
-    set prev_month_url "<a href=\"view?calendar_list=&view=month&date=[ad_urlencode $prev_month]\"><img src=\"/shared/images/left.gif\" alt=\"back one month\" border=\"0\"></a>"
+    set prev_month_url "<a href=\"view?calendar_list=&view=month&date=[ad_urlencode $prev_month]\"><img src=\"/resources/acs-subsite/left.gif\" alt=\"back one month\" border=\"0\"></a>"
 }
     
 
 if { [info exists next_month_template] } {
     set next_month_url "[subst $next_month_template]"
 } else {
-    set next_month_url "<a href=\"view?calendar_list=&view=month&date=[ad_urlencode $next_month]\"><img src=\"/shared/images/right.gif\" alt=\"forward one month\" border=\"0\"</a>"
+    set next_month_url "<a href=\"view?calendar_list=&view=month&date=[ad_urlencode $next_month]\"><img src=\"/resources/acs-subsite/right.gif\" alt=\"forward one month\" border=\"0\"</a>"
 }
 
 

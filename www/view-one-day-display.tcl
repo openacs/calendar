@@ -95,7 +95,7 @@ db_foreach select_day_items {} {
 
 
 set day_current_hour 0
-set localized_day_current_hour {<img border="0" align="left" src="add.gif" alt="No Time">}
+set localized_day_current_hour {<img border="0" align="left" src="/resources/acs-subsite/add.gif" alt="No Time">}
 set item_add_without_time [subst $hour_template]
 
 # Now items with time

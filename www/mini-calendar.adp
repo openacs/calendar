@@ -23,19 +23,19 @@
     <td align="left" class="cal-month-title">
     <if @view@ eq month>
       @prev_year_url;noquote@
-      <img border=0 src="/shared/images/left.gif"></a>
+      <img border=0 src="/resources/acs-subsite/left.gif"></a>
       <td class="cal-month-title-text" colspan="2">@curr_year@</td>
       <td align="right" class="cal-month-title">
       @next_year_url;noquote@
-      <img border=0 src="/shared/images/right.gif"></a>
+      <img border=0 src="/resources/acs-subsite/right.gif"></a>
     </if>
     <else>
       @prev_month_url;noquote@
-      <img border=0 src="/shared/images/left.gif"></a>
+      <img border=0 src="/resources/acs-subsite/left.gif"></a>
       <td class="cal-month-title-text" colspan="2">@curr_month@</td>
       <td align="right" class="cal-month-title">
       @next_month_url;noquote@
-      <img border=0 src="/shared/images/right.gif"></a>
+      <img border=0 src="/resources/acs-subsite/right.gif"></a>
     </else>
     </td>
     </tr>
@@ -136,7 +136,7 @@
   #acs-datetime.is# <%=[dt_ansi_to_pretty]%></font></td></tr>
   <tr><td align=center><br>
   <form method=get action=@base_url@>
-  <INPUT TYPE=text name=date size=10> <INPUT type=image src="/shared/images/go.gif" alt="Go" border=0><br><font size=-2>#acs-datetime.Date_as_YYYYMMDD#</font>
+  <INPUT TYPE=text name=date size=10> <INPUT type=image src="/resources/acs-subsite/go.gif" alt="Go" border=0><br><font size=-2>#acs-datetime.Date_as_YYYYMMDD#</font>
   <INPUT TYPE=hidden name=view value=day>
   @form_vars;noquote@
   @page_num_formvar;noquote@

@@ -27,7 +27,7 @@
       <td width="95%" class="cal-week">
       <a
       href="@base_url@cal-item-new?date=@week_items.ansi_start_date@&start_time=&end_time=">
-      <img border="0" align="right" height="16" width="16" src="/shared/images/add.gif" alt="#calendar.Add_Item#"></a><a
+      <img border="0" align="right" height="16" width="16" src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#"></a><a
       href="?view=day&date=@week_items.ansi_start_date@@page_num@">@week_items.start_date@</a>
       </td>
       </tr>

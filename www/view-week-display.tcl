@@ -116,13 +116,13 @@ if {$current_weekday < 7} {
 # Navigation Bar
 set dates "[lc_time_fmt $first_weekday_date "%q"] - [lc_time_fmt $last_weekday_date "%q"]"
 if { ![info exists prev_week_template] } {
-    set url_previous_week "<a href=\"view?view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian - 7]]]\"><img src=\"/shared/images/left.gif\" alt=\"back one week\" border=\"0\">"
+    set url_previous_week "<a href=\"view?view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian - 7]]]\"><img src=\"/resources/acs-subsite/left.gif\" alt=\"back one week\" border=\"0\">"
 } else {
     set url_previous_week [subst $prev_week_template]
 }
 
 if { ![info exists next_week_template] } {
-    set url_next_week "<a href=\"view?view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian + 7]]]\"><img src=\"/shared/images/right.gif\" alt=\"forward one week\" border=\"0\">"
+    set url_next_week "<a href=\"view?view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian + 7]]]\"><img src=\"/resources/acs-subsite/right.gif\" alt=\"forward one week\" border=\"0\">"
     set next_week_template ""
 } else {
     set url_next_week [subst $next_week_template]

@@ -44,7 +44,7 @@
               <if @day_items_with_time.item_id@ ne "">
                 <if @day_items_with_time.name@ ne "">
 
-                <td class="cal-day-event" rowspan="@day_items_with_time.rowspan@" valign="top">
+                <td class="cal-day-event" rowspan="@day_items_with_time.rowspan@"  colspan="@day_items_with_time.colspan@" valign="top">
                 <a
                 href="cal-item-view?cal_item_id=@day_items_with_time.item_id@">@day_items_with_time.start_time@
                 - @day_items_with_time.end_time@
@@ -54,7 +54,7 @@
               </if>
                 <else>
                   <if @day_items_with_time.rowspan@ gt 0>
-                    <td class="cal-day-event" colspan="@day_items_with_time.rowspan@">&nbsp;</td>
+                    <td class="cal-day-event" colspan="@day_items_with_time.colspan@">&nbsp;</td>
                   </if>
                   <else>
                     <if @max_items_per_hour@ eq 0>

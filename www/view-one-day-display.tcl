@@ -33,8 +33,8 @@ for {set i 0 } { $i < 24 } { incr i } {
 
 set day_items_per_hour {}
 db_foreach select_day_items_with_time {} {
-    set start_hour [expr int($start_hour)]
-
+    set start_hour [string trimleft $start_hour "0"]
+    set end_hour [string trimleft $end_hour "0"]
     for { set item_current_hour $start_hour } { $item_current_hour < $end_hour } { incr item_current_hour } {
         if {$start_hour == $item_current_hour} {
             lappend day_items_per_hour [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
@@ -44,7 +44,6 @@ db_foreach select_day_items_with_time {} {
         incr items_per_hour($item_current_hour)
 
     }
-
 }
 
 set day_items_per_hour [lsort -command calendar::compare_day_items_by_current_hour $day_items_per_hour]
@@ -58,20 +57,8 @@ for {set i 0 } { $i < 24 } { incr i } {
     }
 }
 
-# Get the colspan for each hour
-for {set i 0 } { $i < 24 } { incr i } {
-    set colspan($i) $max_items_per_hour
-}
-
 foreach item $day_items_per_hour {
-    set item_id [lindex $item 1]
-    set item_start_hour [lindex $item 5]
-    set item_end_hour [lindex $item 6]
-}
-
-
-foreach item $day_items_per_hour {
-    set item_start_hour [lindex $item 5]
+    set item_start_hour [expr int( [lindex $item 5])]
     set item_end_hour [lindex $item 6]
     set rowspan [expr $item_end_hour - $item_start_hour]
     if {$item_start_hour > $day_current_hour} {
@@ -80,7 +67,8 @@ foreach item $day_items_per_hour {
             multirow append day_items_with_time $day_current_hour "" "" "" "" "" "" "" "" 0 0
         }
     }
-    multirow append day_items_with_time [lindex $item 0] [lindex $item 1] [lindex $item 2] [lindex $item 3] [lindex $item 4] [lindex $item 5] [lindex $item 6] [lindex $item 7] [lindex $item 8] [expr $max_items_per_hour - $items_per_hour($item_start_hour) +1] $rowspan
+
+    multirow append day_items_with_time [lindex $item 0] [lindex $item 1] [lindex $item 2] [lindex $item 3] [lindex $item 4] [lindex $item 5] [lindex $item 6] [lindex $item 7] [lindex $item 8] 0 $rowspan
     set day_current_hour [expr [lindex $item 0] +1 ]
 }
 

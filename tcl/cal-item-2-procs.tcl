@@ -29,7 +29,13 @@ namespace eval calendar::item {
     } {
         upvar $array row
 
-        db_1row select_item_data {} -column_array row
+        if {[calendar::attachments_enabled_p]} {
+            set query_name select_item_data_with_attachment
+        } else {
+            set query_name select_item_data
+        }
+        
+        db_1row $query_name {} -column_array row
     }
         
     ad_proc -public edit {

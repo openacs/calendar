@@ -77,8 +77,7 @@ namespace eval calendar::outlook {
         set DTEND [ics_timestamp_format -timestamp $end_date]
 
         # Put it together
-        set ics_event "
-        BEGIN:VCALENDAR\r\nPRODID:-//OpenACS//OpenACS 4.5 MIMEDIR//EN\r\nVERSION:2.0\r\nMETHOD:PUBLISH\r\nBEGIN:VEVENT\r\nDTSTART$DTSTART\r\nDTEND$DTEND\r\n"
+        set ics_event "BEGIN:VCALENDAR\r\nPRODID:-//OpenACS//OpenACS 4.5 MIMEDIR//EN\r\nVERSION:2.0\r\nMETHOD:PUBLISH\r\nBEGIN:VEVENT\r\nDTSTART$DTSTART\r\nDTEND$DTEND\r\n"
 
         set creation_date $DTSTART
         set DESCRIPTION $description
@@ -310,7 +309,7 @@ namespace eval calendar::outlook {
         ns_return 200 application/x-msoutlook $ics_event
     }
 
-    ad_register_proc GET /*.ics cal_output_outlook_event
-    ad_register_proc POST /*.ics cal_output_outlook_event
+    # ad_register_proc GET /*.ics cal_output_outlook_event
+    # ad_register_proc POST /*.ics cal_output_outlook_event
 
 }

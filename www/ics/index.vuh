@@ -1,0 +1,25 @@
+
+ad_page_contract {
+    
+    Output an item as ics for Outlook
+    The expected URL is <cal_item_id>.ics
+
+    @author Ben Adida (ben@openforce)
+    @creation-date June 20, 2002
+    @cvs-id $Id$
+}
+
+set path [ad_conn path_info]
+
+# Match the path
+if {![regexp {([0-9]*)\.ics} $path all cal_item_id]} {
+    ad_returnredirect "../"
+    ad_script_abort
+}
+
+# Permission (FIXME: ben)
+# ad_require_permission $cal_item_id read 
+
+set ics_stuff [calendar::outlook::format_item -cal_item_id $cal_item_id]
+
+ns_return 200 application/x-msoutlook $ics_stuff

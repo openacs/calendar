@@ -184,4 +184,10 @@ namespace eval calendar {
         }
     }
 
+    ad_proc -public attachments_enabled_p {} {
+        check if attachments enabled
+    } {
+        return [apm_package_registered_p attachments]        
+    }
+
 }

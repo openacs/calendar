@@ -11,6 +11,4 @@ ad_page_contract {
     cal_item_id:integer
 }
 
-set ics_stuff [calendar::outlook::format_item -cal_item_id $cal_item_id]
-
-ns_return 200 application/x-msoutlook $ics_stuff
+ad_returnredirect "ics/${cal_item_id}.ics"

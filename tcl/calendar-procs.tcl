@@ -152,7 +152,7 @@ ad_proc -public calendar::assign_permissions { calendar_id
 ad_proc -public calendar::have_private_p { 
     {-return_id 0} 
     {-calendar_id_list {}}
-    party_id 
+    {-party_id party_id }
 } {
     check to see if ther user have a private calendar
     if -return_id is 1, then proc will return the calendar_id

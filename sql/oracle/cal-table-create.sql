@@ -4,7 +4,7 @@
 -- @creation-date Nov 30, 2000
 -- @cvs-id $Id$
 --
--- @ported by Charles Mok (mok_cl@eelab.usyd.edu.au)
+
 
 -------------------------------------------------------
 -- Calendar Support Tables
@@ -27,11 +27,11 @@ create table cal_party_prefs (
                                 on delete cascade,
           -- default_view stores whether the user wants 
           -- list, month, day, week, or year as his/her default view.
-        default_view            varchar(10)
+        default_view            varchar2(10)
                                 default 'day'
                                 constraint cal_pty_prefs_default_view_ck
                                 check (default_view in (
-					'list', 
+                                        'list', 
                                         'day',  
                                         'week', 
                                         'month', 
@@ -44,29 +44,26 @@ create table cal_party_prefs (
                                 constraint cal_pty_prefs_default_duration
                                 check (default_duration > 0),
           -- the default starting time in daily view in military time 00 - 23
-        daily_start             --number(2)
-				numeric(2,0) 
+        daily_start             number(2) 
                                 default 07
                                 constraint cal_pty_prefs_daily_start
-                                check (daily_start < 24 and daily_start > -1),
+                                check (daily_start < 24 and daily_start > -1),                  
           -- the default ending time in daily view in military time 00 -23
-        daily_end               --number(2)
-				numeric(2,0)
+        daily_end               number(2)
                                 default 18
-                                constraint cal_pty_prefs_daily_end 
+                                constraint cal_pty_prefs_daily_end            
                                 check (daily_end < 24 and daily_end > 0),
           -- which time zone does the user belong to
         time_zone               integer 
                                 constraint cal_pty_prefs_time_zone_fk
-                                --references timezones
-                                --on delete cascade
-				check (time_zone > 0),
+                                references timezones
+                                on delete cascade,                              
           -- which day to start the week, monday or sunday
-        first_day_of_week       varchar(9)
+        first_day_of_week       varchar2(9)
                                 default 'Sunday'
                                 constraint cal_pty_prefs_1st_day_ck
                                 check (first_day_of_week in (
-				        'Sunday', 
+                                        'Sunday', 
                                         'Monday', 
                                         'Tuesday', 
                                         'Wednesday', 
@@ -113,10 +110,10 @@ comment on column cal_party_prefs.daily_end is '
         default to 18 or 6 pm
 ';
 
---comment on column cal_party_prefs.time_zone is '
---        The time zone that the user is in. This is useful in sending out 
---        reminders and other applications
---';
+comment on column cal_party_prefs.time_zone is '
+        The time zone that the user is in. This is useful in sending out 
+        reminders and other applications
+';
 
 comment on column cal_party_prefs.first_day_of_week is '
         Which day of the week will be displayed first in month and week view    

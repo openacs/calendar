@@ -5,22 +5,27 @@
 -- @creation-date Nov 17, 2000
 -- @cvs-id $Id$
 --
--- @ported by Charles Mok (mok_cl@eelab.usyd.edu.au)
+
 
 ---------------------------------------------------------- 
---  Drop Support Table
+--  drop cal_item
 ----------------------------------------------------------
 
-DROP TABLE cal_party_prefs;
+  -- drop attributes and acs_object_type
+begin
+  acs_attribute.drop_attribute ('cal_item','on_which_calendar');
+  acs_object_type.drop_type ('cal_item');
+end;
+/
+show errors
 
 
+  -- drop package	  
+drop package cal_item;
 
 
-
-
-
-
-
+  -- drop table  
+drop table cal_items;
 
 
 

@@ -4,6 +4,7 @@
 -- @creation-date Nov 17, 2000
 -- @cvs-id $Id$
 --
+-- ported by Charles Mok (mok_cl@eelab.usyd.edu.au)
 
 ------------------------------------------------------------------
 -- calendar system permissions 

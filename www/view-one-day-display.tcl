@@ -60,7 +60,10 @@ set additional_select_clause ""
 set order_by_clause " order by name"
 set interval_limitation_clause [db_map dbqd.calendar.www.views.day_interval_limitation] 
 
-db_foreach dbqd.calendar.www.views.select_items {} {
+#AG: the "select_all_day_items" query is identical to "select_items"
+#just without the Oracle +ORDERED hint, which speeds every other
+#query but slows this one.
+db_foreach dbqd.calendar.www.views.select_all_day_items {} {
     # reset url stub
     set url_stub ""
     
@@ -74,6 +77,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
 	set url_stub $url_stubs($calendar_id)
     }
 
+    
     set event_url [subst $item_template]
     multirow append items_without_time $name $event_url $calendar_name $status_summary 
 }
@@ -105,7 +109,10 @@ for {set i 0 } { $i < 24 } { incr i } {
 set additional_limitations_clause " and (to_char(start_date, 'HH24:MI') <> '00:00' or to_char(end_date, 'HH24:MI') <> '00:00')"
 set order_by_clause " order by to_char(start_date,'HH24')"
 set day_items_per_hour {}
+
 db_foreach dbqd.calendar.www.views.select_items {} {
+
+
     set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
     set ansi_end_date [lc_time_system_to_conn $ansi_end_date]
 
@@ -122,10 +129,10 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         if { $start_hour == $item_current_hour } {
 
             lappend day_items_per_hour \
-                [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
+                [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time $calendar_id]
         } else {
             lappend day_items_per_hour \
-                [list $item_current_hour {} $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
+                [list $item_current_hour {} $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time $calendar_id]
         }
         incr items_per_hour($item_current_hour)
     }
@@ -172,15 +179,18 @@ foreach this_item $day_items_per_hour {
 
     # reset url stub
     set url_stub ""
+
     # In case we need to dispatch to a different URL (ben)
     if {![empty_string_p $url_stub_callback]} {
         # Cache the stuff
-        if {![info exists url_stubs($calendar_id)]} {
-            set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
+     
+	if {![info exists url_stubs([lindex $this_item 9])]} {
+            set url_stubs([lindex $this_item 9]) [$url_stub_callback [lindex $this_item 9]]
         }
         
-        set url_stub $url_stubs($calendar_id)
+	    set url_stub $url_stubs([lindex $this_item 9])
     }
+
 
     set item [lindex $this_item 1]
     set item_id [lindex $this_item 2]

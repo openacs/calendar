@@ -37,7 +37,7 @@
                 </else>
     
                 <td width="10%" class="cal-day-time">     
-                  <a href="@items.add_url@">@items.localized_current_hour@</a>
+                  <a href="@items.add_url@">@items.localized_current_hour@</a> 
                 </td>
     
                 <group column="current_hour">

@@ -134,6 +134,9 @@ ad_form -extend -name cal_item -validate {
 	set time_p 1 
     } else {
 	set time_p 0
+	set start_hour $start_time
+	set start_time "{} {} {} 0 0 {} {HH24:MI}"
+	set end_time "{} {} {} 0 0 {} {HH24:MI}"
     }
 } -edit_request {
     calendar::item::get -cal_item_id $cal_item_id -array cal_item

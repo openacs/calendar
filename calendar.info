@@ -17,6 +17,7 @@
         <requires url="acs-datetime" version="4.0"/>
         <requires url="acs-events" version="0.1d"/>
         <requires url="acs-lang" version="5.0.0a5"/>
+        <requires url="notifications" version="5.0.0b4"/>
         <requires url="ref-timezones" version="5.0.0a5"/>
 
         <callbacks>

@@ -9,7 +9,8 @@ ad_page_contract {
     @cvs-id $Id$
 } {
     {action add}
-    {date now}
+    {date ""}
+    {julian_date ""}
     {cal_item_id 0}
     {start_time "now"}
     {end_time "now"}
@@ -30,6 +31,14 @@ ad_page_contract {
 
     calendars:multirow
 
+}
+
+if {[empty_string_p $date]} {
+    if {[empty_string_p $julian_date]} {
+        set date now
+    } else {
+        set date [db_string select_from_julian "select to_date(:julian_date ,'J') from dual"]
+    }
 }
  
 

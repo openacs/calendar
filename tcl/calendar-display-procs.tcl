@@ -13,9 +13,9 @@ namespace eval calendar {
 
     ad_proc -public one_month_display {
         {-calendar_id_list ""}
-        {-one_day_link ""}
-        {-one_item_link ""}
-        {-item_add_link ""}
+        {-day_template "<a href=?julian_date=\$julian_date>\$day_number</a>"}
+        {-item_template "<a href=?action=edit&cal_item_id=\$item_id>\$item</a>"}
+        {-item_add_template ""}
         {-date ""}
     } {
         Creates a month widget with events for that month
@@ -38,26 +38,18 @@ namespace eval calendar {
             set calendar_name [calendar_get_name $calendar_id]
 
             db_foreach select_monthly_items {} {
-                set item "$name ($calendar_name)"
-                if {![empty_string_p $one_item_link]} {
-                    set item "<a href=${one_item_link}$item_id>$item</a><br>"
-                }
+                set item "$name"
+                set item "[subst $item_template]<br>"
 
-                ns_set put $items  $start_date $item
+                ns_set put $items $start_date $item
             }            
         }
         
         # Display stuff
-        if {[empty_string_p $one_day_link]} {
-            set one_day_template {$day_number}
+        if {[empty_string_p $item_add_template]} {
+            set day_number_template "<font size=1>$day_template</font>"
         } else {
-            set one_day_template "<a href=$one_day_link\$day_number>\$day_number</a>"
-        }
-
-        if {[empty_string_p $item_add_link]} {
-            set day_number_template "<font size=1>$one_day_template</font>"
-        } else {
-            set day_number_template "<font size=1><a href=${item_add_link}>ADD</a> &nbsp; &nbsp; $one_day_template</font>"
+            set day_number_template "<font size=1>$item_add_template &nbsp; &nbsp; $day_template</font>"
         }
 
         return [dt_widget_month -calendar_details $items -date $date -day_number_template $day_number_template -today_bgcolor #cccccc]
@@ -65,9 +57,9 @@ namespace eval calendar {
 
     ad_proc -public one_week_display {
         {-calendar_id_list ""}
-        {-one_day_link ""}
-        {-one_item_link ""}
-        {-item_add_link ""}
+        {-day_template "<a href=?date=\$julian>\$day</a>"}
+        {-item_template "<a href=?action=edit&cal_item_id=\$item_id>\$item</a>"}
+        {-item_add_template ""}
         {-date ""}
     } {
         Creates a week widget
@@ -97,9 +89,7 @@ namespace eval calendar {
 
             db_foreach select_week_items {} {
                 set item "$pretty_start_date - $pretty_end_date: $name ($calendar_name)"
-                if {![empty_string_p $one_item_link]} {
-                    set item "<a href=${one_item_link}$item_id>$item</a><br>"
-                }
+                set item "[subst $item_template]<br>"
 
                 ns_set put $items $start_date $item
             }
@@ -107,16 +97,11 @@ namespace eval calendar {
         }
 
         # display stuff
-        if {[empty_string_p $one_day_link]} {
-            set one_day_template {$day}
-        } else {
-            set one_day_template "<a href=$one_day_link\$julian>\$day</a>"
-        }
         
-        if {[empty_string_p $item_add_link]} {
-            set day_number_template "$one_day_template"
+        if {[empty_string_p $item_add_template]} {
+            set day_number_template "$day_template"
         } else {
-            set day_number_template "$one_day_template &nbsp; &nbsp; <a href=${item_add_link}>(ADD)</a>"
+            set day_number_template "$day_template &nbsp; &nbsp; $item_add_template"
         }
         
         return [dt_widget_week -calendar_details $items -date $date -day_template $day_number_template -today_bgcolor #cccccc]
@@ -156,20 +141,20 @@ namespace eval calendar {
         # Loop through the calendars
         foreach calendar_id $calendar_id_list {
             set calendar_name [calendar_get_name $calendar_id]
-            ns_log Notice "bma: one calendar $calendar_name"
+            # ns_log Notice "bma: one calendar $calendar_name"
 
             db_foreach select_day_items {} {
                 set item "$pretty_start_date - $pretty_end_date: $name ($calendar_name)"
                 set item [subst $item_template]
 
-                ns_log Notice "bma-calendar: adding $item at $start_hour"
+                # ns_log Notice "bma-calendar: adding $item at $start_hour"
                 ns_set put $items $start_hour $item
             }
 
         }
 
         set hour {$display_hour}
-        set start_time {$hour:00}
+        set start_time {$hour}
         
         set hour_template [subst $hour_template]
         

@@ -10,7 +10,8 @@ ad_page_contract {
 } {
     {view day}
     {action view}
-    {date now}
+    {date ""}
+    {julian_date ""}
     {calendar_list:multiple,optional {}}
     {return_url ""}
 } -properties {
@@ -21,6 +22,13 @@ ad_page_contract {
     view:onevalue
 }
 
+if {[empty_string_p $date]} {
+    if {[empty_string_p $julian_date]} {
+        set date now
+    } else {
+        set date [db_string select_from_julian "select to_date(:julian_date ,'J') from dual"]
+    }
+}
 
 # find out the user_id 
 set user_id [ad_verify_and_get_user_id]

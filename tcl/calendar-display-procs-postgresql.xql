@@ -124,13 +124,15 @@ in       (
 <fullquery name="calendar::list_display.select_list_items">
 <querytext>
 	select   to_char(start_date, 'HH24') as start_hour,
+         to_char(start_date, 'YYYY-MM-DD') as pretty_start_date,
+         to_char(start_date, 'HH24:MI:SS') as start_time,
          to_char(start_date, 'YYYY-MM-DD HH24:MI:SS') as ansi_start_date,
+         to_char(end_date, 'YYYY-MM-DD') as pretty_end_date,
          to_char(end_date, 'YYYY-MM-DD HH24:MI:SS') as ansi_end_date,
          coalesce(e.name, a.name) as name,
-         coalesce(e.status_summary, a.status_summary) as status_summary,
          e.event_id as item_id,
-         recurrence_id,
-         (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type
+         (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type,
+         to_char(start_date, 'Day') as pretty_weekday
 from     acs_activities a,
          acs_events e,
          timespans s,

@@ -38,28 +38,28 @@ element create cal_item calendar_id \
         -label "Calendar ID" -datatype integer -widget hidden -value $calendar_id
 
 element create cal_item title \
-        -label "Title" -datatype text -widget text -html {size 60}
+        -label "[_ calendar.Title_1]" -datatype text -widget text -html {size 60}
 
 element create cal_item date \
-        -label "Date" -datatype date -widget date
+        -label "[_ calendar.Date_1]" -datatype date -widget date
 
 element create cal_item time_p \
-        -label "&nbsp;" -datatype text -widget radio -options {{{All Day Event} 0} {{Use Hours Below:} 1}}
+        -label "&nbsp;" -datatype text -widget radio -options [list [list "[_ calendar.All_Day_Event]" 0] [list "[_ calendar.Use_Hours_Below]" 1]]
 
 element create cal_item start_time \
-        -label "Start Time" -datatype date -widget date -format "HH12:MI AM" -optional
+        -label "[_ calendar.Start_Time]" -datatype date -widget date -format "HH12:MI AM" -optional
 
 element create cal_item end_time \
-        -label "End Time" -datatype date -widget date -format "HH12:MI AM" -optional
+        -label "[_ calendar.End_Time]" -datatype date -widget date -format "HH12:MI AM" -optional
 
 element create cal_item description \
-        -label "Description" -datatype text -widget textarea -html {cols 60 rows 3 wrap soft}
+        -label "[_ calendar.Description]" -datatype text -widget textarea -html {cols 60 rows 3 wrap soft}
 
 element create cal_item item_type_id \
-        -label "Type" -datatype integer -widget select -options [calendar::get_item_types -calendar_id $calendar_id] -optional
+        -label "[_ calendar.Type_1]" -datatype integer -widget select -options [calendar::get_item_types -calendar_id $calendar_id] -optional
 
 element create cal_item repeat_p \
-        -label "Repeat?" -datatype text -widget radio -options {{Yes 1} {No 0}} -value 0
+        -label "[_ calendar.Repeat_1]" -datatype text -widget radio -options [list [list "[_ calendar.Yes]" 1] [list "[_ calendar.No]" 0]] -value 0
 
 # Process the form
 if {[form is_valid cal_item]} {

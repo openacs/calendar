@@ -8,24 +8,24 @@
 
 
 <master>
-<property name="title">Calendar Administration for User # @user_id@</property>
+<property name="title">#calendar.lt_Calendar_Administrati_1# # @user_id@</property>
 <property name="context">@context_bar@</property>
 
 
 <p>
-Your are in the following group: <br>
+#calendar.lt_Your_are_in_the_follo# <br>
 @data@
 </p>
 
 <if @calendars:rowcount@ eq 0>
   <p>
-    <i>You have no party wide calendars</i>
+    <i>#calendar.lt_You_have_no_party_wid#</i>
   </p>
 </if>
 
 <else>
   <p>
-  You can manage the following calendars
+  #calendar.lt_You_can_manage_the_fo#
   <table>
    <multiple name=calendars>
      <tr>
@@ -42,16 +42,17 @@ Your are in the following group: <br>
 
 <p>
 <a href="one?party_id=@user_id@&action=add">
-Create a new calendar
+#calendar.lt_Create_a_new_calendar#
 </a>
 </p>
 
 
 <p>
 <a href="calendar-preferences">
-Edit your Calendar Preferences
+#calendar.lt_Edit_your_Calendar_Pr#
 </a>
 </p>
+
 
 
 

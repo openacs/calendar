@@ -36,7 +36,7 @@ element create cals return_url \
     -datatype text -widget hidden -value $return_url
 
 element create cals calendar_id \
-    -label "Calendar" -datatype text -widget select \
+    -label "[_ calendar.Calendar]" -datatype text -widget select \
     -options $cals_calendar_list
 
 # Process the form

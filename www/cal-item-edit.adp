@@ -1,6 +1,6 @@
 <master>
-<property name="title">Calendar: Edit Item</property>
-<property name="context">Edit</property>
+<property name="title">#calendar.Calendar_Edit_Item#</property>
+<property name="context">#calendar.Edit#</property>
 
 <table width="95%">
 
@@ -20,3 +20,4 @@
   </tr>
 </table>
 </if>
+

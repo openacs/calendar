@@ -1,6 +1,6 @@
 <master>
-<property name="title">Calendar: Choose Calendar</property>
-<property name="context">Choose</property>
+<property name="title">#calendar.lt_Calendar_Choose_Calen#</property>
+<property name="context">#calendar.Choose#</property>
 
 <table width="95%">
 
@@ -20,3 +20,4 @@
   </tr>
 </table>
 </if>
+

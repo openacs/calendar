@@ -8,11 +8,11 @@
 
 
 <master>
-<property name="title">Calendar Administration@title@ </property>
+<property name="title">#calendar.lt_Calendar_Administrati#: @title@ </property>
 <property name="context">@context@</property>
 
 <if @action@ eq view>
-	Calendar detail: listing all the info about the individual calendar
+	#calendar.lt_Calendar_detail_listi#
 </if>
 
 
@@ -34,12 +34,12 @@
 <tr>
   <td>
     <p>
-      <b> Audiences for calendar: @calendar_name@ </b>
+      <b> #calendar.lt_Audiences_for_calenda#: @calendar_name@ </b>
     </p>
 	
     <if @audiences:rowcount@ eq 0>
       <p>
-        <i>There are no audiences for this calendar
+        <i>#calendar.lt_There_are_no_audience#
       </p>
     </if>
 
@@ -57,7 +57,7 @@
     </else>
 
     <a href="calendar-permissions?calendar_id=@calendar_id@&action=add">
-      Add a new Audience
+      #calendar.Add_a_new_Audience#
     </a>	
     
   </td>
@@ -71,14 +71,14 @@
   <if @action@ eq add>
     <p>
 
-    <b>DEVELOPER NOTE:</b>
+    <b>#calendar.DEVELOPER_NOTE#</b>
 
-    the calendar creation process involves the following steps:
+    #calendar.lt_the_calendar_creation#
 
     <ol>
-      <li> create the calendar object, and change the default permission if needed
-      <li> select groups and/or users who are going to the audiences of the calendar
-      <li> apply group, user specific permissions as needed
+      <li> #calendar.lt_create_the_calendar_o#
+      <li> #calendar.lt_select_groups_andor_u#
+      <li> #calendar.lt_apply_group_user_spec#
     </ol>
 
     </p>
@@ -98,7 +98,7 @@
 		
     <tr>
       <td valign=top align=right>
-	<b> Calendar Name </b>
+	<b> #calendar.Calendar_Name# </b>
       </td>
 
       <td valign=top align=left>
@@ -115,7 +115,7 @@
 
     <tr>
       <td valign=top align=right>
-	<b> Calendar Permissions </b>
+	<b> #calendar.Calendar_Permissions_1# </b>
       </td>
 
       <td valign=top align=left>
@@ -123,8 +123,8 @@
 	  <if @action@ eq edit>
 	    <option value="@calendar_permission@" selected> @calendar_permission@
 	  </if>
-	  <option value="private"> private
-	  <option value="public"> public
+	  <option value="private"> #calendar.private#
+	  <option value="public"> #calendar.public#
 	</select>	
       </td>
     </tr>
@@ -133,16 +133,15 @@
       <td colspan=2 valign=top align=left>
 
 	<ul>
-	  <li><b>Public:</b> everyone have read permission, and can see the items, registered 
-	          and un-reg-ed users alike.
-	  <li><b>Private:</b> only those you choose to be the audience of the calendar can see the items.
+	  <li><b>#calendar.Public#</b> #calendar.lt_everyone_have_read_pe#
+	  <li><b>#calendar.Private#</b> #calendar.lt_only_those_you_choose#
 	</ul>
       </td>	
     </tr>
 
     <tr>
       <td colspan=2 valign=top align=left>
-	<input type=submit>
+	<input type=submit value="#calendar.Submit_query#">
       </td>		
     </tr>
 		
@@ -150,9 +149,10 @@
 
   <p>
     <a href="one?calendar_id=@calendar_id@&action=permission"> 
-      Manage Calendar Audiences
+      #calendar.lt_Manage_Calendar_Audie#
     </a>
   </p>
 
 </form>
 </else>
+

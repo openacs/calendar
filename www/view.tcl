@@ -25,7 +25,7 @@ set date [calendar::adjust_date -date $date -julian_date $julian_date]
 # Set up some template
 set item_template "<a href=\"cal-item-view?cal_item_id=\$item_id\">\$item</a>"
 set hour_template "<a href=\"cal-item-new?date=\[ns_urlencode \$date]&start_time=\$start_time&end_time=\$end_time\">\$hour</a>"
-set item_add_template "<a href=\"cal-item-new?julian_date=\$julian_date&start_time=&end_time=\">ADD</a>"
+set item_add_template "<a href=\"cal-item-new?julian_date=\$julian_date&start_time=&end_time=\">[_ calendar.ADD]</a>"
 
 # Depending on the view, make a different widget
 if {$view == "day"} {
@@ -42,7 +42,7 @@ if {$view == "day"} {
 if {$view == "week"} {
     set cal_stuff [calendar::one_week_display \
             -item_template $item_template \
-            -day_template "<font size=-1><b>\$day</b> - <a href=\"view?date=\[ns_urlencode \$date]&view=day\">\$pretty_date</a> &nbsp; &nbsp; <a href=\"cal-item-new?date=\$date&start_time=&end_time=\">(Add Item)</a></font>" \
+            -day_template "<font size=-1><b>\$day</b> - <a href=\"view?date=\[ns_urlencode \$date]&view=day\">\$pretty_date</a> &nbsp; &nbsp; <a href=\"cal-item-new?date=\$date&start_time=&end_time=\">([_ calendar.Add_Item])</a></font>" \
             -date $date \
             -calendar_id_list $calendar_list \
             -prev_week_template "<a href=\"view?date=\[ns_urlencode \$last_week]&view=week\">&lt;</a>" \

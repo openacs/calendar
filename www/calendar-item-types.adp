@@ -1,5 +1,5 @@
 <master>
-<property name="title">Calendar Item Types</property>
+<property name="title">#calendar.Calendar_Item_Types#</property>
 <property name="context">@context@</property>
 
 <ul>
@@ -18,7 +18,8 @@ foreach item_type $item_types {
 </ul>
 <form method="post" action="item-type-new">
 <input type="hidden" name="calendar_id" value="@calendar_id@" />
-New Type: <input type="text" name="type" size="40" />
-<input type="submit" value="add" />
+#calendar.New_Type# <input type="text" name="type" size="40" />
+<input type="submit" value="#calendar.add#" />
 </form>
+
 

@@ -13,12 +13,11 @@
     <input type=hidden name=calendar_id value=@calendar_id@>
     <input type=hidden name=confirm value=yes>
     <p>	
-      Are you sure you want to delete this calendar. All the calendar items
-      and all the permission that's associated with this calendar will be 
-      deleted as well. 
+      #calendar.lt_Are_you_sure_you_want# 
     </p>	
 
-    <input type=submit value="YES, I AM SURE!">	
+    <input type=submit value="#calendar.Yes_I_am_sure#">	
 
   </form>
 </if>
+

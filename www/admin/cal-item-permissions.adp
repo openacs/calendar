@@ -7,20 +7,20 @@
 -->
 
 <master>
-<property name="title">Calendar Item Administration </property>
-<property name="context"> "Calendar Item Permissions" </property>
+<property name="title">#calendar.lt_Calendar_Item_Adminis# </property>
+<property name="context"> #calendar.lt_Calendar_Item_Permiss# </property>
 
 <if @action@ eq list>
   <table>
     <tr>
        <td>
         <p>
-          <b> Audiences for item: @cal_item_name@ </b>
+          <b> #calendar.Audiences_for_item#: @cal_item_name@ </b>
         </p>
 	
         <if @audiences:rowcount@ eq 0>
           <p>
-            <i>There are no audiences for this calendar
+            <i>#calendar.lt_There_are_no_audience#
           </p>
         </if>
 
@@ -39,7 +39,7 @@
         </else>
 
         <a href="cal-item-permissions?cal_item_id=@cal_item_id@&action=add">
-          Add a new Audience
+          #calendar.Add_a_new_Audience#
         </a>	
     
       </td>
@@ -51,11 +51,11 @@
 
 
 <if @action@ eq view>
-<b> Current Permissions </b>
+<b> #calendar.Current_Permissions# </b>
 
 <if @privileges:rowcount@ eq 0>
   <p>		
-    <li>no privilege has been granted
+    <li>#calendar.lt_no_privilege_has_been#
   </p>
 </if>
 
@@ -64,7 +64,7 @@
     <ul>
     <multiple name=privileges>	 
       <li>@privileges.privilege@  
-	[<a href="cal-item-permissions?cal_item_id=@cal_item_id@&action=revoke&party_id=@party_id@&permission=@privileges.privilege@">            revoke
+	[<a href="cal-item-permissions?cal_item_id=@cal_item_id@&action=revoke&party_id=@party_id@&permission=@privileges.privilege@">            #calendar.revoke#
 	 </a>]</li>
     </multiple>
     </ul>
@@ -74,7 +74,7 @@
 
 <if @action@ eq view or @action@ eq add>
   <!-- simple UI to grand permission -->
-  <b> Grant Permissions </b>
+  <b> #calendar.Grant_Permissions# </b>
 
   <p>
   <form action=cal-item-permissions method=post>
@@ -88,12 +88,12 @@
     <table>
       <tr>
         <td>
-          <input type=submit value="Grant >>">
+          <input type=submit value="#calendar.Grant#">
         </td>
 
         <td>
           <if @cal_item_permissions:rowcount@ eq 0>
-            <li>no privilege exist. contact your system admin
+            <li>#calendar.lt_no_privilege_exist_co#
           </if>
 
           <else>
@@ -108,9 +108,9 @@
 
         <td>
           <if @action@ eq add>
-	    to
+	    #calendar.to#
             <if @parties:rowcount@ eq 0>
-              <li> no parties exist. contact your system admin
+              <li> #calendar.lt_no_parties_exist_cont#
             </if>
      
             <else>
@@ -129,6 +129,7 @@
   </form>
 
 </if>
+
 
 
 

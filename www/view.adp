@@ -1,6 +1,6 @@
 <master>
-<property name="title">Calendars</property>
-<property name="context">Calendar</property>
+<property name="title">#calendar.Calendars#</property>
+<property name="context">#calendar.Calendar#</property>
 
 <table width="95%">
 
@@ -20,3 +20,4 @@
   </tr>
 </table>
 </if>
+

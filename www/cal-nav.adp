@@ -10,7 +10,8 @@
 @html@
 
 <p>
-<li><a href=?date=@date@&view=@view@&action=add> add an event </a>
+<li><a href=?date=@date@&view=@view@&action=add> #calendar.add_an_event# </a>
+
 
 
 

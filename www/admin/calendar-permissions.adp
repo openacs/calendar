@@ -1,14 +1,14 @@
 <master>
-<property name="title">Calendar Administration: @party_name@ </property>
-<property name="context">"Calendar Permissions"</property>
+<property name="title">#calendar.lt_Calendar_Administrati#: @party_name@ </property>
+<property name="context">#calendar.Calendar_Permissions#</property>
 
 
 <if @action@ eq view>
-<b> Current Permissions </b>
+<b> #calendar.Current_Permissions# </b>
 
 <if @privileges:rowcount@ eq 0>
   <ul>		
-    <li>no privilege has been granted
+    <li>#calendar.lt_no_privilege_has_been#
   </ul>
 </if>
 
@@ -18,7 +18,7 @@
     <multiple name=privileges>	 
       <li>@privileges.privilege@  
 	[<a href="calendar-permissions?calendar_id=@calendar_id@&action=revoke&party_id=@party_id@&permission=@privileges.privilege@">            
-	  revoke
+	  #calendar.revoke#
 	 </a>]</li>
     </multiple>
     </ul>
@@ -28,7 +28,7 @@
 
 <if @action@ eq view or @action@ eq add>
 <!-- simple UI to grand permission -->
-<b> Grant Permissions </b>
+<b> #calendar.Grant_Permissions# </b>
 <p>
 <form action=calendar-permissions method=post>
 <input type=hidden name=action value=grant>
@@ -41,14 +41,14 @@
 <table>
   <tr>
     <td>
-      <input type=submit value="Grant >>">
+      <input type=submit value="#calendar.Grant#">
     </td>
 
     <td> 
       <select name=permission>
 
       <if @calendar_permissions:rowcount@ eq 0>
-        <li>no privilege exist. contact your system admin
+        <li>#calendar.lt_no_privilege_exist_co#
       </if>
  
       <else>
@@ -62,9 +62,9 @@
 
     <td>
       <if @action@ eq add>
-	to
+	#calendar.to#
         <if @parties:rowcount@ eq 0>
-          <li> no parties exist. contact your system admin
+          <li> #calendar.lt_no_parties_exist_cont#
         </if>
      
         <else>
@@ -81,6 +81,7 @@
 </form>
 
 </if>
+
 
 
 

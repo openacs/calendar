@@ -7,30 +7,28 @@
      	@cvs-id $Id$
 -->
 <master>
-<property name="title">Calendar Administration: @party_name@ </property>
-<property name="context"> "Calendar Preferences" </property>
+<property name="title">#calendar.lt_Calendar_Administrati#: @party_name@ </property>
+<property name="context"> #calendar.Calendar_Preferences# </property>
 
 
 <table>
 
   <tr>
     <td width=400 colspan=2 align=center> 
-      <b> Select Calendars </b>
+      <b> #calendar.Select_Calendars# </b>
     </td>
   </tr>
 
   <tr>
     <td width=400 colspan=3 align=left> 
-      <b> Note </b> The following is a  list of calendars that is accessible to you. 
-      This list will show up on your calendar as an option for you to see events between
-      these calendars. You can select which calendar you want to keep on that list.
+      <b> #calendar.Note# </b> #calendar.lt_The_following_is_a__l#
     </td>
   </tr>
 
   <if @calendars:rowcount@ eq 0>
     <tr>
       <td colspan=3> 
-         No Calendars 
+         #calendar.No_Calendars# 
       </td>
     </tr>
   </if>
@@ -63,7 +61,7 @@
 
       <tr>
       <td colspan=2>
-        <input type=submit value="Hide Checked Calendars">
+        <input type=submit value="#calendar.lt_Hide_Checked_Calendar#">
       </td>	
     </tr>
    </form>
@@ -71,6 +69,7 @@
  </else>
 
 </table>
+
 
 
 

@@ -25,7 +25,7 @@
 <table>
   <tr>
     <td valign=top align=right> 
-      <b>Title</b>
+      <b>#calendar.Title_1#</b>
     </td>
 
     <td valign=top align=left> 
@@ -35,7 +35,7 @@
 
   <tr>
     <td valign=top align=right> 
-      <b>Date</b>
+      <b>#calendar.Date_1#</b>
     </td>
 
     <td valign=top align=left> 
@@ -47,12 +47,12 @@
 
   <tr>
     <td></td><td valign=top align=left>
-      <INPUT <if @no_time_p@ eq 0>CHECKED</if> TYPE=radio name=no_time_p value=0>Use Hours Below &nbsp; &nbsp; <INPUT <if @no_time_p@ eq 1>CHECKED</if> TYPE=radio name=no_time_p value=1>No Time
+      <INPUT <if @no_time_p@ eq 0>CHECKED</if> TYPE=radio name=no_time_p value=0>Use Hours Below &nbsp; &nbsp; <INPUT <if @no_time_p@ eq 1>CHECKED</if> TYPE=radio name=no_time_p value=1>#calendar.No_Time#
     </td>
 </tr>
 <tr>
     <td valign=top align=right> 
-      <b>Start Time</b>
+      <b>#calendar.Start_Time#</b>
     </td>
 
     <td valign=top align=left> 
@@ -62,7 +62,7 @@
 
   <tr>
     <td valign=top align=right> 
-      <b>End Time</b>
+      <b>#calendar.End_Time#</b>
     </td>
 
     <td valign=top align=left> 
@@ -72,7 +72,7 @@
 
   <tr>
     <td valign=top align=right> 
-      <b>Description</b>
+      <b>#calendar.Description#</b>
     </td>
 
     <td valign=top align=left> 
@@ -83,7 +83,7 @@
   <if @action@ eq add or @action@ eq edit>
   <if @force_calendar_id@ not nil>
   <tr>
-  <td align=right valign=top><b>Item Type</b></td>
+  <td align=right valign=top><b>#calendar.Item_Type#</b></td>
   <td valign=top align=left>
   <SELECT name=item_type_id>
   <OPTION VALUE=""> --
@@ -115,7 +115,7 @@ foreach one_item_type $cal_item_types {
       <else>
 
         <td valign=top align=right>
-	  <b> Calendar </b>
+	  <b> #calendar.Calendar# </b>
         </td>
 	
 	<td valign=top align=left>
@@ -125,7 +125,7 @@ foreach one_item_type $cal_item_types {
           </if>
           <else>
 	  <select name=calendar_id>	
-	    <option value="-1"> Private
+	    <option value="-1"> #calendar.Private_1#
             <multiple name=calendars>	    
  	      <option value=@calendars.calendar_id@>@calendars.calendar_name@	  
 	    </multiple>
@@ -140,11 +140,11 @@ foreach one_item_type $cal_item_types {
   <if @action@ eq add>
   <tr>
   <td valign=top align=right>
-  <b>Repeat?</b>
+  <b>#calendar.Repeat_1#</b>
   </td>
   <td>
   <INPUT TYPE=radio CHECKED name=recurrence_p value=0> No &nbsp; &nbsp; &nbsp;
-  <INPUT TYPE=radio name=recurrence_p value=1> Yes
+  <INPUT TYPE=radio name=recurrence_p value=1> #calendar.Yes#
   </td>
   </tr>
   </if>
@@ -155,11 +155,11 @@ foreach one_item_type $cal_item_types {
   </td>
   <td>
   <if @recurrence_id@ nil>
-  This event is a single, non-recurring event
+  #calendar.lt_This_event_is_a_singl#
   </if><else>
-  This event is <b>repeated</b>:<br>
-<input type="radio" name="edit_all_p" value="1" CHECKED> Edit ALL instances of this event<br>
-<input type="radio" name="edit_all_p" value="0"> Edit only THIS instance<p>
+  #calendar.This_event_is# <b>#calendar.repeated#</b>:<br>
+<input type="radio" name="edit_all_p" value="1" CHECKED> #calendar.lt_Edit_ALL_instances_of#<br>
+<input type="radio" name="edit_all_p" value="0"> #calendar.lt_Edit_only_THIS_instan#<p>
   </else>
   </td>
   </tr>
@@ -169,16 +169,16 @@ foreach one_item_type $cal_item_types {
     <td valign=top colspan=2 align=left>
       <if @edit_p@ eq 1>
         <if @action@ eq add>
-        <input type=submit value="Add Item <if @force_calendar_id@ not nil>to @force_calendar_name@</if>">
+        <input type=submit value="#calendar.Add_Item# <if @force_calendar_id@ not nil>#calendar.to# @force_calendar_name@</if>">
         </if>
         <else>
-        <input type=submit value="Edit Item">
+        <input type=submit value="#calendar.Edit_Item#">
         </else>
       </if>
 
    <if @delete_p@ eq 1> 
       <if @action@ eq edit or @action@ eq delete>       
-            <a href=cal-item-edit?action=delete&cal_item_id=@cal_item_id@&return_url=@return_url@>Delete</if></a>
+            <a href=cal-item-edit?action=delete&cal_item_id=@cal_item_id@&return_url=@return_url@>#calendar.Delete#</if></a>
       </if>
    </if>
    </td>
@@ -191,7 +191,7 @@ foreach one_item_type $cal_item_types {
         <td colspan=2>
       	  <!-- Commented out by Ben (OpenACS) - this is hardwired and isn't well thought out yet
 <li> <a href="/calendar/admin/cal-item-permissions?cal_item_id=@cal_item_id@"> 
-      	         Manage the audience to this calendar item
+      	         #calendar.lt_Manage_the_audience_t#
 	       </a> -->
         </td>
       </tr>
@@ -200,6 +200,7 @@ foreach one_item_type $cal_item_types {
 </table>
 
 </form>
+
 
 
 

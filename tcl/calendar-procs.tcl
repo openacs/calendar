@@ -103,22 +103,6 @@ ad_proc calendar_make_date { event_date } {
 
 
 #------------------------------------------------
-# should probably roll this one into the pl/sql since 
-# note: not sure how useful this is going to be
-
-ad_proc calendar_have_group_cal_p { party_id } {
-    
-    figures out if the given party_id have an existing calendar. 
- 
-   
-} {
-
-    return [db_0or1row get_calendar_info ""]
-    
-}
-
-
-#------------------------------------------------
 # figure out if user have a private calendar or not
 # again, best suited to be rolled into the pl/sql
 
@@ -274,18 +258,6 @@ ad_proc calendar_create_private { private_id } {
     return $calendar_id
 }
 
-
-#------------------------------------------------
-# find out if the name of a calendar has already 
-# been taken 
-
-#ad_proc calendar_name_exist_p { calendar_name } {
-    
-    #since calendar_name is unique, this proc determines
-    #if a given name is already used
-#} {
-    
-#}
 
 #------------------------------------------------
 # update a calendar

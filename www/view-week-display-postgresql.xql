@@ -24,15 +24,16 @@ select   to_char(start_date, :ansi_date_format) as ansi_start_date,
          e.event_id as item_id,
          (to_date(start_date,:ansi_date_format)  - to_date(:first_weekday_of_the_week_tz,
          :ansi_date_format)) as day_of_week,
-         (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type,
          cals.calendar_id,
-	 cals.calendar_name
+	 cals.calendar_name,
+         cit.type as item_type
 from     acs_activities a,
          acs_events e,
          timespans s,
          time_intervals t,
-         cal_items ci,
-         calendars cals
+         calendars cals,
+         cal_items ci left join
+         cal_item_types cit on cit.item_type_id = ci.item_type_id
 where    e.timespan_id = s.timespan_id
 and      s.interval_id = t.interval_id
 and      e.activity_id = a.activity_id

@@ -26,12 +26,15 @@
 
         <else>
           <p>
+            <ul>
             <multiple name=audiences>
 	      <li> 
               <a href="cal-item-permissions?cal_item_id=@cal_item_id@&party_id=@audiences.party_id@&action=view">
                 @audiences.name@            
 	      </a>
+              </li>
             </multiple>
+            </ul>
           </p>
         </else>
 
@@ -58,11 +61,13 @@
 
 <else>
   <p>
+    <ul>
     <multiple name=privileges>	 
       <li>@privileges.privilege@  
 	[<a href="cal-item-permissions?cal_item_id=@cal_item_id@&action=revoke&party_id=@party_id@&permission=@privileges.privilege@">            revoke
-	 </a>]
+	 </a>]</li>
     </multiple>
+    </ul>
   </p>
 </else>
 </if>

@@ -25,7 +25,7 @@ if { [string equal $action "edit"] } {
     calendar_update $calendar_id $party_id $calendar_name $calendar_permission
 }
 
-ad_returnredirect "/calendar/admin"
+ad_returnredirect "."
 
 
 

@@ -133,7 +133,11 @@ ad_proc calendar_create { owner_id
     set package_id [ad_conn package_id]
     set creation_ip [ad_conn "peeraddr"]
     set creation_user [ad_conn "user_id"]
-
+    
+    # BMA:FIXME: this needs to be fixed a LOT more, but for now we patch the obvious
+    if {$creation_user == 0}{
+        set creation_user $owner_id
+    }
 
     set calendar_id [db_exec_plsql create_new_calendar {
 	begin

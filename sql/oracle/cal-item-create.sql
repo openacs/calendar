@@ -56,7 +56,7 @@ create table cal_items (
         on_which_calendar       integer
                                 constraint cal_item_which_cal_fk
                                 references calendars
-                                on delete cascade
+                                on delete cascade,
         item_type_id            integer,
         constraint cal_items_type_fk
         foreign key (on_which_calendar, item_type_id)

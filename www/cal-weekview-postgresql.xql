@@ -8,9 +8,9 @@
       
 select   to_char(to_date(:current_date, 'yyyy-mm-dd'), 'D') 
 as       day_of_the_week,
-         to_char(next_day(to_date(:current_date, 'yyyy-mm-dd')-7, 'SUNDAY')) 
+         to_char(next_day(to_date(:current_date, 'yyyy-mm-dd')-7, 'SUNDAY'),'DAY') 
 as       sunday_of_the_week,
-         to_char(next_day(to_date(:current_date, 'yyyy-mm-dd'), 'Saturday')) 
+         to_char(next_day(to_date(:current_date, 'yyyy-mm-dd'), 'Saturday'),'DAY') 
 as       saturday_of_the_week
 from     dual
 

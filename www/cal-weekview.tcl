@@ -176,11 +176,11 @@ set row_html "
 while {$i < $num_hour_rows} {
     
     set sql "
-    select  to_char(next_day(to_date(:current_date, 'yyyy-mm-dd')-7, 'SUNDAY')+:i, 'DAY') 
+    select  to_char(next_day(to_date(:current_date, 'yyyy-mm-dd')-7, 'SUNDAY')+$i, 'DAY') 
     as      weekday,
-            to_char(next_day(to_date(:current_date, 'yyyy-mm-dd')-7, 'SUNDAY')+:i, 'YYYY-MM-DD') 
+            to_char(next_day(to_date(:current_date, 'yyyy-mm-dd')-7, 'SUNDAY')+$i, 'YYYY-MM-DD') 
             as pretty_date,
-            to_char(next_day(to_date(:current_date, 'yyyy-mm-dd')-7, 'SUNDAY')+:i, 'J') 
+            to_char(next_day(to_date(:current_date, 'yyyy-mm-dd')-7, 'SUNDAY')+$i, 'J') 
             as start_date
     from    dual
     "

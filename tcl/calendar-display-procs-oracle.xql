@@ -71,6 +71,7 @@ in       (
          from    cal_items
          where   on_which_calendar = :calendar_id
          )
+order by start_date
 </querytext>
 </fullquery>
 

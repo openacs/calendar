@@ -74,7 +74,7 @@ namespace eval calendar {
             set day_number_template "<font size=1>$item_add_template &nbsp; &nbsp; $day_template</font>"
         }
 
-        return [dt_widget_month -calendar_details $items -date $date -day_number_template $day_number_template -today_bgcolor #cccccc]
+        return [dt_widget_month -calendar_details $items -date $date -day_number_template $day_number_template]
     }
 
     ad_proc -public one_week_display {
@@ -84,6 +84,8 @@ namespace eval calendar {
         {-item_add_template ""}
         {-date ""}
         {-url_stub_callback ""}
+        {-prev_week_template ""}
+        {-next_week_template ""}
     } {
         Creates a week widget
 
@@ -120,13 +122,22 @@ namespace eval calendar {
             }
 
             db_foreach select_week_items {} {
-                set item "$pretty_start_date - $pretty_end_date: $name ($calendar_name)"
-                set item "[subst $item_template]<br>"
+                set item "$name"
+                set item_details "[subst $item_template]"
+                
+                # Add time details
+                if {[dt_no_time_p -start_time $start_date -end_time $end_date]} {
+                    set time_details ""
+                } else {
+                    set time_details "<b>$pretty_start_date - $pretty_end_date</b>:"
+                }
+
+                set item "$time_details $item_details <font size=-1>($calendar_name)</font><br>"
 
                 if { [string length $status_summary] > 0 } {
                     append item " <font color=\"red\">$status_summary</font> "
                 }
-                ns_log Notice "CALENDAR-WEEK: one item $item"
+                # ns_log Notice "CALENDAR-WEEK: one item $item"
 
                 ns_set put $items $start_date_julian $item
             }
@@ -141,7 +152,7 @@ namespace eval calendar {
             set day_number_template "$day_template &nbsp; &nbsp; $item_add_template"
         }
         
-        return [dt_widget_week -calendar_details $items -date $date -day_template $day_number_template -today_bgcolor #cccccc]
+        return [dt_widget_week -calendar_details $items -date $date -day_template $day_number_template -prev_week_template $prev_week_template -next_week_template $next_week_template]
         
     }
 

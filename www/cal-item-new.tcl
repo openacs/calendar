@@ -38,7 +38,7 @@ element create cal_item calendar_id \
         -label "Calendar ID" -datatype integer -widget hidden -value $calendar_id
 
 element create cal_item title \
-        -label "Title" -datatype text -widget text -html {size 60}
+        -label "Title" -datatype text -widget text -html {size 60 maxlength 255}
 
 element create cal_item date \
         -label "Date" -datatype date -widget date

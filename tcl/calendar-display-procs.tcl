@@ -306,7 +306,6 @@ namespace eval calendar {
 		append item " <font color=\"red\">$status_summary</font> "
 	    }
 	    
-	    # ns_log Notice "bma-calendar: adding $item at $start_hour"
 	    ns_set put $items $ns_set_pos [list $start_date $end_date $item]
         }
 
@@ -363,7 +362,6 @@ namespace eval calendar {
             }
             
             db_foreach select_list_items {} {
-                ns_log Notice "BMA-CHECK: test $name"
                 set item "$name"
                 set item [subst $item_template]
                 

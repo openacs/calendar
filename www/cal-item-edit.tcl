@@ -55,8 +55,6 @@ if {[form is_valid cal_item]} {
     set start_date [calendar::to_sql_datetime -date $date -time $start_time -time_p $time_p]
     set end_date [calendar::to_sql_datetime -date $date -time $end_time -time_p $time_p]
 
-    ns_log Notice "BMA3: $repeat_p"
-
     # Do the edit
     calendar::item::edit -cal_item_id $cal_item_id \
             -start_date $start_date \

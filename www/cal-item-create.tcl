@@ -94,11 +94,10 @@ if { [string equal $calendar_id "-1"] } {
 
     # now we make sure that the user has the permission 
     # to create the event on the calendar
-    
-    ad_require_permission $user_id cal_item_create
-    
 
+    ad_require_permission $calendar_id cal_item_create
 }
+
 
 # create new cal_item
 set cal_item_id [cal_item_create $start_datetime \

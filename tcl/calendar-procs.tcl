@@ -12,6 +12,8 @@ ad_library {
 
 }
 
+namespace eval calendar {}
+
 
 #------------------------------------------------
 # datetime info extraction
@@ -183,12 +185,7 @@ ad_proc calendar_assign_permissions { calendar_id
 
     if { [string equal $cal_privilege "public"] } {
 	
-	db_1row get_magic_id {
-	    select  acs.magic_object_id('the_public')
-	            as party_id
-	    from    dual
-	}
-
+        set party_id [acs_magic_object "the_public"]
 	set cal_privilege "calendar_read"
     } elseif { [string equal $cal_privilege "private"] } {
 	set cal_privilege "calendar_read"
@@ -246,8 +243,6 @@ ad_proc calendar_public_p { calendar_id } {
 
 }
 
-
-namespace eval calendar {}
 
 ad_proc -public calendar::get_month_multirow_information {
     {-current_day:required}

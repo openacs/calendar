@@ -105,7 +105,7 @@ as
         ) return cal_items.cal_item_id%TYPE;
  
           -- delete cal_item
-        procedure delete (
+        procedure del (
                 cal_item_id             in cal_items.cal_item_id%TYPE
         );
 
@@ -200,7 +200,7 @@ as
         
         end new;
  
-        procedure delete (
+        procedure del (
                 cal_item_id             in cal_items.cal_item_id%TYPE
         )
         is
@@ -208,14 +208,14 @@ as
         begin
                   -- Erase the cal_item assoicated with the id
                 delete from     cal_items
-                where           cal_item_id = cal_item.delete.cal_item_id;
+                where           cal_item_id = cal_item.del.cal_item_id;
                 
                   -- Erase all the privileges
                 delete from     acs_permissions
-                where           object_id = cal_item.delete.cal_item_id;
+                where           object_id = cal_item.del.cal_item_id;
 
-                acs_event.delete(cal_item_id);
-        end delete;
+                acs_event.del(cal_item_id);
+        end del;
                   
         procedure delete_all (
                 recurrence_id           in acs_events.recurrence_id%TYPE
@@ -226,10 +226,10 @@ as
                     (select * from acs_events 
                     where recurrence_id = delete_all.recurrence_id)
                 LOOP
-                        cal_item.delete(v_event_id.event_id);
+                        cal_item.del(v_event_id.event_id);
                 end LOOP;
 
-                recurrence.delete(recurrence_id);
+                recurrence.del(recurrence_id);
         end delete_all;
                 
           -- functions to return the name of the cal_item

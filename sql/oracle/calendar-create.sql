@@ -267,7 +267,7 @@ as
 
         ) return calendars.calendar_id%TYPE;
  
-        procedure delete (
+        procedure del (
                 calendar_id             in calendars.calendar_id%TYPE
         );
 
@@ -403,7 +403,7 @@ as
 
 
           -- body for procedure delete
-        procedure delete (
+        procedure del (
                 calendar_id             in calendars.calendar_id%TYPE
         )
         is
@@ -411,11 +411,11 @@ as
         begin
                   -- First erase all the item relate to this calendar.
                 delete from     calendars 
-                where           calendar_id = calendar.delete.calendar_id;
+                where           calendar_id = calendar.del.calendar_id;
  
                   -- Delete all privileges associate with this calendar
                 delete from     acs_permissions 
-                where           object_id = calendar.delete.calendar_id;
+                where           object_id = calendar.del.calendar_id;
 
                   -- Delete all privilges of the cal_items that's associated 
                   -- with this calendar
@@ -423,12 +423,12 @@ as
                 where           object_id in (
                                         select  cal_item_id
                                         from    cal_items
-                                        where   on_which_calendar = calendar.delete.calendar_id                                                                                                                                                         
+                                        where   on_which_calendar = calendar.del.calendar_id                                                                                                                                                         
                                 );
                         
  
-                acs_object.delete(calendar_id);
-        end delete;
+                acs_object.del(calendar_id);
+        end del;
  
 
 

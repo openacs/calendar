@@ -71,7 +71,7 @@
       <querytext>
       
 	begin
-	  cal_item.delete (
+	  cal_item.del (
 	    cal_item_id  => :cal_item_id
 	  );
 	end;

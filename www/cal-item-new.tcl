@@ -111,8 +111,14 @@ ad_form -extend -name cal_item -validate {
     }
 } -new_request {
     set date [template::util::date::from_ansi $date]
-    set time_p 0
     set repeat_p 0
+    if {[info exists start_time] && ![empty_string_p $start_time]} {
+	# Set the start time
+	set start_time "{} {} {} $start_time 0 {} {HH24:MI}"
+	set time_p 1 
+    } else {
+	set time_p 0
+    }
 } -edit_request {
     calendar::item::get -cal_item_id $cal_item_id -array cal_item
     set cal_item_id $cal_item(cal_item_id)

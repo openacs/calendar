@@ -12,7 +12,7 @@ set current_date $date
 if {[info exists portlet_mode_p] && $portlet_mode_p} {
     set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=[ad_urlencode "../"]&action=edit&cal_item_id=\$item_id"
     set url_stub_callback "calendar_portlet_display::get_url_stub"
-    set hour_template "calendar/cal-item-new?date=foofoo$current_date&start_time=\$day_current_hour"
+    set hour_template "calendar/cal-item-new?date=$current_date&start_time=\$day_current_hour"
 } else {
     set item_template "cal-item-view?cal_item_id=\$item_id"
     set url_stub_callback ""

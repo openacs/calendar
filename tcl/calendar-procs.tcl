@@ -44,6 +44,12 @@ ad_proc calendar_make_datetime {
                 if {$hours < 12} {
                     incr hours 12
                 }
+            } else {
+                # This is the case where we're dealing with AM/PM
+                # The one issue we have to worry about is 12am
+                if {!$event_time_arr(ampm) && $hours == 12} {
+                    set hours 0
+                }
             }
         }
         

@@ -16,11 +16,11 @@
 
 <table class="table-display" border=0 cellspacing=0 cellpadding=2>
   <tr class="table-header">
-  <th align=left>Day of Week</th>
-  <th align="center"><a href="@start_date_url@">Start Date</a></th>
-  <th align="center">Start Time</th>
-  <th align="center">End Time</th>
-  <th align="center"><a href="@item_type_url@">Type</a></th>
+  <th align=left>#acs-datetime.Day_of_Week#</th>
+  <th align="center"><a href="@start_date_url@">#calendar.Date_1#</a></th>
+  <th align="center">#calendar.Start_Time#</th>
+  <th align="center">#calendar.End_Time#</th>
+  <th align="center"><a href="@item_type_url@">#calendar.Type_1#</a></th>
   <th align=left>Title</th></tr>
 
 <multiple name="calendar_items">

@@ -35,15 +35,15 @@ if {[empty_string_p $start_date] && [empty_string_p $end_date]} {
 }
 
 if {[empty_string_p $start_date] && ![empty_string_p $end_date]} {
-    set title "Items until [util_AnsiDatetoPrettyDate $end_date]"
+    set title "[_ acs-datetime.to] [util_AnsiDatetoPrettyDate $end_date]"
 }
 
 if {![empty_string_p $start_date] && [empty_string_p $end_date]} {
-    set title "Items starting [util_AnsiDatetoPrettyDate $start_date]"
+    set title "[_ acs-datetime.Items_from] [util_AnsiDatetoPrettyDate $start_date]"
 }
 
 if {![empty_string_p $start_date] && ![empty_string_p $end_date]} {
-    set title "Items from [util_AnsiDatetoPrettyDate $start_date] to [util_AnsiDatetoPrettyDate $end_date]"
+    set title "[_ acs-datetime.Items_from] [util_AnsiDatetoPrettyDate $start_date] [_ acs-datetime.to] [util_AnsiDatetoPrettyDate $end_date]"
 }
 
 set today_date [dt_sysdate]    

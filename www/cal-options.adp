@@ -1,6 +1,6 @@
 <if @calendars:rowcount@ gt 0>
 <p>
-Calendars:
+#calendar.Calendars#:
 <ul>
 <multiple name="calendars">
 <li> @calendars.calendar_name@

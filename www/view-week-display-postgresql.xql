@@ -7,10 +7,10 @@
 <querytext>
         select   to_char(to_date(:start_date, 'YYYY-MM-DD'), 'D') 
         as       day_of_the_week,
-        to_char(next_day(to_date(:start_date, 'YYYY-MM-DD')- '1 week'::interval, 'Sunday'), 'YYYY-MM-DD')
-        as       sunday_of_the_week,
-        to_char(next_day(to_date(:start_date, 'YYYY-MM-DD'), 'Saturday'), 'YYYY-MM-DD')
-        as       saturday_of_the_week
+        to_char(next_day(to_date(:start_date, 'YYYY-MM-DD')- '1 week'::interval, :first_us_weekday), 'YYYY-MM-DD')
+        as       first_weekday_of_the_week,
+        to_char(next_day(to_date(:start_date, 'YYYY-MM-DD'), :last_us_weekday), 'YYYY-MM-DD')
+        as       last_weekday_of_the_week
         from     dual
 </querytext>
 </fullquery>
@@ -35,8 +35,8 @@ where    e.timespan_id = s.timespan_id
 and      s.interval_id = t.interval_id
 and      e.activity_id = a.activity_id
 and      start_date between
-         to_date(:sunday_of_the_week_system, :ansi_date_format) and
-         to_date(:saturday_of_the_week_system, :ansi_date_format)
+         to_date(:first_weekday_of_the_week_system, :ansi_date_format) and
+         to_date(:last_weekday_of_the_week_system, :ansi_date_format)
 and      cals.package_id= :package_id
 and      (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))
 and      cals.calendar_id = ci.on_which_calendar
@@ -49,34 +49,14 @@ order by to_char(start_date, 'J'), to_char(start_date,'HH24:MI')
 <querytext>
 select   to_char(to_date(:start_date, 'YYYY-MM-DD'), 'D') 
 as day_of_the_week,
-cast(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), 'Sunday') as date)
-as sunday_date,
-to_char(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), 'Sunday'),'J') 
-as sunday_julian,
-cast(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), 'Sunday') + cast('1 day' as interval) as date)
-as monday_date,
-to_char(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), 'Sunday') + cast('1 day' as interval),'J')
-as monday_julian,
-cast(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), 'Sunday') + cast('2 days' as interval) as date)
-as tuesday_date,
-to_char(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), 'Sunday') + cast('2 days' as interval),'J') 
-as tuesday_julian,
-cast(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), 'Sunday') + cast('3 days' as interval) as date)
-as wednesday_date,
-to_char(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), 'Sunday') + cast('3 days' as interval),'J') 
-as wednesday_julian,
-cast(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), 'Sunday') + cast('4 days' as interval) as date)
-as thursday_date,
-to_char(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), 'Sunday') + cast('4 days' as interval),'J') 
-as thursday_julian,
-cast(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), 'Sunday') + cast('5 days' as interval) as date)
-as friday_date,
-to_char(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), 'Sunday') + cast('5 days' as interval),'J') 
-as friday_julian,
-cast(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), 'Sunday') + cast('6 days' as interval) as date)
-as saturday_date,
-to_char(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), 'Sunday') + cast('6 days' as interval),'J') 
-as saturday_julian,
+cast(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), :first_us_weekday) as date)
+as first_weekday_date,
+to_char(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), :first_us_weekday),'J') 
+as first_weekday_julian,
+cast(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), :first_us_weekday) + cast('6 days' as interval) as date)
+as last_weekday_date,
+to_char(next_day(to_date(:start_date, 'YYYY-MM-DD') - cast('7 days' as interval), :first_us_weekday) + cast('6 days' as interval),'J') 
+as last_weekday_julian,
 cast(:start_date::timestamptz - cast('7 days' as interval) as date) as last_week,
 to_char(:start_date::timestamptz - cast('7 days' as interval), 'Month DD, YYYY') as last_week_pretty,
 cast(:start_date::timestamptz + cast('7 days' as interval) as date) as next_week,

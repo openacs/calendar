@@ -26,7 +26,7 @@
       <img border=0 src="/shared/images/left.gif"></a>
       <td class="cal-month-title-text" colspan="2">@curr_year@</td>
       <td align="right" class="cal-month-title">
-      @prev_year_url;noquote@
+      @next_year_url;noquote@
       <img border=0 src="/shared/images/right.gif"></a>
     </if>
     <else>
@@ -127,17 +127,17 @@
   <font size=-2>
   
   <if @today_p@ eq t>
-    <b>Today</b>
+    <b>#acs_datetime.Today#</b>
   </if>
   <else>
     <a href="@today_url;noquote@">
-    <b>Today</b></a> 
+    <b>#acs_datetime.Today#</b></a> 
   </else>
   
-  is <%=[dt_ansi_to_pretty]%></font></td></tr>
+  #acs_datetime.is# <%=[dt_ansi_to_pretty]%></font></td></tr>
   <tr><td align=center><br>
   <form method=get action=@base_url@>
-  <INPUT TYPE=text name=date size=10> <INPUT type=image src="/shared/images/go.gif" alt="Go" border=0><br><font size=-2>Date as YYYYMMDD</font>
+  <INPUT TYPE=text name=date size=10> <INPUT type=image src="/shared/images/go.gif" alt="Go" border=0><br><font size=-2>#acs-datetime.Date_as_YYYYMMDD#</font>
   <INPUT TYPE=hidden name=view value=day>
   @form_vars;noquote@
   </form>

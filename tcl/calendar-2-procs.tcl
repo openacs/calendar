@@ -17,55 +17,28 @@ namespace eval calendar {
         @author Dirk Gomez (openacs@dirkgomez.de)
         @creation-date 20-July-2003
     } {
-        i18n_display_parameters
+        set first_day_of_week [lc_get firstdayofweek]
+        set last_day_of_week [expr [expr $first_day_of_week + 6] % 7]
+
         if {$current_day == $today_julian_date} {
             set today_p t 
         } else {
             set today_p f
         }
         set day_number [expr $current_day - $first_julian_date_of_month +1]
-        set weekday [expr $current_day % 7]
-        
+        set weekday [expr [expr $current_day % 7] +1]
+
         set beginning_of_week_p f
         set end_of_week_p f
-        if {$weekday == $week_ends_on} {
+        if {$weekday == $last_day_of_week} {
             set end_of_week_p t
-        } elseif {$weekday == $week_begins_on} {
+        } elseif {$weekday == $first_day_of_week} {
             set beginning_of_week_p t
         }
         return [list day_number $day_number \
                     today_p $today_p \
                     beginning_of_week_p $beginning_of_week_p \
                     end_of_week_p $end_of_week_p]
-    }
-
-    ad_proc -public get_weekday_list {
-    } {
-        Return a list of the weekdays one letter each. You need to be wary
-        that your settings here coincide with other basic configuration
-        parameters.
-
-        Not-yet i18nized.
-        @author Dirk Gomez (openacs@dirkgomez.de)
-        @creation-date 20-July-2003
-    } {
-        # This will be retrieved from a apm_parameter or a user setting
-        return [list S M T W T F S]
-    }
-
-    ad_proc -public i18n_display_parameters {
-    } {
-        Basic parameters to make calendar displaying locale-dependent.
-
-        Not-yet i18nized.
-
-        @author Dirk Gomez (openacs@dirkgomez.de)
-        @creation-date 20-July-2003
-    } {
-        uplevel 1 {
-            set week_ends_on 5
-            set week_begins_on 6
-        }
     }
 
     ad_proc -public from_sql_datetime {

@@ -212,7 +212,7 @@ if {[catch {set tomor [clock format [clock scan "1 day" -base [clock scan $date]
     }
 }
 
-set dates "[util_AnsiDatetoPrettyDate $date]"
+set dates [lc_time_fmt $date "%q"]
 set ansi_list [split $date "- "]
 set ansi_year [lindex $ansi_list 0]
 set ansi_month [string trimleft [lindex $ansi_list 1] "0"]

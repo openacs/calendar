@@ -7,7 +7,7 @@
   @prev_month_url;noquote@
   <img src="/shared/images/left.gif" alt="back one month" border="0">
   </a>
-  <b>@month@ @year@</b>
+  <b>@month_string@ @year@</b>
   @next_month_url;noquote@
   <img src="/shared/images/right.gif" alt="forward one month" border="0"
   </a>

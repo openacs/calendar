@@ -24,7 +24,8 @@ db_1row get_item_data {
     nvl(a. name, e.name) as name,
     nvl(e.description, a.description) as description,
     calendar_name,
-    to_char(start_date, 'Day') as day_of_week,
+    to_char(start_date, 'D') as day_of_week,
+    to_char(start_date, 'Day') as pretty_day_of_week,
     to_char(start_date, 'DD') as day_of_month
     from     acs_activities a, acs_events e, timespans s, time_intervals t, calendars c, cal_items ci
     where    e.timespan_id = s.timespan_id

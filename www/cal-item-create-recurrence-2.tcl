@@ -13,7 +13,7 @@ ad_page_contract {
     every_n
     interval_type
     recur_until:array
-    {days_of_week ""}
+    days_of_week:multiple
     {return_url "./"}
 } 
 

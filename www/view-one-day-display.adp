@@ -21,7 +21,7 @@
           <if @day_items_without_time:rowcount@ gt 0>
             <multiple name="day_items_without_time">
             <tr class="cal-row-light">
-            <td width="1%" class="cal-day-time"><img border="0" align="left" src="no-time.gif" alt="No Time"></td>
+            <td width="1%" class="cal-day-time">@item_add_without_time;noquote@</td>
             <td class="cal-day-event-notime">@day_items_without_time.full_item;noquote@</td>
             </tr>
             </multiple>

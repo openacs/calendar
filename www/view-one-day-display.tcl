@@ -5,7 +5,6 @@
 # date (YYYY-MM-DD) - optional
 # start_display_hour and end_display_hour
 
-
 # Calendar-portlet makes use of this stuff
 if { ![info exists url_stub_callback] } {
     set url_stub_callback ""
@@ -24,11 +23,11 @@ if { ![info exists item_template] } {
 }
 
 if { ![info exists prev_nav_template] } {
-    set prev_nav_template {<a href=".?date=[ns_urlencode $yesterday]"><img border=0 src=\"[dt_left_arrow]\" alt=\"back one day\"></a>}
+    set prev_nav_template {<a href="view?view=day&date=[ns_urlencode $yesterday]"><img border=0 src=\"[dt_left_arrow]\" alt=\"back one day\"></a>}
 }
 
 if { ![info exists next_nav_template] } {
-    set next_nav_template {<a href=".?date=[ns_urlencode $tomorrow]"><img border=0 src=\"[dt_right_arrow]\" alt=\"forward one day\"></a>}
+    set next_nav_template {<a href="view?view=day&date=[ns_urlencode $tomorrow]"><img border=0 src=\"[dt_right_arrow]\" alt=\"forward one day\"></a>}
 }
 
 if { ![info exists show_calendar_name_p] } {
@@ -43,7 +42,7 @@ if { [info exists start_display_hour] && $start_display_hour > 0 } {
 }
 
 if { [info exists end_display_hour]  && $end_display_hour < 23 } {
-    set start_clause "and to_char(start_date, 'HH') < :end_display_hour"
+    set end_clause "and to_char(start_date, 'HH') < :end_display_hour"
 } else {
     set end_clause ""
     set end_display_hour 23
@@ -96,6 +95,10 @@ db_foreach select_day_items {} {
 
     multirow append day_items_without_time $name $status_summary $item_id $calendar_name $full_item
 }
+
+set day_current_hour 0
+set localized_day_current_hour {<img border="0" align="left" src="diamond.gif" alt="No Time">}
+set item_add_without_time [subst $hour_template]
 
 # Now items with time
 

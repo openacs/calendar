@@ -68,7 +68,7 @@ if {[form is_valid cal_item]} {
     # Set up the datetimes
     set start_date [calendar::to_sql_datetime -date $date -time $start_time -time_p $time_p]
     set end_date [calendar::to_sql_datetime -date $date -time $end_time -time_p $time_p]
-    
+
     set cal_item_id [calendar::item::new -start_date $start_date \
             -end_date $end_date \
             -name $title \

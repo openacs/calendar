@@ -3,6 +3,15 @@
 <queryset>
   <rdbms><type>postgresql</type><version>7.1</version></rdbms>
 
+    <fullquery name="calendar::item::dates_valid_p.dates_valid_p_select">
+      <querytext>
+        select CASE WHEN (:start_date::timestamp - :end_date::timestamp) < 0 
+                    THEN 1
+                    ELSE -1
+               END 
+      </querytext>
+    </fullquery>
+
     <fullquery name="calendar::item::get.select_item_data">      
       <querytext>
        select

@@ -9,6 +9,24 @@ ad_library {
 
 namespace eval calendar::item {
 
+    ad_proc -private dates_valid_p {
+        {-start_date:required}
+        {-end_date:required}
+    } {
+        A sanity check that the start time is before the end time. 
+    } {
+        # set the date_format for oracle - from cal_item_create
+        set date_format "YYYY-MM-DD HH24:MI"
+
+        set dates_valid_p [db_string dates_valid_p_select {}]
+
+        if {[string equal $dates_valid_p 1]} {
+            return 1
+        } else {
+            return 0
+        }
+    }
+
     ad_proc -public new {
         {-start_date:required}
         {-end_date:required}
@@ -17,8 +35,16 @@ namespace eval calendar::item {
         {-calendar_id:required}
         {-item_type_id ""}
     } {
-        # For now we call the old nasty version
-        return [cal_item_create $start_date $end_date $name $description $calendar_id [ad_conn peeraddr] [ad_conn user_id] $item_type_id]
+        # if the dates are invalid, don't create the item
+        if {[dates_valid_p -start_date $start_date -end_date $end_date]} {
+            # For now we call the old nasty version
+            return [cal_item_create $start_date $end_date $name $description $calendar_id [ad_conn peeraddr] [ad_conn user_id] $item_type_id]
+        } else {
+            # FIXME: do this better
+            ad_return_complaint 1 "Start Time must be before End Time"
+            ad_script_abort
+        }
+
     }
 
     ad_proc -public get {

@@ -3,6 +3,18 @@
 <queryset>
    <rdbms><type>oracle</type><version>8.1.6</version></rdbms>
 
+<fullquery name="calendar::item::dates_valid_p.dates_valid_p_select">      
+<querytext>
+          
+            select CASE WHEN (to_date(:start_date,:date_format) - to_date(:end_date,:date_format)) < 0 
+                        THEN 1
+                        ELSE -1
+                   END 
+            from dual
+
+</querytext>
+</fullquery>
+
 <fullquery name="calendar::item::get.select_item_data">      
 <querytext>
             

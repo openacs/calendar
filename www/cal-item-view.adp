@@ -88,7 +88,8 @@
       <if @write_p@ true>
         <a href="cal-item-new?cal_item_id=@cal_item_id@&return_url=@return_url@" class="button">#calendar.edit#</a>
         <a href="./cal-item-delete?cal_item_id=@cal_item_id@&return_url=@return_url@" class="button">#calendar.delete#</a>
-      </if>
+      	@attachment_options;noquote@
+	</if>
       <p><a href="ics/@cal_item_id@.ics" class="button">#calendar.sync_with_Outlook#</a> 
     </td>
   </tr>

@@ -71,8 +71,8 @@ namespace eval calendar::outlook {
         
         # For now we don't do recurrence
 
-        set DTSTART [ics_timestamp_format -timestamp $cal_item(ansi_start_date)]
-        set DTEND [ics_timestamp_format -timestamp $cal_item(ansi_end_date)]
+        set DTSTART [ics_timestamp_format -timestamp $cal_item(start_date_ansi)]
+        set DTEND [ics_timestamp_format -timestamp $cal_item(end_date_ansi)]
 
         # Put it together
         set ics_event "BEGIN:VCALENDAR\r\nPRODID:-//OpenACS//OpenACS 4.5 MIMEDIR//EN\r\nVERSION:2.0\r\nMETHOD:PUBLISH\r\nBEGIN:VEVENT\r\nDTSTART:$DTSTART\r\nDTEND:$DTEND\r\n"

@@ -84,7 +84,7 @@
     <a
     href="cal-item-new?cal_item_id=@cal_item_id@&return_url=@return_url@">#calendar.edit#</a>
     </td>
-    <td>Edit this calendar event</td>
+    <td>&nbsp;</td>
     </tr>
   </if>
 
@@ -94,15 +94,15 @@
     <a
     href="./cal-item-delete?cal_item_id=@cal_item_id@&return_url=@return_url@">#calendar.delete#</a> 
     </td>
-    <td>Delete this calendar event</td>
+    <td>&nbsp;</td>
     </tr>
   </if>
  
   <tr>
   <td class="cal-table-data-action">
-  <a href="ics/@cal_item_id@.ics">#calendar.single_event#</a> 
+  <a href="ics/@cal_item_id@.ics">#calendar.sync_with_Outlook#</a> 
   </td>
-  <td>#calendar.sync_with_Outlook#</td>
+  <td>&nbsp;</td>
   </tr>
 
   <if @cal_item.recurrence_id@ not nil>

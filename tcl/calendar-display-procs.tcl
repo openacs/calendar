@@ -166,6 +166,7 @@ namespace eval calendar {
 
         set hour {$display_hour}
         set start_time {$hour}
+        set end_time {$next_hour}
         
         set hour_template [subst $hour_template]
         

@@ -44,6 +44,11 @@
 
 
   <tr>
+    <td></td><td valign=top align=left>
+      <INPUT CHECKED TYPE=radio name=no_time_p value=0>Use Hours Below &nbsp; &nbsp; <INPUT TYPE=radio name=no_time_p value=1>No Time
+    </td>
+</tr>
+<tr>
     <td valign=top align=right> 
       <b>Start Time</b>
     </td>
@@ -106,7 +111,7 @@
 
 
   <tr>
-    <td valign=top colspan=2 align=right>
+    <td valign=top colspan=2 align=left>
       <if @edit_p@ eq 1>
         <if @action@ eq add>
         <input type=submit value="Add Item <if @force_calendar_id@ not nil>to @force_calendar_name@</if>">
@@ -115,7 +120,6 @@
         <input type=submit value="Edit Item">
         </else>
       </if>
-    </td>
     </form>
 
    <if @delete_p@ eq 1> 
@@ -126,7 +130,6 @@
 	  <input type=hidden name=cal_item_id value=@cal_item_id@>
 	  <td valign=top align=left>
             <input type=submit value=delete>
-          </td>
         </form>
       </if>
    </if>

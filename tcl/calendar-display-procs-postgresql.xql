@@ -12,7 +12,11 @@
 	         coalesce(e.name, a.name) as name,
 	         coalesce(e.description, a.description) as description,
                  coalesce(e.status_summary, a.status_summary) as status_summary,
-	         e.event_id as item_id
+	         e.event_id as item_id,
+		 (select on_which_calendar from cal_items where cal_item_id = e.event_id) as calendar_id,
+		 (select calendar_name from calendars 
+		 where calendar_id = (select on_which_calendar from cal_items where cal_item_id= e.event_id))
+		 as calendar_name
 	from     acs_activities a,
 	         acs_events e,
 	         timespans s,
@@ -24,7 +28,7 @@
 	in       (
 	         select  cal_item_id
 	         from    cal_items
-	         where   on_which_calendar = :calendar_id
+	         where   on_which_calendar in ([join $calendar_id_list ","])
          )
          order by start_date,end_date	
       </querytext>
@@ -35,9 +39,9 @@
 <querytext>
         select   to_char(to_date(:current_date, 'yyyy-mm-dd'), 'D') 
         as       day_of_the_week,
-        to_char(next_day(to_date(:current_date, 'yyyy-mm-dd')- '1 week'::timespan, 'Sunday'), 'D')
+        to_char(next_day(to_date(:current_date, 'yyyy-mm-dd')- '1 week'::timespan, 'Sunday'), 'YYYY-MM-DD')
         as       sunday_of_the_week,
-        to_char(next_day(to_date(:current_date, 'yyyy-mm-dd'), 'Saturday'), 'D')
+        to_char(next_day(to_date(:current_date, 'yyyy-mm-dd'), 'Saturday'), 'YYYY-MM-DD')
         as       saturday_of_the_week
         from     dual
 </querytext>
@@ -54,7 +58,11 @@ select   to_char(start_date, 'J') as start_date,
          coalesce(e.name, a.name) as name,
          coalesce(e.status_summary, a.status_summary) as status_summary,
          e.event_id as item_id,
-         (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type
+         (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type,
+	 (select on_which_calendar from cal_items where cal_item_id = e.event_id) as calendar_id,
+	 (select calendar_name from calendars 
+	 where calendar_id = (select on_which_calendar from cal_items where cal_item_id= e.event_id))
+	 as calendar_name
 from     acs_activities a,
          acs_events e,
          timespans s,
@@ -71,7 +79,7 @@ and      e.event_id
 in       (
          select  cal_item_id
          from    cal_items
-         where   on_which_calendar = :calendar_id
+         where   on_which_calendar in ([join $calendar_id_list ","])
          )
 </querytext>
 </fullquery>
@@ -86,7 +94,11 @@ in       (
          coalesce(e.name, a.name) as name,
          coalesce(e.status_summary, a.status_summary) as status_summary,
          e.event_id as item_id,
-         (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type
+         (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type,
+	 on_which_calendar as calendar_id,
+	 (select calendar_name from calendars 
+	 where calendar_id = on_which_calendar)
+	 as calendar_name
 from     acs_activities a,
          acs_events e,
          timespans s,
@@ -103,7 +115,7 @@ and      e.event_id
 in       (
          select  cal_item_id
          from    cal_items
-         where   on_which_calendar = :calendar_id
+         where   on_which_calendar in ([join $calendar_id_list ","])
          )
 	
 </querytext>

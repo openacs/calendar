@@ -44,41 +44,49 @@ namespace eval calendar {
         
         set items [ns_set create]
         
-        # Loop through calendars
-        foreach calendar_id $calendar_id_list {
-            set calendar_name [calendar_get_name $calendar_id]
+	
+	db_foreach select_monthly_items {} {
+	    # Calendar name now set in query
+	    # set calendar_name [calendar_get_name $calendar_id]
+	    
+	    # reset url stub
+	    set url_stub ""
 
-            # In case we need to dispatch to a different URL (ben)
-            if {![empty_string_p $url_stub_callback]} {
-                set url_stub [$url_stub_callback $calendar_id]
-            }
+	    # In case we need to dispatch to a different URL (ben)
+	    if {![empty_string_p $url_stub_callback]} {
+		# Cache the stuff
+		if {![info exists url_stubs($calendar_id)]} {
+		    set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
+		}
 
-            db_foreach select_monthly_items {} {
-                set item "$name"
-                set item "[subst $item_template]"
+		set url_stub $url_stubs($calendar_id)
+	    }
+	    
+	    set item "$name"
+	    set item "[subst $item_template]"
+	    
+	    if {![dt_no_time_p -start_time $start_time -end_time $end_time]} {
+		set item "<font size=-2><b>$start_time</b></font> $item"
+	    }
+	    
+	    if {$show_calendar_name_p} {
+		append item " <font size=-2>($calendar_name)</font>"
+	    }
+	    
+	    # DRB: This ugly hack was added for dotlrn-events, to give us a way to
+	    # flag event status in red in accordance with the spec.  When calendar
+	    # is rewritten we should come up with a way for objects derived from
+	    # acs-events to render their own name summary and full descriptions.
+	    
+	    if { [string length $status_summary] > 0 } {
+		append item " <font color=\"red\">$status_summary</font> "
+	    }
+	    
+	    append item "<br>"
+	    
+	    ns_set put $items $start_date $item
+	}            
 
-                if {![dt_no_time_p -start_time $start_time -end_time $end_time]} {
-                    set item "<font size=-2><b>$start_time</b></font> $item"
-                }
-                
-                if {$show_calendar_name_p} {
-                    append item " <font size=-2>($calendar_name)</font>"
-                }
-
-                # DRB: This ugly hack was added for dotlrn-events, to give us a way to
-                # flag event status in red in accordance with the spec.  When calendar
-                # is rewritten we should come up with a way for objects derived from
-                # acs-events to render their own name summary and full descriptions.
-
-                if { [string length $status_summary] > 0 } {
-                    append item " <font color=\"red\">$status_summary</font> "
-                }
-
-                append item "<br>"
-
-                ns_set put $items $start_date $item
-            }            
-        }
         
         # Display stuff
         if {[empty_string_p $item_add_template]} {
@@ -140,39 +148,43 @@ namespace eval calendar {
         db_1row select_weekday_info {}
 
         # Loop through the calendars
-        foreach calendar_id $calendar_id_list {
-            set calendar_name [calendar_get_name $calendar_id]
+	db_foreach select_week_items {} {
+	    ns_log Notice "ONE WEEK ITEM"
 
-            # In case we need to dispatch to a different URL (ben)
-            if {![empty_string_p $url_stub_callback]} {
-                set url_stub [$url_stub_callback $calendar_id]
-            }
+	    # now selected from the query
+	    # set calendar_name [calendar_get_name $calendar_id]
+	    
+	    # In case we need to dispatch to a different URL (ben)
+	    if {![empty_string_p $url_stub_callback]} {
+		# Cache the stuff
+		if {![info exists url_stubs($calendar_id)]} {
+		    set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
+		}
 
-            db_foreach select_week_items {} {
-                set item "$name"
-                set item_details "[subst $item_template]"
-                
-                # Add time details
-                if {[dt_no_time_p -start_time $start_date -end_time $end_date]} {
-                    set time_details ""
-                } else {
-                    set time_details "<b>$pretty_start_date - $pretty_end_date</b>:"
-                }
-
-                set item "$time_details $item_details"
-
-                if {$show_calendar_name_p} {
-                    append item "<font size=-1>($calendar_name)</font><br>"
-                }
-
-                if { [string length $status_summary] > 0 } {
-                    append item " <font color=\"red\">$status_summary</font> "
-                }
-                # ns_log Notice "CALENDAR-WEEK: one item $item"
-
-                ns_set put $items $start_date_julian $item
-            }
-
+		set url_stub $url_stubs($calendar_id)
+	    }
+	    
+	    set item "$name"
+	    set item_details "[subst $item_template]"
+	    
+	    # Add time details
+	    if {[dt_no_time_p -start_time $start_date -end_time $end_date]} {
+		set time_details ""
+	    } else {
+		set time_details "<b>$pretty_start_date - $pretty_end_date</b>:"
+	    }
+	    
+	    set item "$time_details $item_details"
+	    
+	    if {$show_calendar_name_p} {
+		append item "<font size=-1>($calendar_name)</font><br>"
+	    }
+	    
+	    if { [string length $status_summary] > 0 } {
+		append item " <font color=\"red\">$status_summary</font> "
+	    }
+	    
+	    ns_set put $items $start_date $item
         }
 
         # display stuff
@@ -226,57 +238,59 @@ namespace eval calendar {
         set items [ns_set create]
 
         # Loop through the calendars
-        foreach calendar_id $calendar_id_list {
-            set calendar_name [calendar_get_name $calendar_id]
-            # ns_log Notice "bma: one calendar $calendar_name"
+	db_foreach select_day_items {} {
+	    # Not needed anymore
+            # set calendar_name [calendar_get_name $calendar_id]
 
             # In case we need to dispatch to a different URL (ben)
             if {![empty_string_p $url_stub_callback]} {
-                set url_stub [$url_stub_callback $calendar_id]
+		# Cache the stuff
+		if {![info exists url_stubs($calendar_id)]} {
+		    set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
+		}
+
+		set url_stub $url_stubs($calendar_id)
             }
+	    
+	    set item_details ""
 
-            db_foreach select_day_items {} {
-                set item_details ""
-
-                if {$show_calendar_name_p} {
-                    append item_details $calendar_name
-                }
-
-                if {![empty_string_p $item_type]} {
-                    if {![empty_string_p $item_details]} {
-                        append item_details " - "
-                    }
-
-                    append item_details "$item_type"
-                }
-
-                set item $name
-                set item_subst [subst $item_template]
-
-                if {[dt_no_time_p -start_time $pretty_start_date -end_time $pretty_end_date]} {
-                    # Hack for no-time items
-                    set item "$item_subst"
-                    if {![empty_string_p $item_details]} {
-                        append item " <font size=-1>($item_details)</font>"
-                    }
-
-                    set ns_set_pos "X"
-                } else {
-                    set item "<b>$pretty_start_date - $pretty_end_date</b>: $item_subst"
-                    if {![empty_string_p $item_details]} {
-                        append item " <font size=-1>($item_details)</font>"
-                    }
-                    set ns_set_pos $start_hour
-                }
-
-                if { [string length $status_summary] > 0 } {
-                    append item " <font color=\"red\">$status_summary</font> "
-                }
-
-                # ns_log Notice "bma-calendar: adding $item at $start_hour"
-                ns_set put $items $ns_set_pos [list $start_date $end_date $item]
-            }
-
+	    if {$show_calendar_name_p} {
+		append item_details $calendar_name
+	    }
+	    
+	    if {![empty_string_p $item_type]} {
+		if {![empty_string_p $item_details]} {
+		    append item_details " - "
+		}
+		
+		append item_details "$item_type"
+	    }
+	    
+	    set item $name
+	    set item_subst [subst $item_template]
+	    
+	    if {[dt_no_time_p -start_time $pretty_start_date -end_time $pretty_end_date]} {
+		# Hack for no-time items
+		set item "$item_subst"
+		if {![empty_string_p $item_details]} {
+		    append item " <font size=-1>($item_details)</font>"
+		}
+		
+		set ns_set_pos "X"
+	    } else {
+		set item "<b>$pretty_start_date - $pretty_end_date</b>: $item_subst"
+		if {![empty_string_p $item_details]} {
+		    append item " <font size=-1>($item_details)</font>"
+		}
+		set ns_set_pos $start_hour
+	    }
+	    
+	    if { [string length $status_summary] > 0 } {
+		append item " <font color=\"red\">$status_summary</font> "
+	    }
+	    
+	    # ns_log Notice "bma-calendar: adding $item at $start_hour"
+	    ns_set put $items $ns_set_pos [list $start_date $end_date $item]
         }
 
         set hour {$display_hour}

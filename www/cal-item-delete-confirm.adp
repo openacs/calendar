@@ -9,7 +9,7 @@
 
 <master src="master">
 <property name="title">Calendar Item Delete: @cal_item.name@</property>
-<property name="context_bar">Delete</property>
+<property name="context">Delete</property>
 
 <table>
 

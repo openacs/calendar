@@ -8,7 +8,7 @@
 -->
 <master src="master">
 <property name="title">Calendar Administration: @party_name@ </property>
-<property name="context_bar"> "Calendar Preferences" </property>
+<property name="context"> "Calendar Preferences" </property>
 
 
 <table>

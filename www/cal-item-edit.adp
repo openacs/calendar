@@ -1,6 +1,6 @@
 <master src="master">
 <property name="title">Calendar: Edit Item</property>
-<property name="context_bar">Edit</property>
+<property name="context">Edit</property>
 
 <table width="95%">
 

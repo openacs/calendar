@@ -9,7 +9,7 @@
 
 <master src="master">
 <property name="title">Calendar Administration@title@ </property>
-<property name="context_bar"> @context_bar@ </property>
+<property name="context">@context@</property>
 
 <if @action@ eq view>
 	Calendar detail: listing all the info about the individual calendar

@@ -1,6 +1,6 @@
-<master>
+<master src="master">
 <property name="title">Calendar Item Types</property>
-<property name="context_bar">@context_bar@</property>
+<property name="context">@context@</property>
 
 <ul>
 <%
@@ -12,12 +12,13 @@ foreach item_type $item_types {
             continue
         }
 
-        template::adp_puts "<li> \[ <a href=\"item-type-delete?calendar_id=$calendar_id&item_type_id=$item_type_id\">delete</a> \]  &nbsp; $type\n"
+      template::adp_puts "<li> \[ <a href=\"item-type-delete?calendar_id=$calendar_id&item_type_id=$item_type_id\">delete</a> \]  &nbsp; $type</li>\n"
 }
 %>
-<form method=POST action=item-type-new>
-<INPUT TYPE=hidden name=calendar_id value=@calendar_id@>
-New Type: <INPUT TYPE=text name=type size=40>
-<INPUT TYPE=submit value=add>
-</FORM>
 </ul>
+<form method="post" action="item-type-new">
+<input type="hidden" name="calendar_id" value="@calendar_id@" />
+New Type: <input type="text" name="type" size="40" />
+<input type="submit" value="add" />
+</form>
+

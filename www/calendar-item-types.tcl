@@ -1,4 +1,3 @@
-
 ad_page_contract {
 
     Manage the calendar item types
@@ -16,8 +15,7 @@ ad_require_permission $calendar_id calendar_admin
 
 # List the item types and allow addition of a new one
 set item_types [calendar::get_item_types -calendar_id $calendar_id]
-set context_bar {{Item Types}}
+set context [list "Item Types"]
 
-ad_return_template
 
 

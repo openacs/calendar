@@ -1,6 +1,6 @@
 <master src="master">
 <property name="title">Calendars</property>
-<property name="context_bar">Calendar</property>
+<property name="context">Calendar</property>
 
 <table width="95%">
 

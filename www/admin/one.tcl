@@ -22,7 +22,7 @@ ad_page_contract {
     calendar_permission:onevalue
 
     title:onevalue
-    context_bar:onevalue
+    context:onevalue
 
     audiences:multirow
 }
@@ -41,7 +41,7 @@ if { [string equal $action "edit" ] } {
     if { ![empty_string_p $calendar_id] } {
 
 	#set context bar and title
-	set context_bar "Edit"
+	set context "Edit"
 	set title ": Edit a Calendar"
 
 	# get calendar name
@@ -63,7 +63,7 @@ if { [string equal $action "edit" ] } {
 } elseif { [string equal $action "add" ] } {
 
     #set context bar and title
-    set context_bar "Create"
+    set context "Create"
     set title ": Create a Calendar"
 
 
@@ -71,7 +71,7 @@ if { [string equal $action "edit" ] } {
 } elseif { [string equal $action "view"] } {
 
     #set context bar and title
-    set context_bar "Create"
+    set context "Create"
     set title ": Create a Calendar"
 
 
@@ -79,7 +79,7 @@ if { [string equal $action "edit" ] } {
 } elseif { [string equal $action "delete"] } {
 
     #set context bar and title
-    set context_bar "Delete"
+    set context "Delete"
     set title ": Delete a Calendar"
 
 
@@ -87,7 +87,7 @@ if { [string equal $action "edit" ] } {
 } elseif { [string equal $action "permission"] } {
 
     #set context bar and title
-    set context_bar "permissions"
+    set context "permissions"
     set title ": Manage Calendar Permissions"
 
     # get calendar_name

@@ -9,7 +9,7 @@
 
 <master src="master">
 <property name="title">Calendars: Repeating Event</property>
-<property name="context_bar">Repeat</property>
+<property name="context">Repeat</property>
 
 You are choosing to make this event recurrent, so that it appears more
 than once in your calendar. The event's details are:

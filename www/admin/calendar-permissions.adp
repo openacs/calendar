@@ -1,15 +1,6 @@
-<!--	
-	The template for assigning permission to audiences of 
-	the calendar
-	
-	@author Gary Jin (gjin@arsidigta.com)
-     	@creation-date Jan 09, 2000
-     	@cvs-id $Id$
--->
-
 <master src="master">
 <property name="title">Calendar Administration: @party_name@ </property>
-<property name="context_bar"> Calendar Permissions </property>
+<property name="context">"Calendar Permissions"</property>
 
 
 <if @action@ eq view>

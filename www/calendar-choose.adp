@@ -1,6 +1,6 @@
 <master src="master">
 <property name="title">Calendar: Choose Calendar</property>
-<property name="context_bar">Choose</property>
+<property name="context">Choose</property>
 
 <table width="95%">
 

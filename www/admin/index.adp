@@ -9,7 +9,7 @@
 
 <master src="master">
 <property name="title">Calendar Administration for User # @user_id@</property>
-<property name="context_bar">@context_bar@</property>
+<property name="context">@context_bar@</property>
 
 
 <p>

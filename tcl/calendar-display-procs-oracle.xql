@@ -9,6 +9,7 @@
 	select   to_char(start_date, 'j') as start_date,
 	         nvl(e.name, a.name) as name,
 	         nvl(e.description, a.description) as description,
+                 nvl(e.status_summary, a.status_summary) as status_summary,
 	         e.event_id as item_id
 	from     acs_activities a,
 	         acs_events e,
@@ -49,6 +50,7 @@ select   to_char(start_date, 'J') as start_date,
          to_char(start_date,'HH24:MI') as start_date,
          to_char(end_date,'HH24:MI') as end_date,
          nvl(e.name, a.name) as name,
+         nvl(e.status_summary, a.status_summary) as status_summary,
          e.event_id as item_id,
          (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type
 from     acs_activities a,
@@ -80,6 +82,7 @@ in       (
          to_char(start_date, 'HH24:MI') as start_date,
          to_char(end_date, 'HH24:MI') as end_date,
          nvl(e.name, a.name) as name,
+         nvl(e.status_summary, a.status_summary) as status_summary,
          e.event_id as item_id,
          (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type
 from     acs_activities a,
@@ -110,6 +113,7 @@ in       (
          to_char(start_date, 'HH:MIpm') as pretty_start_date,
          to_char(end_date, 'HH:MIpm') as pretty_end_date,
          nvl(e.name, a.name) as name,
+         nvl(e.status_summary, a.status_summary) as status_summary,
          e.event_id as item_id
 from     acs_activities a,
          acs_events e,

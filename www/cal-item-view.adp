@@ -37,7 +37,7 @@ foreach attachment $item_attachments {
     <if @edit_p@ eq 1><a href="cal-item-edit?cal_item_id=@cal_item_id@&return_url=@return_url@">edit</a> | <a href="./cal-item-delete?cal_item_id=@cal_item_id@&return_url=@return_url@">delete</a> @attachment_options@
 </if>
 <p>
-<a href="ics/@cal_item_id@.ics">sync with Outlook</a>
+sync with Outlook: <a href="ics/@cal_item_id@.ics">single event</a> <if @cal_item.recurrence_id@ not nil>| <a href="ics/@cal_item_id@.ics?all_occurences_p=1">all events</a></if>
     </td>
   </tr>
 </table>

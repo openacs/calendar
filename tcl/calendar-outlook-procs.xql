@@ -1,21 +1,14 @@
 <?xml version="1.0"?>
 <queryset>
 
-<fullquery name="calendar::outlook::format_item.select_calendar_item">      
+<fullquery name="calendar::outlook::format_item.select_recurrence">      
 <querytext>
 select 
-to_char(start_date, :date_format) as start_date,
-to_char(end_date, :date_format) as end_date,
-nvl(e.name,a.name) as name,
-nvl(e.description, a.description) as description,
-recurrence_id,
-item_type_id
-from acs_activities a, acs_events e, timespans s, time_intervals t, cal_items
-	where    e.timespan_id = s.timespan_id
-	and      s.interval_id = t.interval_id
-	and      e.activity_id = a.activity_id
-	and      e.event_id = :cal_item_id
-        and      cal_items.cal_item_id = :cal_item_id
+recurrence_id, recurrences.interval_type, interval_name,
+every_nth_interval, days_of_week, recur_until
+from recurrences, recurrence_interval_types
+where recurrence_id= :recurrence_id
+and recurrences.interval_type = recurrence_interval_types.interval_type
 </querytext>
 </fullquery>
 

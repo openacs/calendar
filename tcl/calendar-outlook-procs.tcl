@@ -52,7 +52,7 @@ namespace eval calendar::outlook {
 
     ad_proc -public format_item {
         {-cal_item_id:required}
-        {-all_occurences_p:boolean 0}
+        {-all_occurences_p 0}
         {-client_timezone 0}
     } {
         the cal_item_id is obvious.
@@ -63,9 +63,7 @@ namespace eval calendar::outlook {
     } {
         set date_format "YYYY-MM-DD HH24:MI:SS"
 
-        # Select the item information
-        db_1row select_calendar_item {}
-
+        calendar::item::get -cal_item_id $cal_item_id -array cal_item
         # If necessary, select recurrence information
 
         # Here we have some fields
@@ -73,17 +71,63 @@ namespace eval calendar::outlook {
         
         # For now we don't do recurrence
 
-        set DTSTART [ics_timestamp_format -timestamp $start_date]
-        set DTEND [ics_timestamp_format -timestamp $end_date]
+        set DTSTART [ics_timestamp_format -timestamp $cal_item(full_start_date)]
+        set DTEND [ics_timestamp_format -timestamp $cal_item(full_end_date)]
 
         # Put it together
         set ics_event "BEGIN:VCALENDAR\r\nPRODID:-//OpenACS//OpenACS 4.5 MIMEDIR//EN\r\nVERSION:2.0\r\nMETHOD:PUBLISH\r\nBEGIN:VEVENT\r\nDTSTART:$DTSTART\r\nDTEND:$DTEND\r\n"
 
-        regexp {^([0-9]*)T} $DTSTART all creation_date
-        set DESCRIPTION $description
-        set title $name
+        # Recurrence stuff
+        if {![empty_string_p $cal_item(recurrence_id)] && $all_occurences_p} {
 
-        append ics_event "LOCATION:Not Listed\r\nTRANSP:OPAQUE\r\nSEQUENCE:0\r\nUID:$cal_item_id\r\nDTSTAMP:$creation_date\r\nDESCRIPTION:$DESCRIPTION\r\nSUMMARY:$title\r\nPRIORITY:5\r\nCLASS:PUBLIC\r\n"
+            set recur_rule "RRULE:FREQ="
+
+            # Select recurrence info
+            set recurrence_id $cal_item(recurrence_id)
+            db_1row select_recurrence {} -column_array recurrence
+
+            switch -glob $recurrence(interval_name) {
+                day { append recur_rule "DAILY" }
+                week { append recur_rule "WEEKLY" }
+                *month* { append recur_rule "MONTHLY"}
+                year { append recur_rule "YEARLY"}
+            }
+
+            if { $recurrence(interval_name) == "week" && ![empty_string_p $recurrence(days_of_week)] } {
+                
+                #DRB: Standard indicates ordinal week days are OK, but Outlook
+                #only takes two-letter abbreviation form.
+
+                append recur_rule ";BYDAY="
+                set week_list [list "SU" "MO" "TU" "WE" "TH" "FR" "SA" "SU"]
+                set sep ""
+                set day_list [split $recurrence(days_of_week) " "]
+                foreach day $day_list {
+                    append recur_rule "$sep[lindex $week_list $day]"
+                    set sep ","
+                }
+            }
+
+            if { ![empty_string_p $recurrence(every_nth_interval)] } {
+                append recur_rule ";INTERVAL=$recurrence(every_nth_interval)"
+            }
+
+            if { ![empty_string_p $recurrence(recur_until)] } {
+                #DRB: this should work with a DATE: type but doesn't with Outlook at least.
+                append recur_rule ";UNTIL=$recurrence(recur_until)"
+                append recur_rule "T000000Z"
+            }
+
+            append ics_event "$recur_rule\r\n"
+
+        }
+
+        ns_log Notice "DTSTART = $DTSTART"
+        regexp {^([0-9]*)T} $DTSTART all CREATION_DATE
+        set DESCRIPTION $cal_item(description)
+        set TITLE $cal_item(name)
+
+        append ics_event "LOCATION:Not Listed\r\nTRANSP:OPAQUE\r\nSEQUENCE:0\r\nUID:$cal_item_id\r\nDTSTAMP:$CREATION_DATE\r\nDESCRIPTION:$DESCRIPTION\r\nSUMMARY:$TITLE\r\nPRIORITY:5\r\nCLASS:PUBLIC\r\n"
 
         append ics_event "END:VEVENT\r\nEND:VCALENDAR\r\n"
 

@@ -112,11 +112,13 @@ where 	privilege in (
 -- Drop Calendar
 ------------------------------------------------
 
+DROP TABLE calendars;
 CREATE FUNCTION inline_0 ()
 RETURNS integer
 AS 'begin
 	PERFORM acs_attribute__drop_attribute (''calendar'',''owner_id'');
 	PERFORM acs_attribute__drop_attribute (''calendar'',''private_p'');
+	DELETE FROM acs_objects WHERE object_type = ''calendar'';
 	PERFORM acs_object_type__drop_type (''calendar'', ''f'');
 
 	return 0;
@@ -190,7 +192,7 @@ DROP FUNCTION calendar__last_displayed_date(
 );
 
   -- drop table  
-drop table calendars;
+--drop table calendars;
 
 
 

@@ -34,11 +34,12 @@ drop function cal_item__name (integer);
 
 drop function cal_item__on_which_calendar (integer);
 
+drop table cal_items;
 --drop objects
 delete from acs_objects where object_type='cal_item';
 
 --drop table
-drop table cal_items;
+--drop table cal_items;
 
 
   -- drop attributes and acs_object_type

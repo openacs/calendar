@@ -97,7 +97,7 @@ CREATE TABLE cal_items (
         cal_item_id	  integer 
 			  constraint cal_item_cal_item_id_fk 
                           references acs_events
-                          constraint news_item_news_item_id_pk 
+                          constraint cal_item_cal_item_id_pk 
                           primary key,            
           -- a references to calendar
           -- Each cal_item is owned by one calendar

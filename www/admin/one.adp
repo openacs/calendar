@@ -45,12 +45,14 @@
 
     <else>
       <p>
-        <multiple name=audiences>
-	  <li> 
-          <a href="calendar-permissions?calendar_id=@calendar_id@&party_id=@audiences.party_id@">
+        <ul>
+          <multiple name=audiences>
+	    <li> 
+              <a href="calendar-permissions?calendar_id=@calendar_id@&party_id=@audiences.party_id@">
             @audiences.name@            
-	  </a>
-        </multiple>
+	      </a>
+          </multiple>
+        </ul>
       </p>
     </else>
 

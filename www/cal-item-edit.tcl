@@ -48,7 +48,7 @@ set end_datetime [calendar_make_datetime [array get event_date] [array get end_t
 # validate time interval ( start_time <= end_time )
 
 if { [dt_interval_check $start_datetime $end_datetime] < 0 } {
-    ad_return_compliant 1 "you end time can't happen before start time"
+    ad_return_complaint 1 "your end time can't happen before start time"
 }
 
 

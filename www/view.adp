@@ -37,7 +37,6 @@ calendar_id_list="@calendar_list@">
 
 <if @view@ eq "week">
 <include src="view-week-display" 
-item_template="@item_template@"
 date="@date@"
 calendar_id_list="@calendar_list@">
 </if>

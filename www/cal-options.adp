@@ -6,11 +6,12 @@
      	@creation-date Dec 14, 2000
      	@cvs-id $Id$
 -->
+<if @empty_p@ eq 0>
 <table>
 
   <tr>
     <td colspan=2> 
-      <b> calendar options </b>
+      <b>Calendar Views:</b>
     </td>
   </tr>
 
@@ -58,7 +59,7 @@
 
   <tr>
     <td colspan=2>
-      <input type=submit value="Toggle Calendars">
+      <input type=submit value="Toggle Calendars Viewed">
     </td>	
   </tr>
  </form>
@@ -72,34 +73,6 @@
    </tr>
 
 </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</if>
+<else>
+</else>

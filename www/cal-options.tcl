@@ -18,7 +18,7 @@ ad_page_contract {
 
 
 } {
-
+    {action ""}
     {view day}
     {date now}
     {calendar_id:integer "-1"}
@@ -40,6 +40,15 @@ ad_page_contract {
 # get a user_id
 set user_id [ad_verify_and_get_user_id]
 
+# An abort of this if we're adding or editing an item, because this 
+# then becomes more confusing than anything (ben - OpenACS)
+if {$action == "add" || $action == "edit"} {
+    set empty_p 1
+    ad_return_template
+    return
+} else {
+    set empty_p 0
+}
 
 # get a list of the calendars that the user has read access to
 # NOTE: this query would need to optimized. Its take a major

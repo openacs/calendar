@@ -45,7 +45,7 @@
 
   <tr>
     <td valign=top align=right> 
-      <b>Start Time @start_time@</b>
+      <b>Start Time</b>
     </td>
 
     <td valign=top align=left> 
@@ -127,9 +127,10 @@
     <if @action@ eq edit>
       <tr>
         <td colspan=2>
-      	  <li> <a href="/calendar/admin/cal-item-permissions?cal_item_id=@cal_item_id@"> 
-	         Manage the audience to this calendar item
-	       </a>
+      	  <!-- Commented out by Ben (OpenACS) - this is hardwired and isn't well thought out yet
+<li> <a href="/calendar/admin/cal-item-permissions?cal_item_id=@cal_item_id@"> 
+      	         Manage the audience to this calendar item
+	       </a> -->
         </td>
       </tr>
     </if>

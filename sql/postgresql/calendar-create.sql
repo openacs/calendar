@@ -252,7 +252,7 @@ comment on column calendars.package_id is '
 -- Load cal_item_object
 -------------------------------------------------------------
 --@@cal-item-create
---\i cal-item-create.sql
+\i cal-item-create.sql
 -------------------------------------------------------------
 -- create package calendar
 -------------------------------------------------------------

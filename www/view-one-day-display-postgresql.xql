@@ -60,8 +60,6 @@ and      (to_char(start_date, 'HH24:MI') <> '00:00' or
 and      cals.calendar_id = ci.on_which_calendar
 and      e.event_id = ci.cal_item_id
 $calendars_clause
-$start_clause
-$end_clause
 order by to_char(start_date,'HH24')
 </querytext>
 </fullquery>

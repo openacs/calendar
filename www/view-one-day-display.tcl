@@ -17,7 +17,16 @@ if { ![info exists day_template] } {
 if { ![info exists item_template] } {
     set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\$item</a>"
 }
-# calendar-portlet
+
+if { ![info exists prev_nav_template] } {
+    set prev_nav_template {<a href=".?date=[ns_urlencode $yesterday]"><img border=0 src=\"[dt_left_arrow]\" alt=\"back one day\"></a>}
+}
+
+if { ![info exists next_nav_template] } {
+    set next_nav_template {<a href=".?date=[ns_urlencode $tomorrow]"><img border=0 src=\"[dt_right_arrow]\" alt=\"forward one day\"></a>}
+}
+
+# --calendar-portlet
 
 if { ![info exists start_display_hour] } {
     set start_display_hour 0
@@ -186,5 +195,6 @@ set ansi_month [string trimleft [lindex $ansi_list 1] "0"]
 set ansi_day [string trimleft [lindex $ansi_list 2] "0"]
 set julian_date [dt_ansi_to_julian $ansi_year $ansi_month $ansi_day]
 
-set url_previous_week "<a href=\"view?view=day&date=[ad_urlencode [dt_julian_to_ansi [expr $julian_date - 1]]]\">"
-set url_next_week "<a href=\"view?view=day&date=[ad_urlencode [dt_julian_to_ansi [expr $julian_date + 1]]]\">"
+set url_previous_week [subst $prev_nav_template]
+set url_next_week [subst $next_nav_template]
+

@@ -4,11 +4,9 @@
     <tr class="table-header" bgcolor=lavender>
     <td class="cal-month-title-text">
     @url_previous_week;noquote@
-    <img src="/shared/images/left.gif" alt="back one day" border="0">
     </a>
     <B>@dates;noquote@</B>
     @url_next_week;noquote@
-    <img src="/shared/images/right.gif" alt="forward one day" border="0"
     </a>
     </td>
     </tr>

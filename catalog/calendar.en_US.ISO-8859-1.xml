@@ -115,6 +115,7 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Select_Calendars">Select Calendars</msg>
   <msg key="Sharing">Sharing</msg>
   <msg key="Start_Time">Start Time</msg>
+  <msg key="start_time_before_end_time">Start time is before end time</msg>
   <msg key="Submit_query">Submit query</msg>
   <msg key="Sunday">Sunday</msg>
   <msg key="sync_with_Outlook">sync with Outlook</msg>
@@ -132,5 +133,4 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Yes">Yes</msg>
   <msg key="yes_delete_it">yes, delete it</msg>
   <msg key="Yes_I_am_sure">Yes, I am sure!</msg>
-  <msg key="start_time_before_end_time">Start time is before end time</msg>
 </message_catalog>

@@ -85,7 +85,7 @@
       <if @delete_p@ eq 1>
         <a href="./cal-item-delete?cal_item_id=@cal_item_id@&return_url=@return_url@" class="button">#calendar.delete#</a>
       </if>
-      <p><a href="ics/@cal_item_id@.ics" class="button">Synkroniser med Outlook</a> 
+      <p><a href="ics/@cal_item_id@.ics" class="button">#calendar.sync_with_Outlook#</a> 
     </td>
   </tr>
 

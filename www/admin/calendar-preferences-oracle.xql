@@ -17,25 +17,25 @@
       <querytext>
       
 	
-	select   unique(object_id) as calendar_id, 
+	select   unique(o.object_id) as calendar_id, 
 	         calendar.name(object_id) as calendar_name,
                  calendar.show_p(object_id, :party_id) as show_p
-	from     acs_object_party_privilege_map 
-	where    calendar.readable_p(object_id, :party_id) = 't'
-	and      party_id = :party_id
-	and      acs_object_util.object_type_p(object_id, 'calendar') = 't'
-	and      calendar.private_p(object_id) = 'f'
+	from     acs_objects o
+	where    calendar.readable_p(o.object_id, :party_id) = 't'
+	and      o.object_id = :party_id
+	and      acs_object_util.object_type_p(o.object_id, 'calendar') = 't'
+	and      calendar.private_p(o.object_id) = 'f'
 	
 	union
 
-	select   cal_item.on_which_calendar(object_id) as calendar_id, 
-	         calendar.name(cal_item.on_which_calendar(object_id)) as calendar_name,
-	         calendar.show_p(cal_item.on_which_calendar(object_id), :party_id) as show_p
-	from     acs_object_party_privilege_map 
+	select   cal_item.on_which_calendar(o.object_id) as calendar_id, 
+	         calendar.name(cal_item.on_which_calendar(o.object_id)) as calendar_name,
+	         calendar.show_p(cal_item.on_which_calendar(o.object_id), :party_id) as show_p
+	from     acs_objects o
 	where    privilege = 'cal_item_read'
 	and      party_id = :party_id
-	and      acs_object_util.object_type_p(object_id, 'cal_item') = 't'
-	and      calendar.private_p(cal_item.on_which_calendar(object_id)) = 'f'
+	and      acs_object_util.object_type_p(o.object_id, 'cal_item') = 't'
+	and      calendar.private_p(cal_item.on_which_calendar(o.object_id)) = 'f'
 
 	
     

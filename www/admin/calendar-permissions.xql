@@ -15,8 +15,8 @@
 <fullquery name="get_party_privileges">      
       <querytext>
       
-	select    privilege 	        
-	from      acs_object_party_privilege_map 
+	select    distinct privilege 	        
+	from      all_object_party_privilege_map 
 	where     object_id = :calendar_id
 	and       party_id = :party_id
 	and       privilege like '%calendar%'

@@ -135,7 +135,7 @@ ad_proc calendar_create { owner_id
     set creation_user [ad_conn "user_id"]
     
     # BMA:FIXME: this needs to be fixed a LOT more, but for now we patch the obvious
-    if {$creation_user == 0}{
+    if {$creation_user == 0} {
         set creation_user $owner_id
     }
 

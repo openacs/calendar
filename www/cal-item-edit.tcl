@@ -19,6 +19,7 @@ ad_page_contract {
     {description ""}
     {return_url ""}
     {item_type_id ""}
+    {confirm_p 0}
 } 
 
 # Fix up the return URL
@@ -37,7 +38,12 @@ set user_id [ad_verify_and_get_user_id]
 
 if { $action == "delete" } {
 
- cal_item_delete $cal_item_id
+    if {!$confirm_p} {
+        ad_returnredirect "cal-item-delete-confirm?cal_item_id=$cal_item_id&show_cal_nav=0"
+        return
+    }
+    
+    cal_item_delete $cal_item_id
 
     ad_returnredirect $return_url
 

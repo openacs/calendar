@@ -1,15 +1,9 @@
-<!--	
-	The master template
-	
-	@author Gary Jin (gjin@arsidigta.com)
-     	@creation-date Dec 14, 2000
-     	@cvs-id $Id$
--->
+<master>
+<property name="title">@title@</property>
 
-<%= [ad_header $title] %>
 <h2>@title@</h2>
-<%= [eval ad_context_bar $context_bar] %>
+ <if @context_bar@ not nil>
+  <%= [eval ad_context_bar $context_bar] %>
+ </if>
 <hr>
 <slave>
-<%= [ad_footer] %>
-

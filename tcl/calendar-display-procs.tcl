@@ -46,6 +46,7 @@ namespace eval calendar {
         
 	
 	db_foreach select_monthly_items {} {
+            # Localize
             set start_time [lc_time_fmt $ansi_start_date "%X"]
             set end_time [lc_time_fmt $ansi_end_date "%X"]
 
@@ -152,6 +153,7 @@ namespace eval calendar {
 
         # Loop through the calendars
 	db_foreach select_week_items {} {
+            # Localize
             set pretty_start_date [lc_time_fmt $ansi_start_date "%X"]
             set pretty_end_date [lc_time_fmt $ansi_end_date "%X"]
 
@@ -241,8 +243,16 @@ namespace eval calendar {
         
         set items [ns_set create]
 
+        set timezone [lang::conn::timezone]
+
         # Loop through the calendars
 	db_foreach select_day_items {} {
+            # other date/time formats
+            set start_hour [lc_time_fmt $ansi_start_date "%H"]
+            set start_date [lc_time_fmt $ansi_start_date "%H:%M"]
+            set end_date [lc_time_fmt $ansi_end_date "%H:%M"]
+
+            # Localize
             set pretty_start_date [lc_time_fmt $ansi_start_date "%X"]
             set pretty_end_date [lc_time_fmt $ansi_end_date "%X"]
             
@@ -361,6 +371,7 @@ namespace eval calendar {
                     append item " ($calendar_name)"
                 }
                 
+                # Localize
                 set pretty_date [lc_time_fmt $ansi_start_date "%x"]
                 set pretty_weekday [lc_time_fmt $ansi_start_date "%A"]
                 set pretty_start_date [lc_time_fmt $ansi_start_date "%X"]

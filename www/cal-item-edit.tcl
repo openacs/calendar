@@ -91,8 +91,8 @@ if { [form is_request cal_item] } {
     element set_properties cal_item cal_item_id -value $cal_item(cal_item_id)
     element set_properties cal_item title -value $cal_item(name)
     element set_properties cal_item date -value [template::util::date::from_ansi $cal_item(start_date)]
-    element set_properties cal_item start_time -value [template::util::date::from_ansi $cal_item(full_start_date) [lc_get formbuilder_time_format]]
-    element set_properties cal_item end_time -value [template::util::date::from_ansi $cal_item(full_end_date) [lc_get formbuilder_time_format]]
+    element set_properties cal_item start_time -value [template::util::date::from_ansi $cal_item(ansi_start_date) [lc_get formbuilder_time_format]]
+    element set_properties cal_item end_time -value [template::util::date::from_ansi $cal_item(ansi_end_date) [lc_get formbuilder_time_format]]
     element set_properties cal_item description -value $cal_item(description)
     element set_properties cal_item item_type_id -value $cal_item(item_type_id)
 

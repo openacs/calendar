@@ -16,6 +16,7 @@ ad_page_contract {
 set package_id [ad_conn package_id]
 
 set date [calendar::adjust_date -date $date -julian_date $julian_date]
+set calendar_list [calendar::calendar_list]
 
 if {[empty_string_p $calendar_id]} {
     set calendar_list [calendar::calendar_list]

@@ -10,7 +10,6 @@ ad_page_contract {
     {view day}
     {date ""}
     {julian_date ""}
-    {calendar_list:multiple ""}
     {sort_by ""}
     {start_date ""}
     {period_days:integer "31"}
@@ -31,7 +30,7 @@ set user_id [ad_conn user_id]
 
 set admin_p [ad_permission_p $package_id calendar_admin]
 
-set calendar_list [calendar::adjust_calendar_list -calendar_list $calendar_list -package_id $package_id -user_id $user_id]
+set calendar_list [calendar::calendar_list]
 set date [calendar::adjust_date -date $date -julian_date $julian_date]
 
 if {$view == "list"} {

@@ -14,22 +14,11 @@ ad_page_contract {
 } {
 }
 
-# get a user_id
-set user_id [ad_verify_and_get_user_id]
+set user_id [ad_conn user_id]
 
-set calendar_list [calendar::calendar_list]
-
-if {[llength $calendar_list] > 0} {
-    set calendar_list_sql "[join $calendar_list ","]"
-
-    db_multirow calendars select_calendars "
-    select calendar_id, calendar_name, 
-    acs_permission__permission_p(calendar_id, :user_id, 'calendar_admin') as calendar_admin_p
-    from calendars
-    where calendar_id in ($calendar_list_sql)
-    "
-} else {
-    multirow create calendars
+multirow create calendars calendar_name calendar_id calendar_admin_p
+foreach calendar $calendar_list {
+    multirow append calendars [lindex $calendar 0] [lindex $calendar 1] [lindex $calendar 2]
 }
 
 ad_return_template

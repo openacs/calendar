@@ -10,7 +10,7 @@
       <p>
       <include src="mini-calendar" base_url="view" view="day" date="@date@">
      <p>
-	<include src="cal-options">	
+	<include src="cal-options" calendar_list="@calendar_list@">	
     </td>	
 
     <td valign=top> 

@@ -120,8 +120,8 @@ db_foreach select_day_items_with_time {} {
     set start_time [lc_time_fmt $ansi_start_date "%X"]
     set end_time [lc_time_fmt $ansi_end_date "%X"]
 
-    regexp {([1-9][0-9]*)} $start_hour match start_hour_no
-    regexp {([1-9][0-9]*)} $end_hour match end_hour_no
+    regexp {([0-9][0-9]*)} $start_hour match start_hour_no
+    regexp {([0-9][0-9]*)} $end_hour match end_hour_no
 
     for { set item_current_hour $start_hour } { $item_current_hour < $end_hour } { incr item_current_hour } {
         set item_current_hour [expr [string trimleft $item_current_hour 0]+0]

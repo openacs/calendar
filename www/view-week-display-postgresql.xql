@@ -16,26 +16,6 @@
 </fullquery>
 
 
-<fullquery name="select_week_items">
-<querytext>
-         (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type,
-         cals.calendar_id,
-	 cals.calendar_name
-from     acs_activities a,
-         acs_events e,
-         timespans s,
-         time_intervals t,
-         cal_items ci,
-         calendars cals
-where    e.timespan_id = s.timespan_id
-and      s.interval_id = t.interval_id
-and      e.activity_id = a.activity_id
-and      start_date between
-
-
-</querytext>
-</fullquery>
-
 <fullquery name="select_week_info">      
 <querytext>
 select   to_char(to_date(:start_date, 'YYYY-MM-DD'), 'D') 

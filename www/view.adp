@@ -8,10 +8,11 @@
     <td valign=top width=150>
       <p>
       @cal_nav;noquote@
+<p>
+<a href="cal-item-new?julian_date=@julian_date@" title="#calendar.Add_Item#"><img border=0 align="right" valign="top" src="/shared/images/add.gif" alt="#calendar.Add_Item#">#calendar.Add_Item#</a>
       <p>
 	<include src="cal-options">	
     </td>	
-
     <td valign=top> 
     
 <if @view@ eq "list">
@@ -38,8 +39,7 @@ calendar_id_list="@calendar_list@">
 <include src="view-week-display" 
 item_template="@item_template@"
 date="@date@"
-calendar_id_list="@calendar_list@"
->
+calendar_id_list="@calendar_list@">
 </if>
 
 

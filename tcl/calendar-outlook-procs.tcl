@@ -300,7 +300,7 @@ namespace eval calendar::outlook {
                 append ics_event "ATTACH:$url\r\n"
             } else {
                 regsub -all {[^-_.0-9a-zA-Z]+} $client_file_name "_" pretty_file_name
-                append ics_event "ATTACH:[ad_parameter SystemURL]/file-storage/download/$version_id/$pretty_file_name\r\n"
+                append ics_event "ATTACH:[ad_url]/file-storage/download/$version_id/$pretty_file_name\r\n"
             }
         }
 

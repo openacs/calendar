@@ -34,7 +34,7 @@
  
 <fullquery name="calendar_assign_permissions.assign_calendar_permissions">      
       <querytext>
-	    select ac_permission__grant_permission(
+	    select acs_permission__grant_permission(
 			:calendar_id,
 			:party_id,
 			:cal_privilege

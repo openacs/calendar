@@ -25,7 +25,8 @@
          it.type as item_type,
          on_which_calendar as calendar_id,
          c.calendar_name,
-         o.creation_user
+         o.creation_user,
+         c.package_id as calendar_package_id
        from
          acs_events e join timespans s
            on (e.timespan_id = s.timespan_id)
@@ -60,7 +61,8 @@
          it.type as item_type,
          on_which_calendar as calendar_id,
          c.calendar_name,
-         o.creation_user
+         o.creation_user,
+         c.package_id as calendar_package_id
        from
          acs_events e join timespans s
            on (e.timespan_id = s.timespan_id)

@@ -12,7 +12,7 @@ if { ![info exists url_stub_callback] } {
 }
 
 if { ![info exists hour_template] } {
-    set hour_template {<a href=cal-item-new?date=$current_date&start_time=$localized_day_current_hour>$localized_day_current_hour</a>}
+    set hour_template {<a href=cal-item-new?date=$current_date&start_time=$day_current_hour>$localized_day_current_hour</a>}
 }
 
 if { ![info exists day_template] } {

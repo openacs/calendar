@@ -36,6 +36,7 @@ if {![info exists item_type_id]} {
 }
 
 set date [calendar::adjust_date -date $date -julian_date $julian_date]
+set ansi_date $date
 set calendar_list [calendar::calendar_list]
 
 if {![info exists cal_item_id]} {

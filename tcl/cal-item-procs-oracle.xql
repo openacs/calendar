@@ -89,7 +89,7 @@ begin
    :1 := recurrence.new(interval_type => :interval_type,
     	every_nth_interval => :every_n,
     	days_of_week => :days_of_week,
-    	recur_until => :recur_until);
+    	recur_until => to_date(:recur_until,'YYYY-MM-DD HH24:MI'));
 end;
 </querytext>
 </fullquery>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<message_catalog package_key="calendar" package_version="2.0d1" locale="ko_KR" charset="utf-8">
+<message_catalog package_key="calendar" package_version="2.0.1" locale="ko_KR" charset="utf-8">
 
   <msg key="_You_may_choose_to">선택할 수 있습니다:</msg>
   <msg key="Add">추가</msg>
@@ -11,6 +11,7 @@
   <msg key="All_Day_Event">모든 요일 이벤트</msg>
   <msg key="all_events">모든 이벤트</msg>
   <msg key="and_Time">(와)과 시간</msg>
+  <msg key="Apply_to_all">모든 이벤트에 적용하시오</msg>
   <msg key="Attachments">첨부:</msg>
   <msg key="Audiences_for_item">항목을 위한 독자</msg>
   <msg key="Calendar">달력</msg>
@@ -44,6 +45,7 @@
   <msg key="from">로부터</msg>
   <msg key="Grant">승인</msg>
   <msg key="Grant_Permissions">사용권한 승인</msg>
+  <msg key="is_recurring">항목이 반복 발생한다.</msg>
   <msg key="Item">항목</msg>
   <msg key="lt_Are_you_sure_you_want">이 달력을 삭제하시겠습니까? 이 달력과 관련된 모든 달력 항목과 모든 사용권한이 삭제될 것입니다. </msg>
   <msg key="lt_Are_you_sure_you_want_1">이 이벤트를 삭제하시겠습니까?</msg>
@@ -93,6 +95,7 @@
   <msg key="same">같은 </msg>
   <msg key="Saturday">토요일</msg>
   <msg key="Select_Calendars">달력 선택</msg>
+  <msg key="Sharing">공유하는</msg>
   <msg key="Start_Time">시작 시간</msg>
   <msg key="Submit_query">질의어 제출</msg>
   <msg key="Sunday">일요일</msg>

@@ -5,20 +5,6 @@
 
 <fullquery name="calendar_create.create_new_calendar">      
       <querytext>
-      <!--FIX ME PLSQL
-FIX ME PLSQL
-
-	begin
-	:1 := calendar__new(
-	  owner_id      => :owner_id,
-	  private_p     => :private_p,
-	  calendar_name => :calendar_name,
-	  package_id    => :package_id,
-	  creation_user => :creation_user,
-	  creation_ip   => :creation_ip
-	);	
-	end;
-      -->
 	select calendar__new(
 		null,
 		:calendar_name,
@@ -48,17 +34,6 @@ FIX ME PLSQL
  
 <fullquery name="calendar_assign_permissions.assign_calendar_permissions">      
       <querytext>
-      <!--FIX ME PLSQL
-FIX ME PLSQL
-
-	    begin
-	      acs_permission__grant_permission (
-	        object_id       =>      :calendar_id,
-	        grantee_id      =>      :party_id,
-	        privilege       =>      :cal_privilege
-	      );
-	    end;
-      -->
 	    select ac_permission__grant_permission(
 			:calendar_id,
 			:party_id,
@@ -70,17 +45,6 @@ FIX ME PLSQL
  
 <fullquery name="calendar_assign_permissions.revoke_calendar_permissions">      
       <querytext>
-      <!--FIX ME PLSQL
-FIX ME PLSQL
-
-	    begin
-	      acs_permission__revoke_permission (
-	        object_id       =>      :calendar_id,
-	        grantee_id      =>      :party_id,
-	        privilege       =>      :cal_privilege
-	      );
-	    end;
-      -->
 	    select acs_permission_revoke_permission (
 			:calendar_id,
 			:party_id,

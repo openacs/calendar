@@ -272,16 +272,16 @@ CREATE FUNCTION calendar__new (
 RETURNS integer 
 AS 'declare
 	v_calendar_id           calendars.calendar_id%TYPE;
-	new__calendar_id	alias for $1,
-	new__calendar_name	alias for $2,
-	new__object_type	alias for $3,
-	new__owner_id		alias for $4,
-	new__private_p		alias for $5,
-	new__package_id		alias for $6,
-	new__context_id		alias for $7,
-	new__creation_date	alias for $8,
-	new__createion_user	alias for $9,
-	new__createion_ip	alias for $10
+	new__calendar_id	alias for $1;
+	new__calendar_name	alias for $2;
+	new__object_type	alias for $3;
+	new__owner_id		alias for $4;
+	new__private_p		alias for $5;
+	new__package_id		alias for $6;
+	new__context_id		alias for $7;
+	new__creation_date	alias for $8;
+	new__createion_user	alias for $9;
+	new__createion_ip	alias for $10;
 
     begin
         v_calendar_id := acs_object__new(
@@ -294,7 +294,7 @@ AS 'declare
 	);
 	
 	insert into     calendars
-                        (new__calendar_id, new__calendar_name, new__owner_id, new__package_id, new__private_p)
+                        (calendar_id, calendar_name, owner_id, package_id, private_p)
 	values          (v_calendar_id, new__calendar_name, new__owner_id, new__package_id, new__private_p);
 
 	PERFORM acs_permission__grant_permission (
@@ -312,7 +312,7 @@ CREATE FUNCTION calendar__delete(
 )
 RETURNS integer
 AS 'declare
-	delete__calendar_id		alias for $1
+	delete__calendar_id		alias for $1;
     begin
 	delete from calendars
 	where calendar_id = delete__calendar_id;
@@ -340,8 +340,8 @@ CREATE FUNCTION calendar__name(
 )
 RETURNS varchar
 AS 'declare
-	name__calendar_id		alias for $1
-	v_calendar_name			calendars.calendar_name%TYPE
+	name__calendar_id		alias for $1;
+	v_calendar_name			calendars.calendar_name%TYPE;
 
     begin
 	select	calendar_name

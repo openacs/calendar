@@ -173,7 +173,7 @@ begin
 	);
 
     insert into cal_items
-	(new__cal_item_id, new__on_which_calendar)
+	(cal_item_id, on_which_calendar)
     values          
 	(v_cal_item_id, new__on_which_calendar);
 

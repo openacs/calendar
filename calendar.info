@@ -20,7 +20,7 @@
 
         <provides url="calendar" version="1.0"/>
         <requires url="acs-datetime" version="4.0"/>
-        <requires url="acs-event" version="0.1d"/>
+        <requires url="acs-events" version="0.1d"/>
         <requires url="ref-timezones" version="0.1d"/>
 
         <files>

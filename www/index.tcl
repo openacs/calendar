@@ -10,7 +10,7 @@ ad_page_contract {
 }
 
 set package_id [ad_conn package_id]
-set user_id [auth::require_login]
+set user_id [ad_conn user_id]
 
 if { ![calendar::have_private_p $user_id] } {
     calendar::new -owner_id $user_id -private_p "t" -calendar_name "Personal" -package_id $package_id

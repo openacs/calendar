@@ -24,7 +24,7 @@
   <querytext>
     select calendar_name, 
            calendar_id, 
-           acs_permission.permission_p(calendar_id, :user_id, 'calendar_admin') as calendar_admin_p
+           acs_permission.permission_p(calendar_id, :user_id, 'admin') as calendar_admin_p
     from   calendars
     where  (private_p = 'f' and package_id = :package_id $permissions_clause) or
            (private_p = 't' and owner_id = :user_id)

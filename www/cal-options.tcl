@@ -20,6 +20,8 @@ if { ![info exists base_url] } {
     set base_url ""
 }
 
+set calendar_list [calendar::calendar_list]
+
 multirow create calendars calendar_name calendar_id calendar_admin_p
 foreach calendar $calendar_list {
     multirow append calendars [lindex $calendar 0] [lindex $calendar 1] [lindex $calendar 2]

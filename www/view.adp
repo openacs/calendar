@@ -26,7 +26,7 @@
     </p>
   
     <p>
-    <include src="cal-options" calendar_list="@calendar_list;noquote@">	
+    <include src="cal-options">	
     </p>
   </div>
 

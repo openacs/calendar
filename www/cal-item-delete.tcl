@@ -1,4 +1,3 @@
-
 ad_page_contract {
     Delete a calendar item
     
@@ -14,6 +13,8 @@ if {!$confirm_p} {
     ad_returnredirect "cal-item-delete-confirm?cal_item_id=$cal_item_id"
     ad_script_abort
 }
+
+auth::require_login
 
 calendar::item::delete -cal_item_id $cal_item_id
 

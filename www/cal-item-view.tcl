@@ -9,7 +9,7 @@ ad_page_contract {
     {return_url ""}
 }
 
-set user_id [ad_verify_and_get_user_id]
+set user_id [ad_conn user_id]
 set package_id [ad_conn package_id]
 
 permission::require_permission -object_id $cal_item_id -privilege read

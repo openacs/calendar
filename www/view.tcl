@@ -27,7 +27,6 @@ set user_id [ad_conn user_id]
 
 set admin_p [permission::permission_p -object_id $package_id -privilege calendar_admin]
 
-set calendar_list [calendar::calendar_list]
 set date [calendar::adjust_date -date $date]
 
 if {$view == "list"} {

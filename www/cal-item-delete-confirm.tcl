@@ -1,4 +1,3 @@
-
 #
 # A script that assumes
 #
@@ -13,6 +12,8 @@ ad_page_contract {
 } {
     cal_item_id
 }
+
+auth::require_login
 
 calendar::item::get -cal_item_id $cal_item_id -array cal_item
 

@@ -160,6 +160,10 @@ ad_proc -public calendar::have_private_p {
     @param calendar_id_list If you supply the calendar_id_list, then we'll only search 
     for a personal calendar among the calendars supplied here.
 } {
+    # Check whether the user is logged in at all
+    if {!$party_id} {
+	return -1
+    }
 
     if { [llength $calendar_id_list] > 0 } {
         set result [db_string get_calendar_info_calendar_id_list {} -default 0]

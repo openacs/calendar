@@ -294,11 +294,12 @@ namespace eval calendar {
     }
 
     ad_proc -public list_display {
+        {-date ""}
         {-start_date ""}
         {-end_date ""}
         {-calendar_id_list ""}
         {-item_template {$item}}
-        {-url_template {?sort_by=$sort_by}}
+        {-url_template {?sort_by=$order_by}}
         {-url_stub_callback ""}
         {-show_calendar_name_p 1}
         {-sort_by "item_type"}
@@ -312,6 +313,8 @@ namespace eval calendar {
             set calendar_id_list [list [calendar_have_private_p -return_id 1 [ad_get_user_id]]]
         }
         
+        set date_format "YYYY-MM-DD HH24:MI"
+        set current_date $date
         set items [ns_set create]
         
         # Loop through the calendars
@@ -324,15 +327,15 @@ namespace eval calendar {
             }
             
             db_foreach select_list_items {} {
-                set item "$pretty_start_date - $pretty_end_date: $name"
+                ns_log Notice "BMA-CHECK: test $name"
+                set item "$name"
+                set item [subst $item_template]
                 
                 if {$show_calendar_name_p} {
                     append item " ($calendar_name)"
                 }
                 
-                set item [subst $item_template]
-                
-                ns_set put $items $start_hour [list $start_date $end_date $item_type $item]
+                ns_set put $items $start_hour [list $pretty_date $pretty_start_date $pretty_end_date $pretty_weekday $item_type $item]
             }
             
         }
@@ -348,82 +351,82 @@ namespace eval calendar {
         
     }
 
-    ad_proc -public list_display {
-        {-date ""}
-        {-calendar_id_list ""}
-        {-item_template {$item}}
-        {-url_stub_callback ""}
-        {-show_calendar_name_p 1}
-   } {
-       Creates a list widget
-   } {
-       if {[empty_string_p $date]} {
-           set date [dt_sysdate]
-       }
+#      ad_proc -public list_display {
+#          {-date ""}
+#          {-calendar_id_list ""}
+#          {-item_template {$item}}
+#          {-url_stub_callback ""}
+#          {-show_calendar_name_p 1}
+#     } {
+#         Creates a list widget
+#     } {
+#         if {[empty_string_p $date]} {
+#             set date [dt_sysdate]
+#         }
 
-       set date_format "YYYY-MM-DD HH24:MI"
-       set current_date $date
+#         set date_format "YYYY-MM-DD HH24:MI"
+#         set current_date $date
 
-       # If we were given no calendars, we assume we display the 
-       # private calendar. It makes no sense for this to be called with
-       # no data whatsoever.
-       if {[empty_string_p $calendar_id_list]} {
-           set calendar_id_list [list [calendar_have_private_p -return_id 1 [ad_get_user_id]]]
-       }
+#         # If we were given no calendars, we assume we display the 
+#         # private calendar. It makes no sense for this to be called with
+#         # no data whatsoever.
+#         if {[empty_string_p $calendar_id_list]} {
+#             set calendar_id_list [list [calendar_have_private_p -return_id 1 [ad_get_user_id]]]
+#         }
        
-       set items [ns_set create]
+#         set items [ns_set create]
 
-       # Loop through the calendars
-       foreach calendar_id $calendar_id_list {
-           set calendar_name [calendar_get_name $calendar_id]
+#         # Loop through the calendars
+#         foreach calendar_id $calendar_id_list {
+#             set calendar_name [calendar_get_name $calendar_id]
 
-           # In case we need to dispatch to a different URL (ben)
-           if {![empty_string_p $url_stub_callback]} {
-               set url_stub [$url_stub_callback $calendar_id]
-           }
+#             # In case we need to dispatch to a different URL (ben)
+#             if {![empty_string_p $url_stub_callback]} {
+#                 set url_stub [$url_stub_callback $calendar_id]
+#             }
 
-           db_foreach select_day_items {} {
-               # ns_log Notice "bma: one item"
-               set item "$pretty_start_date - $pretty_end_date: $name"
+#             db_foreach select_day_items {} {
+#                 # ns_log Notice "bma: one item"
+#                 set item "$pretty_start_date - $pretty_end_date: $name"
 
-               if {$show_calendar_name_p} {
-                   append item " ($calendar_name)"
-               }
+#                 if {$show_calendar_name_p} {
+#                     append item " ($calendar_name)"
+#                 }
 
-               set item [subst $item_template]
+#                 set item [subst $item_template]
 
-               ns_set put $items $start_hour $item
-           }
+#                 ns_set put $items $start_hour $item
+#             }
 
-       }
+#         }
 
-       set return_html "Items for [util_AnsiDatetoPrettyDate $date]:<p><ul>\n"
+#         set return_html "Items for [util_AnsiDatetoPrettyDate $date]:<p><ul>\n"
 
-       for {set i 0} {$i <= 23} {incr i} {
-           if {$i < 10} {
-               set index_hour "0$i"
-           } else {
-               set index_hour $i
-           }
+#         for {set i 0} {$i <= 23} {incr i} {
+#             if {$i < 10} {
+#                 set index_hour "0$i"
+#             } else {
+#                 set index_hour $i
+#             }
 
-           while {1} {
-               set index [ns_set find $items $index_hour]
-               if {$index == -1} {
-                   break
-               }
+#             while {1} {
+#                 set index [ns_set find $items $index_hour]
+#                 if {$index == -1} {
+#                     break
+#                 }
 
-               # ns_log Notice "bma: one item found !!"
+#                 # ns_log Notice "bma: one item found !!"
 
-               append return_html "<li> [ns_set value $items $index]\n"
-               ns_set delete $items $index
-           }
-           append return_html "<p>"
-       }
+#                 append return_html "<li> [ns_set value $items $index]\n"
+#                 ns_set delete $items $index
+#             }
+#             append return_html "<p>"
+#         }
 
-       append return_html "</ul>"
+#         append return_html "</ul>"
 
-       return $return_html
-   }
+#         return $return_html
+#     }
        
 
 

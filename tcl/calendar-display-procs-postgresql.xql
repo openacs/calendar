@@ -112,6 +112,8 @@ in       (
 <fullquery name="calendar::list_display.select_list_items">
 <querytext>
 	select   to_char(start_date, 'HH24') as start_hour,
+         to_char(start_date, 'MM/DD/YYYY') as pretty_date,
+         to_char(start_date, 'Day') as pretty_weekday,
          to_char(start_date, 'HH:MIpm') as pretty_start_date,
          to_char(end_date, 'HH:MIpm') as pretty_end_date,
          coalesce(e.name, a.name) as name,
@@ -122,13 +124,14 @@ in       (
 from     acs_activities a,
          acs_events e,
          timespans s,
-         time_intervals t
+         time_intervals t,
+         cal_items
 where    e.timespan_id = s.timespan_id
 and      s.interval_id = t.interval_id
 and      e.activity_id = a.activity_id
-and      start_date between
-         to_date(:start_date,:date_format) and
-         to_date(:end_date,:date_format)
+and      cal_items.cal_item_id= e.event_id
+and      (start_date > to_date(:start_date,:date_format) or :start_date is null) and
+         (start_date < to_date(:end_date,:date_format) or :end_date is null)
 and      e.event_id
 in       (
          select  cal_item_id

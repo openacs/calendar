@@ -236,7 +236,6 @@ ad_proc calendar_assign_permissions { calendar_id
 
     if { [empty_string_p $revoke] } {
 	# grant the permissions
-
         permission::grant -object_id $calendar_id -party_id $party_id -privilege $cal_privilege
 
     } elseif { [string equal $revoke "revoke"] } {

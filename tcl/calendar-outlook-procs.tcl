@@ -122,7 +122,8 @@ namespace eval calendar::outlook {
 
         }
 
-        ns_log Notice "DTSTART = $DTSTART"
+        ns_log debug "calendar::outlook::format_item: DTSTART = $DTSTART"
+
         regexp {^([0-9]*)T} $DTSTART all CREATION_DATE
         set DESCRIPTION $cal_item(description)
         set TITLE $cal_item(name)

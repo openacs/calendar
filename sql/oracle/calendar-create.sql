@@ -177,9 +177,6 @@ create table calendars (
                                 primary key,
           -- the name of the calendar
         calendar_name           varchar2(200),
-          -- the name of the calendar in a system should be unique
-          -- to avoid confusion
-        constraint calendar_calendar_name_un unique (calendar_name),
           -- the individual or party that owns the calendar        
         owner_id                integer
                                 constraint calendars_calendar_owner_id_fk 

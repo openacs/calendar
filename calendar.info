@@ -24,6 +24,7 @@
         </callbacks>
         <parameters>
             <parameter datatype="number"  min_n_values="1"  max_n_values="1"  name="Attachments"  default="0" description="Allow Files to be Uploaded"/>
+            <parameter datatype="number"  min_n_values="1"  max_n_values="1"  name="ListView_DefaultPeriodDays"  default="31" description="Sets the default for the number of days shown in a list view. Defaults to 31."/>
         </parameters>
 
     </version>

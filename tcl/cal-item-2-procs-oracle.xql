@@ -28,19 +28,22 @@
             recurrence_id,
             cal_items.item_type_id,
             cal_item_types.type as item_type,
-            on_which_calendar as calendar_id
+            on_which_calendar as calendar_id,
+            c.calendar_name
             from     acs_activities a,
             acs_events e,
             timespans s,
             time_intervals t,
             cal_items,
-            cal_item_types
+            cal_item_types,
+            calendars c
             where    e.timespan_id = s.timespan_id
             and      s.interval_id = t.interval_id
             and      e.activity_id = a.activity_id
             and      e.event_id = :cal_item_id
             and      cal_items.cal_item_id= :cal_item_id
             and      cal_item_types.item_type_id(+)= cal_items.item_type_id
+            and      c.calendar_id = on_which_calendar
 </querytext>
 </fullquery>
 
@@ -57,19 +60,22 @@
             recurrence_id,
             cal_items.item_type_id,
             cal_item_types.type as item_type,
-            on_which_calendar as calendar_id
+            on_which_calendar as calendar_id,
+            c.calendar_name
             from     acs_activities a,
             acs_events e,
             timespans s,
             time_intervals t,
             cal_items,
-            cal_item_types
+            cal_item_types,
+            calendars c
             where    e.timespan_id = s.timespan_id
             and      s.interval_id = t.interval_id
             and      e.activity_id = a.activity_id
             and      e.event_id = :cal_item_id
             and      cal_items.cal_item_id= :cal_item_id
             and      cal_item_types.item_type_id(+)= cal_items.item_type_id
+            and      c.calendar_id = on_which_calendar
 </querytext>
 </fullquery>
 

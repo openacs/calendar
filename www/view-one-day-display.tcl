@@ -117,10 +117,23 @@ db_foreach select_day_items_with_time {} {
     set start_time [lc_time_fmt $ansi_start_date "%X"]
     set end_time [lc_time_fmt $ansi_end_date "%X"]
 
+    regexp {([1-9][0-9]*)} $start_hour match start_hour_no
+    regexp {([1-9][0-9]*)} $end_hour match end_hour_no
+
     for { set item_current_hour $start_hour } { $item_current_hour < $end_hour } { incr item_current_hour } {
         set item_current_hour [expr [string trimleft $item_current_hour 0]+0]
-        if {$start_hour == $item_current_hour && $start_hour >= $start_display_hour && $end_hour <= $end_display_hour} {
-            lappend day_items_per_hour [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
+        ds_comment "start_hour_no = $start_hour_no, end_hour = $end_hour, item_current_hour = $item_current_hour, start_display_hour = $start_display_hour, end_display_hour = $end_display_hour, name=$name"
+
+        if { $start_hour_no == $item_current_hour && \
+                 $start_hour_no >= $start_display_hour && $end_hour_no <= $end_display_hour } {
+
+            lappend day_items_per_hour \
+                [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
+            ds_comment "Outputting $name at $start_hour ($item_current_hour)"
+        } else {
+            lappend day_items_per_hour \
+                [list $item_current_hour {} $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
+            ds_comment "Continuing $name at $start_hour ($item_current_hour)"
         }
         incr items_per_hour($item_current_hour)
     }
@@ -141,14 +154,16 @@ foreach this_item $day_items_per_hour {
     set item_start_hour [expr [string trimleft [lindex $this_item 5] 0]+0]
     set item_end_hour [expr [string trimleft [lindex $this_item 6] 0]+0]
     set rowspan [expr $item_end_hour - $item_start_hour]
+
     if {$item_start_hour > $day_current_hour} {
         # need to add dummy entries to show all hours
         for {  } { $day_current_hour < $item_start_hour } { incr day_current_hour } {
 	    set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%X"]
-            multirow append day_items_with_time  "[subst $hour_template]" $day_current_hour $localized_day_current_hour "" "" "" "" "" "" "" "" 0 0 ""
+            multirow append day_items_with_time [subst $hour_template] $day_current_hour $localized_day_current_hour "" "" "" "" "" "" "" "" 0 0 ""
         }
     }
 
+    set day_current_hour [lindex $this_item 0]
     set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%X"]
 
     # reset url stub
@@ -167,11 +182,19 @@ foreach this_item $day_items_per_hour {
     set end_time [lindex $this_item 8]
 
     set item [lindex $this_item 1]
+    set item_id [lindex $this_item 2]
     set full_item [subst $item_template]
 
-    set current_hour_link "[subst $hour_template]"
+    set current_hour_link [subst $hour_template]
 
-    multirow append day_items_with_time $current_hour_link $day_current_hour $localized_day_current_hour [lindex $this_item 1] [lindex $this_item 2] [lindex $this_item 3] [lindex $this_item 4] [lindex $this_item 5] [lindex $this_item 6] [lindex $this_item 7] [lindex $this_item 8] 0 $rowspan $full_item
+    ds_comment "Multirow: day_current_hour = $day_current_hour, name = [lindex $this_item 1]"
+
+    multirow append day_items_with_time \
+        $current_hour_link $day_current_hour $localized_day_current_hour \
+        [lindex $this_item 1] [lindex $this_item 2] [lindex $this_item 3] \
+        [lindex $this_item 4] [lindex $this_item 5] [lindex $this_item 6] \
+        [lindex $this_item 7] [lindex $this_item 8] 0 $rowspan $full_item
+
     set day_current_hour [expr [lindex $this_item 0] +1 ]
 }
 

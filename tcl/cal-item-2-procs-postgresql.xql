@@ -19,12 +19,13 @@
          0 as n_attachments,
          to_char(start_date, 'YYYY-MM-DD HH24:MI:SS') as start_date_ansi,
          to_char(end_date, 'YYYY-MM-DD HH24:MI:SS') as end_date_ansi,
-         coalesce(a.name, e.name) as name,
+         coalesce(e.name, a.name) as name,
          coalesce(e.description, a.description) as description,
          recurrence_id,
          i.item_type_id,
          it.type as item_type,
-         on_which_calendar as calendar_id
+         on_which_calendar as calendar_id,
+         c.calendar_name
        from
          acs_events e join timespans s
            on (e.timespan_id = s.timespan_id)
@@ -36,6 +37,8 @@
            on (e.event_id = i.cal_item_id)
          left join cal_item_types it
            on (it.item_type_id = i.item_type_id)
+         left join calendars c
+           on (c.calendar_id = i.on_which_calendar)
        where
          e.event_id = :cal_item_id
       </querytext>
@@ -53,7 +56,8 @@
          recurrence_id,
          i.item_type_id,
          it.type as item_type,
-         on_which_calendar as calendar_id
+         on_which_calendar as calendar_id,
+         c.calendar_name
        from
          acs_events e join timespans s
            on (e.timespan_id = s.timespan_id)
@@ -65,6 +69,8 @@
            on (e.event_id = i.cal_item_id)
          left join cal_item_types it
            on (it.item_type_id = i.item_type_id)
+         left join calendars c
+           on (c.calendar_id = i.on_which_calendar)
        where
          e.event_id = :cal_item_id
      </querytext>

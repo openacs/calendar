@@ -33,6 +33,12 @@
     </tr>
 
     <tr>
+    <td class="cal-table-data-title">#calendar.Sharing#:
+    </td>
+    <td>@cal_item.calendar_name@
+    </tr>
+
+    <tr>
     <td class="cal-table-data-title">#calendar.Date_1#
     <if @cal_item.no_time_p@ eq 0> 
     #calendar.and_Time#
@@ -91,8 +97,8 @@
 
   <if @cal_item.recurrence_id@ not nil>
     <tr>
-    <td class="cal-table-data-action">
-    <a  href="ics/@cal_item_id@.ics?all_occurences_p=1">#calendar.all_events#</a>
+    <td>
+    <a  href="ics/@cal_item_id@.ics?all_occurences_p=1" class="button">#calendar.all_events#</a>
     </td>
     <td>Sync all events with Outlook</td>
     </tr>

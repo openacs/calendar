@@ -38,22 +38,17 @@ set date [calendar::adjust_date -date $date -julian_date $julian_date]
 set ansi_date $date
 set calendar_list [calendar::calendar_list]
 
-if { ![info exists cal_item_id] } {
-    if { [llength $calendar_list] > 1 && [empty_string_p $calendar_id] } {
-        set return_url [export_vars -base cal-item-new { date start_time end_time }]
-        ad_returnredirect [export_vars -base calendar-choose { return_url }]
-        ad_script_abort
-    } elseif { [empty_string_p $calendar_id] } {
-	set calendar_id [lindex [lindex $calendar_list 0] 1]
-    }
-} else {
-    set calendar_id [db_string get_calendar_id {select 
-         on_which_calendar as calendar_id
-         from cal_items 
-        where cal_item_id = :cal_item_id} -default ""]
 
+# TODO: Move into ad_form
+if { ![ad_form_new_p -key cal_item_id] } {
+    set calendar_id [db_string get_calendar_id {
+        select on_which_calendar as calendar_id
+         from  cal_items 
+        where  cal_item_id = :cal_item_id
+    } -default ""]
 }
 
+# TODO: Move into ad_form
 if { [exists_and_not_null cal_item_id] } {
     set page_title "One calendar item"
     set ad_form_mode display
@@ -63,7 +58,7 @@ if { [exists_and_not_null cal_item_id] } {
 }
 
 ad_form -name cal_item  -form {
-    cal_item_id:key
+    {cal_item_id:key}
 
     {title:text(text)
         {label "[_ calendar.Title_1]"}
@@ -96,13 +91,28 @@ ad_form -name cal_item  -form {
         {html {cols 60 rows 3 wrap soft} maxlength 255}
     }
 
-    {repeat_p:text(radio)     
-        {label "[_ calendar.Repeat_1]"}
-        {options {{"[_ calendar.Yes]" 1}
-                  {"[_ calendar.No]" 0} }}
+    {calendar_id:integer(radio)
+        {label "[_ calendar.Sharing]"}
+        {options $calendar_list}
     }
+}
 
-    {calendar_id:text(hidden) {value $calendar_id}}
+if { [ad_form_new_p -key cal_item_id] } {
+    ad_form -extend -name cal_item -form {
+        {repeat_p:text(radio)     
+            {label "[_ calendar.Repeat_1]"}
+            {options {{"[_ calendar.Yes]" 1}
+                {"[_ calendar.No]" 0} }}
+        }
+    }
+} else {
+    ad_form -extend -name cal_item -form {
+        {edit_all_p:text(radio)     
+            {label "[_ calendar.Apply_to_all]"}
+            {options {{"[_ calendar.Yes]" 1}
+                {"[_ calendar.No]" 0} }}
+        }
+    }
 }
 
 
@@ -131,8 +141,9 @@ while { ![empty_string_p $format_string] } {
 
 
 
-
-
+#----------------------------------------------------------------------
+# Finishing definition of form
+#----------------------------------------------------------------------
 
 set cal_item_types [calendar::get_item_types -calendar_id $calendar_id]
 
@@ -148,7 +159,7 @@ if {[llength $cal_item_types] > 1} {
 
 ad_form -extend -name cal_item -validate { 
     {title {[string length $title] <= 4000}
-        " TITLE MUST BE 4"
+        "Title is too long"
     }
 } -new_request {
     set date [template::util::date::from_ansi $date]
@@ -165,6 +176,7 @@ ad_form -extend -name cal_item -validate {
 	set start_time "{} {} {} 0 0 {} {HH24:MI}"
 	set end_time "{} {} {} 0 0 {} {HH24:MI}"
     }
+    set calendar_id [lindex [lindex $calendar_list 0] 1]
 } -edit_request {
     calendar::item::get -cal_item_id $cal_item_id -array cal_item
     set cal_item_id $cal_item(cal_item_id)
@@ -181,10 +193,14 @@ ad_form -extend -name cal_item -validate {
     set calendar_id $cal_item(calendar_id)
     set time_p $cal_item(time_p)
 
-    if {[empty_string_p $repeat_p]} {
+    if { [empty_string_p $repeat_p] } {
         set repeat_p 0
     } else {
         set repeat_p 1
+    }
+    set edit_all_p $repeat_p
+    if { !$repeat_p } {
+        element set_property cal_item edit_all_p -widget hidden
     }
     set date [template::util::date::from_ansi $ansi_start_date]
     set start_time [template::util::date::from_ansi $ansi_start_date [lc_get formbuilder_time_format]]
@@ -199,27 +215,32 @@ ad_form -extend -name cal_item -validate {
             -description $description \
             -calendar_id $calendar_id \
             -item_type_id $item_type_id]
+
+    if {$repeat_p} {
+        ad_returnredirect [export_vars -base cal-item-create-recurrence { cal_item_id }]
+    } else {
+        ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]
+    }
+    ad_script_abort
+
 } -edit_data {
     # set up the datetimes
     set start_date [calendar::to_sql_datetime -date $date -time $start_time -time_p $time_p]
     set end_date [calendar::to_sql_datetime -date $date -time $end_time -time_p $time_p]
 
     # Do the edit
-    calendar::item::edit -cal_item_id $cal_item_id \
-            -start_date $start_date \
-            -end_date $end_date \
-            -name $title \
-            -description $description \
-            -item_type_id $item_type_id \
-            -edit_all_p $repeat_p
-} -after_submit {
-    if {$repeat_p} {
-        ad_returnredirect "cal-item-create-recurrence?cal_item_id=$cal_item_id"
-    } else {
-        ad_returnredirect "cal-item-view?cal_item_id=$cal_item_id"
-    }
+    calendar::item::edit \
+        -cal_item_id $cal_item_id \
+        -start_date $start_date \
+        -end_date $end_date \
+        -name $title \
+        -description $description \
+        -item_type_id $item_type_id \
+        -edit_all_p $edit_all_p \
+        -calendar_id $calendar_id
+    
+    ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]
     ad_script_abort
 }
 
 
-ad_return_template

@@ -123,13 +123,14 @@ namespace eval calendar::item {
         {-description:required}
         {-item_type_id ""}
         {-edit_all_p 0}
+        {-calendar_id ""}
     } {
         Edit the item
 
     } {
         if {[dates_valid_p -start_date $start_date -end_date $end_date]} {
             # For now we call the old nasty version
-	    return [cal_item_update $cal_item_id $start_date $end_date $name $description $item_type_id $edit_all_p]
+	    return [cal_item_update $cal_item_id $start_date $end_date $name $description $item_type_id $edit_all_p $calendar_id]
         } else {
             # FIXME: do this better
             ad_return_complaint 1 "Start Time must be before End Time"

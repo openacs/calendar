@@ -89,7 +89,7 @@
   
       <if @days.greyed_p@ eq t>
         <td class="cal-day-inactive">
-        <a href="@base_url@?view=@view@date=@days.ansi_date@@page_num@">
+        <a href="@base_url@?view=@view@&date=@days.ansi_date@@page_num@">
         <font color=gray>@days.day_number@</font></a>
         </td>
       </if>

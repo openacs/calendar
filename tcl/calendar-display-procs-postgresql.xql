@@ -50,7 +50,7 @@
 
 <fullquery name="calendar::one_week_display.select_week_items">
 <querytext>
-select   to_char(start_date, 'J') as start_date,
+select   to_char(start_date, 'J') as start_date_julian,
          to_char(start_date, 'HH:MIpm') as pretty_start_date,
          to_char(end_date, 'HH:MIpm') as pretty_end_date,
          to_char(start_date,'HH24:MI') as start_date,

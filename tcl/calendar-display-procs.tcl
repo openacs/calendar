@@ -184,7 +184,7 @@ namespace eval calendar {
 		append item " <font color=\"red\">$status_summary</font> "
 	    }
 	    
-	    ns_set put $items $start_date $item
+	    ns_set put $items $start_date_julian $item
         }
 
         # display stuff

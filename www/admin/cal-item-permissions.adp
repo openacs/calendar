@@ -7,7 +7,7 @@
 -->
 
 <master src="master">
-<property name="title">ArsDigita Calendar Item Administration </property>
+<property name="title">Calendar Item Administration </property>
 <property name="context_bar"> "Calendar Item Permissions" </property>
 
 <if @action@ eq list>

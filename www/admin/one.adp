@@ -8,7 +8,7 @@
 
 
 <master src="master">
-<property name="title">ArsDigita Calendar Administration@title@ </property>
+<property name="title">Calendar Administration@title@ </property>
 <property name="context_bar"> @context_bar@ </property>
 
 <if @action@ eq view>

@@ -8,7 +8,7 @@
 
 
 <master src="master">
-<property name="title">ArsDigita Calendar Administration for User # @user_id@</property>
+<property name="title">Calendar Administration for User # @user_id@</property>
 <property name="context_bar">@context_bar@</property>
 
 

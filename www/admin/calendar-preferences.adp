@@ -7,7 +7,7 @@
      	@cvs-id $Id$
 -->
 <master src="master">
-<property name="title">ArsDigita Calendar Administration: @party_name@ </property>
+<property name="title">Calendar Administration: @party_name@ </property>
 <property name="context_bar"> "Calendar Preferences" </property>
 
 

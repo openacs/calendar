@@ -16,19 +16,21 @@
 <b> Current Permissions </b>
 
 <if @privileges:rowcount@ eq 0>
-  <p>		
+  <ul>		
     <li>no privilege has been granted
-  </p>
+  </ul>
 </if>
 
 <else>
   <p>
+    <ul>
     <multiple name=privileges>	 
       <li>@privileges.privilege@  
 	[<a href="calendar-permissions?calendar_id=@calendar_id@&action=revoke&party_id=@party_id@&permission=@privileges.privilege@">            
 	  revoke
-	 </a>]
+	 </a>]</li>
     </multiple>
+    </ul>
   </p>
 </else>
 </if>

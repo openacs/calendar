@@ -97,7 +97,7 @@ if { [string equal $calendar_id "-1"] } {
     # is not given
 	
     if { [empty_string_p $calendar_id] } {
-	ad_return_compliant 1 "You need to supply a caledar"
+	ad_return_complaint 1 "You need to supply a calendar"
     }
 
     # now we make sure that the user has the permission 

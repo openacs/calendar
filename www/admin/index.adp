@@ -42,13 +42,13 @@ Your are in the following group: <br>
 
 <p>
 <a href="one?party_id=@user_id@&action=add">
-create a new calendar
+Create a new calendar
 </a>
 </p>
 
 
 <p>
-<a href="one?party_id=@user_id@&action=add">
+<a href="calendar-preferences">
 Edit your Calendar Preferences
 </a>
 </p>

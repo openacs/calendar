@@ -15,10 +15,10 @@ if {[exists_and_not_null page_num]} {
 }
 
 array set message_key_array {
-    list acs-datetime.List
-    day acs-datetime.Day
-    week acs-datetime.Week
-    month acs-datetime.Month
+    list #acs-datetime.List#
+    day #acs-datetime.Day#
+    week #acs-datetime.Week#
+    month #acs-datetime.Month#
 }
 
 # Create row with existing views
@@ -29,7 +29,7 @@ foreach viewname {list day week month} {
     } else {
         set active_p f
     }
-    multirow append views [_ $message_key_array($viewname)] $viewname $active_p
+    multirow append views [lang::util::localize $message_key_array($viewname)] $viewname $active_p
 }
 
 set list_of_vars [list]

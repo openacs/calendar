@@ -11,6 +11,7 @@ ad_page_contract {
     {date ""}
     {julian_date ""}
     {calendar_list:multiple ""}
+    {sort_by ""}
 }
 
 set package_id [ad_conn package_id]
@@ -44,8 +45,8 @@ if {$view == "week"} {
             -day_template "<font size=-1><b>\$day</b> - <a href=\"view?date=\$date&view=day\">\$pretty_date</a> &nbsp; &nbsp; <a href=\"cal-item-new?date=\$date&start_time=&end_time=\">(Add Item)</a></font>" \
             -date $date \
             -calendar_id_list $calendar_list \
-            -prev_week_template "<a href=\"?date=\$last_week&view=week\">&lt;</a>" \
-            -next_week_template "<a href=\"?date=\$next_week&view=week\">&gt;</a>"
+            -prev_week_template "<a href=\"view?date=\[ns_urlencode \$last_week]&view=week\">&lt;</a>" \
+            -next_week_template "<a href=\"view?date=\[ns_urlencode \$next_week]&view=week\">&gt;</a>"
     ]
 }
 
@@ -56,19 +57,25 @@ if {$view == "month"} {
             -date $date \
             -item_add_template "<font size=-3>$item_add_template</font>" \
             -calendar_id_list $calendar_list \
-            -prev_month_template "<a href=view?view=month&date=\$ansi_date>&lt;</a>" \
-            -next_month_template "<a href=view?view=month&date=\$ansi_date>&gt;</a>"]
+            -prev_month_template "<a href=view?view=month&date=\[ns_urlencode \$ansi_date]>&lt;</a>" \
+            -next_month_template "<a href=view?view=month&date=\[ns_urlencode \$ansi_date]>&gt;</a>"]
 }
 
 if {$view == "list"} {
-    set sort_by [ns_queryget sort_by]
-
+    set start_date $date
+    set ansi_list [split $date "- "]
+    set ansi_year [lindex $ansi_list 0]
+    set ansi_month [string trimleft [lindex $ansi_list 1] "0"]
+    set ansi_day [string trimleft [lindex $ansi_list 2] "0"]
+    set end_date [dt_julian_to_ansi [expr [dt_ansi_to_julian $ansi_year $ansi_month $ansi_day ] + 1]]
     set cal_stuff [calendar::list_display \
             -item_template $item_template \
+            -start_date $start_date \
+            -end_date $end_date \
             -date $date \
             -calendar_id_list $calendar_list \
             -sort_by $sort_by \
-            -url_template "?view=list&sort_by=\$order_by"]
+            -url_template "view?view=list&sort_by=\$order_by"]
 }
 
 set cal_nav [dt_widget_calendar_navigation "view" $view $date "calendar_list="]

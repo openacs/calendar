@@ -18,13 +18,13 @@
 <b>#calendar.Details#</b> @cal_item.description@
 <p>
 
-<FORM method=post action=cal-item-create-recurrence-2>
+<FORM method=get action=cal-item-create-recurrence-2>
 <INPUT TYPE=hidden name=cal_item_id value=@cal_item.cal_item_id@>
 <INPUT TYPE=hidden name=return_url value="@return_url@">
 
 #calendar.Repeat_every# <INPUT TYPE=text name=every_n value=1 size=3>:<br>
 <INPUT TYPE=radio name=interval_type value=day> #calendar.day_s#<br>
-<INPUT TYPE=radio name=interval_type value=week> 
+<INPUT TYPE=radio name=interval_type value=week CHECKED> 
 <%
 foreach dow [list [list "#calendar.Sunday#" 0] [list "#calendar.Monday#" 1] [list "#calendar.Tuesday#" 2] [list "#calendar.Wednesday#" 3] [list "#calendar.Thursday#" 4] [list "#calendar.Friday#" 5] [list "#calendar.Saturday#" 6]] {
         if {[lindex $dow 1] == [expr "$cal_item(day_of_week) -1"]} {

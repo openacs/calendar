@@ -11,6 +11,7 @@ ad_page_contract {
     {cal_item_id:integer}
     {view day}
     {action edit}
+    {no_time_p ""}
     {event_date:array ""}
     {start_time:array ""}
     {end_time:array ""}
@@ -34,14 +35,21 @@ if { $action == "delete" } {
 
     ad_returnredirect "${return_url}?[export_url_vars date action view]"
 
+    return
 }
 
 #------------------------------------------------------
 # extract the time info 
 
-set start_datetime [calendar_make_datetime [array get event_date] [array get start_time]]
-
-set end_datetime [calendar_make_datetime [array get event_date] [array get end_time]]
+if {$no_time_p == 1} {
+    set no_time(hours) 0
+    set no_time(minutes) 0
+    set start_datetime [calendar_make_datetime [array get event_date] [array get no_time]]
+    set end_datetime [calendar_make_datetime [array get event_date] [array get no_time]]
+} else {
+    set start_datetime [calendar_make_datetime [array get event_date] [array get start_time]]
+    set end_datetime [calendar_make_datetime [array get event_date] [array get end_time]]
+}
 
 
 #-----------------------------------------------------------------

@@ -22,12 +22,6 @@ ad_page_contract {
     {recurrence_p 0}
 } 
 
-if {$recurrence_p} {
-    # We must ask for recurrence information
-    ad_returntemplate cal-item-create-recurrence
-    ad_script_abort
-}
-
 if { $date == "now" } {
     set date [dt_sysdate] 
 }
@@ -38,8 +32,8 @@ if { $date == "now" } {
 #
 
 if {$no_time_p == 1} {
-    set no_time(hour) 0
-    set no_time(minute) 0
+    set no_time(hours) 0
+    set no_time(minutes) 0
     set start_datetime [calendar_make_datetime [array get event_date] [array get no_time]]
     set end_datetime [calendar_make_datetime [array get event_date] [array get no_time]]
 } else {
@@ -123,42 +117,12 @@ set cal_item_id [cal_item_create $start_datetime \
 				 $creation_ip \
                                  $creation_user]
 
+if {$recurrence_p} {
+    # We must ask for recurrence information
+    ad_returnredirect "cal-item-create-recurrence?cal_item_id=$cal_item_id"
+    return
+}
+
 # set the date to be the date of the event
 set date [calendar_make_date [array get event_date]]
 ad_returnredirect "${return_url}?[export_url_vars date action view calendar_id]"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

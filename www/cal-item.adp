@@ -112,11 +112,25 @@
   <if @action@ eq add>
   <tr>
   <td valign=top align=right>
-  Recurrence?
+  <b>Repeat?</b>
   </td>
   <td>
   <INPUT TYPE=radio CHECKED name=recurrence_p value=0> No &nbsp; &nbsp; &nbsp;
   <INPUT TYPE=radio name=recurrence_p value=1> Yes
+  </td>
+  </tr>
+  </if>
+
+  <if @action@ eq edit>
+  <tr>
+  <td valign=top align=right>
+  </td>
+  <td>
+  <if @recurrence_id@ nil>
+  This event is a single, non-recurring event
+  </if><else>
+  This event is recurring. <a href=cal-item-recurrence?cal_item_id=@cal_item_id@>Find out more</a>.
+  </else>
   </td>
   </tr>
   </if>
@@ -131,17 +145,10 @@
         <input type=submit value="Edit Item">
         </else>
       </if>
-    </form>
 
    <if @delete_p@ eq 1> 
       <if @action@ eq edit or @action@ eq delete>       
-        <form action="cal-item-edit" method=post>
-          <input type=hidden name=return_url value=@return_url@>
-          <input type=hidden name=action value=delete>
-	  <input type=hidden name=cal_item_id value=@cal_item_id@>
-	  <td valign=top align=left>
-            <input type=submit value=delete>
-        </form>
+            <a href=cal-item-edit?action=delete&cal_item_id=@cal_item_id@&return_url=@return_url@>Delete <if @recurrence_id@ not nil>(this instance only)</if></a>
       </if>
    </if>
    </td>
@@ -162,6 +169,7 @@
   </if>
 </table>
 
+</form>
 
 
 

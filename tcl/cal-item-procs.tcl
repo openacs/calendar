@@ -255,11 +255,42 @@ ad_proc cal_item_delete { cal_item_id } {
 
 
 
+ad_proc -public calendar_item_add_recurrence {
+    {-cal_item_id:required}
+    {-interval_type:required}
+    {-every_n:required}
+    {-days_of_week ""}
+    {-recur_until ""}
+} {
+    Adds a recurrence for a calendar item
+} {
+    # We do things in a transaction
+    db_transaction {
+        # Create the recurrence
+        set recurrence_id [db_exec_plsql create_recurrence "
+            begin
+            :1 := recurrence.new(interval_type => :interval_type,
+            every_nth_interval => :every_n,
+            days_of_week => :days_of_week,
+            recur_until => :recur_until);
+            end;
+        "]
+        
+        # Update the events table
+        db_dml update_event "update acs_events set recurrence_id= :recurrence_id where event_id= :cal_item_id"
 
-
-
-
-
-
-
-
+        # Insert instances
+        db_exec_plsql insert_instances "
+        begin
+        acs_event.insert_instances(event_id => :cal_item_id);
+        end;
+        "
+        
+        # Make sure they're all in the calendar!
+        db_dml insert_cal_items "
+        insert into cal_items (cal_item_id, on_which_calendar)
+        select event_id, (select on_which_calendar as calendar_id from cal_items where cal_item_id = :cal_item_id) from acs_events where recurrence_id= :recurrence_id and event_id <> :cal_item_id"
+    }
+}
+        
+        

@@ -159,7 +159,7 @@ namespace eval calendar {
                 set item [subst $item_template]
 
                 # ns_log Notice "bma-calendar: adding $item at $start_hour"
-                ns_set put $items $ns_set_pos $item
+                ns_set put $items $ns_set_pos [list $pretty_start_date $pretty_end_date $item]
             }
 
         }

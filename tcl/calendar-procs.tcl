@@ -14,49 +14,60 @@ ad_library {
 #------------------------------------------------
 # datetime info extraction
 
-ad_proc calendar_make_datetime { event_date
-                        event_time
+ad_proc calendar_make_datetime {
+    event_date
+    {event_time ""}
 } {
     given a date, and a time, construct the proper date string
     to be imported into oracle. (yyyy-mm-dd hh24:mi format)s
 } {
-
+    
     # MUST CONVERT TO ARRAYS! (ben)
     array set event_date_arr $event_date
-    array set event_time_arr $event_time
-
+    if {![empty_string_p $event_time]} {
+        array set event_time_arr $event_time
+    }
+    
     # extract from even-date 
     set year   $event_date_arr(year)
     set day    $event_date_arr(day)
     set month  $event_date_arr(month)
-
-    # extract from event_time
-    set hours $event_time_arr(hours)
-    set minutes $event_time_arr(minutes)
-
-    # AM/PM? (ben - openacs fix)
-    if {[info exists event_time_arr(ampm)]} {
-        if {$event_time_arr(ampm)} {
-            if {$hours < 12} {
-                incr hours 12
+    
+    if {![empty_string_p $event_time]} {
+        # extract from event_time
+        set hours $event_time_arr(hours)
+        set minutes $event_time_arr(minutes)
+        
+        # AM/PM? (ben - openacs fix)
+        if {[info exists event_time_arr(ampm)]} {
+            if {$event_time_arr(ampm)} {
+                if {$hours < 12} {
+                    incr hours 12
+                }
             }
         }
+        
+        if {$hours < 10} {
+            set hours "0$hours"
+        }
+        
     }
-
+    
+    
     if {$month < 10} {
 	set month "0$month"
     }
-
+    
     if {$day < 10} {
 	set day "0$day"
     }
-
-    if {$hours < 10} {
-	set hours "0$hours"
+    
+    if {[empty_string_p $event_time]} {
+        return "$year-$month-$day"
+    } else {
+        return "$year-$month-$day $hours:$minutes"
     }
-
-    return "$year-$month-$day $hours:$minutes"
-
+    
 }
 
 
@@ -352,13 +363,4 @@ ad_proc calendar_public_p { calendar_id } {
     }
 
 }
-
-
-
-
-
-
-
-
-
 

@@ -92,7 +92,8 @@ if { $action == "edit" } {
 		 to_char(start_date, 'MM/DD/YYYY') as start_date,
 	         to_char(end_date, 'HH24:MI') as end_time,
 	         nvl(a. name, e.name) as name,
-	         nvl(e.description, a.description) as description
+	         nvl(e.description, a.description) as description,
+                 recurrence_id
 	from     acs_activities a,
 	         acs_events e,
 	         timespans s,

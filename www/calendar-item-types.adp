@@ -1,4 +1,4 @@
-<master src="../master">
+<master>
 <property name="title">Calendar Item Types</property>
 <property name="context_bar">@context_bar@</property>
 

@@ -7,7 +7,7 @@
 -->
 
 
-<master src="master">
+<master>
 <property name="title">Calendars: Recurrence</property>
 <property name="context_bar"></property>
 

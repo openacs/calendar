@@ -5,6 +5,6 @@
 
 <listtemplate name="calendars"></listtemplate>
 
-<p>
-  <b>&raquo;</b> <a href="@permissions_url@">Package permissions</a>
-</p>
+<ul class="action-links">
+  <li><a href="@permissions_url@">Package permissions</a></li>
+</ul>

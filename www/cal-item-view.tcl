@@ -44,6 +44,8 @@ set cal_item(no_time_p) [dt_no_time_p -start_time $cal_item(start_time) -end_tim
 # Attachment URLs
 if {[calendar::attachments_enabled_p]} {
     set attachment_options " | <A href=\"[attachments::add_attachment_url -object_id $cal_item(cal_item_id) -return_url "../cal-item-view?cal_item_id=$cal_item(cal_item_id)"]\">add attachment</a>"
+} else { 
+    set attachment_options {} 
 }
 
 # cal nav

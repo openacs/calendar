@@ -33,7 +33,7 @@ set date [calendar::adjust_date -date $date -julian_date $julian_date]
 # Set up some template
 set item_template "<a href=\"cal-item-view?cal_item_id=\$item_id\">\$item</a>"
 set hour_template "<a href=\"cal-item-new?date=\[ns_urlencode \$date]&start_time=\$start_time&end_time=\$end_time\">\$hour</a>"
-set item_add_template "<a href=\"cal-item-new?julian_date=\$julian_date&start_time=&end_time=\">ADD</a>"
+set item_add_template "<a href=\"cal-item-new?julian_date=\$julian_date&start_time=&end_time=\"><img border=0 align=\"right\" valign=\"top\" src=\"/shared/images/add.gif\" alt=\"Add Item\"></a>"
 
 # Depending on the view, make a different widget
 if {$view == "day"} {

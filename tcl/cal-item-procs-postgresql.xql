@@ -80,9 +80,9 @@
                                         null,
 					:timespan_id,
 					:activity_id,
-					:on_which_calendar,
+					null, 
 					'cal_item',
-					null,
+					:on_which_calendar,
 					now(),
 					:creation_user,
 					:creation_ip

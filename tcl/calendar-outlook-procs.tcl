@@ -76,16 +76,16 @@ namespace eval calendar::outlook {
         # If necessary, select recurrence information
 
         # Convert some dates for timezone
-        set cal_item(full_start_date) [adjust_timezone -timestamp $cal_item(full_start_date) -format $date_format -user_tz "Universal"]
-        set cal_item(full_end_date) [adjust_timezone -timestamp $cal_item(full_end_date) -format $date_format -user_tz "Universal"]
+        set cal_item(ansi_start_date) [adjust_timezone -timestamp $cal_item(ansi_start_date) -format $date_format -user_tz "Universal"]
+        set cal_item(ansi_end_date) [adjust_timezone -timestamp $cal_item(ansi_end_date) -format $date_format -user_tz "Universal"]
 
         # Here we have some fields
         # start_time end_time title description
         
         # For now we don't do recurrence
 
-        set DTSTART [ics_timestamp_format -timestamp $cal_item(full_start_date)]
-        set DTEND [ics_timestamp_format -timestamp $cal_item(full_end_date)]
+        set DTSTART [ics_timestamp_format -timestamp $cal_item(ansi_start_date)]
+        set DTEND [ics_timestamp_format -timestamp $cal_item(ansi_end_date)]
 
         # Put it together
         set ics_event "BEGIN:VCALENDAR\r\nPRODID:-//OpenACS//OpenACS 4.5 MIMEDIR//EN\r\nVERSION:2.0\r\nMETHOD:PUBLISH\r\nBEGIN:VEVENT\r\nDTSTART:$DTSTART\r\nDTEND:$DTEND\r\n"

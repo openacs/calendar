@@ -45,7 +45,7 @@
  
 <fullquery name="calendar_assign_permissions.revoke_calendar_permissions">      
       <querytext>
-	    select acs_permission_revoke_permission (
+	    select acs_permission__revoke_permission (
 			:calendar_id,
 			:party_id,
 			:cal_privilege

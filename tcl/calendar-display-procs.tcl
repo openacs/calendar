@@ -312,6 +312,11 @@ namespace eval calendar {
         if {[empty_string_p $calendar_id_list]} {
             set calendar_id_list [list [calendar_have_private_p -return_id 1 [ad_get_user_id]]]
         }
+
+        # sort by cannot be empty
+        if {[empty_string_p $sort_by]} {
+            set sort_by "item_type"
+        }
         
         set date_format "YYYY-MM-DD HH24:MI"
         set current_date $date

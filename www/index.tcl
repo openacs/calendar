@@ -15,7 +15,7 @@ ad_page_contract {
 } -properties {
     package_id:onevalue
     user_id:onevalue
-     
+    name:onevalue
     date:onevalue
     view:onevalue
 }
@@ -23,6 +23,13 @@ ad_page_contract {
 
 # find out the user_id 
 set user_id [ad_verify_and_get_user_id]
+
+db_0or1row user_name_select {
+        select first_names || ' ' || last_name as name, email
+        from persons, parties
+        where person_id = :user_id
+        and person_id = party_id
+}
 
 set package_id [ad_conn package_id]
 

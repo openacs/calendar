@@ -42,7 +42,7 @@ if {[llength $calendar_list] == 0} {
 }
 
 # set the html
-set html [dt_widget_calendar_navigation "" $view $date $pass_in_vars]
+set html [dt_widget_calendar_navigation "./" $view $date $pass_in_vars]
 
 ad_return_template
 

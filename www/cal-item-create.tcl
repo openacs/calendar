@@ -23,11 +23,6 @@ ad_page_contract {
     {item_type_id ""}
 } 
 
-# Fix up the return URL
-if {[empty_string_p $return_url]} {
-    set return_url "?[export_url_vars date action view]"
-}
-
 if { $date == "now" } {
     set date [dt_sysdate] 
 }
@@ -124,6 +119,11 @@ db_transaction {
 				 $creation_ip \
                                  $creation_user \
                                  $item_type_id]
+}
+
+# Fix up the return URL
+if {[empty_string_p $return_url]} {
+    set return_url "cal-item-view?[export_url_vars date action view cal_item_id]"
 }
 
 if {$recurrence_p} {

@@ -47,7 +47,7 @@ if {[llength $calendar_list] == 0} {
 
 
     db_foreach get_monthly_items "" {
-	ns_set put $set_id  $start_date "<a href=?action=edit&cal_item_id=$item_id>
+	ns_set put $set_id  $start_date "<a href=cal-item-view?action=edit&cal_item_id=$item_id>
 	  $name ($calendar_name)
 	</a><br>"
     }

@@ -95,7 +95,7 @@ in       (
          where   on_which_calendar = :calendar_id
          )
 } {
-	ns_set put $set_id  $start_date "<li> <a href=?action=edit&cal_item_id=$item_id>
+	ns_set put $set_id  $start_date "<li> <a href=cal-item-view?action=edit&cal_item_id=$item_id>
 	$pretty_start_date - $pretty_end_date $name ($calendar_name)
 	</a>"
 	append items "<li> <a href=?action=edit&cal_item_id=$item_id>

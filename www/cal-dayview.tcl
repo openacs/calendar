@@ -54,7 +54,7 @@ if {[llength $calendar_list] == 0} {
     }
     
     db_foreach get_day_items "" {
-	ns_set put $set_id  $start_hour "<a href=?date=$date&action=edit&cal_item_id=$item_id>
+	ns_set put $set_id  $start_hour "<a href=cal-item-view?date=$date&action=edit&cal_item_id=$item_id>
                                      $pretty_start_date - $pretty_end_date $name ($calendar_name)
 
                                      </a><br>"

@@ -71,7 +71,13 @@ set user_id [ad_conn user_id]
 # Loop through the items without time
 multirow create day_items_without_time name status_summary item_id calendar_name full_item
 
-db_foreach select_day_items {} {
+# Set the necessary variables for the unified calendar query in views.xql.
+set interval_limitation_clause " to_date(:current_date_system,'YYYY-MM-DD HH24:MI:SS') and to_date(:current_date_system,'YYYY-MM-DD HH24:MI:SS') + cast('23 hours 59 minutes 59 seconds' as interval)"
+set additional_limitations_clause " and to_char(start_date, 'HH24:MI') = '00:00' and  to_char(end_date, 'HH24:MI') = '00:00'"
+set additional_select_clause ""
+set order_by_clause " order by name"
+
+db_foreach dbqd.calendar.www.views.select_items {} {
     # reset url stub
     set url_stub ""
     
@@ -107,8 +113,10 @@ for {set i 0 } { $i < 24 } { incr i } {
 }
 
 
+set additional_limitations_clause " and (to_char(start_date, 'HH24:MI') <> '00:00' or to_char(end_date, 'HH24:MI') <> '00:00')"
+set order_by_clause " order by to_char(start_date,'HH24')"
 set day_items_per_hour {}
-db_foreach select_day_items_with_time {} {
+db_foreach dbqd.calendar.www.views.select_items {} {
     set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
     set ansi_end_date [lc_time_system_to_conn $ansi_end_date]
 
@@ -201,8 +209,7 @@ if {$day_current_hour < $end_display_hour } {
     }
 }
 
-# Select some basic stuff, sets day_of_the_week, yesterday, tomorrow vars
-db_1row select_day_info {}
+db_1row dbqd.calendar.www.views.select_day_info {}
 
 # Check that the previous and next days are in the tcl boundaries
 # so that the calendar widget doesn't bomb when it creates the next/prev links

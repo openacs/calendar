@@ -78,8 +78,20 @@ multirow create calendar_items calendar_name item_id name item_type pretty_weekd
 
 set last_pretty_start_date ""
 # Loop through the events, and add them
-    
-db_foreach select_list_items {} {
+
+set interval_limitation_clause " to_timestamp(:start_date,'YYYY-MM-DD HH24:MI:SS')  and      to_timestamp(:end_date, 'YYYY-MM-DD HH24:MI:SS')"
+
+set order_by_clause " order by $sort_by"
+set additional_limitations_clause ""
+
+if {[string match [db_type] "postgresql"]} {
+    set sysdate "now()"
+} else {
+    set sysdate "sysdate"
+}
+set additional_select_clause " , to_char($sysdate, 'YYYY-MM-DD HH24:MI:SS') as ansi_today, recurrence_id"
+
+db_foreach dbqd.calendar.www.views.select_items {} {
     # Timezonize
     set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
     set ansi_end_date [lc_time_system_to_conn $ansi_end_date]

@@ -62,7 +62,11 @@ multirow create week_items name item_id ansi_start_date start_date calendar_name
 set first_weekday_of_the_week_tz [lc_time_conn_to_system "$first_weekday_of_the_week 00:00:00"]
 set last_weekday_of_the_week_tz [lc_time_conn_to_system "$last_weekday_of_the_week 00:00:00"]
 
-db_foreach select_week_items {} {
+set order_by_clause " order by to_char(start_date, 'J'), to_char(start_date,'HH24:MI')"
+set interval_limitation_clause " to_date(:first_weekday_of_the_week_tz, 'YYYY-MM-DD HH24:MI:SS') and to_date(:last_weekday_of_the_week_tz, 'YYYY-MM-DD HH24:MI:SS')"
+set additional_limitations_clause ""
+set additional_select_clause " , (to_date(start_date,'YYYY-MM-DD HH24:MI:SS')  - to_date(:first_weekday_of_the_week_tz,         'YYYY-MM-DD HH24:MI:SS')) as day_of_week"
+db_foreach dbqd.calendar.www.views.select_items {} {
     # Convert from system timezone to user timezone
     set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
     set ansi_end_date [lc_time_system_to_conn $ansi_end_date]

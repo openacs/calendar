@@ -103,8 +103,13 @@ for {set current_day 0} {$current_day < $greyed_days_before_month} {incr current
 
 set current_day $first_julian_date_of_month
 
-db_foreach select_monthly_items {} {
+# Set the necessary variables for the unified calendar query in views.xql.
+set interval_limitation_clause " to_timestamp(:first_date_of_month_system,'YYYY-MM-DD HH24:MI:SS')  and      to_timestamp(:last_date_in_month_system, 'YYYY-MM-DD HH24:MI:SS')"
+set order_by_clause " order by ansi_start_date, ansi_end_date"
+set additional_limitations_clause ""
+set additional_select_clause ""
 
+db_foreach dbqd.calendar.www.views.select_items {} {
     # Convert from system timezone to user timezone
     set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
     set ansi_end_date [lc_time_system_to_conn $ansi_end_date]

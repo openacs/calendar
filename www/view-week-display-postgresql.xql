@@ -15,15 +15,9 @@
 </querytext>
 </fullquery>
 
+
 <fullquery name="select_week_items">
 <querytext>
-select   to_char(start_date, 'YYYY-MM-DD HH24:MI:SS') as ansi_start_date,
-         to_char(end_date, 'YYYY-MM-DD HH24:MI:SS') as ansi_end_date,
-         coalesce(e.name, a.name) as name,
-         coalesce(e.status_summary, a.status_summary) as status_summary,
-         e.event_id as item_id,
-         (to_date(start_date,'YYYY-MM-DD HH24:MI:SS')  - to_date(:first_weekday_of_the_week_tz,
-         'YYYY-MM-DD HH24:MI:SS')) as day_of_week,
          (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type,
          cals.calendar_id,
 	 cals.calendar_name
@@ -37,12 +31,8 @@ where    e.timespan_id = s.timespan_id
 and      s.interval_id = t.interval_id
 and      e.activity_id = a.activity_id
 and      start_date between
-         to_date(:first_weekday_of_the_week_tz, 'YYYY-MM-DD HH24:MI:SS') and
-         to_date(:last_weekday_of_the_week_tz, 'YYYY-MM-DD HH24:MI:SS')
-and      cals.calendar_id = ci.on_which_calendar
-and      e.event_id = ci.cal_item_id
-$calendars_clause
-order by to_char(start_date, 'J'), to_char(start_date,'HH24:MI')
+
+
 </querytext>
 </fullquery>
 

@@ -31,7 +31,8 @@ ad_page_contract {
 
 # get user_id and check permission of the user
 set user_id [ad_verify_and_get_user_id]    
-ad_require_permission $user_id calendar_admin
+
+permission::require_permission -object_id $calendar_id -privilege calendar_admin
 
 # get party name
 set party_name [db_string get_party_name {

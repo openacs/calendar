@@ -1,14 +1,18 @@
 if {[info exists url_stub_callback]} {
     # This parameter is only set if this file is called from .LRN.
     # This way I make sure that for the time being this adp/tcl
-    # snippet is backwards-compatible.  Will be fixed in OpenACS 5.1.
-    set portled_mode_p 1
+    # snippet is backwards-compatible.
+    set portlet_mode_p 1
+} else {
+    set portlet_mode_p 0 
 }
 
+set current_date $date
+
 if {[info exists portlet_mode_p] && $portlet_mode_p} {
-    set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=$encoded_return_url&action=edit&cal_item_id=\$item_id>"
+    set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=[ad_urlencode "../"]&action=edit&cal_item_id=\$item_id"
     set url_stub_callback "calendar_portlet_display::get_url_stub"
-    set hour_template "calendar/cal-item-new?date=$current_date&start_time=\$localized_day_current_hour"
+    set hour_template "calendar/cal-item-new?date=foofoo$current_date&start_time=\$day_current_hour"
 } else {
     set item_template "cal-item-view?cal_item_id=\$item_id"
     set url_stub_callback ""
@@ -33,7 +37,6 @@ if {[exists_and_not_null calendar_id_list]} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
 }
 
-set current_date $date
 if {[empty_string_p $date]} {
     # Default to todays date in the users (the connection) timezone
     set server_now_time [dt_systime]
@@ -106,19 +109,18 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
     set ansi_end_date [lc_time_system_to_conn $ansi_end_date]
 
-    set start_hour [lc_time_fmt $ansi_start_date "%H"]
-    set end_hour [lc_time_fmt $ansi_end_date "%H"]
     set start_time [lc_time_fmt $ansi_start_date "%X"]
     set end_time [lc_time_fmt $ansi_end_date "%X"]
 
-    if { ($start_hour == $end_hour) || ([string trimleft [lc_time_fmt $ansi_end_date "%M"] 0] > 0) } {
+    if {($start_hour == $end_hour) || ($end_minutes > 0)} {
         incr end_hour
     }
 
     for { set item_current_hour $start_hour } { $item_current_hour < $end_hour } { incr item_current_hour } {
         set item_current_hour [expr [string trimleft $item_current_hour 0]+0]
 
-        if { [string trimleft $start_hour 0] == $item_current_hour } {
+        if { $start_hour == $item_current_hour } {
+
             lappend day_items_per_hour \
                 [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
         } else {
@@ -144,11 +146,10 @@ foreach this_item $day_items_per_hour {
     set item_start_hour [expr [string trimleft [lindex $this_item 5] 0]+0]
     set item_end_hour [expr [string trimleft [lindex $this_item 6] 0]+0]
     set rowspan [expr $item_end_hour - $item_start_hour]
-
     if {$item_start_hour > $day_current_hour && \
-            $item_start_hour >= $start_display_hour && \
-            $item_end_hour <= $end_display_hour} {
+            $item_start_hour >= $start_display_hour} {
         # need to add dummy entries to show all hours
+
         for {  } { $day_current_hour < $item_start_hour } { incr day_current_hour } {
 	    set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%X"]
             multirow append items \
@@ -204,7 +205,7 @@ foreach this_item $day_items_per_hour {
 
 if {$day_current_hour < $end_display_hour } {
     # need to add dummy entries to show all hours
-    for {  } { $day_current_hour <= $end_display_hour } { incr day_current_hour } {
+    for {  } { $day_current_hour < $end_display_hour } { incr day_current_hour } {
 	set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%X" [ad_conn locale]]
         multirow append items \
             "" \
@@ -222,7 +223,11 @@ if {$day_current_hour < $end_display_hour } {
 
 db_1row dbqd.calendar.www.views.select_day_info {}
 
-set previous_week_url "view?view=day&date=[ns_urlencode $yesterday]"
-set next_week_url "view?view=day&date=[ns_urlencode $tomorrow]"
-
+if {$portlet_mode_p} {
+    set previous_week_url "?page_num=$page_num&date=[ns_urlencode $yesterday]"
+    set next_week_url "?page_num=$page_num&&date=[ns_urlencode $tomorrow]"
+} else {
+    set previous_week_url "view?view=day&date=[ns_urlencode $yesterday]"
+    set next_week_url "view?view=day&date=[ns_urlencode $tomorrow]"
+}
 set dates [lc_time_fmt $date "%q"]

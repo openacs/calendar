@@ -7,6 +7,9 @@
   <querytext>
     select   to_char(start_date, 'YYYY-MM-DD HH24:MI:SS') as ansi_start_date,
              to_char(end_date, 'YYYY-MM-DD HH24:MI:SS') as ansi_end_date,
+             to_number(to_char(start_date,'HH24'),'90') as start_hour,
+             to_number(to_char(end_date,'HH24'),'90') as end_hour,
+             to_number(to_char(end_date,'MI'),'90') as end_minutes,
              coalesce(e.name, a.name) as name,
              coalesce(e.status_summary, a.status_summary) as status_summary,
              e.event_id as item_id,

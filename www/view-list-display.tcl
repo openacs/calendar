@@ -1,8 +1,10 @@
 if {[info exists url_stub_callback]} {
     # This parameter is only set if this file is called from .LRN.
     # This way I make sure that for the time being this adp/tcl
-    # snippet is backwards-compatible.  Will be fixed in OpenACS 5.1.
-    set portled_mode_p 1
+    # snippet is backwards-compatible.
+    set portlet_mode_p 1
+} else {
+    set portlet_mode_p 0 
 }
 
 if {[info exists portlet_mode_p] && $portlet_mode_p} {

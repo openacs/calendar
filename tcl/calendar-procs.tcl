@@ -16,11 +16,7 @@ namespace eval calendar {}
 namespace eval calendar::notification {}
 
 
-#------------------------------------------------
-# Should be moved into the calendar:: namespace. Will do after .LRN 2.0 release 
-# (Dirk 9-Jan-2003)
-
-ad_proc calendar_make_datetime {
+ad_proc calendar::make_datetime {
     event_date
     {event_time ""}
 } {
@@ -62,9 +58,7 @@ ad_proc calendar_make_datetime {
         if {$hours < 10} {
             set hours "0$hours"
         }
-        
     }
-    
     
     if {$month < 10} {
 	set month "0$month"
@@ -79,20 +73,12 @@ ad_proc calendar_make_datetime {
     } else {
         return "$year-$month-$day $hours:$minutes"
     }
-    
 }
 
-
-
-#------------------------------------------------
-# Should be moved into the calendar:: namespace. Will do after .LRN 2.0 release 
-# (Dirk 9-Jan-2003)
-
-ad_proc calendar_create { owner_id
+ad_proc calendar::create { owner_id
                           private_p          
                           {calendar_name ""}       
 } {
-
     create a new calendar
     private_p is default to true since the default
     calendar is a private calendar 
@@ -126,12 +112,7 @@ ad_proc calendar_create { owner_id
     
 }
 
-
-#------------------------------------------------
-# Should be moved into the calendar:: namespace. Will do after .LRN 2.0 release 
-# (Dirk 9-Jan-2003)
-
-ad_proc calendar_assign_permissions { calendar_id
+ad_proc -public calendar::assign_permissions { calendar_id
                                       party_id
                                       cal_privilege
                                       {revoke ""}                        
@@ -159,20 +140,14 @@ ad_proc calendar_assign_permissions { calendar_id
 	set cal_privilege "calendar_read"
     } 
 
-
     if { [empty_string_p $revoke] } {
 	# grant the permissions
         permission::grant -object_id $calendar_id -party_id $party_id -privilege $cal_privilege
-
     } elseif { [string equal $revoke "revoke"] } {
 	# revoke the permissions
-
         permission::revoke -object_id $calendar_id -party_id $party_id -privilege $cal_privilege
-
     }    
-
 }
-
 
 ad_proc -public calendar::have_private_p { 
     {-return_id 0} 

@@ -83,7 +83,7 @@ set item_type_id ""
 if { $action == "edit" } {
     
     # check so that cal_item_id does exist
-    if { [empty_string_p cal_item_id] } {
+    if { [empty_string_p $cal_item_id] } {
 	# barf error
 	ad_return_complaint 1 "you need to supply a cal_item_id"
     }

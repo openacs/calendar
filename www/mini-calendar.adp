@@ -95,7 +95,7 @@
       </if>
       <if @days.today_p@ eq t>
         <td class="cal-day-today">
-        <b>@days.day_number@</b>
+        <a href="@base_url@?view=@view@&date=@days.ansi_date@@page_num@" style="color: white; text-decoration: none;"><b>@days.day_number@</b></a>
         </td>
       </if>
       <if @days.today_p@ eq f and @days.greyed_p@ eq f>

@@ -34,7 +34,6 @@
   <msg key="delete">eliminar</msg>
   <msg key="Description">Descrição</msg>
   <msg key="Details">Detalhes:</msg>
-  <msg key="developer_note_calendar_add">Nota para o programador: O processo de criação do calendário envolve os seguintes passos: &lt;ol&gt; &lt;li&gt; Crie o objecto calendário, e mude as permissões por defeito se necessário &lt;li&gt; Seleccione grupos e/ou utilizadores que irão ás audiências do calendário &lt;li&gt; Aplique permissões específicas do grupo ou utilizador conforme necessário &lt;/ol&gt;</msg>
   <msg key="Edit">Editar</msg>
   <msg key="edit">editar</msg>
   <msg key="End_Time">Horário de Término</msg>

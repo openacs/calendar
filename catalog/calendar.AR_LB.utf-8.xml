@@ -34,7 +34,6 @@
   <msg key="delete">إحذفْ</msg>
   <msg key="Description">الوصفُ</msg>
   <msg key="Details">التفاصيل:</msg>
-  <msg key="developer_note_calendar_add">ملاحظة مطوّر: تتضمّن عملية خلق المفكرة الخطوات التالية: &lt;ol&gt; &lt;li&gt; أخلق الجسم المفكرة، وغيّر الرخصة الأصلية إذا دعت الحاجة &lt;li&gt; إختر المجموعات و/ أو المستعملين الذين ذاهبون إلى مشاهدي المفكرة &lt;li&gt; طبّق المجموعة، رخص مستعمل المعيّنة حسب الحاجة &lt;ol&gt; </msg>
   <msg key="Edit">عدّلْ</msg>
   <msg key="edit">عدّلْ</msg>
   <msg key="End_Time">وقت النّهاية</msg>
@@ -44,7 +43,7 @@
   <msg key="Grant_Permissions">إمنَحْ الأذون</msg>
   <msg key="Item">بند</msg>
   <msg key="lt_Are_you_sure_you_want">هل أنت متأكّد أنّك تريد حذف هذه المفكرة . كلّ بنود المفكرة و كلّ الإذون المرتبطة بهذه المفكرة ستُحْذَف أيضًا.</msg>
-  <msg key="lt_Are_you_sure_you_want_1">هل أنت متأكّد أنّك تريد حذف هذا الحدث.</msg>
+  <msg key="lt_Are_you_sure_you_want_1">هل أنت متأكّد أنّك تريد حذف هذا الحدث ؟</msg>
   <msg key="lt_Audiences_for_calenda">مُشاهدون للمفكرة</msg>
   <msg key="lt_Calendar_Administrati">إدارة المفكرة</msg>
   <msg key="lt_Calendar_Administrati_1">إدارة المفكرة للمستخدم</msg>

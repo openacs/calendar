@@ -2,7 +2,7 @@
 
 ad_page_contract {
     
-    Management of cal-items. Takes in the parameters for the adp pages. 
+    Single calendar item view
     
     @author Gary Jin (gjin@arsdigita.com)
     @creation-date Dec 14, 2000

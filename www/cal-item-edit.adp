@@ -1,8 +1,8 @@
 <master src="master">
-<property name="title">Calendars</property>
-<property name="context_bar">Calendar</property>
+<property name="title">Calendar: Edit Item</property>
+<property name="context_bar">Edit</property>
 
-<table width=95%>
+<table width="95%">
 
   <tr>
     <td valign=top width=150>
@@ -14,7 +14,7 @@
 
     <td valign=top> 
     
-    @cal_stuff@
+    <formtemplate id="cal_item"></formtemplate>
 
     </td>
   </tr>

@@ -10,25 +10,21 @@ ad_page_contract {
     {view day}
     {date ""}
     {julian_date ""}
-    {calendar_list:multiple,optional {}}
+    {calendar_list:multiple ""}
 }
 
 set package_id [ad_conn package_id]
+set user_id [ad_conn user_id]
 
-if {[empty_string_p $date]} {
-    if {![empty_string_p $julian_date]} {
-        set date [dt_julian_to_ansi $julian_date]
-    } else {
-        set date [dt_sysdate]
-    }
-}
+set calendar_list [calendar::adjust_calendar_list -calendar_list $calendar_list -package_id $package_id -user_id $user_id]
+set date [calendar::adjust_date -date $date -julian_date $julian_date]
 
 # Calendar ID list
 
 # Set up some template
-set item_template "<a href=\"cal-item?cal_item_id=\$item_id\">\$item</a>"
-set hour_template "<a href=\"cal-item-add?date=$date&start_time=\$start_time&end_time=\$end_time\">\$hour</a>"
-set item_add_template "<a href=\"cal-item-add?julian_date=\$julian_date&start_time=&end_time=\">ADD</a>"
+set item_template "<a href=\"cal-item-view?cal_item_id=\$item_id\">\$item</a>"
+set hour_template "<a href=\"cal-item-new?date=$date&start_time=\$start_time&end_time=\$end_time\">\$hour</a>"
+set item_add_template "<a href=\"cal-item-new?julian_date=\$julian_date&start_time=&end_time=\">ADD</a>"
 
 # Depending on the view, make a different widget
 if {$view == "day"} {
@@ -45,7 +41,7 @@ if {$view == "day"} {
 if {$view == "week"} {
     set cal_stuff [calendar::one_week_display \
             -item_template $item_template \
-            -day_template "<font size=-1><b>\$day</b> - <a href=\"view?date=\$date&view=day\">\$pretty_date</a> &nbsp; &nbsp; <a href=\"cal-item-add?date=\$date&start_time=&end_time=\">(Add Item)</a></font>" \
+            -day_template "<font size=-1><b>\$day</b> - <a href=\"view?date=\$date&view=day\">\$pretty_date</a> &nbsp; &nbsp; <a href=\"cal-item-new?date=\$date&start_time=&end_time=\">(Add Item)</a></font>" \
             -date $date \
             -calendar_id_list $calendar_list \
             -prev_week_template "<a href=\"?date=\$last_week&view=week\">&lt;</a>" \
@@ -78,40 +74,3 @@ if {$view == "list"} {
 set cal_nav [dt_widget_calendar_navigation "view" $view $date "calendar_list="]
 
 ad_return_template 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -54,4 +54,6 @@ set item_data(recurrence_id) $recurrence_id
 # no time?
 set item_data(no_time_p) [dt_no_time_p -start_time $start_time -end_time $end_time]
 
+set cal_nav [dt_widget_calendar_navigation "view" day $raw_start_date "calendar_id"]
+
 ad_return_template

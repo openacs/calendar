@@ -239,9 +239,8 @@ ad_proc cal_item_update { cal_item_id
     # set the date_format
     set date_format "YYYY-MM-DD HH24:MI"
 
-    # first update the acs_activities
-    
-    db_dml update_activity ""
+    # update the events
+    db_dml update_event ""
 
     # update the time interval based on the timespan id
 
@@ -319,7 +318,8 @@ ad_proc -public cal_item_edit_recurrence {
         db_exec_plsql recurrence_timespan_update {}
 
         # Update the activities table
-        db_dml recurrence_activities_update {}
+        # We shouldn't update activities, I don't think
+        # db_dml recurrence_activities_update {}
 
         # Update the events table
         db_dml recurrence_events_update {}

@@ -32,6 +32,15 @@ select recurrence_id from acs_events where event_id= :cal_item_id
     </querytext>
 </fullquery>
 
+<fullquery name="cal_item_update.update_event">
+    <querytext>
+    update acs_events
+    set    name = :name,
+           description = :description
+    where  event_id= :cal_item_id
+    </querytext>
+</fullquery>
+
 <fullquery name="cal_item_update.get_interval_id">
     <querytext>
     select interval_id 

@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
 <queryset>
 
+<fullquery name="calendar::adjust_calendar_list.select_calendar_list">
+<querytext>
+select calendar_id from calendars
+where package_id= :package_id
+$sql_clause
+</querytext>
+</fullquery>
+
 <fullquery name="calendar::get_item_types.select_item_types">
 <querytext>
 select item_type_id, type from cal_item_types

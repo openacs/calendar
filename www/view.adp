@@ -5,8 +5,12 @@
   <link href="/resources/calendar/calendar.css" rel="stylesheet" type="text/css">
 </property>
   <div id="viewadp-mini-calendar">
-    <include src="mini-calendar" base_url="view" view="@view@" date="@date@">
-
+    <if @view@ eq "list">
+      <include src="mini-calendar" base_url="view" view="@view@" date="@date@" period_days="@period_days@">
+    </if>
+    <else>
+      <include src="mini-calendar" base_url="view" view="@view@" date="@date@">
+    </else>
     <p>
     <a href="cal-item-new?date=@date@&view=@view@" title="#calendar.Add_Item#">
     <img border=0 align="left" valign="top" src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#">#calendar.Add_Item#</a>

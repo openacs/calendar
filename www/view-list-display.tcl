@@ -42,7 +42,7 @@ if {[exists_and_not_null calendar_id_list]} {
 }
 
 if { ![info exists period_days] } {
-    set period_days 31
+    set period_days [parameter::get -parameter ListView_DefaultPeriodDays -default 31]
 }
 
 if {[exists_and_not_null page_num]} {

@@ -14,6 +14,17 @@ if {[exists_and_not_null page_num]} {
     set page_num ""
 }
 
+# Determine whether we need to pass on the period_days variable from the list view
+if {[string equal $view list]} {
+    if {![exists_and_not_null period_days] || [string equal $period_days [parameter::get -parameter ListView_DefaultPeriodDays -default 31]]} {
+	set url_stub_period_days ""
+    } else {
+	set url_stub_period_days "&period_days=${period_days}"
+    }
+} else {
+    set url_stub_period_days ""
+}
+
 array set message_key_array {
     list #acs-datetime.List#
     day #acs-datetime.Day#
@@ -29,8 +40,13 @@ foreach viewname {list day week month} {
     } else {
         set active_p f
     }
-    multirow append views [lang::util::localize $message_key_array($viewname)] $viewname $active_p \
-        "[export_vars -base $base_url {date {view $viewname}}]$page_num"
+    if {[string equal $viewname list]} {
+	multirow append views [lang::util::localize $message_key_array($viewname)] $viewname $active_p \
+	    "[export_vars -base $base_url {date {view $viewname}}]${page_num}${url_stub_period_days}"
+    } else {
+	multirow append views [lang::util::localize $message_key_array($viewname)] $viewname $active_p \
+	    "[export_vars -base $base_url {date {view $viewname}}]${page_num}"
+    }
 }
 
 set list_of_vars [list]
@@ -55,8 +71,8 @@ if [string equal $view month] {
     set curr_year [clock format $now -format "%Y"]
     set prev_year [clock format [clock scan "1 year ago" -base $now] -format "%Y-%m-%d"]
     set next_year [clock format [clock scan "1 year" -base $now] -format "%Y-%m-%d"]
-    set prev_year_url "$base_url?view=$view&date=[ad_urlencode $prev_year]$page_num"
-    set next_year_url "$base_url?view=$view&date=[ad_urlencode $next_year]$page_num"
+    set prev_year_url "$base_url?view=$view&date=[ad_urlencode $prev_year]${page_num}${url_stub_period_days}"
+    set next_year_url "$base_url?view=$view&date=[ad_urlencode $next_year]${page_num}${url_stub_period_days}"
 
     set now         [clock scan $date]
 
@@ -82,15 +98,15 @@ if [string equal $view month] {
                                  [clock scan "[expr $i-$curr_month_idx] month" -base $now] -format "%Y-%m-%d"]
         }
         multirow append months $month $current_month_p $new_row_p  \
-            "[export_vars -base $base_url {{date $target_date} view}]$page_num"
+            "[export_vars -base $base_url {{date $target_date} view}]${page_num}${url_stub_period_days}"
         
     }
 } else {
     set curr_month [lindex $months_list $curr_month_idx ]
     set prev_month [clock format [clock scan "1 month ago" -base $now] -format "%Y-%m-%d"]
     set next_month [clock format [clock scan "1 month" -base $now] -format "%Y-%m-%d"]
-    set prev_month_url "$base_url?view=$view&date=[ad_urlencode $prev_month]$page_num"
-    set next_month_url "$base_url?view=$view&date=[ad_urlencode $next_month]$page_num"
+    set prev_month_url "$base_url?view=$view&date=[ad_urlencode $prev_month]${page_num}${url_stub_period_days}"
+    set next_month_url "$base_url?view=$view&date=[ad_urlencode $next_month]${page_num}${url_stub_period_days}"
     
     set first_day_of_week [lc_get firstdayofweek]
     set week_days [lc_get abday]
@@ -149,13 +165,13 @@ if [string equal $view month] {
         }
 
         multirow append days $day_number $beginning_of_week_p $end_of_week_p $today_p $active_p \
-            "[export_vars -base $base_url {{date $ansi_date} view}]$page_num"
+            "[export_vars -base $base_url {{date $ansi_date} view}]${page_num}${url_stub_period_days}"
         incr day_number
         incr day_of_week
     }
 }
 
-set today_url "$base_url?view=day&date=[ad_urlencode [dt_sysdate]]$page_num"
+set today_url "$base_url?view=day&date=[ad_urlencode [dt_sysdate]]${page_num}${url_stub_period_days}"
 
 if { $view == "day" && [dt_sysdate] == $date } {
     set today_p t

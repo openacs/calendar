@@ -1,6 +1,6 @@
 <master>
 <property name="title">#calendar.Calendar_Item_Types#</property>
-<property name="context">@context@</property>
+<property name="context">@context;noquote@</property>
 
 <ul>
 <%

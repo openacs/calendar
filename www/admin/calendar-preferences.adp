@@ -7,7 +7,7 @@
      	@cvs-id $Id$
 -->
 <master>
-<property name="title">#calendar.lt_Calendar_Administrati#: @party_name@ </property>
+<property name="title">#calendar.lt_Calendar_Administrati#: @party_name;noquote@ </property>
 <property name="context"> #calendar.Calendar_Preferences# </property>
 
 

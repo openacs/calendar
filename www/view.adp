@@ -7,7 +7,7 @@
   <tr>
     <td valign=top width=150>
       <p>
-      @cal_nav@
+      @cal_nav;noquote@
       <p>
 	<include src="cal-options">	
     </td>	

@@ -8,7 +8,7 @@
 
 
 <master>
-<property name="title">#calendar.Calendar_Item#: @cal_item.name@</property>
+<property name="title">#calendar.Calendar_Item#: @cal_item.name;noquote@</property>
 <property name="context">#calendar.Item#</property>
 
 <table>
@@ -16,7 +16,7 @@
   <tr>
     <td valign=top>
       <p>
-      @cal_nav@
+      @cal_nav;noquote@
     </td>	
 
     <td valign=top> 

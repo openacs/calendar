@@ -8,8 +8,8 @@
 
 
 <master>
-<property name="title">#calendar.lt_Calendar_Administrati#: @title@ </property>
-<property name="context">@context@</property>
+<property name="title">#calendar.lt_Calendar_Administrati#: @title;noquote@ </property>
+<property name="context">@context;noquote@</property>
 
 <if @action@ eq view>
 	#calendar.lt_Calendar_detail_listi#

@@ -29,6 +29,7 @@
   <msg key="Date">Data:</msg>
   <msg key="Date_1">Data</msg>
   <msg key="day">giorno</msg>
+  <msg key="day_rolling_period">giorni da oggi</msg>
   <msg key="day_s">giorno (i)</msg>
   <msg key="Delete">Cancella</msg>
   <msg key="delete">cancella</msg>
@@ -37,6 +38,7 @@
   <msg key="Edit">Modifica</msg>
   <msg key="edit">modifica</msg>
   <msg key="End_Time">Ora finale</msg>
+  <msg key="Events_over_a">Elementi in un intervallo di </msg>
   <msg key="Friday">Venerd&amp;igrave;</msg>
   <msg key="from">da</msg>
   <msg key="Grant">Garantisci</msg>

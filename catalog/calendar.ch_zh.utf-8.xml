@@ -1,10 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <message_catalog package_key="calendar" package_version="2.0d1" locale="ch_zh" charset="utf-8">
 
+  <msg key="Add_a_new_Audience">增加新读者</msg>
+  <msg key="Add_Item">增加条目</msg>
+  <msg key="Add_Recurrence">增加重现</msg>
+  <msg key="All_Day_Event">全日事件</msg>
+  <msg key="Calendar_Item_Delete">删除日历条目</msg>
+  <msg key="Calendar_Name">日历名称</msg>
+  <msg key="Calendar_Preferences">“日历参数”</msg>
+  <msg key="Current_Permissions">当前许可</msg>
+  <msg key="day_rolling_period">天</msg>
   <msg key="Description">傍苧</msg>
+  <msg key="Details">详细信息：</msg>
+  <msg key="developer_note_calendar_add">开发者注意：此日历创建过程包括以下步骤：&lt;ol&gt; &lt;li&gt; 创建日历对象，并更改必要的缺省许可。&lt;li&gt; 选择将成为该日历读者的组或用户。&lt;li&gt; 给组或用户申请必要的特定许可。&lt;/ol&gt; </msg>
   <msg key="Edit">園辞</msg>
   <msg key="edit">園辞</msg>
+  <msg key="Events_over_a">共</msg>
+  <msg key="lt_Are_you_sure_you_want">确实要删除此日历吗？所有的日历条目及与此相关的许可也将被删除。</msg>
+  <msg key="lt_delete_only_this_inst">仅删除此实例</msg>
+  <msg key="lt_everyone_have_read_pe">每个人都可以阅读许可条款、注册用户或取消注册用户。</msg>
+  <msg key="lt_no_privilege_has_been">没有授予权限。</msg>
+  <msg key="lt_The_following_is_a__l">下面是你可浏览的日历列表。此列表为可选日历列表。你可以选择列表中要保留的日历。</msg>
+  <msg key="lt_You_are_choosing_to_m">此事件将被重复，它将在日历中重复显示。事件详细信息如下：</msg>
+  <msg key="lt_You_can_manage_the_fo">你可管理下列日历</msg>
+  <msg key="of_the_month">本月的</msg>
+  <msg key="of_the_week">本周的</msg>
+  <msg key="same">同样的</msg>
   <msg key="Start_Time">尼強扮寂</msg>
+  <msg key="sync_with_Outlook">与Outlook同步</msg>
   <msg key="Title">炎籾</msg>
   <msg key="Title_1">炎籾</msg>
+  <msg key="Use_Hours_Below">使用时间如下：</msg>
 </message_catalog>

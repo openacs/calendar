@@ -150,14 +150,6 @@ namespace eval calendar {
         {-package_id ""}
         {-user_id ""}
     } {
-        return [adjust_calendar_list -calendar_list "" -package_id $package_id -user_id $user_id]
-    }
-
-    ad_proc -public adjust_calendar_list {
-        {-calendar_list:required}
-        {-package_id ""}
-        {-user_id ""}
-    } {
         # If no user_id
         if {[empty_string_p $user_id]} {
             set user_id [ad_conn user_id]
@@ -167,17 +159,7 @@ namespace eval calendar {
             set package_id [ad_conn package_id]
         }
 
-        if {[string compare $calendar_list {{}}] == 0} {
-            set calendar_list [list]
-        }
-
-        if {[llength $calendar_list] > 0} {
-            set sql_clause "and calendar_id in ([join $calendar_list ","]) "
-        } else {
-            set sql_clause ""
-        }
-
-        set new_list [db_list select_calendar_list {}]
+        set new_list [db_list_of_lists select_calendar_list {}]
     }
 
     ad_proc -public adjust_date {

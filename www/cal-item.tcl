@@ -1,0 +1,149 @@
+# /packages/calendar/www/cal-item.tcl
+
+ad_page_contract {
+    
+    Management of cal-items. Takes in the parameters for the adp pages. 
+    
+    @author Gary Jin (gjin@arsdigita.com)
+    @creation-date Dec 14, 2000
+    @cvs-id $Id$
+} {
+    {action add}
+    {date now}
+    {cal_item_id 0}
+    {start_time "now"}
+    {end_time "now"}
+} -properties {
+    cal_item_id:onevalue
+
+    name:onevalue
+    description:onevalue
+
+    start_date:onevalue
+    start_time:onevalue
+    end_time:onevalue
+
+    edit_p:onevalue
+    delete_p:onevalue
+    admin_p:onevalue
+
+    calendars:multirow
+
+}
+ 
+
+# find out the user_id 
+set user_id [ad_verify_and_get_user_id]
+
+
+# find out the calendar_id
+# for this case, we are assuming that its
+# a private calendar
+set calendar_id [calendar_have_private_p -return_id 1 $user_id]
+
+# set up all the default values
+set name ""
+set description ""
+
+if {$date == "now"} {
+    set start_date "now"
+} else {
+    set start_date $date
+}
+
+
+#------------------------------------------------
+# check the permission on the party to the object
+# then set up the variable to the template
+
+# write permission
+set edit_p [ad_permission_p $cal_item_id cal_item_write]
+
+# delete permission
+set delete_p [ad_permission_p $cal_item_id cal_item_delete] 
+
+# admin permission
+set admin_p [ad_permission_p $cal_item_id calendar_admin]
+
+#------------------------------------------------
+# only worry about the query when it is an edit
+if { $action == "edit" } {
+    
+    # check so that cal_item_id does exist
+    if { [empty_string_p cal_item_id] } {
+	# barf error
+	ad_return_compliant 1 "you need to supply a cal_item_id"
+    }
+
+
+    # get data time
+    db_1row get_item_data { 
+	select   to_char(start_date, 'MM/DD/YYYY') as start_date,
+	         to_char(start_date, 'HH24:MI') as start_time,
+	         to_char(end_date, 'HH24:MI') as end_time,
+	         nvl(a. name, e.name) as name,
+	         nvl(e.description, a.description) as description
+	from     acs_activities a,
+	         acs_events e,
+	         timespans s,
+	         time_intervals t
+	where    e.timespan_id = s.timespan_id
+	and      s.interval_id = t.interval_id
+	and      e.activity_id = a.activity_id
+	and      e.event_id = :cal_item_id
+    }
+    
+    
+
+    # forced error checking
+    set name [ad_quotehtml $name]
+    set description [ad_quotehtml $description]
+
+} elseif { [string equal $action "add"] } {
+    # get calendar names that user has calendar
+    # write permission to
+
+
+    # write permission for the calendar
+    set edit_p [ad_permission_p $calendar_id calendar_write]
+    
+    # user has no private calendar
+    if { [string equal $calendar_id 0] } {
+	set edit_p 1
+    }
+    
+    db_multirow calendars list_calendars {
+
+	select    object_id as calendar_id,
+    	          calendar.name(object_id) as calendar_name
+	from      acs_permissions
+	where     privilege in ( 
+	            'calendar_write',
+	            'calendar_admin'
+	          )
+	and       grantee_id = :user_id
+        and       acs_object_util.object_type_p(
+                    object_id, 
+                    'calendar'
+                  ) = 't'
+        and       calendar.private_p(
+                    object_id
+                  ) = 'f'
+	          
+
+    }
+
+}
+
+ad_return_template
+
+
+
+
+
+
+
+
+
+
+

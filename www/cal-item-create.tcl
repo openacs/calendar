@@ -23,6 +23,11 @@ ad_page_contract {
     {item_type_id ""}
 } 
 
+# Fix up the return URL
+if {[empty_string_p $return_url]} {
+    set return_url "?[export_url_vars date action view]"
+}
+
 if { $date == "now" } {
     set date [dt_sysdate] 
 }
@@ -129,4 +134,4 @@ if {$recurrence_p} {
 
 # set the date to be the date of the event
 set date [calendar_make_date [array get event_date]]
-ad_returnredirect "${return_url}?[export_url_vars date action view calendar_id]"
+ad_returnredirect "${return_url}"

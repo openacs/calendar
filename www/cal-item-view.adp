@@ -1,8 +1,9 @@
 <master>
 <property name="title">#calendar.Calendar_Item#: @cal_item.name;noquote@</property>
 <property name="context">#calendar.Item#</property>
-
-<link href="calendar.css" rel="stylesheet" type="text/css">
+<property name="header_stuff">
+  <link href="/resources/calendar/calendar.css" rel="stylesheet" type="text/css">
+</property>
 
 <table width="95%">
 
@@ -12,27 +13,27 @@
   </td>	
 
   <td valign=top> 
-  <table class="table-display">
+  <table class="cal-table-display">
     <tr>
-    <td colspan="2" class="table-title">
+    <td colspan="2" class="cal-table-title">
     Calendar Event Details:
     </td>
     </tr>
 
     <tr>
-    <td class="table-data-title">#calendar.Title#
+    <td class="cal-table-data-title">#calendar.Title#
     </td>
     <td >@cal_item.name@</td>
     </tr>
 
     <tr>
-    <td class="table-data-title">Description:
+    <td class="cal-table-data-title">Description:
     </td>
     <td>@cal_item.description@
     </tr>
 
     <tr>
-    <td class="table-data-title">#calendar.Date_1#
+    <td class="cal-table-data-title">#calendar.Date_1#
     <if @cal_item.no_time_p@ eq 0> 
     #calendar.and_Time#
     </if>
@@ -47,7 +48,7 @@
 
     <if @cal_item.item_type@ not nil>
       <tr>
-      <td class="table-data-title">
+      <td class="cal-table-data-title">
       #calendar.Type#
       </td>
       <td>
@@ -73,13 +74,13 @@
     </if>
 
   <tr>
-  <td colspan="2" class="table-title">
+  <td colspan="2" class="cal-table-title">
   Actions:
   </td>
   </tr>
   <if @edit_p@ eq 1>
     <tr>
-    <td class="table-data-action">
+    <td class="cal-table-data-action">
     <a
     href="cal-item-new?cal_item_id=@cal_item_id@&return_url=@return_url@">#calendar.edit#</a>
     </td>
@@ -89,7 +90,7 @@
 
   <if @delete_p@ eq 1>
     <tr>
-    <td class="table-data-action">
+    <td class="cal-table-data-action">
     <a
     href="./cal-item-delete?cal_item_id=@cal_item_id@&return_url=@return_url@">#calendar.delete#</a> 
     </td>
@@ -98,7 +99,7 @@
   </if>
  
   <tr>
-  <td class="table-data-action">
+  <td class="cal-table-data-action">
   <a href="ics/@cal_item_id@.ics">#calendar.single_event#</a> 
   </td>
   <td>#calendar.sync_with_Outlook#</td>
@@ -106,7 +107,7 @@
 
   <if @cal_item.recurrence_id@ not nil>
     <tr>
-    <td class="table-data-action">
+    <td class="cal-table-data-action">
     <a
     href="ics/@cal_item_id@.ics?all_occurences_p=1">#calendar.all_events#</a>
     </td>

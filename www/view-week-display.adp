@@ -1,8 +1,8 @@
 <table CELLPADDING=0 CELLSPACING=0 BORDER=0 width="100%">
 
   <tr><td>
-  <table cellpadding=3 cellspacing=0 border=0 width="100%" class="table-display">
-    <tr class="table-header" bgcolor=lavender>
+  <table cellpadding=3 cellspacing=0 border=0 width="100%" class="cal-table-display">
+    <tr class="cal-table-header" bgcolor=lavender>
     <td class="cal-month-title-text">
     @url_previous_week;noquote@
     <img src="/shared/images/left.gif" alt="back one week" border="0">
@@ -19,7 +19,7 @@
   <tr>
   <td>
   
-    <table class="table-display" cellpadding=0 cellspacing=0 border=0>
+    <table class="cal-table-display" cellpadding=0 cellspacing=0 border=0>
     <multiple name="week_items">
       <tr>
       <td valign=top class="cal-week">
@@ -59,7 +59,7 @@
             <if @week_items.no_time_p@ eq "t">
             </span>
             </if>
-            <span class="text-grey-sml">[@week_items.calendar_name@]</span>
+            <span class="cal-text-grey-sml">[@week_items.calendar_name@]</span>
             </td>
             </tr>
            </if>

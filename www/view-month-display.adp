@@ -1,8 +1,8 @@
 <table CELLPADDING=0 CELLSPACING=0 BORDER=0 width=100%>
 
-  <tr><td class="no-border" colspan=7>
-  <table width=100% cellpadding=0 cellspacing=0 border=0 class="table-display">
-  <tr class="table-header" bgcolor=lavender>
+  <tr><td class="cla-no-border" colspan=7>
+  <table width=100% cellpadding=0 cellspacing=0 border=0 class="cal-table-display">
+  <tr class="cal-table-header" bgcolor=lavender>
   <td class="cal-month-title-text">
   @prev_month_url;noquote@
   <img src="/shared/images/left.gif" alt="back one month" border="0">
@@ -56,7 +56,7 @@
         <div class="cal-month-event">@days_of_a_month.ansi_start_time@
         <a
         href=cal-item-view?cal_item_id=@days_of_a_month.item_id@>@days_of_a_month.full_item;noquote@</a>
-        <span class="text-grey-sml"> [@days_of_a_month.calendar_name@]</span>
+        <span class="cal-text-grey-sml"> [@days_of_a_month.calendar_name@]</span>
         </div>
       </if>
     </group>

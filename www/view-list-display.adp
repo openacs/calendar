@@ -1,12 +1,12 @@
         
-          <form name="frmdays" class="frm-compact">
+          <form name="frmdays" class="cal-frm-compact">
             <table width="100%" cellspacing="0" cellpadding="0" border="0">
               <tbody><tr valign="middle">
                 <td align="left">
                   <h5>@title@</h5>
                 </td>
                 <td align="right">
-                  Events over a <input type="text" class="field" id="period_days" name="period_days" value="@period_days@" size="3" maxlength="3"> day rolling period <input class="button-sml" type="submit" value="Go">
+                  Events over a <input type="text" class="cal-field" id="period_days" name="period_days" value="@period_days@" size="3" maxlength="3"> day rolling period <input class="cal-button-sml" type="submit" value="Go">
                   @form_vars;noquote@
                 </td>
               </tr>
@@ -14,8 +14,8 @@
           </form>
 
 
-<table class="table-display" border=0 cellspacing=0 cellpadding=2>
-  <tr class="table-header">
+<table class="cal-table-display" border=0 cellspacing=0 cellpadding=2>
+  <tr class="cal-table-header">
   <th align=left>#acs-datetime.Day_of_Week#</th>
   <th align="center"><a href="@start_date_url@">#calendar.Date_1#</a></th>
   <th align="center">#calendar.Start_Time#</th>
@@ -28,10 +28,10 @@
   <group column="pretty_weekday">
 
   <if @calendar_items.flip@ odd>
-    <tr class="row-dark">
+    <tr class="cal-row-dark">
   </if>
   <else>
-    <tr class="row-light">
+    <tr class="cal-row-light">
   </else>  
 
   <td class="@calendar_items.today@" align=left>@calendar_items.pretty_weekday@</td>

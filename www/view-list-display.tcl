@@ -100,9 +100,9 @@ db_foreach select_list_items {} {
 
     # Give the row different appearance depending on whether it's before today, today, or after today
     if {$start_date_seconds == $today_seconds} {
-        set today row-hi
+        set today cal-row-hi
     } elseif {$start_date_seconds < $today_seconds} {
-        set today row-lo
+        set today cal-row-lo
     } else {
         set today ""
     }

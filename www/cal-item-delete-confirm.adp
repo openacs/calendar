@@ -1,7 +1,9 @@
 <master>
 <property name="title">#calendar.Calendar_Item_Delete#: @cal_item.name;noquote@</property>
 <property name="context">#calendar.Delete#</property>
-<link href="calendar.css" rel="stylesheet" type="text/css">
+<property name="header_stuff">
+  <link href="/resources/calendar/calendar.css" rel="stylesheet" type="text/css">
+</property>
 
 <table>
 

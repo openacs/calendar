@@ -3,12 +3,12 @@
   <tr>
   <multiple name=views>
     <if @views.active_p@ eq t>
-      <td class="navbar-selected">
+      <td class="cal-navbar-selected">
       @views.name@
       </td>
     </if>
     <else>
-      <td class="navbar">
+      <td class="cal-navbar">
       <a href="@base_url@?view=@views.text@&date=@date@">@views.name@</a>
       </td>
     </else>
@@ -18,7 +18,7 @@
   <!-- Forward/back months/years -->
   <tr>
   <td colspan=5>
-  <table class="table-display" cellspacing="0" cellpadding="0">
+  <table class="cal-table-display" cellspacing="0" cellpadding="0">
     <tr>
     <td align="left" class="cal-month-title">
     <if @view@ eq month>
@@ -121,7 +121,7 @@
   
   </td>
   </tr>
-  <tr class="table-header"><td align=center colspan=5>
+  <tr class="cal-table-header"><td align=center colspan=5>
   <table cellspacing=0 cellpadding=0 border=0>
   <tr><td nowrap>
   <font size=-2>

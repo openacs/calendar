@@ -1,4 +1,3 @@
-
 <master>
 <if @ad_form_mode@ eq display>
   <property name="title">#calendar.Calendar_Edit_Item#</property>
@@ -11,9 +10,10 @@
   <property name="focus">cal_item.title</property>
 </else>
 <property name="onload">TimePChanged()</property>
+<property name="header_stuff">
+  <link href="/resources/calendar/calendar.css" rel="stylesheet" type="text/css">
+</property>
 
-
-<link href="calendar.css" rel="stylesheet" type="text/css">
 
 <script language="JavaScript">
     function TimePChanged() {

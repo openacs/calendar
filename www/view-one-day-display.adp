@@ -1,7 +1,7 @@
-  <table class="table-display" cellpadding="1" cellspacing="2">
+  <table class="cal-table-display" cellpadding="1" cellspacing="2">
   <tr><td>
-  <table cellpadding=3 cellspacing=0 border=0 width=100% class="table-display">
-    <tr class="table-header" bgcolor=lavender>
+  <table cellpadding=3 cellspacing=0 border=0 width=100% class="cal-table-display">
+    <tr class="cal-table-header" bgcolor=lavender>
     <td class="cal-month-title-text">
     @url_previous_week;noquote@
     </a>
@@ -20,7 +20,7 @@
       <td>
           <if @day_items_without_time:rowcount@ gt 0>
             <multiple name="day_items_without_time">
-            <tr class="row-light">
+            <tr class="cal-row-light">
             <td width="1%" class="cal-day-time"><img border="0" align="left" src="no-time.gif" alt="No Time"></td>
             <td class="cal-day-event-notime">@day_items_without_time.full_item;noquote@</td>
             </tr>
@@ -51,7 +51,7 @@
                 @day_items_with_time.full_item;noquote@
                 <if @show_calendar_name_p@>
                 <span
-                class="text-grey-sml">@day_items_with_time.calendar_name@</span>
+                class="cal-text-grey-sml">@day_items_with_time.calendar_name@</span>
                 </if>
                 </td>
                 </if>

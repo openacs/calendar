@@ -1,8 +1,10 @@
 <master>
 <property name="title">#calendar.lt_Calendar_Choose_Calen#</property>
 <property name="context">#calendar.Choose#</property>
+<property name="header_stuff">
+  <link href="/resources/calendar/calendar.css" rel="stylesheet" type="text/css">
+</property>
 
-<link href="calendar.css" rel="stylesheet" type="text/css">
 <table width="95%">
 
   <tr>

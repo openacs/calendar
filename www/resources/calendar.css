@@ -1,84 +1,4 @@
-body {font-size: 75%; background-color: #ffffff; color: #000000;}
-
-table, td, form {
-	color: #333333; font-family: Arial, Helvetica, sans-serif;
-	font-size: 100%;
-}
-
-ul, ol, li {
-	color: #333333; font-family: Arial, Helvetica, sans-serif;
-	margin-top: 5px ;
-	margin-bottom: 1px ;
-}
-
-p {font-weight: normal; font-size: 100%; color: #333333; font-family: Arial, Helvetica, sans-serif;}
-
-a {text-decoration:none;}
-a:link {color: #003399; font-family: Arial, Helvetica, sans-serif;}
-a:hover {text-decoration: underline; font-family: Arial, Helvetica, sans-serif;}
-a:active {color: #cc0000; font-family: Arial, Helvetica, sans-serif;}
-a:visited {color: #003399; font-family: Arial, Helvetica, sans-serif;}
-
-
-h1 {font-weight: bold; font-size: 130%; color: #990000; font-family: Arial, Helvetica, sans-serif; margin: 0px; }
-h2 {font-weight: bold; font-size: 120%; color: #990000; font-family: Arial, Helvetica, sans-serif; margin: 0px;}
-h3 {font-weight: bold; font-size: 100%; color: #333333; font-family: Arial, Helvetica, sans-serif; margin: 0px;}
-h4 {font-weight: bold; font-size: 100%; color: #990000; font-family: Arial, Helvetica, sans-serif; margin: 0px;}
-h5 {font-weight: bold; font-size: 100%; color: #666666; font-family: Arial, Helvetica, sans-serif; margin: 0px;}
-h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Helvetica, sans-serif; margin: 0px;}
-
-
-/* netscape 6 correction */
-.null {font-size: 1px;}
-
-/* linux correction */
-.block {display: block;}
-
-.dark-line {
-    font-size: 1px;
-    background-color: #CC6633;
-}
-
-.light-line {
-    font-size: 1px;
-    background-color: #E7B59C;
-}
-
-.header-img {
-	COLOR: white;
-	border: 0px none;
-}
-
-.header-logo {
-    WIDTH: 100px; 
-    COLOR: white;
-    PADDING-RIGHT: 35px;
-    PADDING-BOTTOM: 10px;
-}
-
-.header-text {
-	WHITE-SPACE: nowrap;
-	font-weight: bold;
-	font-size: 150%;
-	padding-left: 3px;
-}
-
-.element-header-text {
-	COLOR: #000000;
-	font-style: normal;
-	font-weight: bold;
-	background-color: #DDEEFF;
-	border-top: 0px solid #99CCFF;
-	border-right: 0px solid #99CCFF;
-	border-bottom: 0px solid #99CCFF;
-	border-left: 0px solid #99CCFF;
-}
-
-.element-text {
-    FONT-SIZE: small; 
-}
-
-.table-header {
+.cal-table-header {
 	BACKGROUND: #99CCFF;
 	color: #000000;
 	margin: 0px;
@@ -87,32 +7,14 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 
 }
 
-.table-header a {
+.cal-table-header a {
 	color: #0055AA;
 }
-.table-header a:hover {
+.cal-table-header a:hover {
 	TEXT-DECORATION: underline;
 }
 
-.selected {
-    BACKGROUND: #002D59; 
-    COLOR: white; 
-    font-weight: bold;
-    BORDER-RIGHT: medium none;
-    BORDER-TOP: medium none;
-    BORDER-LEFT: medium none;
-    BORDER-BOTTOM: medium none;
-}
-
-.element-content {
-	padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px
-}
-
-.main_color {
-    color: #CC6633;
-}
-
-.table-title {
+.cal-table-title {
 	background: #FFFFFF;
 	font-weight: bold;
 	border-top-width: 0px;
@@ -163,35 +65,24 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 
 }
 
-.element {
-	border-top:    1px solid #99CCFF;
-	border-bottom: 1px solid #99CCFF;
-	border-left:   0px solid #99CCFF;
-	border-right:  0px solid #99CCFF;
-}
-
-.no-border {
+.cal-no-border {
     BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none;
 }
 
-.footer {
-    FONT-SIZE: x-small;
-}
-
-.navbar a {
+.cal-navbar a {
 	color: #999999;
 }
 
-.navbar a:visited {
+.cal-navbar a:visited {
 	COLOR: #999999;
 }
 
-.navbar a:hover {
+.cal-navbar a:hover {
 	COLOR: #000000;
 	TEXT-DECORATION: none;
 }
 
-.navbar {
+.cal-navbar {
 	COLOR: #999999;
 	TEXT-DECORATION: none;
 	padding-top: 4px;
@@ -208,7 +99,7 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	border-left: 0px solid #99CCFF;
 }
 
-.navbar-selected {
+.cal-navbar-selected {
 	FONT-SIZE: 8pt;
 	COLOR: #004080;
 	TEXT-DECORATION: none;
@@ -226,7 +117,7 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	border-left: 0px solid #99CCFF;
 }
 
-.table-display {
+.cal-table-display {
 	width: 100%;
 	border: 0px none;
 	margin: 0px;
@@ -234,14 +125,7 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 
 }
 
-.portlet-config {
-    cellpadding: 0;
-    cellspacing: 0;
-    border: 1 solid #000000;
-    width: 100%;
-}
-
-.field {
+.cal-field {
 	font-size: 8pt;
 	color: #000000;
 	margin: 0px;
@@ -250,18 +134,7 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	background-color: #FFFFFF;
 }
 
-.text-button {
-  font-size: 9pt;
-  color: #000000;
-  text-decoration: underline;
-  background-color: #FFFFFF;
-  border: 0px solid #770000;
-  margin: 0px;
-  padding: 0px;
-  cursor: hand;
-}
-
-.frm-compact {
+.cal-frm-compact {
 	font-size: 9pt;
 	color: #000000;
 	margin: 0px;
@@ -269,48 +142,8 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	border: 0px solid #000000;
 	vertical-align: top;
 }
-.show-here {
-    width: 100%;
-}
 
-.portal-page-body {
-    cellpadding: 0;
-    cellspacing: 0;
-    margin: 0px;
-    padding: 0px;
-    border: 0 none;
-    width: 100%;
-}
-
-.portal-page-header {
-    cellpadding: 0;
-    cellspacing: 0;
-    background: #FFDDB0;
-    border: 0;
-    width: 100%;
-}
-
-.portal-page-config {
-    cellpadding: 0;
-    cellspacing: 0;
-    margin: 0px;
-    padding: 0px;
-    background: white;
-    border: 1px solid #CC6633;
-    width: 100%;
-}
-
-.bottom-border {
-    BORDER-Bottom: #CC6633 1px solid;
-}
-
-.page-table {
-	width: 100%;
-	border: 0px none #CCCCFF;
-	background-color: #FFFFFF;
-}
-
-.navbar-spacer {
+.cal-navbar-spacer {
 	COLOR: #000000;
 	FONT-SIZE: 8pt;
 	text-align: center;
@@ -328,7 +161,7 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	background-color: #CEE6FF;
 }
 
-.navbar-spacer-end {
+.cal-navbar-spacer-end {
 	COLOR: #000000;
 	FONT-SIZE: 8pt;
 	text-align: center;
@@ -346,7 +179,7 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	background-color: #CEE6FF;
 }
 
-.navbar-end {
+.cal-navbar-end {
 	COLOR: #000000;
 	FONT-SIZE: 8pt;
 	text-align: center;
@@ -363,7 +196,7 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	border-left: 1px solid #99CCFF;
 }
 
-.navbar-spacer-start {
+.cal-navbar-spacer-start {
 	border-top-width: 1px;
 	border-right-width: 0px;
 	border-bottom-width: 0px;
@@ -379,7 +212,7 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	background-color: #CEE6FF;
 }
 
-.navbar-spacer-selected {
+.cal-navbar-spacer-selected {
 	COLOR: #000000;
 	FONT-SIZE: 8pt;
 	text-align: center;
@@ -394,7 +227,7 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	border: 0px solid #000000;
 }
 
-.navbar-spacer-body {
+.cal-navbar-spacer-body {
 	background-color: #DDDDFF;
 	COLOR: #000000;
 	FONT-SIZE: 8pt;
@@ -416,34 +249,7 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	border-left-color: #FFFFFF;
 }
 
-.topnavbar {
-	font-size: 10pt;
-	font-weight: bold;
-	color: #000000;
-	background-color: #CEE6FF;
-	border-top-width: 1px;
-	border-right-width: 0px;
-	border-bottom-width: 1px;
-	border-left-width: 0px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-top-color: #99CCFF;
-	border-right-color: #99CCFF;
-	border-bottom-color: #99CCFF;
-	border-left-color: #99CCFF;
-}
-
-.topnavbar a {
-	color: #003399;
-}
-
-.topnavbar a:hover{
-	text-decoration: underline;
-}
-
-.navbar-spacer-selected-start {
+.cal-navbar-spacer-selected-start {
 	background-color: #CEE6FF;
 	border-top-width: 0px;
 	border-right-width: 0px;
@@ -459,31 +265,7 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	border-left-color: #FFFFFF;
 }
 
-.col-left {
-        background-color: #FFFFFF;
-	padding-left: 4px;
-	padding-right: 4px;
-	padding-top: 4px;
-	padding-bottom: 4px;
-}
-
-.col-middle {
-        background-color: #FFFFFF;
-	padding-left: 4px;
-	padding-right: 4px;
-	padding-top: 4px;
-	padding-bottom: 4px;
-}
-
-.col-right {
-        background-color: #FFFFFF;
-	padding-left: 4px;
-	padding-right: 4px;
-	padding-top: 4px;
-	padding-bottom: 4px;
-}
-
-.button-sml {
+.cal-button-sml {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 8pt;
 	font-weight: bold;
@@ -495,26 +277,24 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	color: #FFFFFF;
 }
 
-.row-dark {
+.cal-row-dark {
     BACKGROUND: #DDEEFF;
 }
 
-.row-light {
+.cal-row-light {
     BACKGROUND: #FFFFFF;
 }
 
-.row-hi {
+.cal-row-hi {
 	font-weight: bold;
 	border: 0px solid #7D7DFF;
 
 }
 
-.row-lo {
+.cal-row-lo {
 	color: #999999;
 	border: 0px solid #7D7DFF;
 }
-
-.body-big {font-size: 100%; background-color: #ffffff; color: #000000;}
 
 .cal-day {
 	font-weight: bold;
@@ -612,7 +392,7 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	background-color: #FFFFFF;
 
 }
-.text-grey-sml {
+.cal-text-grey-sml {
 	font-size: 75%;
 	color: #999999;
 	font-weight: normal;
@@ -714,7 +494,7 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	border-left-color: #000066;
 
 }
-.table-data-title {
+.cal-table-data-title {
 	background: #FFFFFF;
 	font-weight: bold;
 	border: 0px solid #99CCFF;
@@ -725,11 +505,8 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	padding-left: 0px;
 	width: 1%;
 	white-space: nowrap;
-
-
-
 }
-.table-data-action {
+.cal-table-data-action {
 	background: #DDEEFF;
 	font-weight: bold;
 	border: 1px solid #99CCFF;
@@ -738,17 +515,4 @@ h6 {font-weight: normal; font-size: 80%; color: #333333; font-family: Arial, Hel
 	white-space: nowrap;
 	padding: 2px;
 	font-size: 95%;
-
-
-
-}
-.button {
-	background: #DDEEFF;
-	font-weight: bold;
-	border: 1px solid #99CCFF;
-	text-align: center;
-	white-space: nowrap;
-	color: #003366;
-	cursor: hand;
-
 }

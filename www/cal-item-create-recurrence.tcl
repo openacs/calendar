@@ -11,7 +11,7 @@ ad_page_contract {
 } {
     cal_item_id
     {return_url "./"}
-    {days_of_week ""}
+    {days_of_week:multiple ""}
 } 
 
 
@@ -39,6 +39,7 @@ set recurrance_options [list \
                             [list [_ calendar.year] year]]
 
 
+
 ad_form -name cal_item  -export {return_url} -form {
     {cal_item_id:key}
 
@@ -60,21 +61,19 @@ ad_form -name cal_item  -export {return_url} -form {
     {submit:text(submit) {label "[_ calendar.Add_Recurrence]"}}
 
 } -validate {
-} -edit_data {
-    set start_date $cal_item(start_date)
-    set recur_until [calendar::to_sql_datetime -date $recur_until -time "" -time_p 0]
-
-    if {![calendar::item::dates_valid_p -start_date $cal_item(start_date) -end_date $recur_until]} {
-        ad_return_complaint 1 [_ calendar.start_date_before_end_date]
-        ad_script_abort
+    {recur_until
+        {
+            [calendar::item::dates_valid_p -start_date $cal_item(start_date) -end_date [calendar::to_sql_datetime -date $recur_until -time "" -time_p 0]]
+        }
+        {[_ calendar.start_time_before_end_time]}
     }
-
+} -edit_data {
     calendar::item::add_recurrence \
         -cal_item_id $cal_item_id \
         -interval_type $interval_type \
         -every_n $every_n \
         -days_of_week $days_of_week \
-        -recur_until $recur_until
+        -recur_until [calendar::to_sql_datetime -date $recur_until -time "" -time_p 0]
 } -edit_request {
     set recur_until [template::util::date::from_ansi $cal_item(start_date)]
     set interval_type week

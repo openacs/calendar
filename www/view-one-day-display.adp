@@ -45,7 +45,7 @@
               <if @day_items_with_time.item_id@ ne "">
                 <if @day_items_with_time.name@ ne "">
 
-                <td class="cal-day-event" rowspan="@day_items_with_time.rowspan@"  colspan="@day_items_with_time.colspan@" valign="top">
+                <td width="80%" class="cal-day-event" rowspan="@day_items_with_time.rowspan@"  colspan="@day_items_with_time.colspan@" valign="top">
                 @day_items_with_time.full_item;noquote@
                 <if @show_calendar_name_p@>
                 <span

@@ -111,12 +111,6 @@
     </multiple>
   </else>
   
-  <tr><td align=center colspan=7>
-  <table cellspacing=0 cellpadding=1 border=0>
-  <tr><td></td></tr>
-  </table>
-  </td>
-  </tr>
   </table>
   
   </td>

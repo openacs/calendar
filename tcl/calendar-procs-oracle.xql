@@ -32,35 +32,6 @@
 </fullquery>
 
  
-<fullquery name="calendar_assign_permissions.assign_calendar_permissions">      
-      <querytext>
-      
-	    begin
-	      acs_permission.grant_permission (
-	        object_id       =>      :calendar_id,
-	        grantee_id      =>      :party_id,
-	        privilege       =>      :cal_privilege
-	      );
-	    end;
-	
-      </querytext>
-</fullquery>
-
- 
-<fullquery name="calendar_assign_permissions.revoke_calendar_permissions">      
-      <querytext>
-      
-	    begin
-	      acs_permission.revoke_permission (
-	        object_id       =>      :calendar_id,
-	        grantee_id      =>      :party_id,
-	        privilege       =>      :cal_privilege
-	      );
-	    end;
-	
-      </querytext>
-</fullquery>
-
  
 <fullquery name="calendar_create_private.get_user_name">      
       <querytext>

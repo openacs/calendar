@@ -19,7 +19,7 @@
 	from      all_object_party_privilege_map 
 	where     object_id = :calendar_id
 	and       party_id = :party_id
-	and       privilege like '%calendar%'
+	and       privilege like 'calendar%'
     
       </querytext>
 </fullquery>

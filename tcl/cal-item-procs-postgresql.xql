@@ -3,42 +3,6 @@
 <queryset>
    <rdbms><type>postgresql</type><version>7.1</version></rdbms>
 
-<fullquery name="cal_assign_item_permission.1_grant_calendar_permissions_to_items">      
-      <querytext>
-	select acs_permission__grant_permission (
-					:cal_item_id,
-					:party_id,
-					'cal_item_read'
-	)
-
-      </querytext>
-</fullquery>
-
-
-<fullquery name="cal_assign_item_permission.2_grant_calendar_permissions_to_items">      
-      <querytext>
-	select acs_permission__grant_permission (
-					:cal_item_id,
-					:party_id,
-					:permission
-	)
-
-      </querytext>
-</fullquery>
-
- 
-<fullquery name="cal_assign_item_permission.3_grant_calendar_permissions_to_items"> 
-      <querytext>
-	select acs_permission__revoke_permission (
-					:cal_item_id,
-					:party_id,
-					:permission
-	)
-
-      </querytext>
-</fullquery>
-
- 
 <fullquery name="cal_item_create.insert_activity">      
       <querytext>
 	select acs_activity__new (
@@ -86,18 +50,6 @@
 					now(),
 					:creation_user,
 					:creation_ip
-	)
-
-      </querytext>
-</fullquery>
-
- 
-<fullquery name="cal_item_create.4_grant_calendar_permissions_to_items">      
-      <querytext>
-	select acs_permission__grant_permission (
-					:cal_item_id,
-					:grantee_id,
-					:privilege
 	)
 
       </querytext>

@@ -32,27 +32,6 @@
 </fullquery>
 
  
-<fullquery name="calendar_assign_permissions.assign_calendar_permissions">      
-      <querytext>
-	    select acs_permission__grant_permission(
-			:calendar_id,
-			:party_id,
-			:cal_privilege
-	    );	
-      </querytext>
-</fullquery>
-
- 
-<fullquery name="calendar_assign_permissions.revoke_calendar_permissions">      
-      <querytext>
-	    select acs_permission__revoke_permission (
-			:calendar_id,
-			:party_id,
-			:cal_privilege
-	    );
-      </querytext>
-</fullquery>
-
  
 <fullquery name="calendar_create_private.get_user_name">      
       <querytext>

@@ -315,15 +315,24 @@ ad_proc calendar_public_p { calendar_id } {
 
 } {
   
-    return [db_string check_calendar_permission {
-              select   acs_permission.permission_p(
-                         :calendar_id, 
-                         acs.magic_object_id('the_public'),
-                         'calendar_read'
-                       ) 
-              from     dual
+#    return [db_string check_calendar_permission {
+#              select   acs_permission.permission_p(
+#                         :calendar_id, 
+#                         acs.magic_object_id('the_public'),
+#                         'calendar_read'
+#                       ) 
+#              from     dual
+#
+#            }]
+#
 
-            }]
+    set private_p [db_string check_calendar_p "select private_p from calendars where calendar_id = :calendar_id"]
+
+    if { $private_p == "t" } {
+        return "f"
+    } else {
+        return "t"
+    }
 
 }
 

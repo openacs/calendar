@@ -22,6 +22,7 @@
         <requires url="acs-datetime" version="4.0"/>
         <requires url="acs-events" version="0.1d"/>
         <requires url="ref-timezones" version="0.1d"/>
+        <requires url="acs-lang" version="4.1b"/>
 
         <files>
             <file type="package_spec" path="calendar.info"/>

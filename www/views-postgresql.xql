@@ -10,7 +10,7 @@
              coalesce(e.name, a.name) as name,
              coalesce(e.status_summary, a.status_summary) as status_summary,
              e.event_id as item_id,
-             (select type from cal_item_types where item_type_id= ci.item_type_id) as item_type,
+             cit.type as item_type,
              cals.calendar_id,
              cals.calendar_name
              $additional_select_clause
@@ -18,8 +18,9 @@
              acs_events e,
              timespans s,
              time_intervals t,
-             cal_items ci,
-             calendars cals
+             calendars cals,
+             cal_items ci left join
+             cal_item_types cit on cit.item_type_id = ci.item_type_id
     where    e.timespan_id = s.timespan_id
     and      s.interval_id = t.interval_id
     and      e.activity_id = a.activity_id

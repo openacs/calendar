@@ -38,11 +38,7 @@ if {![exists_and_not_null base_url]} {
     set base_url ""
 }
 
-set current_date $date
-if { [info exists start_display_hour]} {
-    set current_date_system "$current_date $start_display_hour:00:00"
-} else {
-    set current_date_system "$current_date 00:00:00"
+if { ![info exists start_display_hour]} {
     set start_display_hour 0
 }
 
@@ -59,6 +55,8 @@ if {[exists_and_not_null calendar_id_list]} {
 # The database needs this for proper formatting.
 set ansi_date_format "YYYY-MM-DD HH24:MI:SS"
 
+set current_date $date
+set current_date_system "$date 00:00:00"
 if {[empty_string_p $date]} {
     # Default to todays date in the users (the connection) timezone
     set server_now_time [dt_systime]
@@ -121,11 +119,9 @@ db_foreach select_day_items_with_time {} {
 
     for { set item_current_hour $start_hour } { $item_current_hour < $end_hour } { incr item_current_hour } {
         set item_current_hour [expr [string trimleft $item_current_hour 0]+0]
-        if {$start_hour == $item_current_hour && $start_hour >= $start_display_hour } {
+        if {$start_hour == $item_current_hour && $start_hour >= $start_display_hour && $end_hour <= $end_display_hour} {
             lappend day_items_per_hour [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
-        } elseif { $end_hour <= $end_display_hour } {
-            lappend day_items_per_hour [list $item_current_hour "" $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
-            }
+        }
         incr items_per_hour($item_current_hour)
     }
 }

@@ -137,5 +137,17 @@
       </querytext>
 </fullquery>
 
+<fullquery name="cal_item_delete_recurrence.delete_cal_item_recurrence">      
+      <querytext>
+      
+	begin
+	  cal_item.delete_all (
+	    recurrence_id  => :recurrence_id
+	  );
+	end;
+    
+      </querytext>
+</fullquery>
+
  
 </queryset>

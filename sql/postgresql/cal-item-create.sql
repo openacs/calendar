@@ -188,6 +188,27 @@ begin
 end;' LANGUAGE 'plpgsql';
 
 
+CREATE FUNCTION cal_item__delete_all (
+	integer
+)
+RETURNS integer AS '
+declare
+    delete__recurrence_id		alias for $1;
+    v_event_id                          integer;
+begin
+    for v_event_id in (select event_id from acs_events
+                      where recurrence_id= delete__recurrence_id)
+    LOOP
+        PERFORM cal_item__delete(v_event_id);
+    END LOOP;
+
+    PERFORM recurrence__delete(delete__recurrence_id);
+
+    return 0;
+
+end;' LANGUAGE 'plpgsql';
+
+
 -------------------------------------------------------------
 -- the name function
 -------------------------------------------------------------

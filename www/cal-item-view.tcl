@@ -29,6 +29,7 @@ set admin_p [ad_permission_p $cal_item_id calendar_admin]
 # Select information about the calendar item
 db_1row get_item_data { 
     select   to_char(start_date,'HH:MIpm')as start_time,
+    start_date as raw_start_date,
     to_char(start_date, 'MM/DD/YYYY') as start_date,
     to_char(end_date, 'HH:MIpm') as end_time,
     nvl(a. name, e.name) as name,

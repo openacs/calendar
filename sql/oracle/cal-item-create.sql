@@ -108,6 +108,10 @@ as
         procedure delete (
                 cal_item_id             in cal_items.cal_item_id%TYPE
         );
+
+        procedure delete_all (
+                recurrence_id           in acs_events.recurrence_id%TYPE
+        );
         
           -- functions to return the name of the cal_item
         function name (
@@ -213,6 +217,21 @@ as
                 acs_event.delete(cal_item_id);
         end delete;
                   
+        procedure delete_all (
+                recurrence_id           in acs_events.recurrence_id%TYPE
+        ) is
+          v_event_id            acs_events%ROWTYPE;
+        begin
+                FOR v_event_id in 
+                    (select * from acs_events 
+                    where recurrence_id = delete_all.recurrence_id)
+                LOOP
+                        cal_item.delete(v_event_id.event_id);
+                end LOOP;
+
+                recurrence.delete(recurrence_id);
+        end delete_all;
+                
           -- functions to return the name of the cal_item
         function name (
                 cal_item_id             in cal_items.cal_item_id%TYPE   

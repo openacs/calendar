@@ -269,6 +269,21 @@ ad_proc cal_item_delete { cal_item_id } {
 }
 
 
+# Recurrences
+ad_proc -public cal_item_delete_recurrence {
+    {-recurrence_id:required}
+} {
+
+    # call delete procedure
+    db_exec_plsql delete_cal_item_recurrence "
+	begin
+	  cal_item.delete_all (
+	    recurrence_id  => :recurrence_id
+	  );
+	end;
+    "    
+}
+
 
 ad_proc -public calendar_item_add_recurrence {
     {-cal_item_id:required}

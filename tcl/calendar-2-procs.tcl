@@ -151,7 +151,8 @@ namespace eval calendar {
     } {
         return the item types
     } {
-        return [db_list_of_lists select_item_types {}]
+        return [concat [list [list {--} {}]] \
+                [db_list_of_lists select_item_types {}]]
     }
 
     ad_proc -public item_type_new {

@@ -101,6 +101,7 @@ if { [string equal $calendar_id "-1"] } {
 	
     if { [empty_string_p $calendar_id] } {
 	ad_return_complaint 1 "You need to supply a calendar"
+        ad_script_abort
     }
 
     # now we make sure that the user has the permission 
@@ -130,9 +131,10 @@ if {[empty_string_p $return_url]} {
 if {$recurrence_p} {
     # We must ask for recurrence information
     ad_returnredirect "cal-item-create-recurrence?cal_item_id=$cal_item_id&return_url=[ns_urlencode $return_url]"
-    return
+    ad_script_abort
 }
 
 # set the date to be the date of the event
-set date [calendar_make_date [array get event_date]]
 ad_returnredirect "${return_url}"
+ad_script_abort
+set date [calendar_make_date [array get event_date]]

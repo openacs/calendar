@@ -80,14 +80,16 @@ if { [string equal $action "view"] } {
 	calendar_assign_permissions $calendar_id $party_id "calendar_show"
     }
     
-   set action view
-   ad_returnredirect "calendar-permissions?[export_url_vars calendar_id party_id action]"
+    set action view
+    ad_returnredirect "calendar-permissions?[export_url_vars calendar_id party_id action]"
+    ad_script_abort
 
 # revoke
 } elseif { [string equal $action "revoke"] } {
     
     calendar_assign_permissions $calendar_id $party_id $permission "revoke"
     ad_returnredirect "calendar-permissions?[export_url_vars calendar_id party_id]"
+    ad_script_abort
 
 # add user
 } elseif { [string equal $action "add" ] } {

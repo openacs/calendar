@@ -103,7 +103,7 @@ if { [string equal $action "view"] } {
 
     set action view
     ad_returnredirect "calendar-preferences?[export_url_vars action]"
-
+    ad_script_abort
 } 
 
 ad_return_template

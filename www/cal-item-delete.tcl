@@ -12,7 +12,7 @@ ad_page_contract {
 
 if {!$confirm_p} {
     ad_returnredirect "cal-item-delete-confirm?cal_item_id=$cal_item_id"
-    return
+    ad_script_abort
 }
 
 calendar::item::delete -cal_item_id $cal_item_id

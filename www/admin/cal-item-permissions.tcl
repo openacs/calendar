@@ -91,7 +91,7 @@ if { [string equal $action "view"] } {
     
    set action view
    ad_returnredirect "cal-item-permissions?[export_url_vars cal_item_id party_id action]"
-
+    ad_script_abort
 # delete
 } elseif { [string equal $action "revoke"] } {
     ad_require_permission $user_id calendar_admin
@@ -100,7 +100,7 @@ if { [string equal $action "view"] } {
     
     set action "view"
     ad_returnredirect "cal-item-permissions?[export_url_vars cal_item_id party_id action]"
-
+    ad_script_abort
 # add user
 } elseif { [string equal $action "add" ] } {
 
@@ -128,10 +128,6 @@ if { [string equal $action "view"] } {
 
 
 }
-
-
-
-ad_return_template
 
 
 

@@ -167,7 +167,7 @@ ad_form -extend -name cal_item -validate {
 	set end_time "{} {} {} [expr $start_hour + 1] 0 {} {HH24:MI}"
 	set time_p 1 
     } else {
-	set time_p 0
+	set time_p 1
 	set start_hour $start_time
 	set start_time "{} {} {} 0 0 {} {HH24:MI}"
 	set end_time "{} {} {} 0 0 {} {HH24:MI}"

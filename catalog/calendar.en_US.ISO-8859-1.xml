@@ -33,6 +33,8 @@
   <msg key="Date_1">Date</msg>
   <msg key="day">day</msg>
   <msg key="day_rolling_period">day rolling period</msg>
+  <description key="day_rolling_period">Please, could you give more info of the context for this, thanks</description>
+
   <msg key="day_s">day (s)</msg>
   <msg key="Delete">Delete</msg>
   <msg key="delete">delete</msg>
@@ -53,6 +55,7 @@
   <msg key="from">from</msg>
   <msg key="Grant">Grant</msg>
   <msg key="Grant_Permissions">Grant Permissions</msg>
+  <msg key="is_recurring">Item is recurring.</msg>
   <msg key="Item">Item</msg>
   <msg key="lt_Are_you_sure_you_want">Are you sure you want to delete this calendar. All the calendar items
       and all the permission that's associated with this calendar will be 

@@ -5,11 +5,9 @@
     <tr class="cal-table-header" bgcolor=lavender>
     <td class="cal-month-title-text">
     @url_previous_week;noquote@
-    <img src="/shared/images/left.gif" alt="back one week" border="0">
     </a>
     <B>@dates;noquote@</B>
     @url_next_week;noquote@
-    <img src="/shared/images/right.gif" alt="forward one week" border="0">
     </a>
     </td>
     </tr>
@@ -23,16 +21,14 @@
     <multiple name="week_items">
       <tr>
       <td valign=top class="cal-week">
-      <a
-      href="view?view=day&date=@week_items.start_date@">@week_items.start_date_weekday@:
-      </a>
+      <strong>@week_items.start_date_weekday@</strong>:
       </td>
 
       <td width="95%" class="cal-week">
       <a
-      href="cal-item-new?date=@week_items.start_date@&start_time=&end_time=">
+      href="@base_url@cal-item-new?date=@week_items.ansi_start_date@&start_time=&end_time=">
       <img border="0" align="right" height="16" width="16" src="/shared/images/add.gif" alt="#calendar.Add_Item#"></a><a
-      href="view?view=day&date=@week_items.start_date@">@week_items.start_date@</a>
+      href="?view=day&date=@week_items.ansi_start_date@@page_num@">@week_items.start_date@</a>
       </td>
       </tr>
     
@@ -48,14 +44,10 @@
             <if @week_items.no_time_p@ eq "t">
             <span class="cal-week-event-notime">
             </if>
-            <img src="spacer.gif" width="10" height="1">
-            <a
-            href="cal-item-view?cal_item_id=@week_items.item_id@">
             <if @week_items.no_time_p@ ne "t">
             @week_items.start_time@ -  @week_items.end_time@
             </if>
             @week_items.full_item;noquote@
-            </a>
             <if @week_items.no_time_p@ eq "t">
             </span>
             </if>

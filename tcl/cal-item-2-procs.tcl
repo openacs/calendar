@@ -127,7 +127,14 @@ namespace eval calendar::item {
         Edit the item
 
     } {
-        cal_item_update $cal_item_id $start_date $end_date $name $description $item_type_id $edit_all_p
+        if {[dates_valid_p -start_date $start_date -end_date $end_date]} {
+            # For now we call the old nasty version
+	    return [cal_item_update $cal_item_id $start_date $end_date $name $description $item_type_id $edit_all_p]
+        } else {
+            # FIXME: do this better
+            ad_return_complaint 1 "Start Time must be before End Time"
+            ad_script_abort
+        }
     }
 
     ad_proc -public delete {

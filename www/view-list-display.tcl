@@ -6,6 +6,10 @@ if { ![info exists url_stub_callback] } {
 }
 
 if { ![info exists item_template] } {
+    set url_template {?sort_by=$order_by}
+}
+
+if { ![info exists item_template] } {
     set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\$item</a>"
 }
 
@@ -13,13 +17,19 @@ if { ![info exists show_calendar_name_p] } {
     set show_calendar_name_p 1
 }
 
-if {[exists_and_not_null $calendar_id_list]} {
+if { ![info exists order_by] } {
+    set order_by ""
+}
+
+if {[exists_and_not_null calendar_id_list]} {
     set calendars_clause "and on_which_calendar in ([join $calendar_id_list ","]) and (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))"
 } else {
-    set calendars_clause "and (cals.package_id= :package_id or (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id)))"
+    set calendars_clause "and ((cals.package_id= :package_id and cals.private_p='f') or (cals.private_p='t' and cals.owner_id= :user_id))"
 }
-# --calendar-portlet
 
+if { ![info exists period_days] } {
+    set period_days 31
+}
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 # sort by cannot be empty
@@ -50,8 +60,9 @@ set today_date [dt_sysdate]
 set today_ansi_list [dt_ansi_to_list $today_date]
 set today_julian_date [dt_ansi_to_julian [lindex $today_ansi_list 0] [lindex $today_ansi_list 1] [lindex $today_ansi_list 2]]
 
-set item_type_url "view?view=list&sort_by=item_type&start_date=$start_date"
-set start_date_url "view?view=list&sort_by=start_date&start_date=$start_date"
+set item_type_url "view?view=list&sort_by=item_type&start_date=$start_date&period_days=$period_days"
+set start_date_url "view?view=list&sort_by=start_date&start_date=$start_date&period_days=$period_days"
+
 set view list
 set form_vars [export_form_vars start_date sort_by view]
 

@@ -24,11 +24,10 @@
 	and      e.activity_id = a.activity_id
         and      start_date between  to_date(:first_date_of_month_system, :ansi_date_format) 
         and      to_date(:last_date_in_month_system, :ansi_date_format)
-        and      cals.package_id= :package_id
-        and      (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))
         and      cals.calendar_id = ci.on_which_calendar
 	and      e.event_id = ci.cal_item_id
-        order by ansi_start_date
+	$calendars_clause
+        order by ansi_start_date, ansi_end_date
       </querytext>
 </fullquery> 
 </queryset>

@@ -6,6 +6,14 @@ if {![exists_and_not_null date]} {
     set date [dt_sysdate]
 } 
 
+if {[exists_and_not_null page_num]} {
+    set page_num_formvar [export_form_vars page_num]
+    set page_num "&page_num=$page_num"
+} else {
+    set page_num_formvar ""
+    set page_num ""
+}
+
 # Create row with existing views
 multirow create views name text active_p
 foreach viewname {list day week month} {
@@ -41,8 +49,8 @@ if [string equal $view month] {
     set curr_year [clock format $now -format "%Y"]
     set prev_year [clock format [clock scan "1 year ago" -base $now] -format "%Y-%m-%d"]
     set next_year [clock format [clock scan "1 year" -base $now] -format "%Y-%m-%d"]
-    set prev_year_url "<a href=\"$base_url?view=$view&date=[ad_urlencode $prev_year]\">"
-    set next_year_url "<a href=\"$base_url?view=$view&date=[ad_urlencode $next_year]\">"
+    set prev_year_url "<a href=\"$base_url?view=$view&date=[ad_urlencode $prev_year]$page_num\">"
+    set next_year_url "<a href=\"$base_url?view=$view&date=[ad_urlencode $next_year]$page_num\">"
 
     set now         [clock scan $date]
 
@@ -76,8 +84,8 @@ if [string equal $view month] {
     set curr_month [lindex $months_list $curr_month_idx ]
     set prev_month [clock format [clock scan "1 month ago" -base $now] -format "%Y-%m-%d"]
     set next_month [clock format [clock scan "1 month" -base $now] -format "%Y-%m-%d"]
-    set prev_month_url "<a href=\"$base_url?view=$view&date=[ad_urlencode $prev_month]\">"
-    set next_month_url "<a href=\"$base_url?view=$view&date=[ad_urlencode $next_month]\">"
+    set prev_month_url "<a href=\"$base_url?view=$view&date=[ad_urlencode $prev_month]$page_num\">"
+    set next_month_url "<a href=\"$base_url?view=$view&date=[ad_urlencode $next_month]$page_num\">"
     
     set first_day_of_week [lc_get firstdayofweek]
     set week_days [lc_get abday]
@@ -141,7 +149,7 @@ if [string equal $view month] {
     }
 }
 
-set today_url "$base_url?view=day&date=[ad_urlencode [dt_sysdate]]"
+set today_url "$base_url?view=day&date=[ad_urlencode [dt_sysdate]]$page_num"
 
 if { $view == "day" && [dt_sysdate] == $date } {
     set today_p t

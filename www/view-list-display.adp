@@ -1,3 +1,4 @@
+<if @calendar_items:rowcount@ gt 0>
         
           <form name="frmdays" class="cal-frm-compact">
             <table width="100%" cellspacing="0" cellpadding="0" border="0">
@@ -23,7 +24,7 @@
   <th align="center"><a href="@item_type_url@">#calendar.Type_1#</a></th>
   <th align=left>Title</th></tr>
 
-<multiple name="calendar_items">
+  <multiple name="calendar_items">
 
   <group column="pretty_weekday">
 
@@ -51,6 +52,9 @@
 
   </group>
   </multiple>
-
 </table>
+</if>
+<else>
+<i>No Items</i>
+</else>
 

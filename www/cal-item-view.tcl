@@ -12,7 +12,7 @@ ad_page_contract {
 set user_id [ad_verify_and_get_user_id]
 set package_id [ad_conn package_id]
 
-ad_require_permission $cal_item_id read
+#ad_require_permission $cal_item_id read
 
 set edit_p [ad_permission_p $cal_item_id cal_item_write]
 set delete_p [ad_permission_p $cal_item_id cal_item_delete] 

@@ -31,8 +31,6 @@ if { [string equal $calendar_id "-1"] || [empty_string_p $calendar_id]} {
     ad_require_permission $calendar_id cal_item_create
 }
 
-
-
 if {![info exists item_type_id]} {
     set item_type_id ""
 }

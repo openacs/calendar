@@ -131,7 +131,6 @@ namespace eval calendar {
         if {[empty_string_p $package_id]} {
             set package_id [ad_conn package_id]
         }
-
         set new_list [db_list_of_lists select_calendar_list {}]
     }
 

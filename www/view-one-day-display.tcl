@@ -1,7 +1,7 @@
 # Show calendar items per one day.
 #
 # Parameters:
-#
+#shour_tem
 # date (YYYY-MM-DD) - optional
 # start_display_hour and end_display_hour
 
@@ -34,27 +34,27 @@ if { ![info exists show_calendar_name_p] } {
     set show_calendar_name_p 1
 }
 
-if { [info exists start_display_hour] && $start_display_hour > 0 } {
-    set start_clause "and to_char(start_date, 'HH') > :start_display_hour"
+if {![exists_and_not_null base_url]} {
+    set base_url ""
+}
+
+set current_date $date
+if { [info exists start_display_hour]} {
+    set current_date_system "$current_date $start_display_hour:00:00"
 } else {
-    set start_clause ""
+    set current_date_system "$current_date 00:00:00"
     set start_display_hour 0
 }
 
-if { [info exists end_display_hour]  && $end_display_hour < 23 } {
-    set end_clause "and to_char(start_date, 'HH') < :end_display_hour"
-} else {
-    set end_clause ""
-    set end_display_hour 23
+if { ![info exists end_display_hour]} {
+    set end_display_hour 24
 }
 
-if {[exists_and_not_null $calendar_id_list]} {
+if {[exists_and_not_null calendar_id_list]} {
     set calendars_clause "and on_which_calendar in ([join $calendar_id_list ","]) and (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))"
 } else {
-    set calendars_clause "and (cals.package_id= :package_id or (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id)))"
+    set calendars_clause "and ((cals.package_id= :package_id and cals.private_p='f') or (cals.private_p='t' and cals.owner_id= :user_id))"
 }
-# --calendar-portlet
-
 
 # The database needs this for proper formatting.
 set ansi_date_format "YYYY-MM-DD HH24:MI:SS"
@@ -66,9 +66,6 @@ if {[empty_string_p $date]} {
     set date [lc_time_fmt $user_now_time "%F"]
 }
 
-set current_date $date
-
-set current_date_system "$current_date 00:00:00"
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
@@ -96,8 +93,9 @@ db_foreach select_day_items {} {
     multirow append day_items_without_time $name $status_summary $item_id $calendar_name $full_item
 }
 
+
 set day_current_hour 0
-set localized_day_current_hour {<img border="0" align="left" src="diamond.gif" alt="No Time">}
+set localized_day_current_hour {<img border="0" align="left" src="add.gif" alt="No Time">}
 set item_add_without_time [subst $hour_template]
 
 # Now items with time
@@ -159,7 +157,6 @@ foreach this_item $day_items_per_hour {
 
     # reset url stub
     set url_stub ""
-    
     # In case we need to dispatch to a different URL (ben)
     if {![empty_string_p $url_stub_callback]} {
         # Cache the stuff

@@ -1,9 +1,3 @@
-# Show a calendar month widget
-#
-# Parameters:
-#
-# date (YYYY-MM-DD) - optional
-
 if {![info exists date] || [empty_string_p $date]} {
     # Default to todays date in the users (the connection) timezone
     set server_now_time [dt_systime]
@@ -11,7 +5,6 @@ if {![info exists date] || [empty_string_p $date]} {
     set date [lc_time_fmt $user_now_time "%x"]
 }
 
-# calendar-portlet uses this stuff
 if { ![info exists url_stub_callback] } {
     set url_stub_callback ""
 }
@@ -24,30 +17,21 @@ if { ![info exists item_template] } {
     set item_template "<a href=cal-item-view?cal_item_id=\$item_id>\$item</a>"
 }
 
-# NEW
-if { ![info exists show_calendar_name_p] } {
-    set show_calendar_name_p 1
+if {[exists_and_not_null page_num]} {
+    set page_num "&page_num=$page_num"
+} else {
+    set page_num ""
+}
+ 
+if {![exists_and_not_null base_url]} {
+    set base_url ""
 }
 
-if {[exists_and_not_null $calendar_id_list]} {
+if {[exists_and_not_null calendar_id_list]} {
     set calendars_clause "and on_which_calendar in ([join $calendar_id_list ","]) and (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))"
 } else {
-    set calendars_clause "and (cals.package_id= :package_id or (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id)))"
+    set calendars_clause "and ((cals.package_id= :package_id and cals.private_p='f') or (cals.private_p='t' and cals.owner_id= :user_id))"
 }
-
-if { ![info exists prev_month_template] } {
-    set prev_month_template ""
-}
-
-if { ![info exists next_month_template] } {
-    set next_month_template ""
-}
-
-if { ![info exists item_add_template] } {
-    set item_add_template ""
-}
-# calendar-portlet
-
 
 dt_get_info $date
 set date_list [dt_ansi_to_list $date]
@@ -61,8 +45,20 @@ set ansi_date_format "YYYY-MM-DD HH24:MI:SS"
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 set today_date [dt_sysdate]    
-set next_month_url "<a href=\"view?calendar_list=&view=month&date=[ad_urlencode $next_month]\">"
-set prev_month_url "<a href=\"view?calendar_list=&view=month&date=[ad_urlencode $prev_month]\">"
+
+if { [info exists prev_month_template] } {
+    set prev_month_url "[subst $prev_month_template]"
+} else {
+    set prev_month_url "<a href=\"view?calendar_list=&view=month&date=[ad_urlencode $prev_month]\"><img src=\"/shared/images/left.gif\" alt=\"back one month\" border=\"0\"></a>"
+}
+    
+
+if { [info exists next_month_template] } {
+    set next_month_url "[subst $next_month_template]"
+} else {
+    set next_month_url "<a href=\"view?calendar_list=&view=month&date=[ad_urlencode $next_month]\"><img src=\"/shared/images/right.gif\" alt=\"forward one month\" border=\"0\"</a>"
+}
+
 
 set first_day_of_week [lc_get firstdayofweek]
 set last_day_of_week [expr [expr $first_day_of_week + 7] % 7]

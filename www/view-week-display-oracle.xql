@@ -36,13 +36,12 @@ from     acs_activities a,
 where    e.timespan_id = s.timespan_id
 and      s.interval_id = t.interval_id
 and      e.activity_id = a.activity_id
-and      cals.package_id= :package_id
 and      start_date between
          to_date(:first_weekday_of_the_week_tz, :ansi_date_format) and
          to_date(:last_weekday_of_the_week_tz, :ansi_date_format)
-and      (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))
 and      cals.calendar_id = ci.on_which_calendar
 and      e.event_id = ci.cal_item_id
+$calendars_clause
 order by to_char(start_date, 'J'), to_char(start_date,'HH24:MI')
 </querytext>
 </fullquery>

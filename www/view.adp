@@ -28,28 +28,24 @@ start_date=@start_date@
 end_date=@end_date@ 
 date=@date@ 
 period_days=@period_days@
-calendar_id_list=@calendar_list@ 
 sort_by=@sort_by@> 
 </if>
 
 
 <if @view@ eq "day">
 <include src="view-one-day-display" 
-date="@date@" start_hour=0 end_hour=23
-calendar_id_list="@calendar_list@">
+date="@date@" start_hour=0 end_hour=23>
 </if>
 
 <if @view@ eq "week">
 <include src="view-week-display" 
-date="@date@"
-calendar_id_list="@calendar_list@">
+date="@date@">
 </if>
 
 
 <if @view@ eq "month">
 <include src="view-month-display"
-date=@date@
-calendar_id_list= @calendar_list@>
+date=@date@>
 </if>
     </td>
   </tr>

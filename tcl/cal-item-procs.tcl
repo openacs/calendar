@@ -68,7 +68,6 @@ ad_proc cal_item_create { start_date
 
 } {
 
-
     # find out the activity_id
     set activity_id [db_exec_plsql insert_activity {
 	begin

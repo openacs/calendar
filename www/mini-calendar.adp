@@ -9,7 +9,7 @@
     </if>
     <else>
       <td class="cal-navbar">
-      <a href="@base_url@?view=@views.text@&date=@date@">@views.name@</a>
+      <a href="@base_url@?view=@views.text@&date=@date@@page_num@">@views.name@</a>
       </td>
     </else>
   </multiple>
@@ -60,7 +60,7 @@
       </if>
       <else>
         <td class="cal-month">
-        <a href="@base_url@?view=month&date=@months.target_date@">
+        <a href="@base_url@?view=month&date=@months.target_date@@page_num@">
         @months.name@</a>
         </td>
        </else>         
@@ -89,7 +89,7 @@
   
       <if @days.greyed_p@ eq t>
         <td class="cal-day-inactive">
-        <a href="@base_url@?view=@view@date=@days.ansi_date@">
+        <a href="@base_url@?view=@view@date=@days.ansi_date@@page_num@">
         <font color=gray>@days.day_number@</font></a>
         </td>
       </if>
@@ -100,7 +100,7 @@
       </if>
       <if @days.today_p@ eq f and @days.greyed_p@ eq f>
         <td class="cal-day">
-        <a href="@base_url@?view=@view@&date=@days.ansi_date@">
+        <a href="@base_url@?view=@view@&date=@days.ansi_date@@page_num@">
         <font color=blue>@days.day_number@</font></a>
         </td>
       </if>
@@ -140,6 +140,7 @@
   <INPUT TYPE=text name=date size=10> <INPUT type=image src="/shared/images/go.gif" alt="Go" border=0><br><font size=-2>#acs-datetime.Date_as_YYYYMMDD#</font>
   <INPUT TYPE=hidden name=view value=day>
   @form_vars;noquote@
+  @page_num_formvar;noquote@
   </form>
   </td>
   </tr>

@@ -7,16 +7,8 @@ if {[empty_string_p $date]} {
     set date [dt_sysdate]
 }
 set current_date $date
-
-# The following code is original code which I don't really grasp yet. (Dirk)
-# ----------------------
-# If we were given no calendars, we assume we display the 
-# private calendar. It makes no sense for this to be called with
-# no data whatsoever.
-if {[empty_string_p $calendar_id_list]} {
-    set calendar_id_list [list [calendar_have_private_p -return_id 1 [ad_get_user_id]]]
-}
-# ----------------------
+set package_id [ad_conn package_id]
+set user_id [ad_conn user_id]
 
 # Loop through the calendars
 multirow create day_items_without_time name status_summary item_id calendar_name

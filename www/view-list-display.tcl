@@ -1,13 +1,5 @@
-# If we were given no calendars, we assume we display the 
-# private calendar. It makes no sense for this to be called with
-# no data whatsoever.
-if {[empty_string_p $calendar_id_list]} {
-    set calendar_id_list [list [calendar_have_private_p -return_id 1 [ad_get_user_id]]]
-    set calendar_where_clause " and e.event_id in ([join $calendar_id_list ","])"
-} else {
-    set calendar_where_clause ""
-}
-
+set package_id [ad_conn package_id]
+set user_id [ad_conn user_id]
 # sort by cannot be empty
 if {[empty_string_p $sort_by]} {
     set sort_by "start_date"

@@ -12,6 +12,8 @@ if {[empty_string_p $calendar_id_list]} {
     set calendar_id_list [list [calendar_have_private_p -return_id 1 [ad_get_user_id]]]
 }
 
+set package_id [ad_conn package_id]
+set user_id [ad_conn user_id]
 db_1row select_weekday_info {}
 db_1row select_week_info {}
     

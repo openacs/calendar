@@ -5,15 +5,8 @@ if {![info exists date] || [empty_string_p $date]} {
 }
 dt_get_info $date
 
-# If we were given no calendars, we assume we display the private calendar. It
-# makes no sense for this to be called with no data whatsoever.
-
-if {![info exists calendar_id_list] || [empty_string_p $calendar_id_list]} {
-    set calendar_id_list [list [calendar_have_private_p -return_id 1 [ad_get_user_id]]]
-}
-        
-
-
+set package_id [ad_conn package_id]
+set user_id [ad_conn user_id]
 set today_date [dt_sysdate]    
 set next_month_url "<a href=\"view?calendar_list=&view=month&date=[ad_urlencode $next_month]\">"
 set prev_month_url "<a href=\"view?calendar_list=&view=month&date=[ad_urlencode $prev_month]\">"
@@ -62,6 +55,7 @@ db_foreach select_monthly_items {} {
     array set display_information [calendar::get_month_multirow_information -current_day $current_day -today_julian_date $today_julian_date -first_julian_date_of_month $first_julian_date_of_month]
     multirow append days_of_a_month $name $item_id [dt_julian_to_ansi $current_day] $ansi_start_time $display_information(day_number) $calendar_name $display_information(beginning_of_week_p) $display_information(end_of_week_p) $display_information(today_p)  f 
 }
+
 
 for {} {$current_day <= $last_julian_date_in_month} {incr current_day} {
     array set display_information [calendar::get_month_multirow_information -current_day $current_day -today_julian_date $today_julian_date -first_julian_date_of_month $first_julian_date_of_month]

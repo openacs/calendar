@@ -1,12 +1,10 @@
-# /packages/calendar/www/cal-nav.tcl
 ad_page_contract {
     
-    option pages
-
-    list all the calendars that has
+    List all the calendars for which the user has the read privilege
     the user has  read privilege
     
-    @author Gary Jin (gjin@arsdigita.com)
+    @author Dirk Gomez (openacs@dirkgomez.de)
+    @authorr Gary Jin (gjin@arsdigita.com)
     @author Ben Adida (ben@openforce.net)
     @creation-date Dec 14, 2000, May 29th, 2002
     @cvs-id $Id$

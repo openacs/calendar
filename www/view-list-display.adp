@@ -1,5 +1,3 @@
-<if @calendar_items:rowcount@ gt 0>
-        
           <form name="frmdays" class="cal-frm-compact">
             <table width="100%" cellspacing="0" cellpadding="0" border="0">
               <tbody><tr valign="middle">
@@ -18,6 +16,8 @@
           </form>
 
 
+<if @calendar_items:rowcount@ gt 0>
+        
 <table class="cal-table-display" border=0 cellspacing=0 cellpadding=2>
   <tr class="cal-table-header">
   <th align=left>#acs-datetime.Day_of_Week#</th>
@@ -58,6 +58,6 @@
 </table>
 </if>
 <else>
-<i>No Items</i>
+<i>#calendar.No_Items#</i>
 </else>
 

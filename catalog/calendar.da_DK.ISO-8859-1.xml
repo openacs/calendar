@@ -37,7 +37,7 @@
   <msg key="Details">Detaljer:</msg>
   <msg key="Edit">Redigér</msg>
   <msg key="edit">Redigér</msg>
-  <msg key="End_Time">Sluttidspunkt</msg>
+  <msg key="End_Time">Slut</msg>
   <msg key="Events_over_a">Vis de næste</msg>
   <msg key="Friday">Fredag</msg>
   <msg key="from">fra</msg>
@@ -76,6 +76,7 @@
   <msg key="New_Type">Ny Type:</msg>
   <msg key="No">Nej</msg>
   <msg key="No_Calendars">Ingen Kalendere</msg>
+  <msg key="No_Items">Ingen emner</msg>
   <msg key="no_keep_it">Nej, behold</msg>
   <msg key="Note">Bemærkning</msg>
   <msg key="of_the_month">af måneden</msg>
@@ -91,7 +92,7 @@
   <msg key="same">samme</msg>
   <msg key="Saturday">Lørdag</msg>
   <msg key="Select_Calendars">Vælg Kalendere</msg>
-  <msg key="Start_Time">Starttidspunkt</msg>
+  <msg key="Start_Time">Start</msg>
   <msg key="Submit_query">Indsend</msg>
   <msg key="Sunday">Søndag</msg>
   <msg key="sync_with_Outlook">Synkronisér med Outlook</msg>

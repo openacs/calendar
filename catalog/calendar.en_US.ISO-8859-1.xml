@@ -91,6 +91,7 @@ than once in your calendar. The event's details are:</msg>
   <msg key="New_Type">New Type:</msg>
   <msg key="No">No</msg>
   <msg key="No_Calendars">No Calendars</msg>
+  <msg key="No_Items">No items</msg>
   <msg key="no_keep_it">no, keep it</msg>
   <msg key="Note">Note</msg>
   <msg key="of_the_month">of the month</msg>

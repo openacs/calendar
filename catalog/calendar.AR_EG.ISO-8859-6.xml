@@ -27,7 +27,6 @@
   <msg key="Delete">ÃÍÐב</msg>
   <msg key="delete">ÅוÍךס</msg>
   <msg key="Details">:ÇהÊבÇÕךהן</msg>
-  <msg key="DEVELOPER_NOTE">:וןהÇÍØÉן Çהו×טסÑנ</msg>
   <msg key="Edit">ÙÏה</msg>
   <msg key="edit">ÙÏסה</msg>
   <msg key="Friday">ÇהÌוÙÉ</msg>
@@ -35,12 +34,10 @@
   <msg key="Monday">ÇהÅËזךז</msg>
   <msg key="New_Type">:ÇהזטÙ ÇהÌÏךÏ</msg>
   <msg key="No">הÇ</msg>
-  <msg key="No_Time">הÇ טגÊ</msg>
   <msg key="Repeat_every">דÑסÑ דהס</msg>
   <msg key="same">זבÓח</msg>
   <msg key="Saturday">ÇהÓÈÊ</msg>
   <msg key="Sunday">ÇהÃÍÏ</msg>
-  <msg key="This_event_is">חÐÇ ÇהÍÏË</msg>
   <msg key="Thursday">ÇהÎוךÓ</msg>
   <msg key="Time">:ÇהטגÊ</msg>
   <msg key="Title">:ÇהÙזטÇז</msg>

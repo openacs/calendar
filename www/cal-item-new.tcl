@@ -57,8 +57,12 @@ ad_form -name cal_item  -form {
         {html {size 60} maxlength 255}
     }
 
-    {date:date
+    {date:text(text)
         {label "[_ calendar.Date_1]"}
+	{html {id sel1}}
+	{after_html {<input type='reset' value=' ... ' onclick=\"return showCalendar('sel1', 'y-m-d');\"> \[<b>y-m-d </b>\]
+        }}
+
     }
 
     {time_p:text(radio)     
@@ -158,7 +162,8 @@ ad_form -extend -name cal_item -validate {
 	calendar::new -owner_id $user_id -private_p "t" -calendar_name "Personal" -package_id $package_id
     } 
     
-    set date [template::util::date::from_ansi $date]
+    #set date [template::util::date::from_ansi $date]
+    set date $ansi_date
     set repeat_p 0
     if {[info exists start_time] && ![empty_string_p $start_time] && $start_time != 0} {
 	# Set the start time
@@ -174,6 +179,7 @@ ad_form -extend -name cal_item -validate {
     }
     set calendar_id [lindex [lindex $calendar_options 0] 1]
 } -edit_request {
+    
     calendar::item::get -cal_item_id $cal_item_id -array cal_item
 
     permission::require_write_permission -object_id $cal_item_id -creation_user $cal_item(creation_user)
@@ -201,10 +207,18 @@ ad_form -extend -name cal_item -validate {
     if { !$repeat_p } {
         element set_properties cal_item edit_all_p -widget hidden
     }
-    set date [template::util::date::from_ansi $ansi_start_date]
+    # To support green calendar
+    # set date [template::util::date::from_ansi $ansi_start_date]
+    set date [lindex $ansi_start_date 0]
     set start_time [template::util::date::from_ansi $ansi_start_date [lc_get formbuilder_time_format]]
     set end_time [template::util::date::from_ansi $ansi_end_date [lc_get formbuilder_time_format]]
 } -new_data {
+    # To support green calendar
+    set date [split $date "-"]
+    lappend date ""
+    lappend date ""
+    lappend date ""
+    lappend date "YYYY MM DD"
     set start_date [calendar::to_sql_datetime -date $date -time $start_time -time_p $time_p]
     set end_date [calendar::to_sql_datetime -date $date -time $end_time -time_p $time_p]
 
@@ -228,6 +242,13 @@ ad_form -extend -name cal_item -validate {
     ad_script_abort
 
 } -edit_data {
+    set date [split $date "-"]
+    lappend date ""
+    lappend date ""
+    lappend date ""
+    lappend date "YYYY MM DD"
+
+
     # Require write permission on the item and create on the calendar into which we're putting it
     permission::require_write_permission -object_id $cal_item_id
     if { ![calendar::personal_p -calendar_id $calendar_id] } {

@@ -86,6 +86,7 @@
 	  on_which_calendar  => :on_which_calendar,
 	  activity_id        => :activity_id,
           timespan_id        => :timespan_id,
+          item_type_id        => :item_type_id,
 	  creation_user      => :creation_user,
 	  creation_ip        => :creation_ip
 	);

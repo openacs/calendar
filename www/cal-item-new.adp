@@ -44,7 +44,7 @@
       <p>
       <include src="mini-calendar" base_url="view" view="day" date="@ansi_date@">
       <p>
-	<include src="cal-options" calendar_list="@calendar_list@">	
+	<include src="cal-options" calendar_list="@calendar_list;noquote@">	
     </td>	
 
     <td valign=top> 

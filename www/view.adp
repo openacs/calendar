@@ -16,7 +16,7 @@
 <if @admin_p@ eq 1>
     <a href="admin/">#calendar.lt_Calendar_Administrati#</a>
 </if>
-<include src="cal-options" calendar_list="@calendar_list@">	
+<include src="cal-options" calendar_list="@calendar_list;noquote@">	
 
     </td>	
 

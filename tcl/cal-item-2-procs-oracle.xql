@@ -45,7 +45,7 @@
             and    cal_items.cal_item_id= :cal_item_id
             and    cal_item_types.item_type_id(+)= cal_items.item_type_id
             and    c.calendar_id = on_which_calendar
-            and    o.object_id = i.cal_item_id
+            and    o.object_id = cal_items.cal_item_id
 </querytext>
 </fullquery>
 
@@ -79,7 +79,7 @@
             and    cal_items.cal_item_id= :cal_item_id
             and    cal_item_types.item_type_id(+)= cal_items.item_type_id
             and    c.calendar_id = on_which_calendar
-            and    o.object_id = i.cal_item_id
+            and    o.object_id = cal_items.cal_item_id
 </querytext>
 </fullquery>
 

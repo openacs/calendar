@@ -495,7 +495,6 @@
 
 .cal-day-event {
 	text-align: left;
-	white-space: nowrap;
 	vertical-align: top;
         font-size: 80%;
 }

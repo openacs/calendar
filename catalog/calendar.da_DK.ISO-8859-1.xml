@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="calendar" package_version="2.0.1" locale="da_DK" charset="ISO-8859-1">
+<message_catalog package_key="calendar" package_version="2.1.0b1" locale="da_DK" charset="ISO-8859-1">
 
   <msg key="_You_may_choose_to">. Du kan vælge at:</msg>
   <msg key="Add">Tilføj</msg>
@@ -97,6 +97,7 @@
   <msg key="Select_Calendars">Vælg Kalendere</msg>
   <msg key="Sharing">Deler</msg>
   <msg key="Start_Time">Starttidspunkt</msg>
+  <msg key="start_time_before_end_time">Starttidspunkt er før sluttidspunkt</msg>
   <msg key="Submit_query">Indsend</msg>
   <msg key="Sunday">Søndag</msg>
   <msg key="sync_with_Outlook">synkroniser med Outlook:</msg>

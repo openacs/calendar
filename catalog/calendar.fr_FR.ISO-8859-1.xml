@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="calendar" package_version="2.0.1" locale="fr_FR" charset="ISO-8859-1">
+<message_catalog package_key="calendar" package_version="2.1.0b1" locale="fr_FR" charset="ISO-8859-1">
 
   <msg key="_You_may_choose_to">. Vous pouvez choisir:</msg>
   <msg key="Add">Ajouter</msg>
@@ -11,6 +11,7 @@
   <msg key="All_Day_Event">Evénement toute la journée</msg>
   <msg key="all_events">Tous les événements</msg>
   <msg key="and_Time">et Heure</msg>
+  <msg key="Apply_to_all">Appliquer pour tous les événements </msg>
   <msg key="Attachments">Attaches:</msg>
   <msg key="Audiences_for_item">Audiences de cet élément</msg>
   <msg key="Calendar">Agenda</msg>

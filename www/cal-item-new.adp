@@ -2,7 +2,7 @@
 <property name="title">Calendar: Add Item</property>
 <property name="context_bar">Add</property>
 
-<table width=95%>
+<table width="95%">
 
   <tr>
     <td valign=top width=150>

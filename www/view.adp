@@ -2,7 +2,7 @@
 <property name="title">Calendars</property>
 <property name="context_bar">Calendar</property>
 
-<table width=95%>
+<table width="95%">
 
   <tr>
     <td valign=top width=150>

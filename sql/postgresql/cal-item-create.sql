@@ -216,7 +216,7 @@ end;' LANGUAGE 'plpgsql';
 CREATE FUNCTION cal_item__name (
     integer
 )
-RETURNS integer AS '
+RETURNS varchar AS '
 declare 
     name__cal_item_id	alias for $1;
     v_name	acs_activities.name%TYPE;
@@ -228,7 +228,7 @@ begin
     (
 	select  activity_id
         from    acs_events
-        where   event_id = name__cal_item_id;
+        where   event_id = name__cal_item_id
     );
                
     return v_name;

@@ -40,7 +40,6 @@ set this_month [dt_trim_leading_zeros [lindex $date_list 1]]
 set this_day [dt_trim_leading_zeros [lindex $date_list 2]]
 
 set month_string [lindex [dt_month_names] [expr $this_month - 1]]
-set ansi_date_format "YYYY-MM-DD HH24:MI:SS"
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]

@@ -17,10 +17,10 @@
 
 <fullquery name="select_week_items">
 <querytext>
-select   to_char(start_date, :ansi_date_format) as ansi_start_date,
-         to_char(end_date, :ansi_date_format) as ansi_end_date,
+select   to_char(start_date, 'YYYY-MM-DD HH24:MI:SS') as ansi_start_date,
+         to_char(end_date, 'YYYY-MM-DD HH24:MI:SS') as ansi_end_date,
          trunc(start_date - to_date(:first_weekday_of_the_week_tz,
-         :ansi_date_format)) as day_of_week,
+         'YYYY-MM-DD HH24:MI:SS')) as day_of_week,
          nvl(e.name, a.name) as name,
          nvl(e.status_summary, a.status_summary) as status_summary,
          e.event_id as item_id,
@@ -37,8 +37,8 @@ where    e.timespan_id = s.timespan_id
 and      s.interval_id = t.interval_id
 and      e.activity_id = a.activity_id
 and      start_date between
-         to_date(:first_weekday_of_the_week_tz, :ansi_date_format) and
-         to_date(:last_weekday_of_the_week_tz, :ansi_date_format)
+         to_date(:first_weekday_of_the_week_tz, 'YYYY-MM-DD HH24:MI:SS') and
+         to_date(:last_weekday_of_the_week_tz, 'YYYY-MM-DD HH24:MI:SS')
 and      cals.calendar_id = ci.on_which_calendar
 and      e.event_id = ci.cal_item_id
 $calendars_clause

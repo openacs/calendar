@@ -45,8 +45,6 @@ if {[exists_and_not_null page_num]} {
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
-set date_format "YYYY-MM-DD HH24:MI"
-
 # The title
 if {[empty_string_p $start_date] && [empty_string_p $end_date]} {
     set title ""

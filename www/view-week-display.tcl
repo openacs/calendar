@@ -42,8 +42,6 @@ if {[empty_string_p $date]} {
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
-set ansi_date_format "YYYY-MM-DD HH24:MI:SS"
-
 set start_date $date
 
 # Convert date from user timezone to system timezone

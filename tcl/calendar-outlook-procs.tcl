@@ -61,8 +61,6 @@ namespace eval calendar::outlook {
         The client timezone helps to make things right. 
         It is the number offset from GMT.
     } {
-        set date_format "YYYY-MM-DD HH24:MI:SS"
-
         calendar::item::get -cal_item_id $cal_item_id -array cal_item
         # If necessary, select recurrence information
 

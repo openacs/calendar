@@ -25,8 +25,8 @@ where    e.timespan_id = s.timespan_id
 and      s.interval_id = t.interval_id
 and      e.activity_id = a.activity_id
 and      ci.cal_item_id= e.event_id
-and      (start_date > to_date(:start_date,:date_format) or :start_date is null) and
-         (start_date < to_date(:end_date,:date_format) or :end_date is null)
+and      (start_date > to_date(:start_date,'YYYY-MM-DD HH24:MI') or :start_date is null) and
+         (start_date < to_date(:end_date,'YYYY-MM-DD HH24:MI') or :end_date is null)
 and      cals.calendar_id = ci.on_which_calendar
 $calendars_clause
 order by $sort_by	

@@ -55,9 +55,6 @@ if {[exists_and_not_null calendar_id_list]} {
     }
 }
 
-# The database needs this for proper formatting.
-set ansi_date_format "YYYY-MM-DD HH24:MI:SS"
-
 set current_date $date
 set current_date_system "$date 00:00:00"
 if {[empty_string_p $date]} {

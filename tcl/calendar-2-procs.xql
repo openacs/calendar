@@ -1,14 +1,6 @@
 <?xml version="1.0"?>
 <queryset>
 
-<fullquery name="calendar::calendar_list.select_calendar_list">
-<querytext>
-select calendar_name, calendar_id, acs_permission__permission_p(calendar_id, :user_id, 'calendar_admin') as calendar_admin_p from calendars
-where package_id= :package_id
-and (private_p='f' or (private_p='t' and owner_id= :user_id))
-</querytext>
-</fullquery>
-
 <fullquery name="calendar::get_item_types.select_item_types">
 <querytext>
 select type, item_type_id from cal_item_types

@@ -27,9 +27,8 @@ if {[empty_string_p $calendar_id]} {
         ad_script_abort
     }
 
-    set calendar_id [lindex $calendar_list 0]
+    set calendar_id [lindex [lindex $calendar_list 0] 1]
 }
-
 
 # Create the form
 form create cal_item
@@ -44,7 +43,7 @@ element create cal_item date \
         -label "[_ calendar.Date_1]" -datatype date -widget date
 
 element create cal_item time_p \
-        -label "&nbsp;" -datatype text -widget radio -options [list [list "[_ calendar.All_Day_Event]" 0] [list "[_ calendar.Use_Hours_Below]" 1]]
+        -label "&nbsp;" -datatype text -widget radio -html {onchange "javascript:TimePChanged();"} -options [list [list "[_ calendar.All_Day_Event]" 0] [list "[_ calendar.Use_Hours_Below]" 1]]
 
 element create cal_item start_time \
         -label "[_ calendar.Start_Time]" -datatype date -widget date \

@@ -5,11 +5,9 @@
 
 <fullquery name="select_list_items">
 <querytext>
-<fullquery name="calendar::list_display.select_list_items">
-<querytext>
-	select   to_char(start_date, 'HH24') as start_hour,
-         to_char(start_date, 'YYYY-MM-DD HH24:MI:SS') as ansi_start_date,
+	select to_char(start_date, 'YYYY-MM-DD HH24:MI:SS') as ansi_start_date,
          to_char(end_date, 'YYYY-MM-DD HH24:MI:SS') as ansi_end_date,
+         to_char(sysdate, 'YYYY-MM-DD HH24:MI:SS') as ansi_today,
          nvl(e.name, a.name) as name,
          nvl(e.status_summary, a.status_summary) as status_summary,
          e.event_id as item_id,

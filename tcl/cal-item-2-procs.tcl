@@ -62,18 +62,28 @@ namespace eval calendar::item {
         }
         
         db_1row $query_name {} -column_array row
+        
+        # Timezonize
+
+
+        set row(start_date_ansi) [lc_time_utc_to_local $row(start_date_ansi)]
+        set row(end_date_ansi) [lc_time_utc_to_local $row(end_date_ansi)]
 
         # Localize
-        set row(start_time) [lc_time_fmt $row(ansi_start_date) "%X"]
-        # Unfortunately, SQL has weekday starting at 1 = Sunday
-        set row(day_of_week) [expr [lc_time_fmt $row(ansi_start_date) "%w"] + 1]
-        set row(pretty_day_of_week) [lc_time_fmt $row(ansi_start_date) "%A"]
-        set row(day_of_month) [lc_time_fmt $row(ansi_start_date) "%d"]
-        set row(pretty_short_start_date) [lc_time_fmt $row(ansi_start_date) "%x"]
-        set row(full_start_date) [lc_time_fmt $row(ansi_start_date) "%x"]
-        set row(full_end_date) [lc_time_fmt $row(ansi_end_date) "%x"]
+        set row(start_time) [lc_time_fmt $row(start_date_ansi) "%X"]
 
-        set row(end_time) [lc_time_fmt $row(ansi_end_date) "%X"]
+        # Unfortunately, SQL has weekday starting at 1 = Sunday
+        set row(start_date) [lc_time_fmt $row(start_date_ansi) "%Y-%m-%d"]
+        set row(end_date) [lc_time_fmt $row(end_date_ansi) "%Y-%m-%d"]
+
+        set row(day_of_week) [expr [lc_time_fmt $row(start_date_ansi) "%w"] + 1]
+        set row(pretty_day_of_week) [lc_time_fmt $row(start_date_ansi) "%A"]
+        set row(day_of_month) [lc_time_fmt $row(start_date_ansi) "%d"]
+        set row(pretty_short_start_date) [lc_time_fmt $row(start_date_ansi) "%x"]
+        set row(full_start_date) [lc_time_fmt $row(start_date_ansi) "%x"]
+        set row(full_end_date) [lc_time_fmt $row(end_date_ansi) "%x"]
+
+        set row(end_time) [lc_time_fmt $row(end_date_ansi) "%X"]
     }
         
     ad_proc -public add_recurrence {

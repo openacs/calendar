@@ -1,3 +1,11 @@
+if { ![exists_and_not_null calendar_id]} {
+    set calendar_list [calendar::calendar_list]
+
+    set calendar_id [lindex [lindex $calendar_list 0] 1]
+}
+
+set calendar_name [calendar_get_name $calendar_id]
+
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 # sort by cannot be empty
@@ -41,6 +49,22 @@ set last_pretty_start_date ""
 # Loop through the events, and add them
     
 db_foreach select_list_items {} {
+    # Timezonize
+    set ansi_start_date [lc_time_utc_to_local $ansi_start_date]
+    set ansi_end_date [lc_time_utc_to_local $ansi_end_date]
+    set ansi_today [lc_time_utc_to_local $ansi_today]
+
+    # Localize
+    set pretty_weekday [lc_time_fmt $ansi_start_date "%A"]
+    set pretty_start_date [lc_time_fmt $ansi_start_date "%x"]
+    set pretty_end_date [lc_time_fmt $ansi_end_date "%x"]
+    set pretty_start_time [lc_time_fmt $ansi_start_date "%X"]
+    set pretty_end_time [lc_time_fmt $ansi_end_date "%X"]
+    set pretty_today [lc_time_fmt $ansi_today "%x"]
+
+    set start_date_seconds [clock scan $pretty_start_date]
+    set today_seconds [clock scan $pretty_today]
+
     # Adjust the display of no-time items
     if {[dt_no_time_p -start_time $pretty_start_date -end_time $pretty_end_date]} {
         set pretty_start_time "--"
@@ -60,9 +84,10 @@ db_foreach select_list_items {} {
         incr flip
     }
 
-    if {$julian_start_date == $today_julian_date} {
+    # Give the row different appearance depending on whether it's before today, today, or after today
+    if {$start_date_seconds == $today_seconds} {
         set today row-hi
-    } elseif {$julian_start_date < $today_julian_date} {
+    } elseif {$start_date_seconds < $today_seconds} {
         set today row-lo
     } else {
         set today ""
@@ -71,4 +96,3 @@ db_foreach select_list_items {} {
     multirow append calendar_items $calendar_name $item_id $name $item_type $pretty_weekday $pretty_start_date $pretty_end_date $pretty_start_time $pretty_end_time $flip $today
 
 }
-

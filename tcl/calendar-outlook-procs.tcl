@@ -22,15 +22,6 @@ ad_library {
 
 namespace eval calendar::outlook {
    
-    ad_proc -private adjust_timezone {
-        {-timestamp:required}
-        {-server_tz:required}
-        {-user_tz:required}
-        {-format "YYYY-MM-DD HH24:MI:SS"}
-    } {
-        return [db_string adjust_timezone {}]
-    }
-
     ad_proc ics_timestamp_format {
         {-timestamp:required}
     } {
@@ -74,13 +65,6 @@ namespace eval calendar::outlook {
 
         calendar::item::get -cal_item_id $cal_item_id -array cal_item
         # If necessary, select recurrence information
-
-        # Convert some dates for timezone
-        set server_tz [parameter::get_from_package_key -package_key acs-lang -parameter SystemTimezone]
-        set cal_item(full_start_date) \
-            [adjust_timezone -timestamp $cal_item(full_start_date) -format $date_format -user_tz "Universal" -server_tz $server_tz]
-        set cal_item(full_end_date) \
-            [adjust_timezone -timestamp $cal_item(full_end_date) -format $date_format -user_tz "Universal" -server_tz $server_tz]
 
         # Here we have some fields
         # start_time end_time title description

@@ -1,7 +1,6 @@
 ad_page_contract {
     
-    List all the calendars for which the user has the read privilege
-    the user has  read privilege
+    List all the calendars for which the user has the read privilege.
     
     @author Dirk Gomez (openacs@dirkgomez.de)
     @authorr Gary Jin (gjin@arsdigita.com)

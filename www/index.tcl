@@ -5,7 +5,7 @@ ad_page_contract {
     Main Calendar Page
     totally redone by Ben
     
-    @author Ben Adida (ben@openforce)
+    @author Ben Adida (ben@openforce.net)
     @creation-date June 2, 2002
     @cvs-id $Id$
 } {

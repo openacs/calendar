@@ -4,7 +4,7 @@ ad_page_contract {
     
     Output an item as ics for Outlook
     
-    @author Ben Adida (ben@openforce)
+    @author Ben Adida (ben@openforce.net)
     @creation-date May 28, 2002
     @cvs-id $Id$
 } {

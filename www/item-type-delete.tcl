@@ -3,7 +3,7 @@ ad_page_contract {
 
     Delete an item type
     
-    @author Ben Adida (ben@openforce)
+    @author Ben Adida (ben@openforce.net)
     
     @creation-date Mar 16, 2002
     @cvs-id $Id$

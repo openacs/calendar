@@ -2,7 +2,7 @@
 ad_page_contract {
     Delete a calendar item
     
-    @author Ben Adida (ben@openforce)
+    @author Ben Adida (ben@openforce.net)
     @creation-date 2002-06-02
 } {
     cal_item_id:integer,notnull

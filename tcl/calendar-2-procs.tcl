@@ -3,7 +3,7 @@ ad_library {
     A beginning of an attempt to rewrite calendar by making
     procs cleaner, etc... (ben)
 
-    @author Ben Adida (ben@openforce)
+    @author Ben Adida (ben@openforce.net)
     @creation-date 2002-03-16
 }
 

@@ -5,7 +5,7 @@ ad_page_contract {
     edit an existing calendar item
     (totally rewritten, this was nasty)
 
-    @author Ben Adida (ben@openforce)
+    @author Ben Adida (ben@openforce.net)
     @creation-date 2002-06-02
     @cvs-id $Id$
 } {

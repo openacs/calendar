@@ -3,7 +3,7 @@
 ad_page_contract {
     View one event
     
-    @author Ben Adida (ben@openforce)
+    @author Ben Adida (ben@openforce.net)
     @creation-date April 09, 2002
     @cvs-id $Id$
 } {

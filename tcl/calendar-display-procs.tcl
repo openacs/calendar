@@ -6,7 +6,7 @@ ad_library {
     I'm working as fast as I can to fix this, but there is a LOT to fix (ben).
 
 
-    @author Ben Adida (ben@openforce)
+    @author Ben Adida (ben@openforce.net)
     @creation-date Jan 21, 2002
     @cvs-id $Id$
 

@@ -3,7 +3,7 @@ ad_page_contract {
     
     Creating a new Calendar Item
     
-    @author Ben Adida (ben@openforce)
+    @author Ben Adida (ben@openforce.net)
     @creation-date May 29, 2002
     @cvs-id $Id$
 } {

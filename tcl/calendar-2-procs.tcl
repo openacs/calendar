@@ -185,7 +185,7 @@ namespace eval calendar {
     }
 
     ad_proc -public attachments_enabled_p {} {
-        set package_id [site_nodes::child_package_exists_p \
+        set package_id [site_node_apm_integration::child_package_exists_p \
             -package_key attachments
         ]
     }

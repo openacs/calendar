@@ -106,17 +106,19 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
     set ansi_end_date [lc_time_system_to_conn $ansi_end_date]
 
+    set start_hour [lc_time_fmt $ansi_start_date "%H"]
+    set end_hour [lc_time_fmt $ansi_end_date "%H"]
     set start_time [lc_time_fmt $ansi_start_date "%X"]
     set end_time [lc_time_fmt $ansi_end_date "%X"]
 
-    if {($start_hour == $end_hour) || ($end_minutes > 0)} {
+    if { ($start_hour == $end_hour) || ([string trimleft [lc_time_fmt $ansi_end_date "%M"] 0] > 0) } {
         incr end_hour
     }
 
     for { set item_current_hour $start_hour } { $item_current_hour < $end_hour } { incr item_current_hour } {
         set item_current_hour [expr [string trimleft $item_current_hour 0]+0]
 
-        if { $start_hour == $item_current_hour } {
+        if { [string trimleft $start_hour 0] == $item_current_hour } {
             lappend day_items_per_hour \
                 [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
         } else {
@@ -202,7 +204,7 @@ foreach this_item $day_items_per_hour {
 
 if {$day_current_hour < $end_display_hour } {
     # need to add dummy entries to show all hours
-    for {  } { $day_current_hour < $end_display_hour } { incr day_current_hour } {
+    for {  } { $day_current_hour <= $end_display_hour } { incr day_current_hour } {
 	set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%X" [ad_conn locale]]
         multirow append items \
             "" \

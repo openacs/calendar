@@ -22,14 +22,15 @@ array set message_key_array {
 }
 
 # Create row with existing views
-multirow create views name text active_p
+multirow create views name text active_p url
 foreach viewname {list day week month} {
     if { [string equal $viewname $view] } {
         set active_p t
     } else {
         set active_p f
     }
-    multirow append views [lang::util::localize $message_key_array($viewname)] $viewname $active_p
+    multirow append views [lang::util::localize $message_key_array($viewname)] $viewname $active_p \
+        "[export_vars -base $base_url {date {view $viewname}}]$page_num"
 }
 
 set list_of_vars [list]
@@ -56,12 +57,12 @@ if [string equal $view month] {
     set curr_year [clock format $now -format "%Y"]
     set prev_year [clock format [clock scan "1 year ago" -base $now] -format "%Y-%m-%d"]
     set next_year [clock format [clock scan "1 year" -base $now] -format "%Y-%m-%d"]
-    set prev_year_url "<a href=\"$base_url?view=$view&date=[ad_urlencode $prev_year]$page_num\">"
-    set next_year_url "<a href=\"$base_url?view=$view&date=[ad_urlencode $next_year]$page_num\">"
+    set prev_year_url "$base_url?view=$view&date=[ad_urlencode $prev_year]$page_num"
+    set next_year_url "$base_url?view=$view&date=[ad_urlencode $next_year]$page_num"
 
     set now         [clock scan $date]
 
-    multirow create months name current_month_p new_row_p target_date
+    multirow create months name current_month_p new_row_p target_date url
 
     for {set i 0} {$i < 12} {incr i} {
 
@@ -84,15 +85,16 @@ if [string equal $view month] {
                                  [clock scan "[expr $i-$curr_month_idx] month" -base $now] -format "%Y-%m-%d"]
             set encoded_target_date [ad_urlencode $target_date]
         }
-        multirow append months $month $current_month_p $new_row_p $encoded_target_date
+        multirow append months $month $current_month_p $new_row_p $encoded_target_date \
+            "[export_vars -base $base_url {{date $target_date} view}]$page_num"
         
     }
 } else {
     set curr_month [lindex $months_list $curr_month_idx ]
     set prev_month [clock format [clock scan "1 month ago" -base $now] -format "%Y-%m-%d"]
     set next_month [clock format [clock scan "1 month" -base $now] -format "%Y-%m-%d"]
-    set prev_month_url "<a href=\"$base_url?view=$view&date=[ad_urlencode $prev_month]$page_num\">"
-    set next_month_url "<a href=\"$base_url?view=$view&date=[ad_urlencode $next_month]$page_num\">"
+    set prev_month_url "$base_url?view=$view&date=[ad_urlencode $prev_month]$page_num"
+    set next_month_url "$base_url?view=$view&date=[ad_urlencode $next_month]$page_num"
     
     set first_day_of_week [lc_get firstdayofweek]
     set week_days [lc_get abday]
@@ -102,29 +104,29 @@ if [string equal $view month] {
     }
 
 
-    multirow create days day_number ansi_date beginning_of_week_p end_of_week_p today_p greyed_p
+    multirow create days day_number ansi_date beginning_of_week_p end_of_week_p today_p active_p url
 
     set day_of_week 1
 
-    # Calculate number of greyed days
-    set greyed_days_before_month [expr [expr [dt_first_day_of_month $year $month]] -1 ]
+    # Calculate number of active days
+    set active_days_before_month [expr [expr [dt_first_day_of_month $year $month]] -1 ]
     # Adjust for i18n
-    set greyed_days_before_month [expr [expr $greyed_days_before_month + 7 - $first_day_of_week] % 7]
+    set active_days_before_month [expr [expr $active_days_before_month + 7 - $first_day_of_week] % 7]
 
-    set calendar_starts_with_julian_date [expr $first_julian_date_of_month - $greyed_days_before_month]
-    set day_number [expr $days_in_last_month - $greyed_days_before_month + 1]
+    set calendar_starts_with_julian_date [expr $first_julian_date_of_month - $active_days_before_month]
+    set day_number [expr $days_in_last_month - $active_days_before_month + 1]
 
     for {set julian_date $calendar_starts_with_julian_date} {$julian_date <= [expr $last_julian_date + 7]} {incr julian_date} {
         if {$julian_date > $last_julian_date_in_month && [string equal $end_of_week_p t] } {
             break
         }
         set today_p f
-        set greyed_p f
+        set active_p t
 
         if {$julian_date < $first_julian_date_of_month} {
-            set greyed_p t
+            set active_p f
         } elseif {$julian_date > $last_julian_date_in_month} {
-            set greyed_p t
+            set active_p f
         } 
         set ansi_date [dt_julian_to_ansi $julian_date]
         
@@ -150,7 +152,9 @@ if [string equal $view month] {
         } else {
             set end_of_week_p f
         }
-        multirow append days $day_number [ad_urlencode $ansi_date] $beginning_of_week_p $end_of_week_p $today_p $greyed_p
+
+        multirow append days $day_number [ad_urlencode $ansi_date] $beginning_of_week_p $end_of_week_p $today_p $active_p \
+            "[export_vars -base $base_url {{date $ansi_date} view}]$page_num"
         incr day_number
         incr day_of_week
     }

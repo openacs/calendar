@@ -13,15 +13,14 @@
          coalesce(e.status_summary, a.status_summary) as status_summary,
          e.event_id as item_id,
          (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type,
-	 on_which_calendar as calendar_id,
-	 (select calendar_name from calendars 
-	 where calendar_id = on_which_calendar)
-	 as calendar_name
+	 cals.calendar_id,
+	 cals.calendar_name
 from     acs_activities a,
          acs_events e,
          timespans s,
          time_intervals t,
-         cal_items
+         cal_items ci,
+         calendars cals
 where    e.timespan_id = s.timespan_id
 and      s.interval_id = t.interval_id
 and      e.activity_id = a.activity_id
@@ -31,6 +30,10 @@ and      start_date between
 and      cal_items.cal_item_id= e.event_id
 and      to_char(start_date, 'HH24:MI') = '00:00'
 and      to_char(end_date, 'HH24:MI') = '00:00'
+and      cals.package_id= :package_id
+and      (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))
+and      cals.calendar_id = ci.on_which_calendar
+and      e.event_id = ci.cal_item_id
 </querytext>
 </fullquery>
 
@@ -44,15 +47,14 @@ and      to_char(end_date, 'HH24:MI') = '00:00'
          coalesce(e.status_summary, a.status_summary) as status_summary,
          e.event_id as item_id,
          (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type,
-	 on_which_calendar as calendar_id,
-	 (select calendar_name from calendars 
-	 where calendar_id = on_which_calendar)
-	 as calendar_name
+	 cals.calendar_id,
+	 cals.calendar_name
 from     acs_activities a,
          acs_events e,
          timespans s,
          time_intervals t,
-         cal_items
+         cal_items ci,
+         calendars cals
 where    e.timespan_id = s.timespan_id
 and      s.interval_id = t.interval_id
 and      e.activity_id = a.activity_id
@@ -62,6 +64,10 @@ and      start_date between
 and      cal_items.cal_item_id= e.event_id
 and      to_char(start_date, 'HH24:MI') <> '00:00'
 and      to_char(end_date, 'HH24:MI') <> '00:00'
+and      cals.package_id= :package_id
+and      (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))
+and      cals.calendar_id = ci.on_which_calendar
+and      e.event_id = ci.cal_item_id
 order by start_hour
 </querytext>
 </fullquery>

@@ -17,21 +17,24 @@
          e.event_id as item_id,
          (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type,
          to_char(start_date, 'Day') as pretty_weekday,
-	 on_which_calendar as calendar_id,
-	 (select calendar_name from calendars 
-	 where calendar_id = on_which_calendar) as calendar_name
+	 cals.calendar_id,
+	 cals.calendar_name
 from     acs_activities a,
          acs_events e,
          timespans s,
          time_intervals t,
-         cal_items
+         cal_items ci,
+         calendars cals
 where    e.timespan_id = s.timespan_id
 and      s.interval_id = t.interval_id
 and      e.activity_id = a.activity_id
 and      cal_items.cal_item_id= e.event_id
 and      (start_date >= to_date(:start_date,:date_format) or :start_date is null) 
 and      (start_date <= to_date(:end_date,:date_format) or :end_date is null)
-$calendar_where_clause
+and      cals.package_id= :package_id
+and      (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))
+and      cals.calendar_id = ci.on_which_calendar
+and      e.event_id = ci.cal_item_id
 order by $sort_by
 	
 </querytext>

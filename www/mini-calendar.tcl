@@ -94,9 +94,9 @@ if [string equal $view month] {
             set current_month_p t 
         } else {
             set current_month_p f
-            set target_date [clock format \
-                                 [clock scan "[expr $i-$curr_month_idx] month" -base $now] -format "%Y-%m-%d"]
         }
+        set target_date [clock format \
+                             [clock scan "[expr $i-$curr_month_idx] month" -base $now] -format "%Y-%m-%d"]
         multirow append months $month $current_month_p $new_row_p  \
             "[export_vars -base $base_url {{date $target_date} view}]${page_num}${url_stub_period_days}"
         

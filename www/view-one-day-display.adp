@@ -38,7 +38,9 @@
               <tr class="row-dark">
             </else>
 
-            <td width="1%" class="cal-day-time">@day_items_with_time.current_hour@</td>
+	<td width="1%" class="cal-day-time">      <a	
+      href="cal-item-new?date=@current_date@&start_time=@day_items_with_time.current_hour@&end_time=">
+	@day_items_with_time.current_hour@</a></td>
 
             <group column="current_hour">
               <if @day_items_with_time.item_id@ ne "">

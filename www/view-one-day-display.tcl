@@ -55,7 +55,8 @@ db_foreach select_day_items_with_time {} {
     set end_time [lc_time_fmt $ansi_end_date "%H:%M"]
 
     for { set item_current_hour $start_hour } { $item_current_hour < $end_hour } { incr item_current_hour } {
-        if {$start_hour == $item_current_hour $$ start_hour >= $start_display_hour } {
+	set item_current_hour [expr int($item_current_hour)]
+        if {$start_hour == $item_current_hour && $start_hour >= $start_display_hour } {
             lappend day_items_per_hour [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
         } elseif { $end_hour <= $end_display_hour } {
             lappend day_items_per_hour [list $item_current_hour "" $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]

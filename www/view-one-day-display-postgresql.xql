@@ -8,7 +8,7 @@
 	select coalesce(e.name, a.name) as name,
          coalesce(e.status_summary, a.status_summary) as status_summary,
          e.event_id as item_id,
-         (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type,
+         (select type from cal_item_types where item_type_id= ci.item_type_id) as item_type,
 	 cals.calendar_id,
 	 cals.calendar_name
 from     acs_activities a,
@@ -23,7 +23,7 @@ and      e.activity_id = a.activity_id
 and      start_date between
          to_date(:current_date_system,:ansi_date_format) and
          to_date(:current_date_system,:ansi_date_format) + cast('23 hours 59 minutes 59 seconds' as interval)
-and      cal_items.cal_item_id= e.event_id
+and      ci.cal_item_id= e.event_id
 and      to_char(start_date, 'HH24:MI') = '00:00'
 and      to_char(end_date, 'HH24:MI') = '00:00'
 and      cals.package_id= :package_id
@@ -40,7 +40,7 @@ and      e.event_id = ci.cal_item_id
          coalesce(e.name, a.name) as name,
          coalesce(e.status_summary, a.status_summary) as status_summary,
          e.event_id as item_id,
-         (select type from cal_item_types where item_type_id= cal_items.item_type_id) as item_type,
+         (select type from cal_item_types where item_type_id= ci.item_type_id) as item_type,
 	 cals.calendar_id,
 	 cals.calendar_name
 from     acs_activities a,
@@ -55,7 +55,7 @@ and      e.activity_id = a.activity_id
 and      start_date between
          to_date(:current_date_system,:ansi_date_format) and
          to_date(:current_date_system,:ansi_date_format) + cast('23 hours 59 minutes 59 seconds' as interval)
-and      cal_items.cal_item_id= e.event_id
+and      ci.cal_item_id= e.event_id
 and      (to_char(start_date, 'HH24:MI') <> '00:00' or
           to_char(end_date, 'HH24:MI') <> '00:00')
 and      cals.package_id= :package_id

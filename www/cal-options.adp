@@ -6,7 +6,7 @@ Calendars:
 <li> @calendars.calendar_name@
 <if @calendars.calendar_admin_p@ eq "t">
   <br>
-  <font size=-2>[<a href="calendar-item-types?calendar_id=@calendars.calendar_id@">Manage Types</a>]</font>
+  <font size=-2>[<a href="@base_url@calendar-item-types?calendar_id=@calendars.calendar_id@">Manage Types</a>]</font>
 </if>
 </multiple>
 </ul>

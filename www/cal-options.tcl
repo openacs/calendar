@@ -13,6 +13,13 @@ ad_page_contract {
 
 set user_id [ad_conn user_id]
 
+# If we're included from another package url_stub will have been set up
+# to give a valid url prefix that points to the proper calendar.
+
+if { ![info exists base_url] } {
+    set base_url ""
+}
+
 multirow create calendars calendar_name calendar_id calendar_admin_p
 foreach calendar $calendar_list {
     multirow append calendars [lindex $calendar 0] [lindex $calendar 1] [lindex $calendar 2]

@@ -31,7 +31,7 @@
   </tr>
 </table>
 
-<if @item_data.recurrence_data@ not nil>
+<if @item_data.recurrence_id@ not nil>
 <b>This is a repeating event</b>. You may choose to:
 <ul>
 <li> <a href="cal-item-edit?action=delete&cal_item_id=@cal_item_id@&confirm_p=1">delete only this instance</a>

@@ -28,9 +28,6 @@
     </table>
     <p>
     <if @edit_p@ eq 1><a href="./?action=edit&cal_item_id=@cal_item_id@&show_cal_nav=@show_cal_nav@&return_url=@return_url@">edit</a> | <a href="./cal-item-edit?action=delete&cal_item_id=@cal_item_id@&show_cal_nav=@show_cal_nav@&return_url=@return_url@">delete</a>
-<if @recurrence_id@ not nil>
-| <a href="./cal-item-delete-all-occurrences?recurrence_id=@recurrence_id@&show_cal_nav=@show_cal_nav@">delete all occurrences</a>
-</if>
 </if>
     </td>
   </tr>

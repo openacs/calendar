@@ -7,13 +7,14 @@
     <initial-install-p>f</initial-install-p>
     <singleton-p>f</singleton-p>
     
-    <version name="2.0d3" url="http://openacs.org/acs-repository/download/apm/calendar-2.0d3.apm">
-        <owner url="mailto:openacs@dirkgomez.de">Dirk Gomez</owner>
-        <summary>OpenACS Calendar</summary>
-        <release-date>2004-01-10</release-date>
-        <description format="text/plain">OpenACS Calendar</description>
+    <version name="2.0.1" url="http://openacs.org/repository/download/apm/calendar-2.0.1.apm">
+        <owner url="mailto:openacs-calendar@dirkgomez.de">Dirk Gomez</owner>
+        <summary>Personal and shared event calendars.</summary>
+        <release-date>2004-03-04</release-date>
+        <vendor url="http://openacs.org">OpenACS</vendor>
+        <description format="text/html">Manage group and shared calendars with download.</description>
 
-        <provides url="calendar" version="2.0d3"/>
+        <provides url="calendar" version="2.0.1"/>
         <requires url="acs-datetime" version="4.0"/>
         <requires url="acs-events" version="0.1d"/>
         <requires url="acs-lang" version="5.0.0a5"/>

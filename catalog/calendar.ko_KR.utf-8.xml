@@ -29,14 +29,17 @@
   <msg key="Date">날짜:</msg>
   <msg key="Date_1">날짜</msg>
   <msg key="day">요일</msg>
+  <msg key="day_rolling_period">일(日) 회전주기</msg>
   <msg key="day_s">요일(들)</msg>
   <msg key="Delete">삭제</msg>
   <msg key="delete">삭제하다</msg>
   <msg key="Description">설명</msg>
   <msg key="Details">세부사항:</msg>
+  <msg key="developer_note_calendar_add">개발자 노트: 달력 생성 프로세스는 다음의 단계를 포함하고 있다: &lt;ol&gt; &lt;li&gt; 달력 객체 생성과 필요할 경우 기본 권한 변경 &lt;li&gt; 그룹 이나 현재 달력의 독자인 사용자의 선택 &lt;li&gt; 그룹과 사용자의 요구되는 구체적인 사용권한 적용 &lt;/ol&gt;</msg>
   <msg key="Edit">수정하다</msg>
   <msg key="edit">수정하다</msg>
   <msg key="End_Time">종료 시간</msg>
+  <msg key="Events_over_a">이벤트들</msg>
   <msg key="Friday">금요일</msg>
   <msg key="from">로부터</msg>
   <msg key="Grant">승인</msg>
@@ -74,6 +77,7 @@
   <msg key="New_Type">새로운 유형:</msg>
   <msg key="No">아니오</msg>
   <msg key="No_Calendars">달력이 없음</msg>
+  <msg key="No_Items">항목 없음</msg>
   <msg key="no_keep_it">아니오, 보존하시오.</msg>
   <msg key="Note">주</msg>
   <msg key="of_the_month">월(月)의</msg>

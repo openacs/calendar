@@ -35,6 +35,7 @@
   <msg key="delete">cancella</msg>
   <msg key="Description">Descrizione</msg>
   <msg key="Details">Dettagli:</msg>
+  <msg key="developer_note_calendar_add">Nota per gli Sviluppatori: Il processo di creazione del calendario comporta i seguenti passi: &lt;ol&gt;  &lt;li&gt; Creare l'oggetto &amp;quote;calendario&amp;quot;, e modificare i permessi di default se necessario.&lt;li&gt; Seleziona gruppi e/o utenti che potranno vedere il calendario &lt;li&gt; Ae necessario, applicare i permessi specifici agli utenti o ai gruppi. &lt;/ol&gt;</msg>
   <msg key="Edit">Modifica</msg>
   <msg key="edit">modifica</msg>
   <msg key="End_Time">Ora finale</msg>
@@ -76,6 +77,7 @@
   <msg key="New_Type">Nuovo Tipo:</msg>
   <msg key="No">No</msg>
   <msg key="No_Calendars">Nessun Calendario</msg>
+  <msg key="No_Items">Nessun elemento</msg>
   <msg key="no_keep_it">no, tienilo</msg>
   <msg key="Note">Nota</msg>
   <msg key="of_the_month">del mese</msg>

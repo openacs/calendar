@@ -29,6 +29,7 @@
   <msg key="Date">Datum:</msg>
   <msg key="Date_1">Datum</msg>
   <msg key="day">Jeden</msg>
+  <msg key="day_rolling_period">Tagen</msg>
   <msg key="day_s">Tag(e)</msg>
   <msg key="Delete">Löschen</msg>
   <msg key="delete">Löschen</msg>
@@ -76,6 +77,7 @@
   <msg key="New_Type">Neue Eintragskategorie:</msg>
   <msg key="No">Nein</msg>
   <msg key="No_Calendars">Keine Kalender vorhanden</msg>
+  <msg key="No_Items">Keine Einträge vorhanden</msg>
   <msg key="no_keep_it">Nein, nicht löschen</msg>
   <msg key="Note">Hinweis</msg>
   <msg key="of_the_month">des Monats</msg>

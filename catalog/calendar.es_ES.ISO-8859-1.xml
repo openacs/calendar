@@ -29,14 +29,17 @@
   <msg key="Date">Fecha:</msg>
   <msg key="Date_1">Fecha</msg>
   <msg key="day">día</msg>
+  <msg key="day_rolling_period">período de rotación de día</msg>
   <msg key="day_s">día(s)</msg>
   <msg key="Delete">Borrar</msg>
   <msg key="delete">borrar</msg>
   <msg key="Description">Descripción</msg>
   <msg key="Details">Detalles:</msg>
+  <msg key="developer_note_calendar_add">Nota del desarrollador: El proceso de creación del Calendario incluye los siguientes pasos: &lt;ol&gt; &lt;li&gt; Crear el Calendario,y cambiar los permisos otorgados por defecto, si fuera necesario &lt;li&gt; Seleccionar grupos y/o usuarios que serán la audiencia del calendario &lt;li&gt; Aplicar si fuera necesario permisos al usuario/grupo.</msg>
   <msg key="Edit">Editar</msg>
   <msg key="edit">editar</msg>
   <msg key="End_Time">Fin</msg>
+  <msg key="Events_over_a">Eventos por arriba de</msg>
   <msg key="Friday">Viernes</msg>
   <msg key="from">de</msg>
   <msg key="Grant">Otorgar</msg>
@@ -74,6 +77,7 @@
   <msg key="New_Type">Categoría nueva:</msg>
   <msg key="No">No</msg>
   <msg key="No_Calendars">Ningún calendario</msg>
+  <msg key="No_Items">Sin items</msg>
   <msg key="no_keep_it">no, conservarlo</msg>
   <msg key="Note">Nota</msg>
   <msg key="of_the_month">del mes</msg>

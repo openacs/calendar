@@ -55,6 +55,7 @@
   <msg key="from">from</msg>
   <msg key="Grant">Grant</msg>
   <msg key="Grant_Permissions">Grant Permissions</msg>
+  <msg key="is_recurring">Item is recurring.</msg>
   <msg key="Item">Item</msg>
   <msg key="lt_Are_you_sure_you_want">Are you sure you want to delete this calendar. All the calendar items
       and all the permission that's associated with this calendar will be 

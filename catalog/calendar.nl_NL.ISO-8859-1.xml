@@ -29,14 +29,17 @@
   <msg key="Date">Datum:</msg>
   <msg key="Date_1">Datum</msg>
   <msg key="day">dag</msg>
+  <msg key="day_rolling_period">Dagrotatie-periode</msg>
   <msg key="day_s">dag(en)</msg>
   <msg key="Delete">Verwijderen</msg>
   <msg key="delete">Verwijderen</msg>
   <msg key="Description">Beschrijving</msg>
   <msg key="Details">Details:</msg>
+  <msg key="developer_note_calendar_add">Opmerking voor ontwikkelaars: Het proces van kalenderaanmaak omvat de volgende stappen: &lt;ol&gt;&lt;li&gt;Maak een kalenderobject aan en wijzig, indien nodig, de standaardrechten.&lt;li&gt;Kies groepen en/of gebruikers welke het publiek van de kalender gaan vormen&lt;li&gt;Pas groeps- en gebruikersrechten toe als gewenst.&lt;/ol&gt;</msg>
   <msg key="Edit">Wijzig</msg>
   <msg key="edit">wijzig</msg>
   <msg key="End_Time">Eindtijd</msg>
+  <msg key="Events_over_a">Gebeurtenissen over een</msg>
   <msg key="Friday">Vrijdag</msg>
   <msg key="from">van</msg>
   <msg key="Grant">Schenk</msg>
@@ -74,6 +77,7 @@
   <msg key="New_Type">Nieuw type:</msg>
   <msg key="No">Nee</msg>
   <msg key="No_Calendars">Geen kalenders</msg>
+  <msg key="No_Items">Geen elementen</msg>
   <msg key="no_keep_it">nee, behouden</msg>
   <msg key="Note">Bericht</msg>
   <msg key="of_the_month">van de maand</msg>

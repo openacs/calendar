@@ -29,14 +29,17 @@
   <msg key="Date">Dato:</msg>
   <msg key="Date_1">Dato</msg>
   <msg key="day">dag</msg>
+  <msg key="day_rolling_period">dags rullende periode</msg>
   <msg key="day_s">dag(e)</msg>
   <msg key="Delete">Slet</msg>
   <msg key="delete">slet</msg>
   <msg key="Description">Beskrivelse</msg>
   <msg key="Details">Detaljer:</msg>
+  <msg key="developer_note_calendar_add">Note til udviklere: Oprettelsen af en kalender indebærer følgende trin: &lt;ol&gt; &lt;li&gt;Opret kalenderobjektet og ændring af standardrettighederne hvis det er nødvendigt &lt;li&gt;Udvælg de grupper og/eller brugere som udgør kalenderens publikum &lt;li&gt;Anvend gruppe- og brugerspecifikke rettigheder hvis det er nødvendigt &lt;/ol&gt;</msg>
   <msg key="Edit">Redigér</msg>
   <msg key="edit">redigér</msg>
   <msg key="End_Time">Sluttidspunkt</msg>
+  <msg key="Events_over_a">Begivenheder over en</msg>
   <msg key="Friday">Fredag</msg>
   <msg key="from">fra</msg>
   <msg key="Grant">Tildel</msg>

@@ -323,4 +323,3 @@ ad_proc -public calendar_item_add_recurrence {
     }
 }
         
-        

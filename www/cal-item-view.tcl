@@ -58,6 +58,8 @@ set item_data(name) $name
 set item_data(description) $description
 set item_data(item_type) $item_type
 
+# no time?
+set item_data(no_time_p) [dt_no_time_p -start_time $start_time -end_time $end_time]
 
 ad_return_template 
 

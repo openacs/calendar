@@ -199,7 +199,7 @@ namespace eval calendar {
                     set item_details "$calendar_name - $item_type"
                 }
 
-                if {$pretty_start_date == "00:00 AM" && $pretty_end_date == "00:00 AM"} {
+                if {[dt_no_time_p -start_time $pretty_start_date -end_time $pretty_end_date} {
                     # Hack for no-time items
                     set item "$name ($item_details)"
                     set ns_set_pos "X"

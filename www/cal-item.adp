@@ -47,7 +47,7 @@
 
   <tr>
     <td></td><td valign=top align=left>
-      <INPUT CHECKED TYPE=radio name=no_time_p value=0>Use Hours Below &nbsp; &nbsp; <INPUT TYPE=radio name=no_time_p value=1>No Time
+      <INPUT <if @no_time_p@ eq 0>CHECKED</if> TYPE=radio name=no_time_p value=0>Use Hours Below &nbsp; &nbsp; <INPUT <if @no_time_p@ eq 1>CHECKED</if> TYPE=radio name=no_time_p value=1>No Time
     </td>
 </tr>
 <tr>

@@ -141,6 +141,8 @@ if { $action == "edit" } {
 
 }
 
+set no_time_p [dt_no_time_p -start_time $start_time -end_time $end_time]
+
 ad_return_template
 
 

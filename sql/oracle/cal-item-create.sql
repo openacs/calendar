@@ -53,9 +53,6 @@ create table cal_items (
                                 primary key,            
           -- a references to calendar
           -- Each cal_item is owned by one calendar
-
-        event_type
-          
         on_which_calendar       integer
                                 constraint cal_item_which_cal_fk
                                 references calendars

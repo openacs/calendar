@@ -20,6 +20,7 @@ ad_page_contract {
     {return_url ""}
     {item_type_id ""}
     {confirm_p 0}
+    {edit_all_p 0}
 } 
 
 # Fix up the return URL
@@ -79,7 +80,8 @@ set cal_item_id [cal_item_update $cal_item_id \
 	                         $end_datetime \
                                  $name \
 				 $description \
-				 $item_type_id]
+				 $item_type_id \
+                                 $edit_all_p]
 
 # set the proper rediret value to view and date
 set action "view"

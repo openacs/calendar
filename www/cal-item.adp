@@ -157,7 +157,9 @@ foreach one_item_type $cal_item_types {
   <if @recurrence_id@ nil>
   This event is a single, non-recurring event
   </if><else>
-  This event is recurring. <a href=cal-item-recurrence?cal_item_id=@cal_item_id@>Find out more</a>.
+  This event is <b>repeated</b>:<br>
+<input type="radio" name="edit_all_p" value="1" CHECKED> Edit ALL instances of this event<br>
+<input type="radio" name="edit_all_p" value="0"> Edit only THIS instance<p>
   </else>
   </td>
   </tr>
@@ -176,7 +178,7 @@ foreach one_item_type $cal_item_types {
 
    <if @delete_p@ eq 1> 
       <if @action@ eq edit or @action@ eq delete>       
-            <a href=cal-item-edit?action=delete&cal_item_id=@cal_item_id@&return_url=@return_url@>Delete <if @recurrence_id@ not nil>(this instance only)</if></a>
+            <a href=cal-item-edit?action=delete&cal_item_id=@cal_item_id@&return_url=@return_url@>Delete</if></a>
       </if>
    </if>
    </td>

@@ -134,5 +134,15 @@
       </querytext>
 </fullquery>
 
+<fullquery name="cal_item_edit_recurrence.recurrence_timespan_update">
+<querytext>
+select
+  acs_event__recurrence_timespan_edit (
+    :event_id,
+    :start_date,
+    :end_date
+  )
+</querytext>
+</fullquery>
  
 </queryset>

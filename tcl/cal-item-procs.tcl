@@ -212,6 +212,7 @@ ad_proc cal_item_update { cal_item_id
                           name
                           description
 {item_type_id ""}
+{edit_all_p 0}
 } {
 
     updating  a new cal_item
@@ -219,6 +220,22 @@ ad_proc cal_item_update { cal_item_id
 
 } {
     
+    if {$edit_all_p} {
+        set recurrence_id [db_string select_recurrence_id {}]
+
+        # If the recurrence id is NULL, then we stop here and just do the normal update
+        if {![empty_string_p $recurrence_id]} {
+            cal_item_edit_recurrence -event_id $cal_item_id \
+                    -start_date $start_date \
+                    -end_date $end_date \
+                    -name $name \
+                    -description $description \
+                    -item_type_id $item_type_id
+
+            return
+        }
+    }
+
     # set the date_format
     set date_format "YYYY-MM-DD HH24:MI"
 
@@ -284,6 +301,33 @@ ad_proc -public cal_item_delete_recurrence {
     "    
 }
 
+
+ad_proc -public cal_item_edit_recurrence {
+    {-event_id:required}
+    {-start_date:required}
+    {-end_date:required}
+    {-name:required}
+    {-description:required}
+    {-item_type_id ""}
+} {
+    edit a recurrence
+} {
+    set recurrence_id [db_string select_recurrence_id {}]
+    
+    db_transaction {
+        # Update the recurrence start and end dates
+        db_exec_plsql recurrence_timespan_update {}
+
+        # Update the activities table
+        db_dml recurrence_activities_update {}
+
+        # Update the events table
+        db_dml recurrence_events_update {}
+        
+        # Update the cal_items table
+        db_dml recurrence_items_update {}
+    }
+}
 
 ad_proc -public calendar_item_add_recurrence {
     {-cal_item_id:required}

@@ -47,7 +47,7 @@ namespace eval calendar {
 
             # In case we need to dispatch to a different URL (ben)
             if {![empty_string_p $url_stub_callback]} {
-                set url_stub [eval $url_stub_callback $calendar_id]
+                set url_stub [$url_stub_callback $calendar_id]
             }
 
             db_foreach select_monthly_items {} {
@@ -119,7 +119,7 @@ namespace eval calendar {
 
             # In case we need to dispatch to a different URL (ben)
             if {![empty_string_p $url_stub_callback]} {
-                set url_stub [eval $url_stub_callback $calendar_id]
+                set url_stub [$url_stub_callback $calendar_id]
             }
 
             db_foreach select_week_items {} {
@@ -206,7 +206,7 @@ namespace eval calendar {
 
             # In case we need to dispatch to a different URL (ben)
             if {![empty_string_p $url_stub_callback]} {
-                set url_stub [eval $url_stub_callback $calendar_id]
+                set url_stub [$url_stub_callback $calendar_id]
             }
 
             db_foreach select_day_items {} {
@@ -267,12 +267,67 @@ namespace eval calendar {
         
     }
 
-   ad_proc -public list_display {
-       {-date ""}
-       {-calendar_id_list ""}
-       {-item_template {$item}}
-       {-url_stub_callback ""}
-       {-show_calendar_name_p 1}
+    ad_proc -public list_display {
+        {-start_date ""}
+        {-end_date ""}
+        {-calendar_id_list ""}
+        {-item_template {$item}}
+        {-url_template {?sort_by=$sort_by}}
+        {-url_stub_callback ""}
+        {-show_calendar_name_p 1}
+        {-sort_by "item_type"}
+    } {
+        create a list display of items
+    } {
+        # If we were given no calendars, we assume we display the 
+        # private calendar. It makes no sense for this to be called with
+        # no data whatsoever.
+        if {[empty_string_p $calendar_id_list]} {
+            set calendar_id_list [list [calendar_have_private_p -return_id 1 [ad_get_user_id]]]
+        }
+        
+        set items [ns_set create]
+        
+        # Loop through the calendars
+        foreach calendar_id $calendar_id_list {
+            set calendar_name [calendar_get_name $calendar_id]
+            
+            # In case we need to dispatch to a different URL (ben)
+            if {![empty_string_p $url_stub_callback]} {
+                set url_stub [$url_stub_callback $calendar_id]
+            }
+            
+            db_foreach select_list_items {} {
+                set item "$pretty_start_date - $pretty_end_date: $name"
+                
+                if {$show_calendar_name_p} {
+                    append item " ($calendar_name)"
+                }
+                
+                set item [subst $item_template]
+                
+                ns_set put $items $start_hour [list $start_date $end_date $item_type $item]
+            }
+            
+        }
+
+        # Now we have the items in a big ns_set
+        # We call the widget maker
+        return [dt_widget_list -order_by $sort_by \
+                -item_template $item_template \
+                -calendar_details $items \
+                -start_date $start_date \
+                -end_date $end_date \
+                -url_template $url_template]
+        
+    }
+
+    ad_proc -public list_display {
+        {-date ""}
+        {-calendar_id_list ""}
+        {-item_template {$item}}
+        {-url_stub_callback ""}
+        {-show_calendar_name_p 1}
    } {
        Creates a list widget
    } {
@@ -295,11 +350,10 @@ namespace eval calendar {
        # Loop through the calendars
        foreach calendar_id $calendar_id_list {
            set calendar_name [calendar_get_name $calendar_id]
-           # ns_log Notice "bma: one calendar $calendar_name"
 
            # In case we need to dispatch to a different URL (ben)
            if {![empty_string_p $url_stub_callback]} {
-               set url_stub [eval $url_stub_callback $calendar_id]
+               set url_stub [$url_stub_callback $calendar_id]
            }
 
            db_foreach select_day_items {} {

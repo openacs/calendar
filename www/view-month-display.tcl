@@ -134,7 +134,7 @@ db_foreach select_monthly_items {} {
         # Cache the stuff
         if {![info exists url_stubs($calendar_id)]} {
             set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
-		}
+	}
         
         set url_stub $url_stubs($calendar_id)
     }

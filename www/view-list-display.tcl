@@ -127,14 +127,21 @@ db_foreach select_list_items {} {
         set today ""
     }
 
+    # reset url stub
+    set url_stub ""
+    
     # In case we need to dispatch to a different URL (ben)
     if {![empty_string_p $url_stub_callback]} {
-        set url_stub [$url_stub_callback $calendar_id]
+        # Cache the stuff
+        if {![info exists url_stubs($calendar_id)]} {
+            set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
+	}
+        set url_stub $url_stubs($calendar_id)
     }
     
     set item "$name"
-    set item [subst $item_template]
-                
-    multirow append calendar_items $calendar_name $item_id $name $item_type $pretty_weekday $pretty_start_date $pretty_end_date $pretty_start_time $pretty_end_time $flip $today $item
+    set full_item "[subst $item_template]"
+
+    multirow append calendar_items $calendar_name $item_id $name $item_type $pretty_weekday $pretty_start_date $pretty_end_date $pretty_start_time $pretty_end_time $flip $today $full_item
 
 }

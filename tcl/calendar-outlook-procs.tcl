@@ -61,7 +61,7 @@ namespace eval calendar::outlook {
         The client timezone helps to make things right. 
         It is the number offset from GMT.
     } {
-        calendar::item::get -cal_item_id $cal_item_id -array cal_item
+        calendar::item::get -cal_item_id $cal_item_id -array cal_item -normalize_system_time 1
         # If necessary, select recurrence information
 
         # Here we have some fields
@@ -73,7 +73,7 @@ namespace eval calendar::outlook {
         set DTEND [ics_timestamp_format -timestamp $cal_item(end_date_ansi)]
 
         # Put it together
-        set ics_event "BEGIN:VCALENDAR\r\nPRODID:-//OpenACS//OpenACS 4.5 MIMEDIR//EN\r\nVERSION:2.0\r\nMETHOD:PUBLISH\r\nBEGIN:VEVENT\r\nDTSTART:$DTSTART\r\nDTEND:$DTEND\r\n"
+        set ics_event "BEGIN:VCALENDAR\r\nPRODID:-//OpenACS//OpenACS 5.0 MIMEDIR//EN\r\nVERSION:2.0\r\nMETHOD:PUBLISH\r\nBEGIN:VEVENT\r\nDTSTART:$DTSTART\r\nDTEND:$DTEND\r\n"
 
         # Recurrence stuff
         if {![empty_string_p $cal_item(recurrence_id)] && $all_occurences_p} {
@@ -129,7 +129,6 @@ namespace eval calendar::outlook {
         append ics_event "LOCATION:Not Listed\r\nTRANSP:OPAQUE\r\nSEQUENCE:0\r\nUID:$cal_item_id\r\nDTSTAMP:$CREATION_DATE\r\nDESCRIPTION:$DESCRIPTION\r\nSUMMARY:$TITLE\r\nPRIORITY:5\r\nCLASS:PUBLIC\r\n"
 
         append ics_event "END:VEVENT\r\nEND:VCALENDAR\r\n"
-
         return $ics_event
     }
         

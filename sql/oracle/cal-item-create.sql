@@ -7,10 +7,6 @@
 
 
 
----------------------------------------------------------- 
---  cal_item_ojbect 
-----------------------------------------------------------
-
 begin
 
         acs_object_type.create_type (
@@ -113,16 +109,6 @@ as
                 recurrence_id           in acs_events.recurrence_id%TYPE
         );
         
-          -- functions to return the name of the cal_item
-        function name (
-                cal_item_id             in cal_items.cal_item_id%TYPE   
-        ) return acs_activities.name%TYPE;
-
-          -- functions to return the calendar that owns the cal_item
-        function on_which_calendar (
-                cal_item_id             in cal_items.cal_item_id%TYPE   
-        ) return calendars.calendar_id%TYPE;
-
 end cal_item;
 /
 show errors;
@@ -231,47 +217,6 @@ as
 
                 recurrence.del(recurrence_id);
         end delete_all;
-                
-          -- functions to return the name of the cal_item
-        function name (
-                cal_item_id             in cal_items.cal_item_id%TYPE   
-        ) 
-        return acs_activities.name%TYPE
-
-        is
-                v_name                  acs_activities.name%TYPE;
-        begin
-                select  name 
-                into    v_name
-                from    acs_activities
-                where   activity_id = 
-                        (
-                        select  activity_id
-                        from    acs_events
-                        where   event_id = cal_item.name.cal_item_id
-                        );
-                
-                return v_name;
-        end name;
-                 
-
-          -- functions to return the calendar that owns the cal_item
-        function on_which_calendar (
-                cal_item_id             in cal_items.cal_item_id%TYPE   
-        ) 
-        return calendars.calendar_id%TYPE
-
-        is
-                v_calendar_id           calendars.calendar_id%TYPE;
-        begin
-                select  on_which_calendar
-                into    v_calendar_id
-                from    cal_items
-                where   cal_item_id = cal_item.on_which_calendar.cal_item_id;
-        
-                return  v_calendar_id;
-        end on_which_calendar;
-
 end cal_item;
 /
 show errors;

@@ -35,6 +35,17 @@
       </querytext>
 </fullquery>
 
+<fullquery name="calendar::one_week_display.select_weekday_info">
+<querytext>
+        select   to_char(to_date(:current_date, 'yyyy-mm-dd'), 'D') 
+        as       day_of_the_week,
+        to_char(next_day(to_date(:current_date, 'yyyy-mm-dd')-7, 'SUNDAY')) 
+        as       sunday_of_the_week,
+        to_char(next_day(to_date(:current_date, 'yyyy-mm-dd'), 'Saturday')) 
+        as       saturday_of_the_week
+        from     dual
+</querytext>
+</fullquery>
 
 <fullquery name="calendar::one_week_display.select_week_items">
 <querytext>

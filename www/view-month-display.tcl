@@ -1,9 +1,18 @@
 # Show a calendar month widget
+#
+# Parameters:
+#
+# date (YYYY-MM-DD) - optional
 
 if {![info exists date] || [empty_string_p $date]} {
-    set date [dt_systime]
+    # Default to todays date in the users (the connection) timezone
+    set server_now_time [dt_systime]
+    set user_now_time [lc_time_system_to_conn $server_now_time]
+    set date [lc_time_fmt $user_now_time "%x"]
 }
 dt_get_info $date
+
+set ansi_date_format "YYYY-MM-DD HH24:MI:SS"
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
@@ -16,6 +25,11 @@ foreach weekday [calendar::get_weekday_list] {
     multirow append weekday_names $weekday
 }
 
+# Get the beginning and end of the month in the system timezone
+set first_date_of_month [dt_julian_to_ansi $first_julian_date_of_month]
+set first_date_of_month_system [lc_time_conn_to_system "$first_date_of_month 00:00:00"]
+set last_date_in_month [dt_julian_to_ansi $last_julian_date_in_month]
+set last_date_in_month_system [lc_time_conn_to_system "$last_date_in_month 23:59:59"]
 
 calendar::i18n_display_parameters
 
@@ -41,6 +55,16 @@ for {set current_day $first_julian_date} {$current_day < $first_julian_date_of_m
 set current_day $first_julian_date_of_month
 
 db_foreach select_monthly_items {} {
+
+    # Convert from system timezone to user timezone
+    set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
+    set ansi_end_date [lc_time_system_to_conn $ansi_end_date]
+    
+    set ansi_start_time [lc_time_fmt $ansi_start_date "%X"]
+    set ansi_end_time [lc_time_fmt $ansi_end_date "%X"]
+
+    set julian_start_date [dt_ansi_to_julian_single_arg $ansi_start_date]
+
     if {$current_day < $julian_start_date} {
         for {} {$current_day < $julian_start_date} {incr current_day} {
             array set display_information [calendar::get_month_multirow_information -current_day $current_day -today_julian_date $today_julian_date -first_julian_date_of_month $first_julian_date_of_month]

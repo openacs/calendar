@@ -1,12 +1,23 @@
 # Show calendar items per one day.
+#
+# Parameters:
+#
+# date (YYYY-MM-DD) - optional
 
-# This needs to be internationalized! -- Dirk
-set date_format "YYYY-MM-DD HH24:MI"
+set ansi_date_format "YYYY-MM-DD HH24:MI:SS"
 
 if {[empty_string_p $date]} {
-    set date [dt_sysdate]
+    # Default to todays date in the users (the connection) timezone
+    set server_now_time [dt_systime]
+    set user_now_time [lc_time_system_to_conn $server_now_time]
+    set date [lc_time_fmt $user_now_time "%x"]
 }
+
 set current_date $date
+
+set current_date_system "$current_date 00:00:00"
+#set current_date_system [lc_time_conn_to_system "$date 00:00:00"]
+
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
@@ -25,8 +36,16 @@ for {set i 0 } { $i < 24 } { incr i } {
 
 set day_items_per_hour {}
 db_foreach select_day_items_with_time {} {
-    set start_hour [string trimleft $start_hour "0"]
-    set end_hour [string trimleft $end_hour "0"]
+    # Convert to user's timezone
+    set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
+    set ansi_end_date [lc_time_system_to_conn $ansi_end_date]
+
+    set start_hour [lc_time_fmt $ansi_start_date "%H"]
+    set end_hour [lc_time_fmt $ansi_end_date "%H"]
+
+    set start_time [lc_time_fmt $ansi_start_date "%H:%M"]
+    set end_time [lc_time_fmt $ansi_end_date "%H:%M"]
+
     for { set item_current_hour $start_hour } { $item_current_hour < $end_hour } { incr item_current_hour } {
         if {$start_hour == $item_current_hour} {
             lappend day_items_per_hour [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]

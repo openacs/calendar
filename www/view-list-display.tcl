@@ -62,8 +62,8 @@ db_foreach select_list_items {} {
     set pretty_end_time [lc_time_fmt $ansi_end_date "%X"]
     set pretty_today [lc_time_fmt $ansi_today "%x"]
 
-    set start_date_seconds [clock scan $pretty_start_date]
-    set today_seconds [clock scan $pretty_today]
+    set start_date_seconds [clock scan [lc_time_fmt $ansi_start_date "%Y-%m-%d"]]
+    set today_seconds [clock scan [lc_time_fmt $ansi_today "%Y-%m-%d"]]
 
     # Adjust the display of no-time items
     if {[dt_no_time_p -start_time $pretty_start_date -end_time $pretty_end_date]} {

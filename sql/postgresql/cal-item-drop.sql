@@ -32,17 +32,9 @@ drop function cal_item__new (
 
 drop function cal_item__delete (integer);
 
-drop function cal_item__name (integer);
-
-drop function cal_item__on_which_calendar (integer);
-
 drop table cal_items;
 --drop objects
 delete from acs_objects where object_type='cal_item';
-
---drop table
---drop table cal_items;
-
 
   -- drop attributes and acs_object_type
 begin;
@@ -58,22 +50,4 @@ begin;
            'f'
         );  
 end;
-
-
---  -- drop attributes and acs_object_type
---begin
---  acs_attribute.drop_attribute ('cal_item','on_which_calendar');
---  acs_object_type.drop_type ('cal_item');
---end;
---/
---show errors
---
---
---  -- drop package         
---drop package cal_item;
---
---
---  -- drop table  
---drop table cal_items;
-
 

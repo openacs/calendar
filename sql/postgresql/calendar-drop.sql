@@ -149,40 +149,6 @@ DROP FUNCTION calendar__delete(
        integer            
 );
 
-DROP FUNCTION calendar__name(
-	integer
-);
-
-DROP FUNCTION calendar__private_p(
-	integer
-);
-
-DROP FUNCTION calendar__readable_p(
-	integer,
-	integer
-);
-
-DROP FUNCTION calendar__show_p (
-	integer,
-	integer
-);
-
-DROP FUNCTION calendar__month_name(
-	timestamptz
-);
-
-DROP FUNCTION calendar__next_month(
-	timestamptz
-);
-
-DROP FUNCTION  calendar__prev_month(
-	timestamptz
-);
-
-DROP FUNCTION calendar__num_day_in_month(
-	timestamptz
-);
-
 DROP FUNCTION calendar__first_displayed_date(
 	timestamptz
 );
@@ -191,8 +157,7 @@ DROP FUNCTION calendar__last_displayed_date(
 	timestamptz
 );
 
-  -- drop table  
---drop table calendars;
+
 
 
 

@@ -11,79 +11,48 @@
       <p>
       Maintainer: <a href="mailto:openacs-calendar@dirkgomez.de">Dirk
       Gomez</a>
-      <p>
-      I took over calendar package maintainership in May 2003 and am currently
-      moving html generation into the adp pages. CVS head's Calendar is
-      currently <strong>not</strong> ready for production use, revert to the
-      "before-noquote" version if you need to have calendar up and running
-      now. 
-
-      <p>Here's the wish list of things - in no particular order:
-
-      <ul>
-      <li>Proper I18N:
-        <ul>
-        <li>Choose when a week starts
-        <li>Day and month names
-        <li>Time and date format
-        </ul>
-      <li>Notifications
-      <li>Reminders
-      <li>Multi-day events
-      <li>iCal format compatible. Ideally, import/export to
-      Outlook/iCalendar/etc.. via iCal format (by Jade)
-      <li>Ability to map any sort of date information in a database to the
-      calendar, this means tickets, bugs, etc. perhaps via a service contract
-      (by Jade)
-
-      <li>There should be any easy UI for specifying what is shown. Both the
-      user and the admin should be able to select these things (the admin sets
-      the range of what is possible, the user can select from those choices)
-      (by Jade)
-
-      <li>Events should be able to span more than a day. Ideally, the UI for
-      this should look good. (by Jade)
-
-      <li>An ability to be able to add data via the calendar as well. Anything
-      that implements the service contract should allow you +to add
-      information on that date as well. For example, add a ticket due that
-      day, or add an event for that day, etc.. (by Jade)
-
-      <li>The calendar needs to be printable (at least for where I work)
-
-      </ul>
+ 
 
       <p>
-      Data Model suggestions.
+      The project plan for calendar can be found at <a href="
+      http://openacs.org/projects/openacs/packages/calendar/">http://openacs.org/projects/openacs/packages/calendar/</a>
 
-      <p>
-      Don:<br>
-Calendar items should map arbitrary objects (perhaps only content items) to a 
-given calendar and given acs-events.  We shouldn't have to derive special 
-types from cal item type in order to attach it to a calendar (nor should we 
-have to duplicate content to attach it to two calendars as we do now)
+    <h2>Code Contributors</h2>
 
-If we restricted the mapping to content items (i.e. calendar info some sort of 
-content type) we could use the CR's ability to map a template to a given 
-content type or item to make it possible for the calendar package to display 
-calendar item details using that facility, giving the package adding 
-something to the calendar control over how it is displayed.  Much more 
-general.
-    
-
-    <p>Thanks to 
     <ul>
-    <li>Raad Al-Rawi from Cambridge University for calendar.css and all of the
-    layout.
+
+    <li>Ben Adida - partial refactoring of the original OpenACS 4.X calendar,
+    integration into .LRN
+
+    <li>Gary Jin and W. Scott Meeks from late ArsDigita - original OpenACS 4.X
+    calendar
+
+    <li>Raad Al-Rawi from Cambridge University for calendar.css and a lot of
+    the layout.
+
     </ul>
 
+    <h2>Change Log</h2>
+    <h3>HEAD</h3>
+    <ul>
+      <li>Notifications
+      <li>Removed unused or duplicated code and database queries.
+    </ul>
 
-      <p>This is old stuff and will probably disappear in the near
-      future. (June-2003)
+    <h3>OpenACS 5.0</h3>
+    <ul>
+      <li>Separation of html and tcl, noquote 
+      <li>Proper use of OpenACS permissioning
+      <li>A lot of unused code was removed.
+    </ul>      
+  
+
+    <h3>Old Docs</h3>
+
 
       <ul>
         <li><a href="requirements.html">Original Requirements Document</a>
-        </li> <li><a href="permissions.html">permissions</a></li> 
+        </li>
         </ul>
 
 
@@ -91,7 +60,7 @@ general.
     <address><a href="mailto:openacs-calendar@dirkgomez.de">Dirk Gomez</a></address>
 <!-- Created: Mon Aug 13 14:17:34 EDT 2001 -->
 <!-- hhmts start -->
-Last modified: Fri Sep 13 08:44:30 EDT 2002
+Last modified: Thu Jan 22 22:50:32 CET 2004
 <!-- hhmts end -->
   </body>
 </html>

@@ -29,7 +29,6 @@ ad_proc calendar_make_datetime { event_date
     # extract from event_time
     set hours [lindex $event_time 3]
     set minutes [lindex $event_time 1]
-    
 
     if {$hours < 10} {
 	set hours "0$hours"
@@ -52,7 +51,14 @@ ad_proc calendar_make_date { event_date } {
     set year   [lindex $event_date 5]
     set day    [lindex $event_date 7]
     set month  [lindex $event_date 9]
+    
+    if {$month < 10} {
+	set month "0$month"
+    }
 
+    if {$day < 10} {
+	set day "0$day"
+    }
     return "$year-$month-$day"
 
 }

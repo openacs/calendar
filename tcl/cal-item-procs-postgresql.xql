@@ -60,8 +60,8 @@
 <fullquery name="cal_item_create.insert_timespan">      
       <querytext>
 	select timespan__new (    
-					to_date(:start_date,:date_format),
-					to_date(:end_date,:date_format)
+					timestamp(:start_date),
+					timestamp(:end_date)
 	) 
 
       </querytext>

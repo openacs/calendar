@@ -16,28 +16,23 @@
 
 
 <script language="JavaScript">
-    function TimePChanged() {
+    function TimePChanged(elm) {
       var form_name = "cal_item";
-      var element_name = "time_p";
 
+      if (elm == null) return;
       if (document.forms == null) return;
       if (document.forms[form_name] == null) return;
-      if (document.forms[form_name].elements[element_name] == null) return;
 
-      if (document.forms[form_name].elements[element_name][0].checked) {
-          document.forms[form_name].elements["start_time.short_hours"].disabled = true;
-          document.forms[form_name].elements["start_time.minutes"].disabled = true;
-          document.forms[form_name].elements["start_time.ampm"].disabled = true;
-          document.forms[form_name].elements["end_time.short_hours"].disabled = true;
-          document.forms[form_name].elements["end_time.minutes"].disabled = true;
-          document.forms[form_name].elements["end_time.ampm"].disabled = true;
+      if (elm.value == 0) {
+          <multiple name="time_format_elms">
+            document.forms[form_name].elements["start_time.@time_format_elms.name@"].disabled = true;
+            document.forms[form_name].elements["end_time.@time_format_elms.name@"].disabled = true;
+          </multiple>
       } else {
-          document.forms[form_name].elements["start_time.short_hours"].disabled = false;
-          document.forms[form_name].elements["start_time.minutes"].disabled = false;
-          document.forms[form_name].elements["start_time.ampm"].disabled = false;
-          document.forms[form_name].elements["end_time.short_hours"].disabled = false;
-          document.forms[form_name].elements["end_time.minutes"].disabled = false;
-          document.forms[form_name].elements["end_time.ampm"].disabled = false;
+          <multiple name="time_format_elms">
+            document.forms[form_name].elements["start_time.@time_format_elms.name@"].disabled = false;
+            document.forms[form_name].elements["end_time.@time_format_elms.name@"].disabled = false;
+          </multiple>
       }
   }
 </script>

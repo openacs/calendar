@@ -76,7 +76,7 @@ ad_form -name cal_item  -form {
 
     {time_p:text(radio)     
         {label "&nbsp;"}
-        {html {onchange "javascript:TimePChanged();"}} 
+        {html {onClick "javascript:TimePChanged(this);"}} 
         {options {{"[_ calendar.All_Day_Event]" 0}
                   {"[_ calendar.Use_Hours_Below]" 1} }}
     }
@@ -104,6 +104,35 @@ ad_form -name cal_item  -form {
 
     {calendar_id:text(hidden) {value $calendar_id}}
 }
+
+
+#----------------------------------------------------------------------
+# LARS: Hack to make enable/disable time widgets work with i18n
+#----------------------------------------------------------------------
+
+set format_string [lc_get formbuilder_time_format]
+
+multirow create time_format_elms name
+
+while { ![empty_string_p $format_string] } {
+    # Snip off the next token
+    regexp {([^/\-.: ]*)([/\-.: ]*)(.*)} \
+          $format_string match word sep format_string
+    # Extract the trailing "t", if any
+    regexp -nocase $template::util::date::token_exp $word \
+          match token type
+
+    # Output the widget
+    set fragment_def $template::util::date::fragment_widgets([string toupper $token])
+
+    multirow append time_format_elms [lindex $fragment_def 1]
+}
+
+
+
+
+
+
 
 set cal_item_types [calendar::get_item_types -calendar_id $calendar_id]
 

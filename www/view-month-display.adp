@@ -48,7 +48,7 @@
 
                   <a
                   href="@base_url@cal-item-new?date=@days_of_a_month.ansi_start_date@&start_time=&end_time=">
-                  <img border="0" align="right" height="8" width="8" src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#"></a>
+                  <img border="0" align="right" height="7" width="7" src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#"></a>
                   <a href="?view=day&date=@days_of_a_month.ansi_start_date@@page_num@">@days_of_a_month.day_number@</a>
 
                   <group column="ansi_start_date">
@@ -74,3 +74,7 @@
     </td>
   </tr>
 </table>
+
+
+
+

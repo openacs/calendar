@@ -78,7 +78,7 @@
     </tr>
     <tr>
       <td class="cal-spacer" colspan="7">
-        <img border="0" src="spacer.gif">
+        <img border="0" src="/resources/acs-subsite/spacer.gif">
       </td>
     </tr>
 

@@ -13,7 +13,7 @@
     </table>
   </td>
   </tr>
-  <table>
+  <table width="100%">
   <tr>
   <td>
     <tr>
@@ -60,7 +60,7 @@
                   </if>
                   <else>
                     <if @max_items_per_hour@ eq 0>
-                      <td class="cal-day-event">&nbsp;</td>
+                      <td width="80%" class="cal-day-event">&nbsp;</td>
                     </if>
                   </else>
                 </else>

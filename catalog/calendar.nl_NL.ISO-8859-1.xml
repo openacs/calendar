@@ -1,31 +1,31 @@
-<?xml version="1.0"?>
-<message_catalog package_key="calendar" package_version="1.0" locale="nl_NL" charset="ISO-8859-1">
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<message_catalog package_key="calendar" package_version="2.0d1" locale="nl_NL" charset="ISO-8859-1">
 
-  <msg key="_You_may_choose_to">. De keuze is om:</msg>
+  <msg key="_You_may_choose_to">. Je kunt nu kiezen:</msg>
   <msg key="Add">Toevoegen</msg>
   <msg key="add">toevoegen</msg>
-  <msg key="Add_a_new_Audience">Toevoegen nieuw publiek</msg>
-  <msg key="add_an_event">Toevoegen Gebeurtenis</msg>
-  <msg key="Add_Item">Toevoegen Item</msg>
-  <msg key="Add_Recurrence">Toevoegen Herhaling</msg>
+  <msg key="Add_a_new_Audience">Nieuw publiek toevoegen</msg>
+  <msg key="add_an_event">Gebeurtenis toevoegen</msg>
+  <msg key="Add_Item">Element toevoegen</msg>
+  <msg key="Add_Recurrence">Herhaling toevoegen</msg>
   <msg key="All_Day_Event">Gebeurtenis op iedere dag</msg>
   <msg key="all_events">alle gebeurtenissen</msg>
-  <msg key="and_Time">en Tijd</msg>
+  <msg key="and_Time">en tijd</msg>
   <msg key="Attachments">Bijlagen:</msg>
-  <msg key="Audiences_for_item">Toehoorder Item</msg>
+  <msg key="Audiences_for_item">Publiek voor element %cal_item_name%</msg>
   <msg key="Calendar">Kalender</msg>
-  <msg key="Calendar_Add_Item">Kalender: Toevoegen Item</msg>
-  <msg key="Calendar_Edit_Item">Kalender: Wijzig Item</msg>
-  <msg key="Calendar_Item">Kalenderitem</msg>
-  <msg key="Calendar_Item_Delete">Verwijder Kalenderitem</msg>
-  <msg key="Calendar_Item_Types">Kalenderitem-types</msg>
+  <msg key="Calendar_Add_Item">Kalender: Element toevoegen</msg>
+  <msg key="Calendar_Edit_Item">Kalender: Element wijzigen</msg>
+  <msg key="Calendar_Item">Kalenderelement</msg>
+  <msg key="Calendar_Item_Delete">Verwijder kalenderelement</msg>
+  <msg key="Calendar_Item_Types">Kalenderelementtypen</msg>
   <msg key="Calendar_Name">Kalendernaam</msg>
-  <msg key="Calendar_Permissions">&quot;Kalender Permissies&quot;</msg>
-  <msg key="Calendar_Permissions_1">Kalender Permissies</msg>
-  <msg key="Calendar_Preferences">&quot;Kalender Voorkeuren&quot;</msg>
+  <msg key="Calendar_Permissions">&quot;Kalenderrechten&quot;</msg>
+  <msg key="Calendar_Permissions_1">Kalenderrechten</msg>
+  <msg key="Calendar_Preferences">&quot;Kalendervoorkeuren&quot;</msg>
   <msg key="Calendars">Kalenders</msg>
   <msg key="Choose">Kies</msg>
-  <msg key="Current_Permissions">Huidige Permissies</msg>
+  <msg key="Current_Permissions">Huidige rechten</msg>
   <msg key="Date">Datum:</msg>
   <msg key="Date_1">Datum</msg>
   <msg key="day">dag</msg>
@@ -34,23 +34,28 @@
   <msg key="delete">Verwijderen</msg>
   <msg key="Description">Beschrijving</msg>
   <msg key="Details">Details:</msg>
+  <msg key="developer_note_calendar_add">Mededeling ontwikkelteam: Het kalenderaanmaakproces omvat de volgende stappen:
+&lt;OL&gt;&lt;LI&gt;Maak een kalenderobject aan en verander indien nodig de standaardrechten
+&lt;LI&gt;Selecteer groepen en/of gebruikers welke naar het publiek van de kalender gaan
+&lt;LI&gt;Pas groeps- en gebruikersrechten toe naar wens
+&lt;/OL&gt;</msg>
   <msg key="Edit">Wijzig</msg>
   <msg key="edit">wijzig</msg>
   <msg key="End_Time">Eindtijd</msg>
-  <msg key="Friday">Vrijdag</msg>
+  <msg key="Friday">vrijdag</msg>
   <msg key="from">van</msg>
-  <msg key="Grant">Schenk</msg>
-  <msg key="Grant_Permissions">Schenk Permissies</msg>
+  <msg key="Grant">Toekennen</msg>
+  <msg key="Grant_Permissions">Rechten toekennen</msg>
   <msg key="Item">Item</msg>
   <msg key="lt_Are_you_sure_you_want">Weet u zeker dat u deze kalender wilt verwijderen? Alle kalenderitems en alle permissies die aan deze kalender zijn gebonden zullen dan ook worden verwijderd. </msg>
   <msg key="lt_Are_you_sure_you_want_1">weet u zeker dat u deze gebeurtenis wilt verwijderen?</msg>
-  <msg key="lt_Audiences_for_calenda">Publiek voor Kalender</msg>
-  <msg key="lt_Calendar_Administrati">Beheer Kalender</msg>
+  <msg key="lt_Audiences_for_calenda">Publiek voor kalender</msg>
+  <msg key="lt_Calendar_Administrati">Kalenderbeheer</msg>
   <msg key="lt_Calendar_Administrati_1">Beheer kalender van gebruiker</msg>
-  <msg key="lt_Calendar_Choose_Calen">Kalender: Kies Kalender</msg>
+  <msg key="lt_Calendar_Choose_Calen">Kalender: Kies kalender</msg>
   <msg key="lt_Calendar_detail_listi">Kalender detail: alle informatie over de persoonlijke kalender</msg>
   <msg key="lt_Calendar_Item_Adminis">Beheer Kalenderitem</msg>
-  <msg key="lt_Calendar_Item_Permiss">&quot;Kalenderitem Permissies&quot;</msg>
+  <msg key="lt_Calendar_Item_Permiss">&quot;Kalenderelement Permissies&quot;</msg>
   <msg key="lt_Calendars_Repeating_E">Kalenders: Herhaalde Gebeurtenis</msg>
   <msg key="lt_Create_a_new_calendar">Aanmaken nieuwe kalender</msg>
   <msg key="lt_delete_all_occurrence">verwijder alle voorkomende gevallen</msg>
@@ -71,7 +76,7 @@
   <msg key="lt_You_can_manage_the_fo">De volgende kalenders kunnen worden beheerd</msg>
   <msg key="lt_You_have_no_party_wid">Er zijn geen algemene kalenders</msg>
   <msg key="Monday">Maandag</msg>
-  <msg key="New_Type">Nieuw Type:</msg>
+  <msg key="New_Type">Nieuw type:</msg>
   <msg key="No">Nee</msg>
   <msg key="No_Calendars">Geen Kalenders</msg>
   <msg key="no_keep_it">nee, behouden</msg>
@@ -87,13 +92,13 @@
   <msg key="Repeat_every">Herhaal elke</msg>
   <msg key="revoke">intrekken</msg>
   <msg key="same">zelfde</msg>
-  <msg key="Saturday">Zaterdag</msg>
-  <msg key="Select_Calendars">Selecteer Kalenders</msg>
+  <msg key="Saturday">zaterdag</msg>
+  <msg key="Select_Calendars">Kalenders kiezen</msg>
   <msg key="Start_Time">Begintijd</msg>
   <msg key="Submit_query">Vraag indienen</msg>
-  <msg key="Sunday">Zondag</msg>
+  <msg key="Sunday">zondag</msg>
   <msg key="sync_with_Outlook">synchroniseer met Outlook</msg>
-  <msg key="Thursday">Donderdag</msg>
+  <msg key="Thursday">donderdag</msg>
   <msg key="Time">Tijd:</msg>
   <msg key="Title">Titel:</msg>
   <msg key="Title_1">Titel</msg>
@@ -102,9 +107,9 @@
   <msg key="Type">Type:</msg>
   <msg key="Type_1">Type</msg>
   <msg key="Use_Hours_Below">Gebruik onderstaande uren:</msg>
-  <msg key="Wednesday">Woensdag</msg>
+  <msg key="Wednesday">woensdag</msg>
   <msg key="year">jaar</msg>
-  <msg key="Yes">JA</msg>
+  <msg key="Yes">Ja</msg>
   <msg key="yes_delete_it">ja, verwijder</msg>
   <msg key="Yes_I_am_sure">Ja, ik ben er zeker van!</msg>
 </message_catalog>

@@ -49,6 +49,4 @@ if {[form is_valid cals]} {
     ad_script_abort
 }
 
-set cal_nav [dt_widget_calendar_navigation "view" day $date "calendar_id=$calendar_id"]
-
 ad_return_template

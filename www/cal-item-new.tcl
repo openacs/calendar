@@ -87,7 +87,6 @@ if {[form is_valid cal_item]} {
     # Stop here
     ad_script_abort
 }
-
 # Hide the type widget if there *are* no types to choose from
 if { [llength [element get_property cal_item item_type_id options]] <= 1 } {
     element set_properties cal_item item_type_id -widget hidden
@@ -114,7 +113,5 @@ if { [form is_request cal_item] } {
         element set_properties cal_item time_p -value 1
     }
 }
-
-set cal_nav [dt_widget_calendar_navigation "view" day $date "calendar_id=$calendar_id"]
 
 ad_return_template

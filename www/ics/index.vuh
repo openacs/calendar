@@ -19,8 +19,7 @@ if {![regexp {([0-9]*)\.ics} $path all cal_item_id]} {
     ad_script_abort
 }
 
-# Permission (FIXME: ben)
-# ad_require_permission $cal_item_id read 
+ad_require_permission $cal_item_id read 
 
 set ics_stuff [calendar::outlook::format_item -cal_item_id $cal_item_id -all_occurences_p $all_occurences_p]
 

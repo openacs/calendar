@@ -13,9 +13,12 @@
       Gomez</a>
       <p>
       I took over calendar package maintainership in May 2003 and am currently
-      moving html generation into the adp pages. Calendar is currently
-      <strong>not</strong> recommended for production use. Here's the wish
-      list of things - in no particular order:
+      moving html generation into the adp pages. CVS head's Calendar is
+      currently <strong>not</strong> ready for production use, revert to the
+      "before-noquote" version if you need to have calendar up and running
+      now. 
+
+      <p>Here's the wish list of things - in no particular order:
 
       <ul>
       <li>Proper I18N:
@@ -48,8 +51,32 @@
 
       <li>The calendar needs to be printable (at least for where I work)
 
-
       </ul>
+
+      <p>
+      Data Model suggestions.
+
+      <p>
+      Don:<br>
+Calendar items should map arbitrary objects (perhaps only content items) to a 
+given calendar and given acs-events.  We shouldn't have to derive special 
+types from cal item type in order to attach it to a calendar (nor should we 
+have to duplicate content to attach it to two calendars as we do now)
+
+If we restricted the mapping to content items (i.e. calendar info some sort of 
+content type) we could use the CR's ability to map a template to a given 
+content type or item to make it possible for the calendar package to display 
+calendar item details using that facility, giving the package adding 
+something to the calendar control over how it is displayed.  Much more 
+general.
+    
+
+    <p>Thanks to 
+    <ul>
+    <li>Raad Al-Rawi from Cambridge University for calendar.css and all of the
+    layout.
+    </ul>
+
 
       <p>This is old stuff and will probably disappear in the near
       future. (June-2003)

@@ -1,5 +1,3 @@
-# /packages/calendar/www/index.tcl
-
 ad_page_contract {
     
     Main Calendar Page
@@ -20,13 +18,9 @@ if {!$user_id} {
     ad_script_abort
 }
 
-# Check for a personal, private calendar, create if missing
-# FIXME BUG: this should be moved to new pages to allow users
-# to create/delete/modify/admin their calendars. 
-
 if {![db_string private_calendar_count_qry {}]} {
     # Create a personal calendar for the user
-#    calendar::new -owner_id $user_id -private_p "t" -calendar_name "Personal" -package_id $package_id
+    calendar::new -owner_id $user_id -private_p "t" -calendar_name "Personal" -package_id $package_id
 }
 
 ad_returnredirect "view"    

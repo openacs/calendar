@@ -1,22 +1,13 @@
-<!--	
-	Displays the basic UI for the calendar
-	
-	@author Gary Jin (gjin@arsidigta.com)
-     	@creation-date Dec 14, 2000
-     	@cvs-id $Id$
--->
-
-
 <master>
 <property name="title">#calendar.Calendar_Item_Delete#: @cal_item.name;noquote@</property>
 <property name="context">#calendar.Delete#</property>
+<link href="calendar.css" rel="stylesheet" type="text/css">
 
 <table>
 
   <tr>
     <td valign=top>
-      <p>
-      @cal_nav;noquote@
+      <include src="mini-calendar" base_url="view" view="day" date="@date@">
     </td>	
 
     <td valign=top> 
@@ -38,7 +29,7 @@
 #calendar.lt_Are_you_sure_you_want_1#
 <ul>
 <li> <a href="cal-item-delete?cal_item_id=@cal_item_id@&confirm_p=1">#calendar.yes_delete_it#</a>
-<li> <a href="cal-item-view?show_cal_nav=@show_cal_nav@&cal_item_id=@cal_item_id@">#calendar.no_keep_it#</a>
+<li> <a href="cal-item-view?cal_item_id=@cal_item_id@">#calendar.no_keep_it#</a>
 </ul>
 </else>
     </td>

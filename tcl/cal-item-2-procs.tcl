@@ -70,6 +70,8 @@ namespace eval calendar::item {
         set row(pretty_day_of_week) [lc_time_fmt $row(ansi_start_date) "%A"]
         set row(day_of_month) [lc_time_fmt $row(ansi_start_date) "%d"]
         set row(pretty_short_start_date) [lc_time_fmt $row(ansi_start_date) "%x"]
+        set row(full_start_date) [lc_time_fmt $row(ansi_start_date) "%x"]
+        set row(full_end_date) [lc_time_fmt $row(ansi_end_date) "%x"]
 
         set row(end_time) [lc_time_fmt $row(ansi_end_date) "%X"]
     }

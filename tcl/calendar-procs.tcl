@@ -313,7 +313,7 @@ ad_proc calendar_update { calendar_id
 }
 
 #------------------------------------------------
-# find out the name of a calendar < roll into pl/sql >
+# find out the name of a calendar 
 # NOTE: calendar.name()
 
 ad_proc calendar_get_name { calendar_id } {
@@ -339,18 +339,6 @@ ad_proc calendar_public_p { calendar_id } {
     and 'f' if it is not 
 
 } {
-  
-#    return [db_string check_calendar_permission {
-#              select   acs_permission.permission_p(
-#                         :calendar_id, 
-#                         acs.magic_object_id('the_public'),
-#                         'calendar_read'
-#                       ) 
-#              from     dual
-#
-#            }]
-#
-
     set private_p [db_string check_calendar_p "select private_p from calendars where calendar_id = :calendar_id"]
 
     if { $private_p == "t" } {

@@ -6,12 +6,8 @@
     <pretty-plural>Calendars</pretty-plural>
     <initial-install-p>f</initial-install-p>
     <singleton-p>f</singleton-p>
-
+    
     <version name="1.0" url="http://www.arsdigita.com/acs-repository/download/apm/calendar-1.0.apm">
-    <database-support>
-        <database>oracle</database>
-        <database>postgresql</database>
-    </database-support>
         <owner url="mailto:tong@ebt.ee.usyd.edu.au">Lilian Tong</owner>
         <owner>Charles Mok</owner>
         <summary>straight port</summary>
@@ -21,11 +17,13 @@
         <provides url="calendar" version="1.0"/>
         <requires url="acs-datetime" version="4.0"/>
         <requires url="acs-events" version="0.1d"/>
-        <requires url="ref-timezones" version="0.1d"/>
         <requires url="acs-lang" version="4.1b"/>
+        <requires url="ref-timezones" version="0.1d"/>
 
+        <callbacks>
+        </callbacks>
         <parameters>
-        <!-- No version parameters -->
+            <parameter datatype="number"  min_n_values="1"  max_n_values="1"  name="Attachments"  default="0" description="Allow Files to be Uploaded"/>
         </parameters>
 
     </version>

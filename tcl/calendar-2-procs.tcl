@@ -9,6 +9,65 @@ ad_library {
 
 namespace eval calendar {
 
+    ad_proc -public get_month_multirow_information {
+        {-current_day:required}
+        {-today_julian_date:required}
+        {-first_julian_date_of_month:required}
+    } {
+        @author Dirk Gomez (openacs@dirkgomez.de)
+        @creation-date 20-July-2003
+    } {
+        i18n_display_parameters
+        if {$current_day == $today_julian_date} {
+            set today_p t 
+        } else {
+            set today_p f
+        }
+        set day_number [expr $current_day - $first_julian_date_of_month +1]
+        set weekday [expr $current_day % 7]
+        
+        set beginning_of_week_p f
+        set end_of_week_p f
+        if {$weekday == $week_ends_on} {
+            set end_of_week_p t
+        } elseif {$weekday == $week_begins_on} {
+            set beginning_of_week_p t
+        }
+        return [list day_number $day_number \
+                    today_p $today_p \
+                    beginning_of_week_p $beginning_of_week_p \
+                    end_of_week_p $end_of_week_p]
+    }
+
+    ad_proc -public get_weekday_list {
+    } {
+        Return a list of the weekdays one letter each. You need to be wary
+        that your settings here coincide with other basic configuration
+        parameters.
+
+        Not-yet i18nized.
+        @author Dirk Gomez (openacs@dirkgomez.de)
+        @creation-date 20-July-2003
+    } {
+        # This will be retrieved from a apm_parameter or a user setting
+        return [list S M T W T F S]
+    }
+
+    ad_proc -public i18n_display_parameters {
+    } {
+        Basic parameters to make calendar displaying locale-dependent.
+
+        Not-yet i18nized.
+
+        @author Dirk Gomez (openacs@dirkgomez.de)
+        @creation-date 20-July-2003
+    } {
+        uplevel 1 {
+            set week_ends_on 5
+            set week_begins_on 6
+        }
+    }
+
     ad_proc -public from_sql_datetime {
         {-sql_date:required}
         {-format:required}
@@ -111,7 +170,7 @@ namespace eval calendar {
         if {[string compare $calendar_list {{}}] == 0} {
             set calendar_list [list]
         }
-        
+
         if {[llength $calendar_list] > 0} {
             set sql_clause "and calendar_id in ([join $calendar_list ","]) "
         } else {
@@ -201,6 +260,19 @@ namespace eval calendar {
         rename a calendar
     } {
         db_dml rename_calendar {}
+    }
+
+    ad_proc -private compare_day_items_by_current_hour {a b} {
+        Compare a day item by the current hour (field 0)
+    } {
+        set a_criterium [lindex $a 0]
+        set b_criterium [lindex $b 0]
+        if {$a_criterium > $b_criterium} {
+            return 1
+        } elseif {$a_criterium < $b_criterium} {
+            return -1
+        } 
+        return 0
     }
 
 }

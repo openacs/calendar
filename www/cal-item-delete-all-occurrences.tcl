@@ -6,7 +6,6 @@ ad_page_contract {
     @creation-date April 25, 2002
 } {
     recurrence_id
-    {show_cal_nav 1}
     {return_url "./"}
 }
 

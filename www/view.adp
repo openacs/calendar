@@ -2,17 +2,22 @@
 <property name="title">#calendar.Calendars#</property>
 <property name="context">#calendar.Calendar#</property>
 
+<link href="calendar.css" rel="stylesheet" type="text/css">
+
 <table width="95%">
 
   <tr>
     <td valign=top width=150>
-      <p>
-      @cal_nav;noquote@
+    <include src="mini-calendar" base_url="view" view="@view@" date="@date@">
+</center>
 <p>
-<a href="cal-item-new?julian_date=@julian_date@" title="#calendar.Add_Item#"><img border=0 align="right" valign="top" src="/shared/images/add.gif" alt="#calendar.Add_Item#">#calendar.Add_Item#</a>
-      <p>
-	<include src="cal-options">	
+    <a href="cal-item-new?julian_date=@julian_date@" title="#calendar.Add_Item#"><img border=0 align="left" valign="top" src="/shared/images/add.gif" alt="#calendar.Add_Item#">#calendar.Add_Item#</a>
+
+<p>
+<include src="cal-options">	
+
     </td>	
+
     <td valign=top> 
     
 <if @view@ eq "list">
@@ -20,6 +25,7 @@
 start_date=@start_date@ 
 end_date=@end_date@ 
 date=@date@ 
+period_days=@period_days@
 calendar_id_list=@calendar_list@ 
 sort_by=@sort_by@> 
 </if>
@@ -27,11 +33,7 @@ sort_by=@sort_by@>
 
 <if @view@ eq "day">
 <include src="view-one-day-display" 
-prev_nav_template="@previous_link@"
-next_nav_template="@next_link@"
-item_template="@item_template@"
-hour_template="@hour_template@"
-date="@date@" start_hour=7 end_hour=22
+date="@date@" start_hour=0 end_hour=23
 calendar_id_list="@calendar_list@">
 </if>
 
@@ -45,9 +47,7 @@ calendar_id_list="@calendar_list@">
 <if @view@ eq "month">
 <include src="view-month-display"
 date=@date@
-calendar_id_list= @calendar_list@
-prev_month_template=@previous_link@
-next_month_template=@next_link@>
+calendar_id_list= @calendar_list@>
 </if>
     </td>
   </tr>

@@ -102,7 +102,7 @@ if { [form is_request cal_item] } {
 }
 
 
-set cal_nav [dt_widget_calendar_navigation "view" day $cal_item(start_date) "calendar_id"]
 
+set date $cal_item(start_date)
 ad_return_template
 

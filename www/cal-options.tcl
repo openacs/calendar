@@ -19,12 +19,16 @@ set user_id [ad_verify_and_get_user_id]
 
 set calendar_list [calendar::calendar_list]
 
-set calendar_list_sql "[join $calendar_list ","]"
+if {[llength $calendar_list] > 0} {
+    set calendar_list_sql "[join $calendar_list ","]"
 
-db_multirow calendars select_calendars "
+    db_multirow calendars select_calendars "
     select calendar_id, calendar_name
     from calendars
     where calendar_id in ($calendar_list_sql)
-"
+    "
+} else {
+    multirow create calendars
+}
 
 ad_return_template

@@ -7,7 +7,7 @@
       <querytext>
       
 
-    select   unique(calendar_id) as calendar_id,
+    select  distinct(calendar_id) as calendar_id,
              calendar_name,
              ' ' as checked_p
     from     calendars
@@ -17,7 +17,7 @@
 
     union 
     
-    select  unique(on_which_calendar) as calendar_id,
+    select  distinct(on_which_calendar) as calendar_id,
             calendar__name(on_which_calendar) as calendar_name,
             ' ' as checked_p
     from    cal_items

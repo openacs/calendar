@@ -7,7 +7,7 @@ ad_page_contract {
     @creation-date May 29, 2002
     @cvs-id $Id$
 } {
-    {view day}
+    {view {[parameter::get -parameter DefaultView -default day]}}
     {date ""}
     {sort_by ""}
     {start_date ""}

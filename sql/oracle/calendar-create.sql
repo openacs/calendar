@@ -271,17 +271,6 @@ as
                 calendar_id             in calendars.calendar_id%TYPE
         );
 
-          -- figures out the name of the calendar       
-        function name (
-                calendar_id             in calendars.calendar_id%TYPE
-        ) return calendars.calendar_name%TYPE;
-
-          -- returns 't' if calendar is private and 'f' if its not
-        function private_p (
-                calendar_id             in calendars.calendar_id%TYPE
-        ) return char;
-
-
           -- returns 't' if calendar is viewable by the given party
           -- this implies that the party has calendar_read permission
           -- on this calendar
@@ -431,67 +420,6 @@ as
         end del;
  
 
-
-          -- figures out the name of the calendar       
-        function name (
-                calendar_id             in calendars.calendar_id%TYPE
-        ) 
-        return calendars.calendar_name%TYPE
-
-        is
-                v_calendar_name         calendars.calendar_name%TYPE;
-        begin
-                select  calendar_name
-                into    v_calendar_name
-                from    calendars
-                where   calendar_id = calendar.name.calendar_id;
-
-                return v_calendar_name;
-        end name;
-
-
-
-          -- returns 't' if calendar is private and 'f' if its not
-        function private_p (
-                calendar_id             in calendars.calendar_id%TYPE
-        ) 
-        return char
-
-        is
-                v_private_p             char(1) := 't';
-        begin
-                select  private_p 
-                into    v_private_p
-                from    calendars
-                where   calendar_id = calendar.private_p.calendar_id;
-
-                return v_private_p;
-        end private_p;
-
-
-
-          -- returns 't' if calendar is viewable by the given party
-          -- this implies that the party has calendar_read permission
-          -- on this calendar
-        function readable_p (
-                calendar_id             in calendars.calendar_id%TYPE,
-                party_id                in parties.party_id%TYPE
-        ) 
-        return char
-
-        is      
-                v_readable_p            char(1) := 't';
-        begin
-                select  decode(count(*), 1, 't', 'f') 
-                into    v_readable_p
-                from    acs_object_party_privilege_map 
-                where   party_id = calendar.readable_p.party_id
-                and     object_id = calendar.readable_p.calendar_id 
-                and     privilege = 'calendar_read';
-
-                return  v_readable_p;
-
-        end readable_p;
 
           -- returns 't' if party wants to be able to select (calendar_show granted)
           -- this calendar, and .return 'f' otherwise. 

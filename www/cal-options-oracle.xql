@@ -7,7 +7,7 @@
       <querytext>
       
 
-    select   unique(calendar_id) as calendar_id,
+    select   calendar_id,
              calendar_name,
              ' ' as checked_p
     from     calendars
@@ -17,12 +17,14 @@
 
     union 
     
-    select  unique(on_which_calendar) as calendar_id,
-            calendar.name(on_which_calendar) as calendar_name,
+    select  calendar_id,
+            calendar_name,
             ' ' as checked_p
-    from    cal_items
+    from    cal_items, calendars
     where   acs_permission.permission_p(cal_item_id, :user_id, 'cal_item_read') = 't'
     and     calendar.private_p(on_which_calendar) = 'f'
+    and     calendars.private_p = 'f'
+    and     cal_items.on_which_calendar = calendars.calendar_id
 
       
 

@@ -17,12 +17,13 @@
 
     union 
     
-    select  distinct(on_which_calendar) as calendar_id,
-            calendar__name(on_which_calendar) as calendar_name,
+    select  on_which_calendar as calendar_id,
+            calendar_name,
             ' '::varchar as checked_p
-    from    cal_items
+    from    cal_items, calendars
     where   acs_permission__permission_p(cal_item_id, :user_id, 'cal_item_read') = 't'
-    and     calendar__private_p(on_which_calendar) = 'f'
+    and     calendars.private_p = 'f'
+    and     cal_items.on_which_calendar = calendars.calendar_id
 
       
 

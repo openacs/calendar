@@ -10,15 +10,7 @@
     </fullquery>
 
 
-<fullquery name="calendar_have_group_cal_p.get_calendar_info">
-    <querytext>
-    select    calendar_id,
-    from      calendars
-    where     owner_id = :party_id
-    </querytext>
-</fullquery>
-
-<fullquery name="calendar_have_private_p.get_calendar_info">
+<fullquery name="calendar::have_private_p.get_calendar_info">
     <querytext>
     select    calendar_id
     from      calendars
@@ -27,7 +19,7 @@
     </querytext>
 </fullquery>
  
-<fullquery name="calendar_have_private_p.get_calendar_info_calendar_id_list">
+<fullquery name="calendar::have_private_p.get_calendar_info_calendar_id_list">
     <querytext>
     select    calendar_id
     from      calendars

@@ -64,6 +64,7 @@ ad_proc -public calendar::item::new {
         assign_permission  $cal_item_id  $creation_user delete
         assign_permission  $cal_item_id  $creation_user admin
 
+        calendar::do_notifications -mode New -cal_item_id $cal_item_id
         return $cal_item_id
 
     } else {
@@ -200,6 +201,8 @@ ad_proc -public calendar::item::edit {
             set    [join $colspecs ", "]
             where  cal_item_id= :cal_item_id
         "
+
+        calendar::do_notifications -mode Edited -cal_item_id $cal_item_id
         }
     } else {
         ad_return_complaint 1 "Start Time must be before End Time"

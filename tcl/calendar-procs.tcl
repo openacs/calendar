@@ -82,42 +82,6 @@ ad_proc calendar_make_datetime {
 }
 
 
-#------------------------------------------------
-# Should be moved into the calendar:: namespace. Will do after .LRN 2.0 release 
-# (Dirk 9-Jan-2003)
-
-ad_proc calendar_have_private_p { 
-    {-return_id 0} 
-    {-calendar_id_list {}}
-    party_id 
-} {
-    check to see if ther user have a prviate calendar
-    if -return_id is 1, then proc will return the calendar_id
-
-    @param calendar_id_list If you supply the calendar_id_list, then we'll only search 
-    for a personal calendar among the calendars supplied here.
-} {
-
-    if { [llength $calendar_id_list] > 0 } {
-        set result [db_string get_calendar_info_calendar_id_list {} -default 0]
-    } else {
-        set result [db_string get_calendar_info {} -default 0]
-    }
-    
-    if { ![string equal $result "0"] } {
-
-	if { [string equal $return_id "1"] } {
-	    return $result
-	} else {
-	    return 1
-	}
- 
-    } else {
-	
-	return 0
-    }
-}
-
 
 #------------------------------------------------
 # Should be moved into the calendar:: namespace. Will do after .LRN 2.0 release 
@@ -206,6 +170,39 @@ ad_proc calendar_assign_permissions { calendar_id
 
     }    
 
+}
+
+
+ad_proc -public calendar::have_private_p { 
+    {-return_id 0} 
+    {-calendar_id_list {}}
+    party_id 
+} {
+    check to see if ther user have a private calendar
+    if -return_id is 1, then proc will return the calendar_id
+
+    @param calendar_id_list If you supply the calendar_id_list, then we'll only search 
+    for a personal calendar among the calendars supplied here.
+} {
+
+    if { [llength $calendar_id_list] > 0 } {
+        set result [db_string get_calendar_info_calendar_id_list {} -default 0]
+    } else {
+        set result [db_string get_calendar_info {} -default 0]
+    }
+    
+    if { ![string equal $result "0"] } {
+
+	if { [string equal $return_id "1"] } {
+	    return $result
+	} else {
+	    return 1
+	}
+ 
+    } else {
+	
+	return 0
+    }
 }
 
 
@@ -486,3 +483,56 @@ ad_proc -private calendar::compare_day_items_by_current_hour {a b} {
     return 0
 }
 
+ad_proc -public calendar::do_notifications {
+    {-mode:required}
+    {-cal_item_id:required}
+} {
+    # Select all the important information
+    calendar::item::get -cal_item_id $cal_item_id -array cal_item
+
+    set cal_item_id $cal_item(cal_item_id)
+    set n_attachments $cal_item(n_attachments)
+    set ansi_start_date $cal_item(start_date_ansi)
+    set ansi_end_date $cal_item(end_date_ansi)
+    set start_time $cal_item(start_time)
+    set end_time $cal_item(end_time)
+    set title $cal_item(name)
+    set description $cal_item(description)
+    set repeat_p $cal_item(recurrence_id)
+    set item_type $cal_item(item_type)
+    set item_type_id $cal_item(item_type_id)
+    set calendar_id $cal_item(calendar_id)
+    set time_p $cal_item(time_p)
+
+    set url "[ad_url][ad_conn package_url]"
+
+    set new_content ""
+    append new_content "[_ calendar.Calendar]:  <a href=\"${url}\">[ad_conn instance_name]</a><br>\n"
+    append new_content "[_ calendar.Calendar_Item]: <a href=\"${url}cal-item-view?cal_item_id=$cal_item_id\">$cal_item(name)</a><br>\n"
+    append new_content "[_ calendar.Start_Time]: $cal_item(start_date_ansi) $cal_item(start_time)<br>\n"
+    append new_content "[_ calendar.to]: $cal_item(end_date_ansi) $cal_item(end_time)<br>\n"
+
+    if {![empty_string_p $repeat_p] && $repeat_p} {
+        append new_content "[_ calendar.is_recurring]"
+    }
+
+    append new_content "\n<br>\n"
+    append new_content $cal_item(description)
+
+    acs_user::get -user_id $cal_item(creation_user) -array user_info
+    append new_content "Author: <a href=\"mailto:$user_info(email)\">$user_info(first_names) $user_info(last_name)</a><br>\n"
+
+    # send text for now.
+    set new_content [ad_html_to_text -- $new_content]
+
+    # Do the notification for the forum
+    notification::new \
+        -type_id [notification::type::get_type_id \
+        -short_name calendar_notif] \
+        -object_id [ad_conn package_id] \
+        -response_id $cal_item(cal_item_id) \
+        -notif_subject "$mode [_ calendar.Calendar_Item]: $cal_item(name)" \
+        -notif_text $new_content
+    
+}
+    

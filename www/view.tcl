@@ -42,4 +42,12 @@ if {$view == "list"} {
     set end_date [dt_julian_to_ansi [expr [dt_ansi_to_julian $ansi_year $ansi_month $ansi_day ] + $period_days]]
 }
 
+set notification_chunk [notification::display::request_widget \
+                            -type calendar_notif \
+                            -object_id $package_id \
+                            -pretty_name [ad_conn instance_name] \
+                            -url [ad_conn url] \
+                           ]
+
+
 ad_return_template 

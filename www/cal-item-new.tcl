@@ -153,7 +153,7 @@ ad_form -extend -name cal_item -validate {
     }
 } -new_request {
     # Seamlessly create a private calendar if the user doesn't have one
-    if { ![calendar_have_private_p $user_id] } {
+    if { ![calendar::have_private_p $user_id] } {
 	calendar::new -owner_id $user_id -private_p "t" -calendar_name "Personal" -package_id $package_id
     } 
     

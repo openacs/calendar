@@ -12,6 +12,7 @@ ad_page_contract {
     {action view}
     {date now}
     {calendar_list:multiple,optional {}}
+    {return_url ""}
 } -properties {
     package_id:onevalue
     user_id:onevalue

@@ -17,6 +17,7 @@ ad_page_contract {
     {description ""}
     {date now}
     {calendar_id "-1"}
+    {return_url ""}
 } 
 
 if { $date == "now" } {
@@ -110,7 +111,7 @@ set cal_item_id [cal_item_create $start_datetime \
 
 # set the date to be the date of the event
 set date [calendar_make_date [array get event_date]]
-ad_returnredirect "?[export_url_vars date action view calendar_id]"
+ad_returnredirect "${return_url}?[export_url_vars date action view calendar_id]"
 
 
 

@@ -13,6 +13,7 @@ ad_page_contract {
     {cal_item_id 0}
     {start_time "now"}
     {end_time "now"}
+    {return_url ""}
 } -properties {
     cal_item_id:onevalue
 

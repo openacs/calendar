@@ -126,11 +126,16 @@ namespace eval calendar {
     ad_proc -public one_day_display {
         {-date ""}
         {-calendar_id_list ""}
-        {-one_hour_link ""}
-        {-one_item_link ""}
+        {-hour_template {$hour}}
+        {-item_template {$item}}
+        {-start_hour 0}
+        {-end_hour 23}
     } {
         Creates a day widget
     } {
+        set widget_start_hour $start_hour
+        set widget_end_hour $end_hour
+
         set date_format "YYYY-MM-DD HH24:MI"
 
         if {[empty_string_p $date]} {
@@ -151,19 +156,26 @@ namespace eval calendar {
         # Loop through the calendars
         foreach calendar_id $calendar_id_list {
             set calendar_name [calendar_get_name $calendar_id]
+            ns_log Notice "bma: one calendar $calendar_name"
 
             db_foreach select_day_items {} {
                 set item "$pretty_start_date - $pretty_end_date: $name ($calendar_name)"
-                if {![empty_string_p $one_item_link]} {
-                    set item "<a href=${one_item_link}$item_id>$item</a><br>"
-                }
+                set item [subst $item_template]
 
+                ns_log Notice "bma-calendar: adding $item at $start_hour"
                 ns_set put $items $start_hour $item
             }
 
         }
 
-        return [dt_widget_day -calendar_details $items -date $date]
+        set hour {$display_hour}
+        set start_time {$hour:00}
+        
+        set hour_template [subst $hour_template]
+        
+        return [dt_widget_day -hour_template $hour_template \
+                -start_hour $widget_start_hour -end_hour $widget_end_hour \
+                -calendar_details $items -date $date]
         
     }
 

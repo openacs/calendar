@@ -33,46 +33,20 @@ ad_proc cal_assign_item_permission { cal_item_id
 	if { ![string equal $permission "cal_item_read"] } {
 
 	    # grant read permission first
-
-	    db_exec_plsql 1_grant_calendar_permissions_to_items {
-		begin
-		acs_permission.grant_permission (
-		  object_id       =>      :cal_item_id,
-		  grantee_id      =>      :party_id,
-		  privilege       =>      'cal_item_read'
-		);
-		end;
-	    }
+            permission::grant -object_id $cal_item_id -party_id $party_id -privilege cal_item_read
 	    
 	}
 	
 	# grant other permission
 
-	db_exec_plsql 2_grant_calendar_permissions_to_items {
-	    begin
-	    acs_permission.grant_permission (
-	      object_id       =>      :cal_item_id,
-	      grantee_id      =>      :party_id,
-	      privilege       =>      :permission
-	    );
-	    end;
-	}
+        permission::grant -object_id $cal_item_id -party_id $party_id -privilege $permission
 
 	
     } elseif { [string equal $revoke "revoke"] } {
 	
 	# revoke the permissions
 
-	db_exec_plsql 3_grant_calendar_permissions_to_items {
-	    begin
-	    acs_permission.revoke_permission (
-	      object_id       =>      :cal_item_id,
-	      grantee_id      =>      :party_id,
-	      privilege       =>      :permission
-	    );
-	    end;
-	}
-
+        permission::revoke -object_id $cal_item_id -party_id $party_id -privilege $permission
 
     }
 }

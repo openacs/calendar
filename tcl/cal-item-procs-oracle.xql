@@ -3,51 +3,6 @@
 <queryset>
    <rdbms><type>oracle</type><version>8.1.6</version></rdbms>
 
-<fullquery name="cal_assign_item_permission.grant_calendar_permissions_to_items_1">      
-      <querytext>
-      
-		begin
-		acs_permission.grant_permission (
-		  object_id       =>      :cal_item_id,
-		  grantee_id      =>      :party_id,
-		  privilege       =>      'cal_item_read'
-		);
-		end;
-	    
-      </querytext>
-</fullquery>
-
- 
-<fullquery name="cal_assign_item_permission.grant_calendar_permissions_to_items_2">      
-      <querytext>
-      
-	    begin
-	    acs_permission.grant_permission (
-	      object_id       =>      :cal_item_id,
-	      grantee_id      =>      :party_id,
-	      privilege       =>      :permission
-	    );
-	    end;
-	
-      </querytext>
-</fullquery>
-
- 
-<fullquery name="cal_assign_item_permission.grant_calendar_permissions_to_items_3">      
-      <querytext>
-      
-	    begin
-	    acs_permission.revoke_permission (
-	      object_id       =>      :cal_item_id,
-	      grantee_id      =>      :party_id,
-	      privilege       =>      :permission
-	    );
-	    end;
-	
-      </querytext>
-</fullquery>
-
- 
 <fullquery name="cal_item_create.insert_activity">      
       <querytext>
       
@@ -93,21 +48,6 @@
 	);
 	end;
     
-      </querytext>
-</fullquery>
-
- 
-<fullquery name="cal_item_create.grant_calendar_permissions_to_items_4">      
-      <querytext>
-      
-	    begin
-  	      acs_permission.grant_permission (
-                object_id       =>      :cal_item_id,
-                grantee_id      =>      :grantee_id,
-                privilege       =>      :privilege
-              );
-	    end;
-	
       </querytext>
 </fullquery>
 

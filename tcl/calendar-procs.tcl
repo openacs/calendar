@@ -227,31 +227,13 @@ ad_proc calendar_assign_permissions { calendar_id
 
     if { [empty_string_p $revoke] } {
 	# grant the permissions
-    
-	db_exec_plsql assign_calendar_permissions {
-	    begin
-	      acs_permission.grant_permission (
-	        object_id       =>      :calendar_id,
-	        grantee_id      =>      :party_id,
-	        privilege       =>      :cal_privilege
-	      );
-	    end;
-	}
-	
+
+        permission::grant -object_id $calendar_id -party_id $party_id -privilege $cal_privilege
 
     } elseif { [string equal $revoke "revoke"] } {
 	# revoke the permissions
 
-
-	db_exec_plsql revoke_calendar_permissions {
-	    begin
-	      acs_permission.revoke_permission (
-	        object_id       =>      :calendar_id,
-	        grantee_id      =>      :party_id,
-	        privilege       =>      :cal_privilege
-	      );
-	    end;
-	}
+        permission::revoke -object_id $calendar_id -party_id $party_id -privilege $cal_privilege
 
     }    
 

@@ -12,7 +12,7 @@
       </querytext>
 </fullquery>
 
-<fullquery name="ad_proc cal_item_update.update_activity">
+<fullquery name="cal_item_update.update_activity">
     <querytext>
     update acs_activities 
     set    name = :name,
@@ -26,7 +26,7 @@
     </querytext>
 </fullquery>
 
-<fullquery name="ad_proc cal_item_update.get_interval_id">
+<fullquery name="cal_item_update.get_interval_id">
     <querytext>
     select interval_id 
     from   timespans

@@ -22,7 +22,7 @@ if {[empty_string_p $calendar_id]} {
     set calendar_list [calendar::calendar_list]
 
     if {[llength $calendar_list] > 1} {
-        set return_url [ns_urlencode "cal-item-new?date=$date&start_time=$start_time&end_time=$end_time"]
+        set return_url [ns_urlencode "cal-item-new?date=[ns_urlencode $date]&start_time=$start_time&end_time=$end_time"]
         ad_returnredirect "calendar-choose?return_url=$return_url"
         ad_script_abort
     }

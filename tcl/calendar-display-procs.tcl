@@ -129,6 +129,8 @@ namespace eval calendar {
         {-calendar_id_list ""}
         {-hour_template {$hour}}
         {-item_template {$item}}
+        {-prev_nav_template {<a href="?date=$yesterday">&lt;</a>}}
+        {-next_nav_template {<a href="?date=$tomorrow">&gt;</a>}}
         {-start_hour 0}
         {-end_hour 23}
     } {
@@ -194,6 +196,8 @@ namespace eval calendar {
         set hour_template [subst $hour_template]
         
         return [dt_widget_day -hour_template $hour_template \
+                -prev_nav_template $prev_nav_template \
+                -next_nav_template $next_nav_template \
                 -start_hour $widget_start_hour -end_hour $widget_end_hour \
                 -calendar_details $items -date $date -overlap_p 1]
         

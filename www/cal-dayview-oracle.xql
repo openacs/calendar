@@ -9,7 +9,7 @@
 	select   to_char(start_date, 'HH24') as start_hour,
          to_char(start_date, 'HH24:MI') as pretty_start_date,
          to_char(end_date, 'HH24:MI') as pretty_end_date,
-         coalesce(e.name, a.name) as name,
+         nvl(e.name, a.name) as name,
          e.event_id as item_id
 from     acs_activities a,
          acs_events e,
@@ -38,7 +38,7 @@ in       (
 	select   to_char(start_date, 'HH24') as start_hour,
          to_char(start_date, 'HH24:MI') as pretty_start_date,
          to_char(end_date, 'HH24:MI') as pretty_end_date,
-         coalesce(e.name, a.name) as name,
+         nvl(e.name, a.name) as name,
          e.event_id as item_id
 from     acs_activities a,
          acs_events e,

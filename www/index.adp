@@ -8,7 +8,7 @@
 
 
 <master src="master">
-<property name="title">ArsDigita Calendar for @name@  @user_id@</property>
+<property name="title">Calendar for @name@</property>
 <property name="context_bar"></property>
 
 <table>
@@ -48,14 +48,3 @@
   </tr>
 </table>
 </if>
-
-
-
-
-
-
-
-
-
-
-

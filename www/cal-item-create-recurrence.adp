@@ -21,6 +21,8 @@ than once in your calendar. The event's details are:
 
 <FORM method=post action=cal-item-create-recurrence-2>
 <INPUT TYPE=hidden name=cal_item_id value=@cal_item_id@>
+<INPUT TYPE=hidden name=return_url value="@return_url@">
+
 Repeat every <INPUT TYPE=text name=every_n value=1 size=3>:<br>
 <INPUT TYPE=radio name=interval_type value=day> day (s)<br>
 <INPUT TYPE=radio name=interval_type value=week> @day_of_week@ (s)

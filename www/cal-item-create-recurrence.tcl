@@ -10,6 +10,7 @@ ad_page_contract {
     @cvs-id $Id$
 } {
     cal_item_id
+    {return_url "./"}
 } 
 
 # Verify permission

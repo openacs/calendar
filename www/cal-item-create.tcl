@@ -119,7 +119,7 @@ set cal_item_id [cal_item_create $start_datetime \
 
 if {$recurrence_p} {
     # We must ask for recurrence information
-    ad_returnredirect "cal-item-create-recurrence?cal_item_id=$cal_item_id"
+    ad_returnredirect "cal-item-create-recurrence?cal_item_id=$cal_item_id&return_url=$return_url"
     return
 }
 

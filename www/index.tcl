@@ -15,6 +15,7 @@ ad_page_contract {
     {calendar_list:multiple,optional {}}
     {return_url ""}
     {force_calendar_id ""}
+    {show_cal_nav 1}
 } -properties {
     package_id:onevalue
     user_id:onevalue

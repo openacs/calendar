@@ -44,8 +44,10 @@
 <fullquery name="calendar::one_week_display.select_week_items">
 <querytext>
 select   to_char(start_date, 'J') as start_date,
-         to_char(start_date, 'HH24:MI') as pretty_start_date,
-         to_char(end_date, 'HH24:MI') as pretty_end_date,
+         to_char(start_date, 'HH:MIpm') as pretty_start_date,
+         to_char(end_date, 'HH:MIpm') as pretty_end_date,
+         to_char(start_date,'HH24:MI') as start_date,
+         to_char(end_date,'HH24:MI') as end_date,
          nvl(e.name, a.name) as name,
          e.event_id as item_id
 from     acs_activities a,
@@ -70,8 +72,10 @@ in       (
 <fullquery name="calendar::one_day_display.select_day_items">
 <querytext>
 	select   to_char(start_date, 'HH24') as start_hour,
-         to_char(start_date, 'HH24:MI') as pretty_start_date,
-         to_char(end_date, 'HH24:MI') as pretty_end_date,
+         to_char(start_date, 'HH:MIpm') as pretty_start_date,
+         to_char(end_date, 'HH:MIpm') as pretty_end_date,
+         to_char(start_date, 'HH24:MI') as start_date,
+         to_char(end_date, 'HH24:MI') as end_date,
          nvl(e.name, a.name) as name,
          e.event_id as item_id
 from     acs_activities a,
@@ -97,8 +101,8 @@ in       (
 <fullquery name="calendar::list_display.select_day_items">
 <querytext>
 	select   to_char(start_date, 'HH24') as start_hour,
-         to_char(start_date, 'HH24:MI') as pretty_start_date,
-         to_char(end_date, 'HH24:MI') as pretty_end_date,
+         to_char(start_date, 'HH:MIpm') as pretty_start_date,
+         to_char(end_date, 'HH:MIpm') as pretty_end_date,
          nvl(e.name, a.name) as name,
          e.event_id as item_id
 from     acs_activities a,

@@ -16,7 +16,7 @@
   <tr>
     <td valign=top>
       <p>
-	<include src="cal-nav">
+	<if @show_cal_nav@ eq 1><include src="cal-nav"></if>
       <p>
 	<include src="cal-options">	
     </td>	

@@ -85,10 +85,8 @@
   </tr>
   <tr>
     <td colspan="2">
-      <if @edit_p@ eq 1>
+      <if @write_p@ true>
         <a href="cal-item-new?cal_item_id=@cal_item_id@&return_url=@return_url@" class="button">#calendar.edit#</a>
-      </if>
-      <if @delete_p@ eq 1>
         <a href="./cal-item-delete?cal_item_id=@cal_item_id@&return_url=@return_url@" class="button">#calendar.delete#</a>
       </if>
       <p><a href="ics/@cal_item_id@.ics" class="button">#calendar.sync_with_Outlook#</a> 

@@ -196,6 +196,12 @@ ad_proc cal_item_update {
         lappend colspecs "item_type_id = :item_type_id"
         if { ![empty_string_p $calendar_id] } {
             lappend colspecs "on_which_calendar = :calendar_id"
+
+            db_dml update_context_id {
+                update acs_objects
+                set    context_id = :calendar_id
+                where  object_id = :cal_item_id
+            }
         }
         
         db_dml update_item_type_id "
@@ -270,6 +276,12 @@ ad_proc -public cal_item_edit_recurrence {
         lappend colspecs {item_type_id = :item_type_id}
         if { ![empty_string_p $calendar_id] } {
             lappend colspecs {on_which_calendar = :calendar_id}
+
+            db_dml update_context_id {
+                update acs_objects
+                set    context_id = :calendar_id
+                where  object_id in (select event_id from acs_events where recurrence_id = :recurrence_id)
+            }
         }
 
         db_dml recurrence_items_update {}

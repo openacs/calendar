@@ -7,14 +7,14 @@
     <initial-install-p>f</initial-install-p>
     <singleton-p>f</singleton-p>
     
-    <version name="2.0d1" url="http://openacs.org/acs-repository/download/apm/calendar-2.0d1.apm">
+    <version name="2.0b2" url="http://openacs.org/acs-repository/download/apm/calendar-2.0b2.apm">
         <owner url="mailto:tong@ebt.ee.usyd.edu.au">Lilian Tong</owner>
         <owner>Charles Mok</owner>
-        <summary>straight port</summary>
+        <summary></summary>
         <vendor>University of Sydney</vendor>
         <description format="text/html">straight port of calendar</description>
 
-        <provides url="calendar" version="2.0d1"/>
+        <provides url="calendar" version="2.0b2"/>
         <requires url="acs-datetime" version="4.0"/>
         <requires url="acs-events" version="0.1d"/>
         <requires url="acs-lang" version="5.0.0a5"/>

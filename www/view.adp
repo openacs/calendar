@@ -13,8 +13,8 @@
 <p>
     <a href="cal-item-new?date=@date@" title="#calendar.Add_Item#"><img border=0 align="left" valign="top" src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#">#calendar.Add_Item#</a>
 <p>
-<if @admin_p@ eq 1>
-    <a href="admin/">#calendar.lt_Calendar_Administrati#</a>
+<if @admin_p@ true>
+  <a href="admin/">#calendar.lt_Calendar_Administrati#</a>
 </if>
 <include src="cal-options" calendar_list="@calendar_list;noquote@">	
 

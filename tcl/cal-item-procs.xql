@@ -90,5 +90,5 @@ select recurrence_id from acs_events where event_id= :event_id
             where  cal_item_id in (select event_id from acs_events where recurrence_id = :recurrence_id)
     </querytext>
 </fullquery>
- 
+  
 </queryset>

@@ -1,31 +1,35 @@
-# /packages/calendar/www/admin/calendar-edit.tcl
-
 ad_page_contract {
     
-    edit the basic info
-    of an existing calendar
-
-    @author Gary Jin (gjin@arsdigita.com)
-    
-    @party_id  key to owner id
-    @calendar_name  the name of the calendar
-    @calendar_permission the permissions of the calendar
+    Add/Edit calendar
 
     @creation-date Dec 14, 2000
     @cvs-id $Id$
 } {
-    {action edit}
-    {party_id:integer,notnull}
-    {calendar_id:integer,notnull}
-    {calendar_name:notnull}
-    {calendar_permission "private"}
+    {calendar_id:integer,optional}
 }
 
-if { [string equal $action "edit"] } {
-    calendar_update $calendar_id $party_id $calendar_name $calendar_permission
+set page_title "Add/Edit Calendar"
+set context [list $page_title]
+
+ad_form -name calendar -form {
+    {calendar_id:key}
+    {calendar_name:text
+        {label "[_ calendar.Calendar_Name]"}
+        {html {size 50}}
+    }
+} -edit_request {
+    set calendar_name [calendar_get_name $calendar_id]
+} -new_data {
+    calendar::new \
+        -owner_id [ad_conn user_id] \
+        -calendar_name $calendar_name 
+} -edit_data {
+    calendar::update \
+        -calendar_id $calendar_id \
+        -calendar_name $calendar_name 
+} -after_submit {
+    ad_returnredirect .
+    ad_script_abort
 }
-
-ad_returnredirect "."
-
 
 

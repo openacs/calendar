@@ -49,7 +49,10 @@ if { ![info exists end_display_hour]} {
 if {[exists_and_not_null calendar_id_list]} {
     set calendars_clause "and on_which_calendar in ([join $calendar_id_list ","]) and (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))"
 } else {
-    set calendars_clause "and ((cals.package_id= :package_id and cals.private_p='f') or (cals.private_p='t' and cals.owner_id= :user_id))"
+    set calendars_clause {
+        and ((cals.package_id = :package_id and cals.private_p = 'f') 
+             or (cals.private_p = 't' and cals.owner_id = :user_id))
+    }
 }
 
 # The database needs this for proper formatting.
@@ -122,18 +125,14 @@ db_foreach select_day_items_with_time {} {
 
     for { set item_current_hour $start_hour } { $item_current_hour < $end_hour } { incr item_current_hour } {
         set item_current_hour [expr [string trimleft $item_current_hour 0]+0]
-        ds_comment "start_hour_no = $start_hour_no, end_hour = $end_hour, item_current_hour = $item_current_hour, start_display_hour = $start_display_hour, end_display_hour = $end_display_hour, name=$name"
 
-        if { $start_hour_no == $item_current_hour && \
-                 $start_hour_no >= $start_display_hour && $end_hour_no <= $end_display_hour } {
+        if { $start_hour_no == $item_current_hour } {
 
             lappend day_items_per_hour \
                 [list $item_current_hour $name $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
-            ds_comment "Outputting $name at $start_hour ($item_current_hour)"
         } else {
             lappend day_items_per_hour \
                 [list $item_current_hour {} $item_id $calendar_name $status_summary $start_hour $end_hour $start_time $end_time]
-            ds_comment "Continuing $name at $start_hour ($item_current_hour)"
         }
         incr items_per_hour($item_current_hour)
     }
@@ -155,7 +154,8 @@ foreach this_item $day_items_per_hour {
     set item_end_hour [expr [string trimleft [lindex $this_item 6] 0]+0]
     set rowspan [expr $item_end_hour - $item_start_hour]
 
-    if {$item_start_hour > $day_current_hour} {
+    if {$item_start_hour > $day_current_hour && \
+                 $item_start_hour >= $start_display_hour && $item_end_hour <= $end_display_hour} {
         # need to add dummy entries to show all hours
         for {  } { $day_current_hour < $item_start_hour } { incr day_current_hour } {
 	    set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%X"]
@@ -186,8 +186,6 @@ foreach this_item $day_items_per_hour {
     set full_item [subst $item_template]
 
     set current_hour_link [subst $hour_template]
-
-    ds_comment "Multirow: day_current_hour = $day_current_hour, name = [lindex $this_item 1]"
 
     multirow append day_items_with_time \
         $current_hour_link $day_current_hour $localized_day_current_hour \

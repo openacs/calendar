@@ -25,7 +25,8 @@
          i.item_type_id,
          it.type as item_type,
          on_which_calendar as calendar_id,
-         c.calendar_name
+         c.calendar_name,
+         o.creation_user
        from
          acs_events e join timespans s
            on (e.timespan_id = s.timespan_id)
@@ -39,6 +40,8 @@
            on (it.item_type_id = i.item_type_id)
          left join calendars c
            on (c.calendar_id = i.on_which_calendar)
+         left join acs_objects o
+           on (o.object_id = i.cal_item_id)
        where
          e.event_id = :cal_item_id
       </querytext>
@@ -57,7 +60,8 @@
          i.item_type_id,
          it.type as item_type,
          on_which_calendar as calendar_id,
-         c.calendar_name
+         c.calendar_name,
+         o.creation_user
        from
          acs_events e join timespans s
            on (e.timespan_id = s.timespan_id)
@@ -71,6 +75,8 @@
            on (it.item_type_id = i.item_type_id)
          left join calendars c
            on (c.calendar_id = i.on_which_calendar)
+         left join acs_objects o
+           on (o.object_id = i.cal_item_id)
        where
          e.event_id = :cal_item_id
      </querytext>

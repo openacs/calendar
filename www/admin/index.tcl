@@ -1,81 +1,72 @@
 # /packages/calendar/www/admin/index.tcl
 
 ad_page_contract {
-    
     Main Calendar Admin Page. 
-    ## HACKED BY BEN FOR SLOAN ##
-    ## FEATURES TEMPORARILY TAKEN OUT ##
-    
-    This pages checks to see if the user has any group calendar 
-    that he or she is the admin of. 
-    
 
     @author Gary Jin (gjin@arsdigita.com)
     @creation-date Dec 14, 2000
     @cvs-id $Id$
-} {
- 
-} -properties {
-    context_bar:onevalue
 }
-
 
 # find out the user_id 
 set user_id [ad_verify_and_get_user_id]
 
 set package_id [ad_conn package_id]
+set page_title [_ calendar.lt_Calendar_Administrati]
 set context [list]
 
-
-db_multirow calendars calendar_list {
-    select     calendar_id, 
-               calendar_name
-    from       calendars
-    where      owner_id = :user_id
-    and        acs_permission.permission_p(
-                  calendar_id, 
-                  :user_id,
-                  'calendar_admin'
-               ) = 't'
-    order by   calendar_name
+db_multirow calendars select_calendars {
+    select c.calendar_name, 
+           c.calendar_id, 
+           c.private_p,
+           (select count(*) from cal_items i where i.on_which_calendar = c.calendar_id) as num_items
+    from   calendars c
+    where  (c.private_p = 'f' and c.package_id = :package_id) or (c.private_p = 't' and c.owner_id = :user_id)
+    order  by c.private_p asc, upper(c.calendar_name)
 }
-          
 
-ad_return_template 
+template::list::create \
+    -name "calendars" \
+    -multirow "calendars" \
+    -actions [list [_ calendar.lt_Create_a_new_calendar] "calendar-edit"] \
+    -elements {
+        edit {
+            label ""
+            display_template {
+                <img src="/shared/images/Edit16.gif" height="16" width="16" alt="Edit" border="0">
+            }
+            link_url_eval {[export_vars -base calendar-edit { calendar_id }]}
+            sub_class narrow
+        }
+        calendar_name {
+            label {[_ calendar.Calendar_Name]}
+            link_url_eval {[export_vars -base calendar-edit { calendar_id }]}
+        }
+        type {
+            label {Type}
+            display_eval {[ad_decode $private_p "t" "Personal" "Shared"]}
+        }
+        num_items {
+            label "Items"
+            display_eval {[lc_numeric $num_items]}
+            html { align right }
+        }
+        permissions {
+            label {Permissions}
+            display_template {Permissions}
+            link_url_eval {[export_vars -base permissions { { object_id $calendar_id } }]}
+            html { align center }
+        }
+        delete {
+            label ""
+            display_template {
+                <if @calendars.num_items@ eq 0>
+                  <img src="/shared/images/Delete16.gif" height="16" width="16" alt="Delete" border="0">
+                </if>
+            }
+            link_url_eval {[export_vars -base calendar-delete { calendar_id }]}
+            sub_class narrow
+        }        
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+set permissions_url [export_vars -base permissions { { object_id {[ad_conn package_id]} } }]

@@ -41,4 +41,16 @@ and calendar_id= :calendar_id
         </querytext>
     </fullquery>
 
+<fullquery name="calendar::get.select_calendar">      
+      <querytext>
+	       select  calendar_id,
+                       calendar_name,
+                       private_p,
+                       owner_id,
+                       package_id
+	       from    calendars
+               where   calendar_id = :calendar_id
+      </querytext>
+</fullquery>
+
 </queryset>

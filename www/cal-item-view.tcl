@@ -12,13 +12,12 @@ ad_page_contract {
 set user_id [ad_verify_and_get_user_id]
 set package_id [ad_conn package_id]
 
-#ad_require_permission $cal_item_id read
-
-set edit_p [ad_permission_p $cal_item_id cal_item_write]
-set delete_p [ad_permission_p $cal_item_id cal_item_delete] 
-set admin_p [ad_permission_p $cal_item_id calendar_admin]
+permission::require_permission -object_id $cal_item_id -privilege read
 
 calendar::item::get -cal_item_id $cal_item_id -array cal_item
+
+set write_p [permission::write_permission_p -object_id $cal_item_id -creation_user $cal_item(creation_user)]
+
 
 # Attachments?
 if {$cal_item(n_attachments) > 0} {

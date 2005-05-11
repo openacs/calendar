@@ -52,41 +52,21 @@
               </tr><tr>
             </if>
              <if @months.current_month_p@ true>
-              <td class="months selected"><a href="@months.url@"  title="<#_ Go to @months.name@ @curr_year@#>" >@months.name@</a></td>
+              <td class="months selected"><a href="@months.url@"  title="#calendar.lt_Go_to_monthsname_curr#" >@months.name@</a></td>
             </if>
             <else>
-              <td class="months"><a href="@months.url@" <#_ Go to @months.name@ @curr_year@>@months.name@</a></td>
-            </else>         
-           </multiple>
-        </if>
-
-        <else>
-          <tr class="days">
-            <multiple name="days_of_week">
-              <td>@days_of_week.day_short@</td>
-            </multiple>
-          </tr>
-      
-          <multiple name="days">
-            <if @days.beginning_of_week_p@ true>
-              <tr>
-            </if>
-        
-            <if @days.active_p@ true>
-              <if @days.today_p@ true>
-                <td class="today" onclick="javascript:location.href='@days.url@';">
-                  <a href="@days.url@" title="<#_ Go to @month@/@days.day_number@/@year@#>">@days.day_number@</a>
+              <td class="months"><a href="@months.url@" #calendar.lt_Go_to_monthsname_curr_1#">@days.day_number@</a>
                 </td>
               </if>
               <else>
                 <td class="active" onclick="javascript:location.href='@days.url@';">
-                  <a href="@days.url@">@days.day_number@</a>
+                  <a href="@days.url@"  title="#calendar.lt_Go_to_month_name_days#">@days.day_number@</a>
                 </td>
               </else>
             </if>
             <else>
               <td class="inactive" onclick="javascript:location.href='@days.url@';">
-                <a href="@days.url@">@days.day_number@</a>
+                <a href="@days.url@"  title="#calendar.lt_Go_to_month_name_days#">@days.day_number@</a>
               </td>
             </else>
         

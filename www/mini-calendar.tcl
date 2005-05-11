@@ -72,6 +72,7 @@ set now        [clock scan $date]
     set date_list [dt_ansi_to_list $date]
     set year [dt_trim_leading_zeros [lindex $date_list 0]]
     set month [dt_trim_leading_zeros [lindex $date_list 1]]
+    set month_name [lindex [dt_month_names] $month]
     set day [dt_trim_leading_zeros [lindex $date_list 2]]
 
 set months_list [dt_month_names]

@@ -32,8 +32,15 @@ array set message_key_array {
     month #acs-datetime.Month#
 }
 
+array set message_key_title_array {
+    list #acs-datetime.view_calendar_list#
+    day #acs-datetime.view_calendar_day#
+    week #acs-datetime.view_calendar_week#
+    month #acs-datetime.view_calendar_month#
+}
+
 # Create row with existing views
-multirow create views name text active_p url
+multirow create views name text active_p url title
 foreach viewname {list day week month} {
     if { [string equal $viewname $view] } {
         set active_p t
@@ -42,10 +49,12 @@ foreach viewname {list day week month} {
     }
     if {[string equal $viewname list]} {
 	multirow append views [lang::util::localize $message_key_array($viewname)] $viewname $active_p \
-	    "[export_vars -base $base_url {date {view $viewname}}]${page_num}${url_stub_period_days}"
+	    "[export_vars -base $base_url {date {view $viewname}}]${page_num}${url_stub_period_days}" \
+	    [lang::util::localize $message_key_title_array($viewname)]
     } else {
 	multirow append views [lang::util::localize $message_key_array($viewname)] $viewname $active_p \
-	    "[export_vars -base $base_url {date {view $viewname}}]${page_num}"
+	    "[export_vars -base $base_url {date {view $viewname}}]${page_num}" \
+	    [lang::util::localize $message_key_title_array($viewname)]
     }
 }
 

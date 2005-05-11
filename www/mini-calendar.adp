@@ -8,7 +8,7 @@
       </if>
       <else>
         <td>
-          <a href="@views.url@">@views.name@</a>
+          <a href="@views.url@" title="@views.title@">@views.name@</a>
         </td>
       </else>
     </multiple>
@@ -20,11 +20,11 @@
         <tr>
           <if @view@ eq "month">
             <td class="back">
-              <a href="@prev_year_url@"><img border="0" src="/resources/acs-subsite/left.gif"></a>
+              <a href="@prev_year_url@" title="#calendar.Go_to_year_prev_year#"><img border="0" src="/resources/acs-subsite/left.gif"></a>
             </td>
             <td class="current_view" colspan="2">@curr_year@</td>
             <td class="forward">
-              <a href="@next_year_url@"><img border="0" src="/resources/acs-subsite/right.gif"></a>
+              <a href="@next_year_url@" title="#calendar.Go_to_year_next_year#"><img border="0" src="/resources/acs-subsite/right.gif"></a>
             </td>
           </if>
           <else>
@@ -52,10 +52,10 @@
               </tr><tr>
             </if>
              <if @months.current_month_p@ true>
-              <td class="months selected"><a href="@months.url@">@months.name@</a></td>
+              <td class="months selected"><a href="@months.url@"  title="<#_ Go to @months.name@ @curr_year@#>" >@months.name@</a></td>
             </if>
             <else>
-              <td class="months"><a href="@months.url@">@months.name@</a></td>
+              <td class="months"><a href="@months.url@" <#_ Go to @months.name@ @curr_year@>@months.name@</a></td>
             </else>         
            </multiple>
         </if>
@@ -75,7 +75,7 @@
             <if @days.active_p@ true>
               <if @days.today_p@ true>
                 <td class="today" onclick="javascript:location.href='@days.url@';">
-                  <a href="@days.url@">@days.day_number@</a>
+                  <a href="@days.url@" title="<#_ Go to @month@/@days.day_number@/@year@#>">@days.day_number@</a>
                 </td>
               </if>
               <else>

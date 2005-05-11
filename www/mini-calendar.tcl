@@ -174,8 +174,7 @@ if [string equal $view month] {
             set end_of_week_p f
         }
 
-        multirow append days $day_number $beginning_of_week_p $end_of_week_p $today_p $active_p \
-            "[export_vars -base $base_url {{date $ansi_date} view}]${page_num}${url_stub_period_days}"
+        multirow append days $day_number $beginning_of_week_p $end_of_week_p $today_p $active_p "[export_vars -base $base_url {{date $ansi_date} view}]${page_num}${url_stub_period_days}"
         incr day_number
         incr day_of_week
     }

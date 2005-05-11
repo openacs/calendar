@@ -54,7 +54,7 @@
               <td class="months selected"><a href="@months.url@"  title="#calendar.lt_Go_to_monthsname_curr#" >@months.name@</a></td>
             </if>
             <else>
-              <td class="months"><a href="@months.url@" title="calendar.lt_Go_to_monthsname_curr_1#">@months.name@</a>
+              <td class="months"><a href="@months.url@" title="#calendar.Go_to_monthsname#">@months.name@</a>
                 </td>
            </else>
           </multiple>

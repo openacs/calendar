@@ -85,6 +85,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
 
 set day_current_hour 0
 set localized_day_current_hour ""
+set localized_date_current ""
 set item_add_without_time [subst $hour_template]
 
 # Now items with time
@@ -94,6 +95,7 @@ multirow create items \
     calendar_name \
     status_summary \
     add_url \
+    add_title \
     localized_current_hour \
     current_hour \
     start_time \
@@ -159,23 +161,26 @@ foreach this_item $day_items_per_hour {
 
         for {  } { $day_current_hour < $item_start_hour } { incr day_current_hour } {
 	    set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%X"]
+	    set localized_date_current [lc_time_fmt "$current_date $day_current_hour:00:00" "%x"]
             multirow append items \
                 "" \
                 "" \
                 "" \
                 "" \
                 [subst $hour_template] \
+		"[_ calendar.Add_item_beginning_at]" \
                 $localized_day_current_hour \
                 $day_current_hour \
                 0 \
                 0 \
                 "" \
-                "" 
+                ""
         }
     }
 
     set day_current_hour [lindex $this_item 0]
     set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%X"]
+    set localized_date_current [lc_time_fmt "$current_date $day_current_hour:00:00" "%x"]
 
     # reset url stub
     set url_stub ""
@@ -203,6 +208,7 @@ foreach this_item $day_items_per_hour {
         [lindex $this_item 3] \
         [lindex $this_item 4] \
         $current_hour_link \
+	"[_ calendar.Add_item_beginning_at]" \
         $localized_day_current_hour \
         $day_current_hour \
         [lindex $this_item 7] \
@@ -217,12 +223,14 @@ if {$day_current_hour < $end_display_hour } {
     # need to add dummy entries to show all hours
     for {  } { $day_current_hour < $end_display_hour } { incr day_current_hour } {
 	set localized_day_current_hour [lc_time_fmt "$current_date $day_current_hour:00:00" "%X" [ad_conn locale]]
+	set localized_date_current [lc_time_fmt "$current_date $day_current_hour:00:00" "%x" [ad_conn locale]]
         multirow append items \
             "" \
             "" \
             "" \
             "" \
             "[subst $hour_template]" \
+            "[_ calendar.Add_item_beginning_at]" \
             $localized_day_current_hour \
             $day_current_hour \
             "" \

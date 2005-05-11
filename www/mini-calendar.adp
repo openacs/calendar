@@ -29,6 +29,7 @@
           </if>
           <else>
             <td class="back">
+              <a href="#month_calendar_end" alt="#calendar.skip_month_calendar#"></a>
               <a href="@prev_month_url@"><img border=0 src="/resources/acs-subsite/left.gif"></a>
             </td>
             <td class="current_view" colspan="2">@curr_month@</td>
@@ -120,6 +121,7 @@
         @form_vars;noquote@
         @page_num_formvar;noquote@
       </form>
+      <a name="month_calendar_end" />
     </td>
   </tr>
 </table>

@@ -1,5 +1,5 @@
 ad_library {
-    Callbacks for site-wide packages.
+    Callbacks for the search package.
 
     @author Dirk Gomez <openacs@dirkgomez.de>
     @creation-date 2005-06-12

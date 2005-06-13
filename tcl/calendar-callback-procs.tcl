@@ -49,33 +49,3 @@ ad_proc -public -callback search::url -impl cal_item {} {
     return "[ad_url][db_string select_cal_item_package_url {}]cal-item-view?cal_item_id=$object_id"
 }
 
-ad_proc -public -callback search::datasource -impl calendar {} {
-    Datasource for the FtsContentProvider contract for the calendar object.
-
-    @author Dirk Gomez openacs@dirkgomez.de
-    @creation_date 2004-04-01
-} {
-    if {![db_0or1row datasource {
-        select
-          calendar_id as object_id,
-          calendar_name as title,
-          '' as content,
-          'text/plain' as mime,
-          'text' as storage_type,
-          '' as keywords
-        from cal_item
-        where cal_item_id = :object_id
-    } -column_array datasource]} {
-        return {object_id {} name {} charter {} mime {} storage_type {}}
-    }
-    return [array get datasource]
-}
-
-ad_proc -public -callback search::url -impl calendar {} {
-    url method for the FtsContentProvider contract
-
-    @author Dirk Gomez openacs@dirkgomez.de
-    @creation_date 2004-04-01
-} {
-    return "[ad_url][db_string select_calendar_package_url {}]"
-}

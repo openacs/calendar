@@ -30,7 +30,7 @@ ad_proc -public -callback search::datasource -impl cal_item {} {
 
     return [list object_id $cal_item_id \
                 title $cal_item(title) \
-                content "$combined_content \
+                content $combined_content \
                 keywords {} \
                 storage_type text \
                 mime text/plain ]

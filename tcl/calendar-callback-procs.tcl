@@ -23,13 +23,13 @@ ad_proc -public -callback search::datasource -impl cal_item {} {
 } {
     calendar::item::get -cal_item_id $object_id -array cal_item
 
-    set combined_content $cal_item(calendar_name)
+    set combined_content "$cal_item(calendar_name)\n"
     append combined_content [ad_html_text_convert -from text/html -to text/plain -- $cal_item(description)]
 
     # TODO implement attachments
 
-    return [list object_id $cal_item_id \
-                title $cal_item(title) \
+    return [list object_id $object_id \
+                title $cal_item(name) \
                 content $combined_content \
                 keywords {} \
                 storage_type text \
@@ -46,7 +46,7 @@ ad_proc -public -callback search::url -impl cal_item {} {
 } {
     calendar::item::get -cal_item_id $object_id -array cal_item
 
-    return "[ad_url][db_string select_cal_item_package_url {}]cal-item-view?cal_item_id=$cal_item_id"
+    return "[ad_url][db_string select_cal_item_package_url {}]cal-item-view?cal_item_id=$object_id"
 }
 
 ad_proc -public -callback search::datasource -impl calendar {} {

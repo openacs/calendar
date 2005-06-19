@@ -32,15 +32,8 @@ array set message_key_array {
     month #acs-datetime.Month#
 }
 
-array set message_key_title_array {
-    list #acs-datetime.view_calendar_list#
-    day #acs-datetime.view_calendar_day#
-    week #acs-datetime.view_calendar_week#
-    month #acs-datetime.view_calendar_month#
-}
-
 # Create row with existing views
-multirow create views name text active_p url title
+multirow create views name text active_p url
 foreach viewname {list day week month} {
     if { [string equal $viewname $view] } {
         set active_p t
@@ -49,12 +42,10 @@ foreach viewname {list day week month} {
     }
     if {[string equal $viewname list]} {
 	multirow append views [lang::util::localize $message_key_array($viewname)] $viewname $active_p \
-	    "[export_vars -base $base_url {date {view $viewname}}]${page_num}${url_stub_period_days}" \
-	    [lang::util::localize $message_key_title_array($viewname)]
+	    "[export_vars -base $base_url {date {view $viewname}}]${page_num}${url_stub_period_days}"
     } else {
 	multirow append views [lang::util::localize $message_key_array($viewname)] $viewname $active_p \
-	    "[export_vars -base $base_url {date {view $viewname}}]${page_num}" \
-	    [lang::util::localize $message_key_title_array($viewname)]
+	    "[export_vars -base $base_url {date {view $viewname}}]${page_num}"
     }
 }
 
@@ -72,7 +63,6 @@ set now        [clock scan $date]
     set date_list [dt_ansi_to_list $date]
     set year [dt_trim_leading_zeros [lindex $date_list 0]]
     set month [dt_trim_leading_zeros [lindex $date_list 1]]
-    set month_name [lindex [dt_month_names] $month]
     set day [dt_trim_leading_zeros [lindex $date_list 2]]
 
 set months_list [dt_month_names]
@@ -174,7 +164,8 @@ if [string equal $view month] {
             set end_of_week_p f
         }
 
-        multirow append days $day_number $beginning_of_week_p $end_of_week_p $today_p $active_p "[export_vars -base $base_url {{date $ansi_date} view}]${page_num}${url_stub_period_days}"
+        multirow append days $day_number $beginning_of_week_p $end_of_week_p $today_p $active_p \
+            "[export_vars -base $base_url {{date $ansi_date} view}]${page_num}${url_stub_period_days}"
         incr day_number
         incr day_of_week
     }

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="calendar" package_version="2.1.0b3" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="calendar" package_version="2.1.0b1" locale="en_US" charset="ISO-8859-1">
 
   <msg key="_You_may_choose_to">. You may choose to:</msg>
   <msg key="Add">Add</msg>
   <msg key="add">add</msg>
   <msg key="Add_a_new_Audience">Add a new Audience</msg>
   <msg key="add_an_event">add an event</msg>
-  <msg key="Add_an_item">Add an item</msg>
   <msg key="Add_Item">Add Item</msg>
-  <msg key="Add_item_beginning_at">Add an item beginning at %localized_day_current_hour% on %localized_date_current%</msg>
   <msg key="Add_Recurrence">Add Recurrence</msg>
   <msg key="All_Day_Event">All Day Event</msg>
   <msg key="all_events">all events</msg>
@@ -55,9 +53,6 @@
   <msg key="Events_over_a">Events over a</msg>
   <msg key="Friday">Friday</msg>
   <msg key="from">from</msg>
-  <msg key="Go_to_monthsname">Go to %months.name%</msg>
-  <msg key="Go_to_year_next_year">Go to year %next_year%</msg>
-  <msg key="Go_to_year_prev_year">Go to year %prev_year%</msg>
   <msg key="Grant">Grant</msg>
   <msg key="Grant_Permissions">Grant Permissions</msg>
   <msg key="is_recurring">Item is recurring.</msg>
@@ -80,29 +75,6 @@
   <msg key="lt_Edit_your_Calendar_Pr">Edit your Calendar Preferences</msg>
   <msg key="lt_everyone_have_read_pe">everyone have read permission, and can see the items, registered 
 	          and un-reg-ed users alike.</msg>
-  <msg key="lt_Go_to_month_name_days">Go to %month_name% %days.day_number%, %year%</msg>
-  <msg key="lt_Go_to_monthsname_curr">Go to %months.name% %curr_year%</msg>
-  <msg key="lt_Go_to_monthsname_curr_1">Go to %months.name% %curr_year%&gt;%months.name%&lt;/a&gt;&lt;/td&gt;
-            &lt;/else&gt;         
-           &lt;/multiple&gt;
-        &lt;/if&gt;
-
-        &lt;else&gt;
-          &lt;tr class=&quot;days&quot;&gt;
-            &lt;multiple name=&quot;days_of_week&quot;&gt;
-              &lt;td&gt;%days_of_week.day_short%&lt;/td&gt;
-            &lt;/multiple&gt;
-          &lt;/tr&gt;
-      
-          &lt;multiple name=&quot;days&quot;&gt;
-            &lt;if %days.beginning_of_week_p% true&gt;
-              &lt;tr&gt;
-            &lt;/if&gt;
-        
-            &lt;if %days.active_p% true&gt;
-              &lt;if %days.today_p% true&gt;
-                &lt;td class=&quot;today&quot; onclick=&quot;javascript:location.href='%days.url%';&quot;&gt;
-                  &lt;a href=&quot;%days.url%&quot; title=&quot;&lt;#_ Go to %month_name% %days.day_number%, %year%</msg>
   <msg key="lt_Hide_Checked_Calendar">Hide Selected Calendars</msg>
   <msg key="lt_Manage_Calendar_Audie">Manage Calendar Audiences</msg>
   <msg key="lt_no_parties_exist_cont">no parties exist. contact your system admin</msg>
@@ -142,8 +114,6 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Saturday">Saturday</msg>
   <msg key="Select_Calendars">Select Calendars</msg>
   <msg key="Sharing">Sharing</msg>
-  <msg key="skip_day_calendar">Skip day calendar</msg>
-  <msg key="skip_month_calendar">Skip month calendar</msg>
   <msg key="Start_Time">Start Time</msg>
   <msg key="start_time_before_end_time">Start time is before end time</msg>
   <msg key="Submit_query">Submit query</msg>

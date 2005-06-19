@@ -29,8 +29,7 @@
                    cal_item_types.type as item_type,
                    on_which_calendar as calendar_id,
                    c.calendar_name,
-                   o.creation_user,
-                   c.package_id as calendar_package_id
+                   o.creation_user
             from   acs_activities a,
                    acs_events e,
                    timespans s,
@@ -64,8 +63,7 @@
                    cal_item_types.type as item_type,
                    on_which_calendar as calendar_id,
                    c.calendar_name,
-                   o.creation_user,
-                   c.package_id as calendar_package_id
+                   o.creation_user
             from   acs_activities a,
                    acs_events e,
                    timespans s,
@@ -139,7 +137,6 @@ end;
 	begin
 	:1 := cal_item.new(
 	  on_which_calendar  => :calendar_id,
-          name               => :name, 
 	  activity_id        => :activity_id,
           timespan_id        => :timespan_id,
           item_type_id       => :item_type_id,

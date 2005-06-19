@@ -1,9 +1,9 @@
  <table class="cal-table-display" cellpadding="0" cellspacing="0" border="0" width="99%">
   <tr>
     <td class="cal-month-title-text" colspan="7">
-      <a href="@previous_month_url@"><img border=0 src="<%=[dt_left_arrow]%>" alt="back one month"></a>
+      <a href="@previous_month_url;noquote@"><img border=0 src="<%=[dt_left_arrow]%>" alt="back one month"></a>
       @month_string@ @year@
-      <a href="@next_month_url@"><img border=0 src="<%=[dt_right_arrow]%>" alt="forward one month"></a>
+      <a href="@next_month_url;noquote@"><img border=0 src="<%=[dt_right_arrow]%>" alt="forward one month"></a>
     </td>
   </tr>
   <tr>
@@ -30,12 +30,12 @@
               </if>     
               <else>
                 <if @items.today_p@ true>
-                  <td class="cal-month-today" onclick="javascript:location.href='@items.add_url@';">
+                  <td class="cal-month-today" <if @add_p@> onclick="javascript:location.href='@items.add_url@';"</if>>
                 </if>
                 <else>
-                  <td class="cal-month-day" onclick="javascript:location.href='@items.add_url@';">
+                  <td class="cal-month-day" <if @add_p@>onclick="javascript:location.href='@items.add_url@';"</if>>
                 </else>
-                  <a href="@items.day_url@">@items.day_number@</a>
+                  <if @items.day_url@ not nil><a href="@items.day_url@">@items.day_number@</a></if><else>@items.day_number@</else>
 
                   <group column="day_number">
                     <if @items.event_name@ true>

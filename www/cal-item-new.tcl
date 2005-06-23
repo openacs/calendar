@@ -15,7 +15,7 @@ ad_page_contract {
     {start_time ""}
     {end_time ""}
     {view "month"}
-    {return_url "cal-item-view"}
+    {return_url "./"}
 }
 auth::require_login
 
@@ -225,7 +225,6 @@ ad_form -extend -name cal_item -validate {
     # lappend date "YYYY MM DD"
     # set date [calendar::to_sql_datetime -date $date -time ""]	
     set date "[template::util::date::get_property year $date] [template::util::date::get_property month $date] [template::util::date::get_property day $date]"
-    ns_log Notice " ** $date **"
 
     set start_date [calendar::to_sql_datetime -date $date -time $start_time -time_p $time_p]
     set end_date [calendar::to_sql_datetime -date $date -time $end_time -time_p $time_p]
@@ -242,9 +241,13 @@ ad_form -extend -name cal_item -validate {
                          -item_type_id $item_type_id]
 
     if {$repeat_p} {
-        ad_returnredirect [export_vars -base cal-item-create-recurrence { cal_item_id return_url}]
+        ad_returnredirect [export_vars -base cal-item-create-recurrence { return_url cal_item_id}]
     } else {
-        ad_returnredirect [export_vars -base $return_url { cal_item_id }]
+        if { [string compare $return_url "./"] } {
+    		ad_returnredirect $return_url
+    	} else {
+		ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]	
+    	}
    }
     ad_script_abort
 
@@ -257,7 +260,6 @@ ad_form -extend -name cal_item -validate {
     #lappend date "YYYY MM DD"
     # set date [calendar::to_sql_datetime -date $date -time ""]
     set date "[template::util::date::get_property year $date] [template::util::date::get_property month $date] [template::util::date::get_property day $date]"
-    ns_log Notice " ** $date **"
 
     # Require write permission on the item and create on the calendar into which we're putting it
     permission::require_write_permission -object_id $cal_item_id
@@ -282,7 +284,11 @@ ad_form -extend -name cal_item -validate {
         -edit_all_p $edit_all_p \
         -calendar_id $calendar_id
     
-    ad_returnredirect [export_vars -base $return_url { cal_item_id }]
+    if { [string compare $return_url "./"] } {
+    	ad_returnredirect $return_url
+    } else {
+	ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]	
+    }
     ad_script_abort
 }
 

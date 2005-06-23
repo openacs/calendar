@@ -15,7 +15,7 @@ ad_page_contract {
     {start_time ""}
     {end_time ""}
     {view "month"}
-    {return_url ""}
+    {return_url "cal-item-view"}
 }
 auth::require_login
 
@@ -51,14 +51,13 @@ if { [exists_and_not_null cal_item_id] } {
     set ad_form_mode edit
 }
 
-ad_form -name cal_item  -form {
+ad_form -name cal_item  -export { return_url } -form {
     {cal_item_id:key}
 
     {title:text(text)
         {label "[_ calendar.Title_1]"}
         {html {size 45} maxlength 255}
     }
-    {return_url:text(hidden)}
     {date:date
         {label "[_ calendar.Date_1]"}
 	{format "Month DD YYYY"}
@@ -245,11 +244,7 @@ ad_form -extend -name cal_item -validate {
     if {$repeat_p} {
         ad_returnredirect [export_vars -base cal-item-create-recurrence { cal_item_id return_url}]
     } else {
-	if {![empty_string_p $return_url]} {
-	    ad_returnredirect $return_url
-	} else {
-	    ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]
-	}
+        ad_returnredirect [export_vars -base $return_url { cal_item_id }]
    }
     ad_script_abort
 
@@ -287,11 +282,7 @@ ad_form -extend -name cal_item -validate {
         -edit_all_p $edit_all_p \
         -calendar_id $calendar_id
     
-    if {![empty_string_p $return_url]} {
-	ad_returnredirect $return_url
-    } else {
-	ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]
-    }
+    ad_returnredirect [export_vars -base $return_url { cal_item_id }]
     ad_script_abort
 }
 

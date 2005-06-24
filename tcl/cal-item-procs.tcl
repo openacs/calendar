@@ -58,6 +58,8 @@ ad_proc -public calendar::item::new {
         # by default, the cal_item permissions 
         # are going to be inherited from the calendar permissions
         set cal_item_id [db_exec_plsql cal_item_add {}]
+	
+	db_dml set_item_type_id "update cal_items set item_type_id=:item_type_id where cal_item_id=:cal_item_id"
 
         assign_permission  $cal_item_id  $creation_user read
         assign_permission  $cal_item_id  $creation_user write

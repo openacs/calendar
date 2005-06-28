@@ -60,9 +60,9 @@ ad_form -name cal_item  -export { return_url } -form {
     }
     {date:date
         {label "[_ calendar.Date_1]"}
-	{format "Month DD YYYY"}
+	{format "YYYY MM DD"}
         {html {id date} } 
-	{after_html {<input type="button" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');" onclick ="return showCalendarWithDateWidget('date', 'y-m-d');" />} } }
+	{after_html {<input type="button" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');" onclick ="return showCalendarWithDateWidget('date', 'y-m-d');" /> \[<b>y-m-d</b>\]} } }
     {time_p:text(radio)     
         {label "&nbsp;"}
         {html {onClick "javascript:TimePChanged(this);"}} 
@@ -217,6 +217,7 @@ ad_form -extend -name cal_item -validate {
     set start_time [template::util::date::from_ansi $ansi_start_date [lc_get formbuilder_time_format]]
     set end_time [template::util::date::from_ansi $ansi_end_date [lc_get formbuilder_time_format]]
 } -new_data {
+
     # To support green calendar
     # set date [split $date "-"]
     # lappend date ""
@@ -224,6 +225,7 @@ ad_form -extend -name cal_item -validate {
     # lappend date ""
     # lappend date "YYYY MM DD"
     # set date [calendar::to_sql_datetime -date $date -time ""]	
+
     set date "[template::util::date::get_property year $date] [template::util::date::get_property month $date] [template::util::date::get_property day $date]"
 
     set start_date [calendar::to_sql_datetime -date $date -time $start_time -time_p $time_p]

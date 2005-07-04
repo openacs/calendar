@@ -163,8 +163,7 @@ ad_form -extend -name cal_item -validate {
 	calendar::new -owner_id $user_id -private_p "t" -calendar_name "Personal" -package_id $package_id
     } 
     
-    #set date [template::util::date::from_ansi $date]
-    set date $ansi_date
+    set date [calendar::from_sql_datetime -sql_date $ansi_date  -format "YYY-MM-DD"]
     set repeat_p 0
     if {[info exists start_time] && ![empty_string_p $start_time] && $start_time != 0} {
 	# Set the start time

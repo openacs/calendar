@@ -65,7 +65,7 @@ and calendar_id= :calendar_id
   <querytext>
     select calendar_name
       from    calendars
-      where   calendar_id = :calendar_id;
+      where   calendar_id = :calendar_id
   </querytext>
 </fullquery>
 

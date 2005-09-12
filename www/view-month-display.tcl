@@ -102,8 +102,7 @@ multirow create items \
     outside_month_p \
     time_p \
     add_url \
-    day_url \
-    show_calendar_name_p
+    day_url
 
 # Calculate number of greyed days and then add them to the calendar mulitrow
 set greyed_days_before_month [expr [expr [dt_first_day_of_month $this_year $this_month]] -1 ]
@@ -128,8 +127,7 @@ for {set current_day 0} {$current_day < $greyed_days_before_month} {incr current
 	t \
 	"" \
 	"" \
-	"" \
-        t
+	"" 
 }
 
 set current_day $first_julian_date_of_month
@@ -181,8 +179,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
 		f \
 		0 \
                 "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
-		$day_link \
-                t 
+		$day_link 
+
         } 
     }
 
@@ -226,8 +224,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
 	f \
 	$time_p \
         "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
-	$day_link \
-        t
+	$day_link 
+
 }
 
 # Add cells for remaining days inside the month
@@ -257,8 +255,8 @@ for {} {$current_day <= $last_julian_date_in_month} {incr current_day} {
 	f \
         0 \
 	"${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
-	$day_link \
-        t
+	$day_link 
+
 }
 
 # Add cells for remaining days outside the month
@@ -279,7 +277,7 @@ if {$remaining_days > 0} {
 	    t \
 	    0 \
 	    "" \
-	    "" \
-            t
+	    "" 
+
     }
 }

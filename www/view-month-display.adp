@@ -43,7 +43,7 @@
                         <if @items.time_p@ true>@items.ansi_start_time@</if>
                         <a href=@items.event_url@>@items.event_name@</a>
                         <if @show_calendar_name_p@>
-                          <span class="cal-text-grey-sml"> [@items.calendar_name@]</span>
+                          <span class="cal-text-grey-sml"><if @items.show_calendar_name_p@>[@items.calendar_name@]</if> </span>
                         </if>
                       </div>
                     </if>

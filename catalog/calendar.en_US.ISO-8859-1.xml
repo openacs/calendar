@@ -159,6 +159,7 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Type_1">Type</msg>
   <msg key="Use_Hours_Below">Use Hours Below:</msg>
   <msg key="Wednesday">Wednesday</msg>
+  <msg key="y-m-d">y-m-d</msg>
   <msg key="year">year</msg>
   <msg key="Yes">Yes</msg>
   <msg key="yes_delete_it">yes, delete it</msg>

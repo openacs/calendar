@@ -58,7 +58,7 @@ ad_form -name cal_item  -export {return_url} -form {
         {label "[_ calendar.lt_Repeat_this_event_unt]"}
 	{format "YYYY MM DD"}
 	{html {id sel1}}
-	{after_html {<input type="button" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');" onclick ="return showCalendarWithDateWidget('sel1', 'y-m-d');" /> \[<b>y-m-d</b>\] 
+	{after_html {<input type="button" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');" onclick ="return showCalendarWithDateWidget('sel1', 'y-m-d');" /> \[<b>[_ calendar.y-m-d]</b>\] 
         } }
 
     }

@@ -61,11 +61,11 @@ ad_proc calendar::make_datetime {
     }
     
     if {$month < 10} {
-	set month "0$month"
+        set month "0$month"
     }
     
     if {$day < 10} {
-	set day "0$day"
+        set day "0$day"
     }
     
     if {[empty_string_p $event_time]} {
@@ -95,18 +95,22 @@ ad_proc calendar::create { owner_id
     }
 
     set calendar_id [db_exec_plsql create_new_calendar {
-	begin
-	:1 := calendar.new(
-	  owner_id      => :owner_id,
-	  private_p     => :private_p,
-	  calendar_name => :calendar_name,
-	  package_id    => :package_id,
-	  creation_user => :creation_user,
-	  creation_ip   => :creation_ip
-	);	
-	end;
+        begin
+        :1 := calendar.new(
+          owner_id      => :owner_id,
+          private_p     => :private_p,
+          calendar_name => :calendar_name,
+          package_id    => :package_id,
+          creation_user => :creation_user,
+          creation_ip   => :creation_ip
+        );      
+        end;
     }
     ]
+
+    #removing inherited permissions
+    permission::set_not_inherit -object_id $calendar_id
+            
     
     return $calendar_id
     
@@ -133,18 +137,18 @@ ad_proc -public calendar::assign_permissions { calendar_id
     # and set permission to read
 
     if { [string equal $cal_privilege "public"] } {
-	
+        
         set party_id [acs_magic_object "the_public"]
-	set cal_privilege "calendar_read"
+        set cal_privilege "calendar_read"
     } elseif { [string equal $cal_privilege "private"] } {
-	set cal_privilege "calendar_read"
+        set cal_privilege "calendar_read"
     } 
 
     if { [empty_string_p $revoke] } {
-	# grant the permissions
+        # grant the permissions
         permission::grant -object_id $calendar_id -party_id $party_id -privilege $cal_privilege
     } elseif { [string equal $revoke "revoke"] } {
-	# revoke the permissions
+        # revoke the permissions
         permission::revoke -object_id $calendar_id -party_id $party_id -privilege $cal_privilege
     }    
 }
@@ -162,7 +166,7 @@ ad_proc -public calendar::have_private_p {
 } {
     # Check whether the user is logged in at all
     if {!$party_id} {
-	return -1
+        return -1
     }
 
     if { [llength $calendar_id_list] > 0 } {
@@ -173,15 +177,15 @@ ad_proc -public calendar::have_private_p {
     
     if { ![string equal $result "0"] } {
 
-	if { [string equal $return_id "1"] } {
-	    return $result
-	} else {
-	    return 1
-	}
+        if { [string equal $return_id "1"] } {
+            return $result
+        } else {
+            return 1
+        }
  
     } else {
-	
-	return 0
+        
+        return 0
     }
 }
 

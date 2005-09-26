@@ -59,6 +59,9 @@ ad_proc -public calendar::item::new {
         # are going to be inherited from the calendar permissions
         set cal_item_id [db_exec_plsql cal_item_add {}]
 
+        #removing inherited permissions
+        permission::set_not_inherit -object_id $cal_item_id
+
         assign_permission  $cal_item_id  $creation_user read
         assign_permission  $cal_item_id  $creation_user write
         assign_permission  $cal_item_id  $creation_user delete
@@ -91,11 +94,11 @@ ad_proc -public calendar::item::get {
 
     db_1row $query_name {} -column_array row
     if {$normalize_time_to_utc} {
-	set row(start_date_ansi) [lc_time_local_to_utc $row(start_date_ansi)]
-	set row(end_date_ansi) [lc_time_local_to_utc $row(end_date_ansi)]
+        set row(start_date_ansi) [lc_time_local_to_utc $row(start_date_ansi)]
+        set row(end_date_ansi) [lc_time_local_to_utc $row(end_date_ansi)]
     } else {
-	set row(start_date_ansi) [lc_time_system_to_conn $row(start_date_ansi)]
-	set row(end_date_ansi) [lc_time_system_to_conn $row(end_date_ansi)]
+        set row(start_date_ansi) [lc_time_system_to_conn $row(start_date_ansi)]
+        set row(end_date_ansi) [lc_time_system_to_conn $row(end_date_ansi)]
     }
 
     if { $row(start_date_ansi) ==  $row(end_date_ansi) && [string equal [lc_time_fmt $row(start_date_ansi) "%T"] "00:00:00"]} {
@@ -233,9 +236,9 @@ ad_proc calendar::item::assign_permission { cal_item_id
     if revoke is set to revoke, then we revoke all permissions
 } {
     if { ![string equal $revoke "revoke"] } {
-	if { ![string equal $permission "cal_item_read"] } {
+        if { ![string equal $permission "cal_item_read"] } {
             permission::grant -object_id $cal_item_id -party_id $party_id -privilege cal_item_read
-	}
+        }
         permission::grant -object_id $cal_item_id -party_id $party_id -privilege $permission
     } elseif { [string equal $revoke "revoke"] } {
         permission::revoke -object_id $cal_item_id -party_id $party_id -privilege $permission

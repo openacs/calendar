@@ -50,14 +50,6 @@ if { ![info exists period_days] } {
     set end_date [clock format [clock scan "+${period_days} days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
 }
 
-if {[exists_and_not_null page_num]} {
-    set page_num_formvar [export_form_vars page_num]
-    set page_num "&page_num=$page_num"
-} else {
-    set page_num_formvar ""
-    set page_num ""
-}
-
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 

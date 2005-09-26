@@ -45,6 +45,10 @@ if { ![info exists show_calendar_name_p] } {
     set show_calendar_name_p 1
 }
 
+if { ![info exists show_calendar_name_p] } {
+    set show_calendar_name_p 1
+}
+
 if {[exists_and_not_null calendar_id_list]} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {

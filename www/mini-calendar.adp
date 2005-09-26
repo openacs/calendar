@@ -20,20 +20,20 @@
         <tr>
           <if @view@ eq "month">
             <td class="back">
-              <a href="@prev_year_url@"><img border="0" src="/resources/acs-subsite/left.gif"></a>
+              <a href="@prev_year_url@"><img border="0" src="/resources/acs-subsite/left.gif" alt="#calendar.prev_year#"></a>
             </td>
             <td class="current_view" colspan="2">@curr_year@</td>
             <td class="forward">
-              <a href="@next_year_url@"><img border="0" src="/resources/acs-subsite/right.gif"></a>
+              <a href="@next_year_url@"><img border="0" src="/resources/acs-subsite/right.gif" alt="#calendar.next_year#"></a>
             </td>
           </if>
           <else>
             <td class="back">
-              <a href="@prev_month_url@"><img border=0 src="/resources/acs-subsite/left.gif"></a>
+              <a href="@prev_month_url@"><img border=0 src="/resources/acs-subsite/left.gif" alt="#calendar.prev_month#"></a>
             </td>
             <td class="current_view" colspan="2">@curr_month@</td>
             <td class="forward">
-              <a href="@next_month_url@"><img border=0 src="/resources/acs-subsite/right.gif"></a>
+              <a href="@next_month_url@"><img border=0 src="/resources/acs-subsite/right.gif" alt="#calendar.next_month#"></a>
             </td>
           </else>
         </tr>

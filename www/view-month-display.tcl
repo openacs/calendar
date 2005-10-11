@@ -22,7 +22,20 @@ if {[info exists url_stub_callback]} {
 
 set url_stub_callback ""
 set page_num_urlvar ""
-set base_url ""
+
+if { [info exists calendar_id_list] } {
+    if {[llength $calendar_id_list] > 1} {
+	set force_calendar_id [calendar::have_private_p -return_id 1 -calendar_id_list $calendar_id_list -party_id [ad_conn user_id]]
+    } else {
+	set force_calendar_id [lindex $calendar_id_list 0]
+    }
+
+    calendar::get -calendar_id $force_calendar_id -array force_calendar
+    set base_url [apm_package_url_from_id $force_calendar(package_id)]
+} else {
+    set base_url ""
+}
+
 if {[info exists portlet_mode_p] && $portlet_mode_p} {
     set page_num_urlvar "&page_num=$page_num"
     set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=[ad_urlencode "../"]&action=edit&cal_item_id=\$item_id"
@@ -138,7 +151,7 @@ set current_day $first_julian_date_of_month
 
 set order_by_clause " order by ansi_start_date, ansi_end_date"
 set additional_limitations_clause ""
-set additional_select_clause ""
+set additional_select_clause ", cals.package_id"
 set interval_limitation_clause [db_map dbqd.calendar.www.views.month_interval_limitation]
 
 db_foreach dbqd.calendar.www.views.select_items {} {
@@ -165,11 +178,11 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                      -current_day $current_day \
                      -today_julian_date $today_julian_date \
                      -first_julian_date_of_month $first_julian_date_of_month]
-    if {$link_day_p} {
-	set day_link "?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar"
-    } else {
-	set day_link ""
-    }
+	    if {$link_day_p} {
+		set day_link "?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar"
+	    } else {
+		set day_link ""
+	    }
             multirow append items \
 		"" \
 		"" \
@@ -227,7 +240,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         $display_information(today_p) \
 	f \
 	$time_p \
-        "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
+        "[apm_package_url_from_id $package_id]cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
 	$day_link 
 
 }

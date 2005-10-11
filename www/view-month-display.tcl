@@ -151,7 +151,7 @@ set current_day $first_julian_date_of_month
 
 set order_by_clause " order by ansi_start_date, ansi_end_date"
 set additional_limitations_clause ""
-set additional_select_clause ", cals.package_id"
+set additional_select_clause ""
 set interval_limitation_clause [db_map dbqd.calendar.www.views.month_interval_limitation]
 
 db_foreach dbqd.calendar.www.views.select_items {} {
@@ -240,7 +240,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         $display_information(today_p) \
 	f \
 	$time_p \
-        "[apm_package_url_from_id $package_id]cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
+        "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
 	$day_link 
 
 }

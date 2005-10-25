@@ -61,6 +61,12 @@ ad_proc -public calendar::item::new {
 	
 	db_dml set_item_type_id "update cal_items set item_type_id=:item_type_id where cal_item_id=:cal_item_id"
 
+		# removing inherited permissions
+		if { [calendar::personal_p -calendar_id $calendar_id] } {
+			permission::set_not_inherit -object_id $cal_item_id
+		}
+		# ##
+
         assign_permission  $cal_item_id  $creation_user read
         assign_permission  $cal_item_id  $creation_user write
         assign_permission  $cal_item_id  $creation_user delete

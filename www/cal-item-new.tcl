@@ -144,7 +144,8 @@ if {[llength $cal_item_types] > 1} {
     ad_form -extend -name cal_item -form {
         {item_type_id:integer(select),optional
             {label "[_ calendar.Type_1]"}
-            {options {$cal_item_types}}
+            {options {$cal_item_types} }
+            {help_text "[_ calendar.Type_Help]"}
         }
     }
 }

@@ -157,6 +157,7 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Tuesday">Tuesday</msg>
   <msg key="Type">Type:</msg>
   <msg key="Type_1">Type</msg>
+  <msg key="Type_Help">Your calendar item can optionally be classified into types. Choose one from the drop down.</msg>
   <msg key="Use_Hours_Below">Use Hours Below:</msg>
   <msg key="Wednesday">Wednesday</msg>
   <msg key="y-m-d">y-m-d</msg>

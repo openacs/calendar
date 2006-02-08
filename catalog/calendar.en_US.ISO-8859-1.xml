@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="calendar" package_version="2.1.0b4" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="calendar" package_version="2.1.0b5" locale="en_US" charset="ISO-8859-1">
 
   <msg key="_You_may_choose_to">. You may choose to:</msg>
   <msg key="Add">Add</msg>
@@ -121,6 +121,8 @@ than once in your calendar. The event's details are:</msg>
   <msg key="lt_You_have_no_party_wid">You have no party wide calendars</msg>
   <msg key="Monday">Monday</msg>
   <msg key="New_Type">New Type:</msg>
+  <msg key="next_month">Next Month</msg>
+  <msg key="next_year">Next Year</msg>
   <msg key="No">No</msg>
   <msg key="No_Calendars">No Calendars</msg>
   <msg key="No_Items">No items</msg>
@@ -128,6 +130,8 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Note">Note</msg>
   <msg key="of_the_month">of the month</msg>
   <msg key="of_the_week">of the week</msg>
+  <msg key="prev_month">Previous Month</msg>
+  <msg key="prev_year">Previous Year</msg>
   <msg key="Private">Private:</msg>
   <msg key="private">private</msg>
   <msg key="Public">Public:</msg>

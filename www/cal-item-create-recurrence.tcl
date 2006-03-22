@@ -80,8 +80,7 @@ ad_form -name cal_item  -export {return_url} -form {
     #lappend recur_until ""
     #lappend recur_until ""
     #lappend recur_until "DD MONTH YYYY"
-
-    set recur_until "[template::util::date::get_property day $recur_until] [template::util::date::get_property long_month_name $recur_until] [template::util::date::get_property year $recur_until]"
+    #set recur_until "[template::util::date::get_property day $recur_until] [template::util::date::get_property long_month_name $recur_until] [template::util::date::get_property year $recur_until]"
 
     calendar::item::add_recurrence \
         -cal_item_id $cal_item_id \

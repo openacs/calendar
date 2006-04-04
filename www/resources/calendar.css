@@ -529,7 +529,7 @@ ca.cal-table-header {
 	font-weight: bold;
 	border: 0px solid #dfe2e5;
 	text-align: right;
-	padding-top: 0px 10px 0px 0px;
+	padding: 0px 10px 0px 0px;
 	width: 1%;
 	white-space: nowrap;
         vertical-align: top;

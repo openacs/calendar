@@ -103,6 +103,8 @@
               &lt;if %days.today_p% true&gt;
                 &lt;td class=&quot;today&quot; onclick=&quot;javascript:location.href='%days.url%';&quot;&gt;
                   &lt;a href=&quot;%days.url%&quot; title=&quot;&lt;#_ Go to %month_name% %days.day_number%, %year%</msg>
+  <description key="lt_Go_to_monthsname_curr_1">This looks like a buggy internationalization of the package.</description>
+
   <msg key="lt_Hide_Checked_Calendar">Hide Selected Calendars</msg>
   <msg key="lt_Manage_Calendar_Audie">Manage Calendar Audiences</msg>
   <msg key="lt_no_parties_exist_cont">no parties exist. contact your system admin</msg>

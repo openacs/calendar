@@ -63,7 +63,7 @@
         <else>
           <tr class="days">
             <multiple name="days_of_week">
-              <td>@days_of_week.day_short@</td>
+              <th>@days_of_week.day_short@</th>
             </multiple>
           </tr>
       

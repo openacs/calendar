@@ -13,9 +13,9 @@
         <tbody>
           <tr>
             <multiple name="weekday_names">
-              <td width="14%" class="cal-month-day-title">
+              <th width="14%" class="cal-month-day-title">
                 @weekday_names.weekday_short@
-              </td>
+              </th>
             </multiple>
           </tr>
 

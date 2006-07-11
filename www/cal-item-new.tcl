@@ -206,6 +206,10 @@ ad_form -extend -name cal_item -validate {
     } else {
         set repeat_p 1
     }
+    # Make the user explicitly choose edit all or not
+    # this is a usability issue, since it prevents unexpected
+    # behavior. According to carlb, this is how palm os works
+    # and that sounds like a reasonable interface to emulate
     # set edit_all_p $repeat_p
     if { !$repeat_p } {
         element set_properties cal_item edit_all_p -widget hidden

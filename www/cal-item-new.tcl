@@ -100,10 +100,10 @@ if { [ad_form_new_p -key cal_item_id] } {
     }
 } else {
     ad_form -extend -name cal_item -form {
-        {edit_all_p:text(radio)     
+        {edit_all_p:text(radio)
             {label "[_ calendar.Apply_to_all]"}
-            {options {{"[_ calendar.Yes]" 0}
-                {"[_ calendar.No]" 1} }}
+            {options {{"[_ calendar.Yes]" 1}
+                {"[_ calendar.No]" 0} }}
         }
     }
 }
@@ -206,7 +206,7 @@ ad_form -extend -name cal_item -validate {
     } else {
         set repeat_p 1
     }
-    set edit_all_p $repeat_p
+    # set edit_all_p $repeat_p
     if { !$repeat_p } {
         element set_properties cal_item edit_all_p -widget hidden
     }

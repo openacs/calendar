@@ -213,6 +213,7 @@ ad_form -extend -name cal_item -validate {
     # set edit_all_p $repeat_p
     if { !$repeat_p } {
         element set_properties cal_item edit_all_p -widget hidden
+        element set_value cal_item edit_all_p 0
     }
     # To support green calendar
     # set date [template::util::date::from_ansi $ansi_start_date]

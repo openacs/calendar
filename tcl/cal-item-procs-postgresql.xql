@@ -54,7 +54,7 @@
          (select count(*) from attachments where object_id = cal_item_id) as n_attachments,
          to_char(start_date, 'YYYY-MM-DD HH24:MI:SS') as start_date_ansi,
          to_char(end_date, 'YYYY-MM-DD HH24:MI:SS') as end_date_ansi,
-         coalesce(a.name, e.name) as name,
+         coalesce(e.name, a.name) as name,
          coalesce(e.description, a.description) as description,
          recurrence_id,
          i.item_type_id,

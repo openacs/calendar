@@ -1,7 +1,6 @@
 <table class="cal-table-display" cellpadding="1" cellspacing="2" width="99%">
   <tr>
     <td class="cal-month-title-text">
-      <a href="#day_calendar_end" alt="#calendar.skip_day_calendar#"></a>
       <a href="@previous_week_url@"><img border=0 src="<%=[dt_left_arrow]%>" alt="back one day"></a>
       @dates@
       <a href="@next_week_url@"><img border=0 src="<%=[dt_right_arrow]%>" alt="forward one day"></a>
@@ -15,7 +14,7 @@
         <tr>
           <td>
             <tr class="cal-row-light">
-            <td width="1%" class="cal-day-time"><a href="@item_add_without_time@" title="#calendar.Add_an_item#"><img border="0" align="left" src="/resources/acs-subsite/add.gif" alt="No Time"></a></td>
+            <td width="1%" class="cal-day-time"><a href="@item_add_without_time@" title="#calendar.Add_Item#"><img border="0" src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#"> #calendar.Add#</a></td>
             <td>
             <table> 
               <multiple name="items_without_time">
@@ -38,7 +37,7 @@
                 </else>
     
                 <td width="10%" class="cal-day-time">     
-                  <a href="@items.add_url@" title="@items.add_title@">@items.localized_current_hour@</a>
+                  <a href="@items.add_url@" title="#calendar.Add_Item#"><img border="0" src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#"> @items.localized_current_hour@</a>
                 </td>
     
                 <group column="current_hour">
@@ -60,4 +59,3 @@
     </td>
   </tr>
 </table>
-<a name="day_calendar_end" />

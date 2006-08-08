@@ -8,7 +8,7 @@
       </if>
       <else>
         <td>
-          <a href="@views.url@" title="@views.title@">@views.name@</a>
+          <a href="@views.url@">@views.name@</a>
         </td>
       </else>
     </multiple>
@@ -20,28 +20,28 @@
         <tr>
           <if @view@ eq "month">
             <td class="back">
-              <a href="@prev_year_url@" title="#calendar.Go_to_year_prev_year#"><img border="0" src="/resources/acs-subsite/left.gif"></a>
+              <a href="@prev_year_url@"><img border="0" src="/resources/acs-subsite/left.gif" alt="#calendar.prev_year#"></a>
             </td>
             <td class="current_view" colspan="2">@curr_year@</td>
             <td class="forward">
-              <a href="@next_year_url@" title="#calendar.Go_to_year_next_year#"><img border="0" src="/resources/acs-subsite/right.gif"></a>
+              <a href="@next_year_url@"><img border="0" src="/resources/acs-subsite/right.gif" alt="#calendar.next_year#"></a>
             </td>
           </if>
           <else>
             <td class="back">
-              <a href="#month_calendar_end" alt="#calendar.skip_month_calendar#"></a>
-              <a href="@prev_month_url@"><img border=0 src="/resources/acs-subsite/left.gif"></a>
+              <a href="@prev_month_url@"><img border=0 src="/resources/acs-subsite/left.gif" alt="#calendar.prev_month#"></a>
             </td>
             <td class="current_view" colspan="2">@curr_month@</td>
             <td class="forward">
-              <a href="@next_month_url@"><img border=0 src="/resources/acs-subsite/right.gif"></a>
+              <a href="@next_month_url@"><img border=0 src="/resources/acs-subsite/right.gif" alt="#calendar.next_month#"></a>
             </td>
           </else>
         </tr>
       </table>
     </td>
   </tr>
-      
+    
+  
   <tr>
     <td colspan="4">
       <table id="at-a-glance" cellspacing="0" cellpadding="0">
@@ -52,22 +52,22 @@
               </tr><tr>
             </if>
              <if @months.current_month_p@ true>
-              <td class="months selected"><a href="@months.url@"  title="#calendar.lt_Go_to_monthsname_curr#" >@months.name@</a></td>
+              <td class="months selected"><a href="@months.url@">@months.name@</a></td>
             </if>
             <else>
-              <td class="months"><a href="@months.url@" title="#calendar.Go_to_monthsname#">@months.name@</a>
-                </td>
-           </else>
-          </multiple>
-	</if>
-        <else>	
-           <tr class="days">
-            <multiple name="days_of_week">
-              <td>@days_of_week.day_short@</td>
-            </multiple>
-          </tr>      
+              <td class="months"><a href="@months.url@">@months.name@</a></td>
+            </else>         
+           </multiple>
+        </if>
 
-         <multiple name="days">
+        <else>
+          <tr class="days">
+            <multiple name="days_of_week">
+              <th>@days_of_week.day_short@</th>
+            </multiple>
+          </tr>
+      
+          <multiple name="days">
             <if @days.beginning_of_week_p@ true>
               <tr>
             </if>
@@ -80,13 +80,13 @@
               </if>
               <else>
                 <td class="active" onclick="javascript:location.href='@days.url@';">
-                  <a href="@days.url@" title="#calendar.lt_Go_to_month_name_days#">@days.day_number@</a>
+                  <a href="@days.url@">@days.day_number@</a>
                 </td>
               </else>
             </if>
             <else>
               <td class="inactive" onclick="javascript:location.href='@days.url@';">
-                <a href="@days.url@" title="#calendar.lt_Go_to_month_name_days#">@days.day_number@</a>
+                <a href="@days.url@">@days.day_number@</a>
               </td>
             </else>
         
@@ -94,7 +94,7 @@
               </tr>
             </if>
           </multiple>
-          </else>
+        </else>
  
       </table>
   
@@ -121,7 +121,6 @@
         @form_vars;noquote@
         @page_num_formvar;noquote@
       </form>
-      <a name="month_calendar_end" />
     </td>
   </tr>
 </table>

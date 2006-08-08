@@ -31,12 +31,14 @@ set cal_item(no_time_p) [dt_no_time_p -start_time $cal_item(start_time) -end_tim
 
 # Attachment URLs
 if {[calendar::attachments_enabled_p]} {
-    set attachment_options " | <A href=\"[attachments::add_attachment_url -object_id $cal_item(cal_item_id) -return_url "../cal-item-view?cal_item_id=$cal_item(cal_item_id)"]\" class=\"button\" >add attachment</a>"
+    set attachment_options " | <A href=\"[attachments::add_attachment_url -object_id $cal_item(cal_item_id) -pretty_name $cal_item(name) -return_url "../cal-item-view?cal_item_id=$cal_item(cal_item_id)"]\" class=\"button\" >add attachment</a>"
 } else { 
     set attachment_options {} 
 }
 
 set date $cal_item(start_date)
+set show_synch_p [parameter::get -package_id $package_id -parameter ShowSynchP -default 1]
+set cal_item(description) [ad_html_text_convert -from text/enhanced -to text/html $cal_item(description)]
 
 ad_return_template 
 

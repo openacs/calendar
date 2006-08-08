@@ -15,7 +15,6 @@ ad_library {
 namespace eval calendar {}
 namespace eval calendar::notification {}
 
-
 ad_proc calendar::make_datetime {
     event_date
     {event_time ""}

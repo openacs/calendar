@@ -64,9 +64,9 @@
     <querytext>
     select calendar_name
       from    calendars
-      where   calendar_id = :calendar_id;
-    </querytext>
-  </fullquery>
+      where   calendar_id = :calendar_id
+  </querytext>
+</fullquery>
 
   <fullquery name="calendar::get.select_calendar">      
     <querytext>
@@ -80,6 +80,4 @@
     </querytext>
   </fullquery>
 
-
-  </queryset>
-	
+</queryset>

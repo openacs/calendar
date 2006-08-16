@@ -90,8 +90,11 @@ ad_proc -public calendar::item::get {
 
 } {
     upvar $array row
+    if { [catch  {
+      set attachments_enabled_p [calendar::attachments_enabled_p]
+    }] } { set attachments_enabled_p 0 }
 
-    if {[calendar::attachments_enabled_p]} {
+    if { $attachments_enabled_p } {
         set query_name select_item_data_with_attachment
     } else {
         set query_name select_item_data

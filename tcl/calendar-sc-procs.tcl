@@ -36,7 +36,7 @@ ad_proc -private calendar::fts::datasource { cal_item_id } {
                 content $content \
                 keywords {} \
                 storage_type text \
-                mime_type text/plain ]
+                mime text/plain ]
 }
 
 ad_proc -private calendar::fts::url { cal_item_id } {
@@ -56,12 +56,14 @@ ad_proc -private calendar::sc::register_implementations {} {
 } {
     db_transaction {
         calendar::sc::register_cal_item_fts_impl
+        calendar::sc::register_acs_event_fts_impl
     }
 }
 
 ad_proc -private calendar::sc::unregister_implementations {} {
     db_transaction { 
         acs_sc::impl::delete -contract_name FtsContentProvider -impl_name cal_item
+        acs_sc::impl::delete -contract_name FtsContentProvider -impl_name acs_event
     }
 }
 
@@ -77,4 +79,18 @@ ad_proc -private calendar::sc::register_cal_item_fts_impl {} {
     }
 
     acs_sc::impl::new_from_spec -spec $spec
+}
+
+ad_proc -private calendar::sc::register_acs_event_fts_impl {} {
+   set spec {
+      name "acs_event"
+      aliases {
+         datasource calendar::fts::datasource
+         url calendar::fts::url
+      }
+      contract_name FtsContentProvider
+      owner calendar
+   }
+
+   acs_sc::impl::new_from_spec -spec $spec
 }

@@ -19,7 +19,7 @@
       <td width="95%" class="cal-week">
       <a href="@items.add_url@">
          <img border="0" align="right" height="7" width="7"
-           src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#">
+ src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#">
       </a>
       <a href="@items.day_url@">@items.start_date@</a>
       </td>

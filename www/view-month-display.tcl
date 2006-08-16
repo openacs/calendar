@@ -38,7 +38,10 @@ if { [info exists calendar_id_list] } {
 
 if {[info exists portlet_mode_p] && $portlet_mode_p} {
     set page_num_urlvar "&page_num=$page_num"
-    set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=[ad_urlencode "../"]&action=edit&cal_item_id=\$item_id"
+    if {![info exists return_url]} {
+	set return_url [ad_urlencode "../"]
+    }
+    set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=${return_url}&action=edit&cal_item_id=\$item_id"
     set prev_month_template "?view=month&date=\[ad_urlencode \$prev_month\]&page_num=$page_num"
     set next_month_template "?view=month&date=\[ad_urlencode \$next_month\]&page_num=$page_num"
     set url_stub_callback "calendar_portlet_display::get_url_stub"

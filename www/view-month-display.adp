@@ -30,12 +30,17 @@
               </if>     
               <else>
                 <if @items.today_p@ true>
-                  <td class="cal-month-today" <if @add_p@> onclick="javascript:location.href='@items.add_url@';"</if>>
+                  <td class="cal-month-today" <if @items.day_url@ not nil>onclick="javascript:location.href='@items.day_url@';"</if>>
                 </if>
                 <else>
-                  <td class="cal-month-day" <if @add_p@>onclick="javascript:location.href='@items.add_url@';"</if>>
+                  <td class="cal-month-day" <if @items.day_url@ not nil>onclick="javascript:location.href='@items.day_url@';"</if>>
                 </else>
-                  <if @items.day_url@ not nil><a href="@items.day_url@">@items.day_number@</a></if><else>@items.day_number@</else>
+                  <if @items.day_url@ not nil>
+                     <a href="@items.day_url@">@items.day_number@</a> <if @add_p@><a href="@items.add_url@"><img border="0" src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#"></a></if>
+                    </if>
+                    <else>
+                     @items.day_number@
+                    </else>
 
                   <group column="day_number">
                     <if @items.event_name@ true>

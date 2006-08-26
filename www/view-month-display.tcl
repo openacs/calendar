@@ -36,6 +36,10 @@ if { [info exists calendar_id_list] } {
     set base_url ""
 }
 
+if {![info exists return_url]} {
+    set return_url [ad_urlencode "../"]
+}
+
 if {[info exists portlet_mode_p] && $portlet_mode_p} {
     set page_num_urlvar "&page_num=$page_num"
     if {![info exists return_url]} {
@@ -198,7 +202,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                 $display_information(today_p) \
 		f \
 		0 \
-                "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
+                "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time&return_url=$return_url" \
 		$day_link 
 
         } 
@@ -243,7 +247,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         $display_information(today_p) \
 	f \
 	$time_p \
-        "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
+        "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time&return_url=$return_url" \
 	$day_link 
 
 }
@@ -274,7 +278,7 @@ for {} {$current_day <= $last_julian_date_in_month} {incr current_day} {
 	$display_information(today_p) \
 	f \
         0 \
-	"${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
+	"${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time&return_url=$return_url" \
 	$day_link 
 
 }

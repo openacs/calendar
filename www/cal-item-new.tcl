@@ -21,6 +21,7 @@ auth::require_login
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
+set js ""
 
 if {![info exists item_type_id]} {
     set item_type_id ""
@@ -177,6 +178,7 @@ ad_form -extend -name cal_item -validate {
 	set start_hour $start_time
 	set start_time "{} {} {} 0 0 {} {HH24:MI}"
 	set end_time "{} {} {} 0 0 {} {HH24:MI}"
+        set js "disableTime('cal_item');"
     }
     # set the calendar_id before setting item_types form element (see top of script) DAVEB
     set calendar_id [lindex [lindex $calendar_options 0] 1]
@@ -200,6 +202,10 @@ ad_form -extend -name cal_item -validate {
     set item_type_id $cal_item(item_type_id)
     set calendar_id $cal_item(calendar_id)
     set time_p $cal_item(time_p)
+
+    if { $time_p == 0 } {
+	set js "disableTime('cal_item');"
+    }
 
     if { [empty_string_p $repeat_p] } {
         set repeat_p 0

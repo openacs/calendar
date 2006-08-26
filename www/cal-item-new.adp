@@ -16,23 +16,28 @@
 
 
 <script language="JavaScript">
+    function disableTime(form_name) {
+          <multiple name="time_format_elms">
+            document.forms[form_name].elements["start_time.@time_format_elms.name@"].disabled = true;
+            document.forms[form_name].elements["end_time.@time_format_elms.name@"].disabled = true;
+          </multiple>
+    }
+    function enableTime(form_name) {
+          <multiple name="time_format_elms">
+            document.forms[form_name].elements["start_time.@time_format_elms.name@"].disabled = false;
+            document.forms[form_name].elements["end_time.@time_format_elms.name@"].disabled = false;
+          </multiple>
+    }
     function TimePChanged(elm) {
       var form_name = "cal_item";
 
       if (elm == null) return;
       if (document.forms == null) return;
       if (document.forms[form_name] == null) return;
-
       if (elm.value == 0) {
-          <multiple name="time_format_elms">
-            document.forms[form_name].elements["start_time.@time_format_elms.name@"].disabled = true;
-            document.forms[form_name].elements["end_time.@time_format_elms.name@"].disabled = true;
-          </multiple>
+         disableTime(form_name);
       } else {
-          <multiple name="time_format_elms">
-            document.forms[form_name].elements["start_time.@time_format_elms.name@"].disabled = false;
-            document.forms[form_name].elements["end_time.@time_format_elms.name@"].disabled = false;
-          </multiple>
+         enableTime(form_name);
       }
   }
 </script>
@@ -47,6 +52,7 @@
 
 
 <script language="JavaScript">
-  TimePChanged();
+  // TimePChanged();
+  @js;noquote@
 </script>
 

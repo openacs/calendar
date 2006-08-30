@@ -55,11 +55,15 @@
         }
       %>
 	</ul>
-      	@attachment_options;noquote@
       </td>
       </tr>
     </if>
-
+	<if @attachment_options@ not nil>
+	<tr>
+	<td colspan="2">
+	@attachment_options;noquote@
+	</td>
+</if>
   <tr>
     <td colspan="2">
       <if @write_p@ true>

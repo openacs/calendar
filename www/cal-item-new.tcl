@@ -209,8 +209,9 @@ ad_form -extend -name cal_item -validate {
 
     if { $time_p == 0 } {
 	set js "disableTime('cal_item');"
+    } else {
+	set js "enableTime('cal_item');"
     }
-
     if { [empty_string_p $repeat_p] } {
         set repeat_p 0
     } else {

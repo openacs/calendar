@@ -80,13 +80,13 @@
               </if>
               <else>
                 <td class="active" onclick="javascript:location.href='@days.url@';">
-                  <a href="@days.url@">@days.day_number@</a>
+                  <a href="@days.url@" title="">@days.day_number@</a>
                 </td>
               </else>
             </if>
             <else>
               <td class="inactive" onclick="javascript:location.href='@days.url@';">
-                <a href="@days.url@">@days.day_number@</a>
+                <a href="@days.url@" title="">@days.day_number@</a>
               </td>
             </else>
         
@@ -114,10 +114,10 @@
       </p>  
 
       <form method=get action=@base_url@>
-        <input type=text name=date size=10> 
-        <input type=image src="/resources/acs-subsite/go.gif" alt="Go" border=0>
+        <input type="text" name="date" size="10"> 
+        <input type="image" src="/resources/acs-subsite/go.gif" name="#calendar.Go_to_date#" alt="#calendar.Go_to_date#" border="0">
         <br>#acs-datetime.Date_as_YYYYMMDD#
-        <input type=hidden name=view value=day>
+        <input type="hidden" name="view" value="day">
         @form_vars;noquote@
         @page_num_formvar;noquote@
       </form>

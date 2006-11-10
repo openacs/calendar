@@ -5,10 +5,11 @@
   <msg key="Add">Añadir</msg>
   <msg key="add">añadir</msg>
   <msg key="Add_a_new_Audience">Añadir una nueva Audiencia</msg>
+  <msg key="Add_all_day_event">Añadir un evento para todo el día</msg>
   <msg key="add_an_event">Añadir un evento</msg>
   <msg key="Add_an_item">Añadir un evento</msg>
   <msg key="Add_Item">Añadir Evento</msg>
-  <msg key="Add_item_beginning_at">Añadir un evento que empieze a %localized_day_current_hour% el %localized_date_current%</msg>
+  <msg key="Add_item_beginning_at">Añadir un evento que empieze a %items.localized_current_hour%</msg>
   <msg key="Add_Recurrence">Añadir evento periódico</msg>
   <msg key="All_Day_Event">Evento para todo el día</msg>
   <msg key="all_events">Todos los eventos</msg>
@@ -106,6 +107,7 @@
   <msg key="lt_You_have_no_party_wid">No tiene acceso a calendarios algunos</msg>
   <msg key="Monday">Lunes</msg>
   <msg key="New_Type">Categoría nueva:</msg>
+  <msg key="next_day">Día siguiente</msg>
   <msg key="next_month">Mes Siguiente</msg>
   <msg key="next_year">Año Siguiente</msg>
   <msg key="No">No</msg>
@@ -115,6 +117,7 @@
   <msg key="Note">Nota</msg>
   <msg key="of_the_month">del mes</msg>
   <msg key="of_the_week">de la semana</msg>
+  <msg key="prev_day">Día anterior</msg>
   <msg key="prev_month">Mes Anterior</msg>
   <msg key="prev_year">Año Anterior</msg>
   <msg key="Private">Privado:</msg>

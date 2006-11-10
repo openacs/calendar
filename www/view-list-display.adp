@@ -28,7 +28,7 @@
   <th align="center">#calendar.Start_Time#</th>
   <th align="center">#calendar.End_Time#</th>
   <th align="center"><a href="@item_type_url@">#calendar.Type_1#</a></th>
-  <th align=left>Title</th></tr>
+  <th align=left>#calendar.Title_1#</th></tr>
 
   <multiple name="items">
 

@@ -8,7 +8,7 @@
   <msg key="add_an_event">Adicionar um novo evento</msg>
   <msg key="Add_an_item">Adicionar um item</msg>
   <msg key="Add_Item">Adicionar Item</msg>
-  <msg key="Add_item_beginning_at">Adicionar um item começando às %localized_day_current_hour% em %localized_date_current%</msg>
+  <msg key="Add_item_beginning_at">Adicionar um item começando às %items.localized_current_hour%</msg>
   <msg key="Add_Recurrence">Adicionar Recorrência</msg>
   <msg key="All_Day_Event">Evento de Dia Inteiro</msg>
   <msg key="all_events">todos os eventos</msg>

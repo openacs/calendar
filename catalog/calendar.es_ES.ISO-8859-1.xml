@@ -45,6 +45,7 @@
   <msg key="Events_over_a">Eventos en un período de</msg>
   <msg key="Friday">Viernes</msg>
   <msg key="from">de</msg>
+  <msg key="Go_to_date">Ir a la fecha introducida</msg>
   <msg key="Go_to_monthsname">Ir a %months.name%</msg>
   <msg key="Go_to_year_next_year">Ir al año %next_year%</msg>
   <msg key="Go_to_year_prev_year">Ir al año %prev_year%</msg>

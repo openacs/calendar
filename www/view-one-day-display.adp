@@ -11,8 +11,7 @@
       <table>
       <tr>
       <td>
-        <tr>
-          <td>
+         <table>
             <tr class="cal-row-light">
             <td width="1%" class="cal-day-time"><a href="@item_add_without_time@" title="#calendar.Add_all_day_event#"><img border="0" src="/resources/acs-subsite/add.gif" alt="#calendar.Add_all_day_event#"> #calendar.Add_all_day_event#</a></td>
             <td>
@@ -52,6 +51,7 @@
                 </group>
                 </tr>
                </multiple>
+		</table>
              </if>
           </td>
         </tr>

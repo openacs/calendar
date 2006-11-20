@@ -1,3 +1,13 @@
+if { ![info exists period_days] } {
+    ad_page_contract  {
+     Some documentation.
+     @author Sven Schmitt (s.lrn@gmx.net)
+     @cvs-id $Id$
+    } {
+	{period_days:integer {[parameter::get -parameter DefaultPeriodDays -default 31]}}
+    }
+}
+
 if {[info exists url_stub_callback]} {
     # This parameter is only set if this file is called from .LRN.
     # This way I make sure that for the time being this adp/tcl
@@ -47,11 +57,7 @@ if {[exists_and_not_null calendar_id_list]} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
 }
 
-if { ![info exists period_days] } {
-    set period_days [parameter::get -parameter ListView_DefaultPeriodDays -default 31]
-}  else {
-    set end_date [clock format [clock scan "+${period_days} days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
-}
+set end_date [clock format [clock scan "+${period_days} days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]

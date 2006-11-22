@@ -19,7 +19,7 @@
               <multiple name="items_without_time">
               <tr>
               <td class="cal-day-event-notime">
-              <a href="@items_without_time.event_url@">@items_without_time.event_name@</a>
+              <a href="@items_without_time.event_url@" title="#calendar.goto_items_without_time_event_name#">@items_without_time.event_name@</a>
               </td>
               </tr>
               </multiple>
@@ -42,7 +42,7 @@
                 <group column="current_hour">
                   <if @items.event_name@ true>
                     <td class="cal-day-event" rowspan="@items.rowspan@"  colspan="@items.colspan@" valign="top">
-                      <a href="@items.event_url@">@items.event_name@  (@items.start_time@ - @items.end_time@)</a>
+                      <a href="@items.event_url@" title="#calendar.goto_items_event_name#">@items.event_name@  (@items.start_time@ - @items.end_time@)</a>
                       <if @show_calendar_name_p@>
                         <span class="cal-text-grey-sml">@items.calendar_name@</span>
                       </if>

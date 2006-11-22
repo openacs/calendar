@@ -5,7 +5,6 @@
   <msg key="Add">Hinzufügen</msg>
   <msg key="add">Hinzufügen</msg>
   <msg key="Add_a_new_Audience">Neue Zielgruppe hinzufügen</msg>
-  <msg key="Add_all_day_event">Ganztägiges Ereignis hinzufügen</msg>
   <msg key="add_an_event">Neuen Eintrag hinzufügen</msg>
   <msg key="Add_an_item">Einen Eintrag hinzufügen</msg>
   <msg key="Add_Item">Eintrag hinzufügen</msg>
@@ -46,8 +45,6 @@
   <msg key="Events_over_a">Ereignisse innerhalb eines Zeitraums von</msg>
   <msg key="Friday">Freitag</msg>
   <msg key="from">von</msg>
-  <msg key="go_graphic">/resources/acs-subsite/go_de_DE.gif</msg>
-  <msg key="Go_to_date">Gehe zum Datum</msg>
   <msg key="Go_to_monthsname">Gehe zu %months.name%</msg>
   <msg key="Go_to_year_next_year">Gehe zum Jahr %next_year%</msg>
   <msg key="Go_to_year_prev_year">Gehe zum Jahr %prev_year%</msg>
@@ -88,7 +85,6 @@
   <msg key="lt_You_have_no_party_wid">You have no party wide calendars</msg>
   <msg key="Monday">Montag</msg>
   <msg key="New_Type">Neue Eintragskategorie:</msg>
-  <msg key="next_day">nächster Tag</msg>
   <msg key="next_month">Next Month</msg>
   <msg key="next_year">Next Year</msg>
   <msg key="No">Nein</msg>
@@ -98,7 +94,6 @@
   <msg key="Note">Hinweis</msg>
   <msg key="of_the_month">des Monats</msg>
   <msg key="of_the_week">&amp;nbsp;</msg>
-  <msg key="prev_day">Vortag</msg>
   <msg key="prev_month">Previous Month</msg>
   <msg key="prev_year">Previous Year</msg>
   <msg key="Private">Privat:</msg>

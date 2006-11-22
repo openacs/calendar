@@ -16,7 +16,7 @@ if {[exists_and_not_null page_num]} {
 
 # Determine whether we need to pass on the period_days variable from the list view
 if {[string equal $view list]} {
-    if {![exists_and_not_null period_days] || [string equal $period_days [parameter::get -parameter DefaultPeriodDays -default 31]]} {
+    if {![exists_and_not_null period_days] || [string equal $period_days [parameter::get -parameter ListView_DefaultPeriodDays -default 31]]} {
 	set url_stub_period_days ""
     } else {
 	set url_stub_period_days "&period_days=${period_days}"

@@ -56,7 +56,6 @@
   <msg key="Events_over_a">Events over a</msg>
   <msg key="Friday">Friday</msg>
   <msg key="from">from</msg>
-  <msg key="go_graphic">/resources/acs-subsite/go.gif</msg>
   <msg key="Go_to_date">Go to date</msg>
   <msg key="Go_to_monthsname">Go to %months.name%</msg>
   <msg key="Go_to_year_next_year">Go to year %next_year%</msg>

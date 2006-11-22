@@ -11,7 +11,7 @@ ad_page_contract {
     {date ""}
     {sort_by ""}
     {start_date ""}
-    {period_days:integer {[parameter::get -parameter DefaultPeriodDays -default 31]}}
+    {period_days:integer {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
 } -validate {
     valid_date -requires { date } {
         if {![string equal $date ""]} {

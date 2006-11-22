@@ -37,6 +37,7 @@
       show_calendar_name_p=@show_calendar_name_p@> 
     </if>
     
+    
     <if @view@ eq "day">
       <include src="view-one-day-display" date="@date@" start_hour=0 end_hour=23 return_url="@return_url@"
       show_calendar_name_p=@show_calendar_name_p@>

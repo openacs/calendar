@@ -21,7 +21,7 @@
          <img border="0" align="right" height="7" width="7"
  src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#">
       </a>
-      <a href="@items.day_url@" title="">@items.start_date@</a>
+      <a href="@items.day_url@" title="#calendar.Go_to_date#">@items.start_date@</a>
       </td>
       </tr>
     

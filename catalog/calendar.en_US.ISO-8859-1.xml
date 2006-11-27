@@ -9,7 +9,7 @@
   <msg key="add_an_event">add an event</msg>
   <msg key="Add_an_item">Add an item</msg>
   <msg key="Add_Item">Add Item</msg>
-  <msg key="Add_item_beginning_at">Add an item beginning at %items.localized_current_hour%</msg>
+  <msg key="Add_item_beginning_at">Add an item beginning at </msg>
   <msg key="Add_Recurrence">Add Recurrence</msg>
   <msg key="All_Day_Event">All Day Event</msg>
   <msg key="all_events">all events</msg>

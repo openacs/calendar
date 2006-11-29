@@ -17,11 +17,10 @@
       </td>
 
       <td width="95%" class="cal-week">
-      <a href="@items.add_url@" title="#calendar.Add_Item#">
-         <img border="0" align="right" height="7" width="7"
- src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#">
-      </a>
       <a href="@items.day_url@" title="#calendar.Go_to_date#">@items.start_date@</a>
+      <a href="@items.add_url@" title="#calendar.Add_Item#">
+         <img border="0" align="right" src="/resources/acs-subsite/add.gif" alt="#calendar.Add_Item#">
+      </a>
       </td>
       </tr>
     

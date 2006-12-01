@@ -50,6 +50,12 @@
   <msg key="Go_to_monthsname">Ir a %months.name%</msg>
   <msg key="Go_to_year_next_year">Ir al año %next_year%</msg>
   <msg key="Go_to_year_prev_year">Ir al año %prev_year%</msg>
+  <msg key="goto_day_items_day_number">Ir al día %items.day_number%</msg>
+  <msg key="goto_days_day_number">Ir al día %days.day_number%</msg>
+  <msg key="goto_items_event_name">Ir a %items.event_name%</msg>
+  <msg key="goto_items_without_time_event_name">Ir a %items_without_time.event_name%</msg>
+  <msg key="goto_months_name">Ir a %months.name%</msg>
+  <msg key="goto_today">Ir a hoy</msg>
   <msg key="Grant">Otorgar</msg>
   <msg key="Grant_Permissions">Autorizar</msg>
   <msg key="is_recurring">El evento es recurrente</msg>
@@ -109,6 +115,7 @@
   <msg key="New_Type">Categoría nueva:</msg>
   <msg key="next_day">Día siguiente</msg>
   <msg key="next_month">Mes Siguiente</msg>
+  <msg key="next_week">Semana siguiente</msg>
   <msg key="next_year">Año Siguiente</msg>
   <msg key="No">No</msg>
   <msg key="No_Calendars">Ningún calendario</msg>
@@ -119,6 +126,7 @@
   <msg key="of_the_week">de la semana</msg>
   <msg key="prev_day">Día anterior</msg>
   <msg key="prev_month">Mes Anterior</msg>
+  <msg key="prev_week">Semana anterior</msg>
   <msg key="prev_year">Año Anterior</msg>
   <msg key="Private">Privado:</msg>
   <msg key="private">privado</msg>
@@ -131,9 +139,12 @@
   <msg key="same">cada</msg>
   <msg key="Saturday">Sábado</msg>
   <msg key="Select_Calendars">Elegir Calendarios</msg>
+  <msg key="select_views_name">Seleccionar la vista %views.name%</msg>
   <msg key="Sharing">Compartida</msg>
   <msg key="skip_day_calendar">Omitir calendario diario</msg>
   <msg key="skip_month_calendar">Omitir calendario mensual</msg>
+  <msg key="sort_by_date">Ordenar por fecha</msg>
+  <msg key="sort_by_type">Ordenar por tipo</msg>
   <msg key="Start_Time">Inicio</msg>
   <msg key="start_time_before_end_time">La hora inicial es anterior a la final</msg>
   <msg key="Submit_query">Enviar solicitud</msg>

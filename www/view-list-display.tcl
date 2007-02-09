@@ -8,15 +8,12 @@ if {[info exists url_stub_callback]} {
 }
 
 if {[info exists portlet_mode_p] && $portlet_mode_p} {
-    if {![info exists return_url]} {
-	set return_url [ad_urlencode "../"]
-    }
-    set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=${return_url}&action=edit&cal_item_id=\$item_id"
+    set event_url_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=[ad_urlencode "../"]&action=edit&cal_item_id=\$item_id"
     set url_stub_callback "calendar_portlet_display::get_url_stub"
     set page_num_formvar [export_form_vars page_num]
     set page_num "&page_num=$page_num"
 } else {
-    set item_template "cal-item-view?cal_item_id=\$item_id"
+    set event_url_template "cal-item-view?cal_item_id=\$item_id"
     set url_stub_callback ""
     set page_num_formvar ""
     set page_num ""
@@ -33,6 +30,7 @@ if { ![info exists show_calendar_name_p] } {
 if { ![exists_and_not_null sort_by] } {
     set sort_by "start_date"
 }
+
 if { ![exists_and_not_null start_date] } {
     set start_date [clock format [clock seconds] -format "%Y-%m-%d 00:00"]
 }
@@ -47,10 +45,18 @@ if {[exists_and_not_null calendar_id_list]} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
 }
 
-if { ![info exists period_days] } {
+if { ![exists_and_not_null period_days] } {
     set period_days [parameter::get -parameter ListView_DefaultPeriodDays -default 31]
 }  else {
     set end_date [clock format [clock scan "+${period_days} days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
+}
+
+if {[exists_and_not_null page_num]} {
+    set page_num_formvar [export_form_vars page_num]
+    set page_num "&page_num=$page_num"
+} else {
+    set page_num_formvar ""
+    set page_num ""
 }
 
 set package_id [ad_conn package_id]
@@ -81,9 +87,8 @@ set item_type_url "?view=list&sort_by=item_type&start_date=$start_date&period_da
 set start_date_url "?view=list&sort_by=start_date&start_date=$start_date&period_days=$period_days$page_num"
 
 set view list
-set form_vars [export_form_vars start_date sort_by view]
-
-set flip -1
+set form_vars [export_vars -form -entire_form -exclude {period_days}]
+set url_vars [export_vars -url -entire_form -exclude {period_days}]
 
 multirow create items \
     event_name \
@@ -95,8 +100,11 @@ multirow create items \
     end_date \
     start_time \
     end_time \
-    flip \
-    today 
+    today \
+    description \
+    name_style_class \
+    description_style_class \
+    container_style_class
 
 set last_pretty_start_date ""
 # Loop through the events, and add them
@@ -104,6 +112,9 @@ set last_pretty_start_date ""
 set interval_limitation_clause [db_map dbqd.calendar.www.views.list_interval_limitation]
 set order_by_clause " order by $sort_by"
 set additional_limitations_clause ""
+if { [exists_and_not_null cal_system_type] } {
+    append additional_limitations_clause " and system_type = :cal_system_type "
+}
 
 if {[string match [db_type] "postgresql"]} {
     set sysdate "now()"
@@ -145,7 +156,6 @@ db_foreach dbqd.calendar.www.views.select_items {} {
 
     if {![string equal $pretty_start_date $last_pretty_start_date]} {
         set last_pretty_start_date $pretty_start_date
-        incr flip
     }
 
     # Give the row different appearance depending on whether it's before today, today, or after today
@@ -171,7 +181,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     
     multirow append items \
 	$name \
-	[subst $item_template] \
+	[subst $event_url_template] \
 	$calendar_name \
 	$item_type \
 	$pretty_weekday \
@@ -179,6 +189,24 @@ db_foreach dbqd.calendar.www.views.select_items {} {
 	$pretty_end_date \
 	$pretty_start_time \
 	$pretty_end_time \
-	$flip \
-	$today 
+	$today \
+    $description \
+    "calendar-ItemListName" \
+    "calendar-ItemListDescription" \
+    "calendar-ItemListContainer"
+}
+
+set start_year [lc_time_fmt $start_date "%Y"]
+set start_month [lc_time_fmt $start_date "%B"]
+set start_day [lc_time_fmt $start_date "%d"]
+set end_year [lc_time_fmt $end_date "%Y"]
+set end_month [lc_time_fmt $end_date "%B"]
+set end_day [lc_time_fmt $end_date "%d"]
+
+set self_url [ad_conn url]
+
+if { [info exists export] && [string equal $export print] } {
+    set print_html [template::adp_parse [acs_root_dir]/packages/calendar/www/view-print-display [list &items items show_calendar_name_p $show_calendar_name_p]]
+    ns_return 200 text/html $print_html
+    ad_script_abort
 }

@@ -67,8 +67,10 @@ set now        [clock scan $date]
 
 set months_list [dt_month_names]
 set curr_month_idx  [expr [dt_trim_leading_zeros [clock format $now -format "%m"]]-1]
+set curr_day [clock format $now -format "%d"]
+set curr_month [clock format $now -format "%B"]
+set curr_year [clock format $now -format "%Y"]
 if [string equal $view month] {
-    set curr_year [clock format $now -format "%Y"]
     set prev_year [clock format [clock scan "1 year ago" -base $now] -format "%Y-%m-%d"]
     set next_year [clock format [clock scan "1 year" -base $now] -format "%Y-%m-%d"]
     set prev_year_url "$base_url?view=$view&date=[ad_urlencode $prev_year]${page_num}${url_stub_period_days}"
@@ -84,11 +86,12 @@ if [string equal $view month] {
 
         # show 3 months in a row
 
-        if {($i != 0) && ([expr $i % 3] == 0)} {
-            set new_row_p t
-        } else {
-            set new_row_p f
-        }
+        set new_row_p [expr $i / 3]
+#         if {($i != 0) && ([expr $i % 3] == 0)} {
+#             set new_row_p t
+#         } else {
+#             set new_row_p f
+#         }
 
         if {$i == $curr_month_idx} {
             set current_month_p t 
@@ -102,13 +105,13 @@ if [string equal $view month] {
         
     }
 } else {
-    set curr_month [lindex $months_list $curr_month_idx ]
     set prev_month [clock format [clock scan "1 month ago" -base $now] -format "%Y-%m-%d"]
     set next_month [clock format [clock scan "1 month" -base $now] -format "%Y-%m-%d"]
     set prev_month_url "$base_url?view=$view&date=[ad_urlencode $prev_month]${page_num}${url_stub_period_days}"
     set next_month_url "$base_url?view=$view&date=[ad_urlencode $next_month]${page_num}${url_stub_period_days}"
     
     set first_day_of_week [lc_get firstdayofweek]
+    #set week_days [list S M T W T F Sa]
     set week_days [lc_get abday]
     multirow create days_of_week day_short
     for {set i 0} {$i < 7} {incr i} {
@@ -183,4 +186,10 @@ if { $view == "day" && [dt_sysdate] == $date } {
 set form_vars ""
 foreach var $list_of_vars {
     append form_vars "<INPUT TYPE=hidden name=[lindex $var 0] value=[lindex $var 1]>"
+}
+
+ad_form -name choose_new_date -show_required_p f -has_edit 0 -has_submit 0 -form {
+    {new_date:date
+        {label ""}
+        {format {MM DD YYYY}}}
 }

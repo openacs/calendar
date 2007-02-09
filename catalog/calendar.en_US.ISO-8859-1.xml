@@ -31,6 +31,7 @@
   <msg key="Calendar_Preferences">&quot;Calendar Preferences&quot;</msg>
   <msg key="Calendars">Calendars</msg>
   <msg key="Choose">Choose</msg>
+  <msg key="Close_Window">Close Window</msg>
   <msg key="Current_Permissions">Current Permissions</msg>
   <msg key="Date">Date:</msg>
   <msg key="Date_1">Date</msg>
@@ -70,6 +71,7 @@
   <msg key="Grant_Permissions">Grant Permissions</msg>
   <msg key="is_recurring">Item is recurring.</msg>
   <msg key="Item">Item</msg>
+  <msg key="last_week">last week</msg>
   <msg key="lt_Are_you_sure_you_want">Are you sure you want to delete this calendar. All the calendar items
       and all the permission that's associated with this calendar will be 
       deleted as well.</msg>
@@ -133,7 +135,7 @@ than once in your calendar. The event's details are:</msg>
   <msg key="New_Type">New Type:</msg>
   <msg key="next_day">Next day</msg>
   <msg key="next_month">Next Month</msg>
-  <msg key="next_week">Next week</msg>
+  <msg key="next_week">next week</msg>
   <msg key="next_year">Next Year</msg>
   <msg key="No">No</msg>
   <msg key="No_Calendars">No Calendars</msg>
@@ -146,6 +148,7 @@ than once in your calendar. The event's details are:</msg>
   <msg key="prev_month">Previous Month</msg>
   <msg key="prev_week">Previous week</msg>
   <msg key="prev_year">Previous Year</msg>
+  <msg key="Print">Print</msg>
   <msg key="Private">Private:</msg>
   <msg key="private">private</msg>
   <msg key="Public">Public:</msg>
@@ -181,6 +184,7 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Type_Help">Your calendar item can optionally be classified into types. Choose one from the drop down.</msg>
   <msg key="Use_Hours_Below">Use Hours Below:</msg>
   <msg key="Wednesday">Wednesday</msg>
+  <msg key="Week_of">Week of</msg>
   <msg key="y-m-d">y-m-d</msg>
   <msg key="year">year</msg>
   <msg key="Yes">Yes</msg>

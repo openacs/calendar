@@ -28,6 +28,12 @@ foreach test_view [list day week month] {
     }
 }
 
+if { [string match /dotlrn* $base_url] } {
+    set link "[export_vars -url -base $base_url -entire_form -exclude {export}]&export=print"
+} else {
+    set link "[export_vars -base $base_url {date {view day}}]&export=print"
+}
+
 multirow create views name text url icon spacer selected_p onclick
 
 multirow append views \
@@ -69,7 +75,7 @@ multirow append views \
 multirow append views \
     " Print" \
     "print" \
-    "[export_vars -url -base $base_url -entire_form -exclude {export}]&export=print" \
+    $link \
     "/resources/calendar/images/print-icon.gif" \
     "" \
     f \

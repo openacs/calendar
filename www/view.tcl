@@ -25,6 +25,14 @@ ad_page_contract {
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
+set ad_conn_url [ad_conn url]
+
+set export [ns_queryget export]
+
+if {$export == "print"} {
+    set view "list"
+}
+
 # HAM : try to create a return url back here after creating a new item
 set return_url [ad_urlencode [ad_return_url]]
 

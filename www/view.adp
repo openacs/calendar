@@ -1,9 +1,9 @@
 <master>
 <property name="title">#calendar.Calendars#</property>
-
 <property name="header_stuff">
   <link href="/resources/calendar/calendar.css" rel="stylesheet" type="text/css">
 </property>
+<include src="/packages/calendar/www/navbar" view="@view@" base_url="@ad_conn_url@" date="@date@">
   <div id="viewadp-mini-calendar">
     <if @view@ eq "list">
       <include src="mini-calendar" base_url="view" view="@view@" date="@date@" period_days="@period_days@">
@@ -34,10 +34,9 @@
     <if @view@ eq "list">
       <include src="view-list-display" start_date=@start_date@ return_url="@return_url@"
       end_date=@end_date@ date=@date@ period_days=@period_days@ sort_by=@sort_by@
-      show_calendar_name_p=@show_calendar_name_p@> 
+      show_calendar_name_p=@show_calendar_name_p@ export=@export@> 
     </if>
-    
-    
+
     <if @view@ eq "day">
       <include src="view-one-day-display" date="@date@" start_hour=0 end_hour=23 return_url="@return_url@"
       show_calendar_name_p=@show_calendar_name_p@>

@@ -7,7 +7,7 @@
 <a href="@self_url@?period_days=21&@url_vars@#calendar">21</a>
 <a href="@self_url@?period_days=30&@url_vars@#calendar">30</a>
 <a href="@self_url@?period_days=60&@url_vars@#calendar">60</a>
-<input type="text" class="cal-input-field" id="period_days" name="period_days" value="100" size="3" maxlength="3">
+<input type="text" class="cal-input-field" id="period_days" name="period_days" value="@period_days@" size="3" maxlength="3">
 days
 @form_vars;noquote@
 </form>

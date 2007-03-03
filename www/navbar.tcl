@@ -64,6 +64,15 @@ multirow append views \
     ""
 
 multirow append views \
+    " Calendar" \
+    "calendar" \
+    "[export_vars -base $base_url {date {view month}}]${page_num}\#calendar" \
+    "/resources/calendar/images/calendar-icon.gif" \
+    "&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;" \
+    f \
+    ""
+
+multirow append views \
     " List" \
     "list" \
     "[export_vars -base $base_url {date {view list}}]${page_num}${url_stub_period_days}\#calendar" \
@@ -75,7 +84,7 @@ multirow append views \
 multirow append views \
     " Print" \
     "print" \
-    $link \
+    "[export_vars -url -base $base_url -entire_form -exclude {export}]&export=print" \
     "/resources/calendar/images/print-icon.gif" \
     "" \
     f \

@@ -84,4 +84,31 @@
     </tr>
     </else>
  
+      </table>
+  
+    </td>
+  </tr>
+  <tr id="jump">
+  <td colspan="4">
+    <p>  
+      <if @today_p@ true>
+        #acs-datetime.Today#
+      </if>
+      <else>
+        <a href="@today_url@">#acs-datetime.Today#</a> 
+      </else>
+      
+      #acs-datetime.is# <%=[dt_ansi_to_pretty]%>
+    </p>  
+    
+    <form method=get action=@base_url@>
+      <input type="text" name="date" size="10"> 
+        <input type="image" src="#calendar.go_graphic#" name="#calendar.Go_to_date#" alt="#calendar.Go_to_date#" border="0">
+	  <br>#acs-datetime.Date_as_YYYYMMDD#
+	    <input type="hidden" name="view" value="day">
+	      @form_vars;noquote@
+	      @page_num_formvar;noquote@
+    </form>
+  </td>
+  </tr>
 </table>

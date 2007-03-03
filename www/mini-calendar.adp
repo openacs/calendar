@@ -86,11 +86,8 @@
  
       </table>
   
-    </td>
-  </tr>
-  <tr id="jump">
-  <td colspan="4">
-    <p>  
+	<br>
+
       <if @today_p@ true>
         #acs-datetime.Today#
       </if>
@@ -99,7 +96,7 @@
       </else>
       
       #acs-datetime.is# <%=[dt_ansi_to_pretty]%>
-    </p>  
+
     
     <form method=get action=@base_url@>
       <input type="text" name="date" size="10"> 
@@ -109,6 +106,6 @@
 	      @form_vars;noquote@
 	      @page_num_formvar;noquote@
     </form>
-  </td>
-  </tr>
-</table>
+
+	<br>
+

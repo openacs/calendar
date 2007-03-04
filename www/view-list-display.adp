@@ -44,7 +44,7 @@ id="frmdays"></formtemplate>
 		<tr>
 			<td class="@items.description_style_class@">
 			<strong>Description: </strong>
-            <if @items.description@ eq ""><em>none</em></if><else>@items.description@</else>
+            <if @items.description@ eq ""><em>none</em></if><else>@items.description;noquote@</else>
 
 			<a href="@items.event_url@&export=print" onclick="return calOpenPrintView('@items.event_url@&export=print');"><img src="/resources/calendar/images/print-list-icon.gif" align="right" border="0"></a>
 			</td>

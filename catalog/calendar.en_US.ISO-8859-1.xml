@@ -9,7 +9,7 @@
   <msg key="add_an_event">add an event</msg>
   <msg key="Add_an_item">Add an item</msg>
   <msg key="Add_Item">Add Item</msg>
-  <msg key="Add_item_beginning_at">Add an item beginning at </msg>
+  <msg key="Add_item_beginning_at">Add an item beginning at this time</msg>
   <msg key="Add_Recurrence">Add Recurrence</msg>
   <msg key="All_Day_Event">All Day Event</msg>
   <msg key="all_events">all events</msg>
@@ -67,6 +67,7 @@
   <msg key="goto_items_without_time_event_name">Go to %items_without_time.event_name%</msg>
   <msg key="goto_months_name">Go to %months.name%</msg>
   <msg key="goto_today">Go to today</msg>
+  <msg key="goto_weekday">Go to %days_of_week.day_short% %days_of_week.monthday%</msg>
   <msg key="Grant">Grant</msg>
   <msg key="Grant_Permissions">Grant Permissions</msg>
   <msg key="is_recurring">Item is recurring.</msg>
@@ -135,7 +136,7 @@ than once in your calendar. The event's details are:</msg>
   <msg key="New_Type">New Type:</msg>
   <msg key="next_day">Next day</msg>
   <msg key="next_month">Next Month</msg>
-  <msg key="next_week">next week</msg>
+  <msg key="next_week">Next Week</msg>
   <msg key="next_year">Next Year</msg>
   <msg key="No">No</msg>
   <msg key="No_Calendars">No Calendars</msg>
@@ -162,7 +163,7 @@ than once in your calendar. The event's details are:</msg>
   <msg key="same">same</msg>
   <msg key="Saturday">Saturday</msg>
   <msg key="Select_Calendars">Select Calendars</msg>
-  <msg key="select_views_name">Select view %views.name%</msg>
+  <msg key="select_views_name">Select %views.name% view</msg>
   <msg key="Sharing">Sharing</msg>
   <msg key="skip_day_calendar">Skip day calendar</msg>
   <msg key="skip_month_calendar">Skip month calendar</msg>
@@ -183,6 +184,7 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Type_1">Type</msg>
   <msg key="Type_Help">Your calendar item can optionally be classified into types. Choose one from the drop down.</msg>
   <msg key="Use_Hours_Below">Use Hours Below:</msg>
+  <msg key="view">View</msg>
   <msg key="Wednesday">Wednesday</msg>
   <msg key="Week_of">Week of</msg>
   <msg key="y-m-d">y-m-d</msg>

@@ -1,7 +1,11 @@
 <table class="cal-table-display" cellpadding="1" cellspacing="2" width="99%">
 <tr>
 	<td align="center">
-		<h1>#calendar.Week_of# @week_start_month@ @week_start_day@ @week_start_year@ &ndash; @week_end_month@ @week_end_day@ @week_end_year@</h1>
+		<h1>
+		  <a href="@nav_url_base@&view=week&date=@last_week@#calendar"" title="#calendar.prev_week#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_week#"/></a>
+		  &nbsp;#calendar.Week_of# @week_start_month@ @week_start_day@ @week_start_year@ &ndash; @week_end_month@ @week_end_day@ @week_end_year@&nbsp;
+		  <a href="@nav_url_base@&view=week&date=@next_week@#calendar" title="#calendar.next_week#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_week#" /></a>
+		</h1>
 	</td>
 </tr>
 <tr>
@@ -9,7 +13,7 @@
 		<table cellpadding="0" cellspacing="0" border="0" class="cal-week-day-title">
 		<tr>
 			<td><p style="width:@time_of_day_width@@width_units@;margin:0px;">&nbsp;</p></td>
-            <multiple name="days_of_week"><td width="@days_of_week.width@@width_units@"><a href="@nav_url_base@&view=day&date=@days_of_week.weekday_date@">@days_of_week.day_short@ @days_of_week.monthday@</td></multiple>
+            <multiple name="days_of_week"><td width="@days_of_week.width@@width_units@"><a href="@nav_url_base@&view=day&date=@days_of_week.weekday_date@" title="#calendar.goto_weekday#">@days_of_week.day_short@ @days_of_week.monthday@</td></multiple>
 		</tr>
 		</table>
 	</td>
@@ -22,11 +26,9 @@
 			<td style="vertical-align: top;" class="week-event-1" width="@day_width_0@@width_units@">
               <div class="week-entry-box">
                 <multiple name="items">
-				<a href="@items.event_url@">
-				<div class="week-entry-item @items.style_class@" title="@items.event_name@" style="position: absolute; top:@items.top@@hour_height_units@; left: @items.left@@width_units@; height:@items.height@@hour_height_units@;" onMouseOver="showCalItem(this,'@items.height@@hour_height_units@',20);" onMouseOut="showCalItem(this,'@items.height@@hour_height_units@',10);">
-				<p title="@items.event_name@">@items.event_name@</p>
-				</div>
-				</a>
+				  <div class="week-entry-item @items.style_class@" style="position: absolute; top:@items.top@@hour_height_units@; left: @items.left@@width_units@; height:@items.height@@hour_height_units@;" onMouseOver="showCalItem(this,'@items.height@@hour_height_units@',20);" onMouseOut="showCalItem(this,'@items.height@@hour_height_units@',10);">
+					<p><a href="@items.event_url@" title="#calendar.goto_items_event_name#">@items.event_name@</a></p>
+				  </div>
                 </multiple>
 			  </div>
             </td>
@@ -68,10 +70,10 @@
 		<table width="100%">
 			<tr>
 				<td>
-					<div class="calendar-back-forward"><a href="@nav_url_base@&view=week&date=@last_week@#calendar""><img src="/resources/calendar/images/left.gif" alt="last week" /> &nbsp; #calendar.last_week#</a></div>
+					<div class="calendar-back-forward"><a href="@nav_url_base@&view=week&date=@last_week@#calendar" title="#calendar.prev_week#"><img src="/resources/calendar/images/left.gif" alt="#acs-kernel.common_Go#" /> &nbsp; #calendar.prev_week#</a></div>
 				</td>
 				<td align="right">
-					<div class="calendar-back-forward"><a href="@nav_url_base@&view=week&date=@next_week@#calendar">#calendar.next_week# &nbsp; <img src="/resources/calendar/images/right.gif" alt="next week" /></a></div>
+					<div class="calendar-back-forward"><a href="@nav_url_base@&view=week&date=@next_week@#calendar" title="#calendar.next_week#">#calendar.next_week# &nbsp; <img src="/resources/calendar/images/right.gif" alt="#acs-kernel.common_Go#" /></a></div>
 				</td>
 			</tr>
 		</table>

@@ -221,3 +221,28 @@ if { [info exists export] && [string equal $export print] } {
     ns_return 200 text/html $print_html
     ad_script_abort
 }
+
+
+set noprocessing_vars [list]
+
+
+    set the_form [ns_getform]
+    if { ![empty_string_p $the_form] } {
+	for { set i 0 } { $i < [ns_set size $the_form] } { incr i } {
+	    set varname [ns_set key $the_form $i]
+	    set varvalue [ns_set value $the_form $i]
+	    if {!($varname eq "period_days") && !([string match "__*" $varname]) && !([string match "form:*" $varname])} {
+		lappend noprocessing_vars [list $varname $varvalue]
+	    }
+	}
+    }
+
+
+ad_form -name frmdays -has_submit 1 -html {style float:right} -export $noprocessing_vars -form {
+    {period_days:integer,optional
+        {label ""}
+        {html {size 3} {maxlength 3} {class "cal-input-field"}}
+        {value "$period_days"}
+        {after_html "[_ calendar.days]"}
+    }
+} -on_submit { }

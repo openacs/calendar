@@ -6,6 +6,22 @@ if {![exists_and_not_null date]} {
     set date [dt_sysdate]
 } 
 
+ad_form -name go-to-date -method get -has_submit 1 -action $base_url  -export [lappend list_of_vars page_num] -form {
+    {date:text,nospell,optional
+	{label ""}
+	{html {size 10}}
+	{after-html "<br/>[_ acs-datetime.Date_as_YYYYMMDD]"}
+    }
+    {btn_ok:text(submit)
+        {label "[_ calendar.Go_to_date]"}
+    } 
+    {view:text(hidden)
+	{label ""}
+	{value "day"}
+    }
+} -on_submit { }
+
+
 if {[exists_and_not_null page_num]} {
     set page_num_formvar [export_form_vars page_num]
     set page_num "&page_num=$page_num"

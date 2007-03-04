@@ -97,15 +97,9 @@
       
       #acs-datetime.is# <%=[dt_ansi_to_pretty]%>
 
-    
-    <form method=get action=@base_url@>
-      <input type="text" name="date" size="10"> 
-        <input type="image" src="#calendar.go_graphic#" name="#calendar.Go_to_date#" alt="#calendar.Go_to_date#" border="0">
-	  <br>#acs-datetime.Date_as_YYYYMMDD#
-	    <input type="hidden" name="view" value="day">
-	      @form_vars;noquote@
-	      @page_num_formvar;noquote@
-    </form>
+
+    <formtemplate id="go-to-date"></formtemplate> 
+
 
 	<br>
 

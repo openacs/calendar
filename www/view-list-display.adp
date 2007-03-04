@@ -1,16 +1,12 @@
 <table class="cal-table-display" cellpadding="1" cellspacing="2" width="99%">
-<tr><td align="right">
-<form name="frmdays">
+<tr><td align="right" nowrap="nowrap">
 <a href="@self_url@?period_days=1&@url_vars@#calendar">1</a>
 <a href="@self_url@?period_days=7&@url_vars@#calendar">7</a>
 <a href="@self_url@?period_days=14&@url_vars@#calendar">14</a>
 <a href="@self_url@?period_days=21&@url_vars@#calendar">21</a>
 <a href="@self_url@?period_days=30&@url_vars@#calendar">30</a>
-<a href="@self_url@?period_days=60&@url_vars@#calendar">60</a>
-<input type="text" class="cal-input-field" id="period_days" name="period_days" value="@period_days@" size="3" maxlength="3">
-days
-@form_vars;noquote@
-</form>
+<a href="@self_url@?period_days=60&@url_vars@#calendar">60</a><formtemplate
+id="frmdays"></formtemplate>
 </td></tr>
 <tr>
 	<td align="center">

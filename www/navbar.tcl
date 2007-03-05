@@ -20,7 +20,7 @@ if {![exists_and_not_null period_days] || [string equal $period_days [parameter:
     set url_stub_period_days "&period_days=${period_days}"
 }
 
-foreach test_view [list day week month] {
+foreach test_view {list day week month calendar} {
     if { [string equal $test_view $view] } {
         set ${test_view}_selected_p t
     } else {
@@ -69,7 +69,7 @@ multirow append views \
     "[export_vars -base $base_url {date {view month}}]${page_num}\#calendar" \
     "/resources/calendar/images/calendar-icon.gif" \
     "&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;" \
-    f \
+    $calendar_selected_p \
     ""
 
 multirow append views \
@@ -78,7 +78,7 @@ multirow append views \
     "[export_vars -base $base_url {date {view list}}]${page_num}${url_stub_period_days}\#calendar" \
     "/resources/calendar/images/list-icon.gif" \
     "&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;" \
-    f \
+    $list_selected_p \
     ""
 
 multirow append views \

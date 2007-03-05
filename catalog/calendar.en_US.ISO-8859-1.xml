@@ -40,6 +40,7 @@
   <description key="day_rolling_period">Please, could you give more info of the context for this, thanks</description>
 
   <msg key="day_s">day (s)</msg>
+  <msg key="days">days</msg>
   <msg key="Delete">Delete</msg>
   <msg key="delete">delete</msg>
   <msg key="Description">Description</msg>
@@ -54,6 +55,13 @@
   <msg key="Edit">Edit</msg>
   <msg key="edit">edit</msg>
   <msg key="End_Time">End Time</msg>
+  <msg key="Event">Event</msg>
+  <msg key="events_over_1d">Display events for today</msg>
+  <msg key="events_over_7d">Display events for the next 7 days</msg>
+  <msg key="events_over_14d">Display events for the next 14 days</msg>
+  <msg key="events_over_21d">Display events for the next 21 days</msg>
+  <msg key="events_over_30d">Display events for the next 30 days</msg>
+  <msg key="events_over_60d">Display events for the next 60 days</msg>
   <msg key="Events_over_a">Events over a</msg>
   <msg key="Friday">Friday</msg>
   <msg key="from">from</msg>
@@ -192,5 +200,4 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Yes">Yes</msg>
   <msg key="yes_delete_it">yes, delete it</msg>
   <msg key="Yes_I_am_sure">Yes, I am sure!</msg>
-  <msg key="days">days</msg>
 </message_catalog>

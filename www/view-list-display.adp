@@ -1,12 +1,17 @@
 <table class="cal-table-display" cellpadding="1" cellspacing="2" width="99%">
 <tr><td align="right" nowrap="nowrap">
-<a href="@self_url@?period_days=1&@url_vars@#calendar">1</a>
-<a href="@self_url@?period_days=7&@url_vars@#calendar">7</a>
-<a href="@self_url@?period_days=14&@url_vars@#calendar">14</a>
-<a href="@self_url@?period_days=21&@url_vars@#calendar">21</a>
-<a href="@self_url@?period_days=30&@url_vars@#calendar">30</a>
-<a href="@self_url@?period_days=60&@url_vars@#calendar">60</a><formtemplate
-id="frmdays"></formtemplate>
+[&nbsp;<a href="@self_url@?period_days=1&@url_vars@#calendar" title="#calendar.events_over_1d#">1</a>
+&nbsp;|&nbsp;
+<a href="@self_url@?period_days=7&@url_vars@#calendar" title="#calendar.events_over_7d#">7</a>
+&nbsp;|&nbsp;
+<a href="@self_url@?period_days=14&@url_vars@#calendar" title="#calendar.events_over_14d#">14</a>
+&nbsp;|&nbsp;
+<a href="@self_url@?period_days=21&@url_vars@#calendar" title="#calendar.events_over_21d#">21</a>
+&nbsp;|&nbsp;
+<a href="@self_url@?period_days=30&@url_vars@#calendar" title="#calendar.events_over_30d#">30</a>
+&nbsp;|&nbsp;
+<a href="@self_url@?period_days=60&@url_vars@#calendar" title="#calendar.events_over_60d#">60</a>&nbsp;]
+<formtemplate id="frmdays"></formtemplate>
 </td></tr>
 <tr>
 	<td align="center">
@@ -34,7 +39,7 @@ id="frmdays"></formtemplate>
 		<tbody>
 		<tr>
 			<td class="@items.name_style_class@">
-			<strong>Event: </strong><a href="@items.event_url@">@items.event_name@</a>
+			<strong>#calendar.Event#</strong> <a href="@items.event_url@" title="#calendar.goto_items_event_name#">@items.event_name@</a>
             <if @show_calendar_name_p@>
             (@items.calendar_name@)
             </if>
@@ -43,10 +48,10 @@ id="frmdays"></formtemplate>
 		</tr>
 		<tr>
 			<td class="@items.description_style_class@">
-			<strong>Description: </strong>
+			<strong>#calendar.Description#</strong>
             <if @items.description@ eq ""><em>none</em></if><else>@items.description;noquote@</else>
 
-			<a href="@items.event_url@&export=print" onclick="return calOpenPrintView('@items.event_url@&export=print');"><img src="/resources/calendar/images/print-list-icon.gif" align="right" border="0"></a>
+			<a href="@items.event_url@&export=print" onclick="return calOpenPrintView('@items.event_url@&export=print');" title="#calendar.Print#"><img src="/resources/calendar/images/print-list-icon.gif" align="right" border="0" alt="#calendar.Print#"></a>
 			</td>
 		</tr>
 		</tbody>

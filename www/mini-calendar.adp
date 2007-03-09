@@ -84,23 +84,18 @@
     </td>
     </tr>
     </else>
- 
-      </table>
-  
-	<br>
+ </table>
 
-      <if @today_p@ true>
-        #acs-datetime.Today#
-      </if>
-      <else>
-        <a href="@today_url@" title="#calendar.goto_today#">#acs-datetime.Today#</a> 
-      </else>
-      
-      #acs-datetime.is# <%=[dt_ansi_to_pretty]%>
+  <p>
+  <if @today_p@ true>
+    #acs-datetime.Today#
+  </if>
+  <else>
+    <a href="@today_url@" title="#calendar.goto_today#">#acs-datetime.Today#</a> 
+  </else>
+  #acs-datetime.is# <%=[dt_ansi_to_pretty]%>
+  </p>
 
+  <formtemplate id="go-to-date"></formtemplate>
 
-    <formtemplate id="go-to-date"></formtemplate> 
-
-
-	<br>
 

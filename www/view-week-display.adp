@@ -2,9 +2,9 @@
 <tr>
 	<td align="center">
 		<h1>
-		  <a href="@nav_url_base@&view=week&date=@last_week@#calendar"" title="#calendar.prev_week#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_week#"/></a>
+		  <a href="@previous_week_url@" title="#calendar.prev_week#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_week#"/></a>
 		  &nbsp;#calendar.Week_of# @week_start_month@ @week_start_day@ @week_start_year@ &ndash; @week_end_month@ @week_end_day@ @week_end_year@&nbsp;
-		  <a href="@nav_url_base@&view=week&date=@next_week@#calendar" title="#calendar.next_week#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_week#" /></a>
+		  <a href="@next_week_url@" title="#calendar.next_week#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_week#" /></a>
 		</h1>
 	</td>
 </tr>
@@ -13,7 +13,7 @@
 		<table cellpadding="0" cellspacing="0" border="0" class="cal-week-day-title">
 		<tr>
 			<td><p style="width:@time_of_day_width@@width_units@;margin:0px;">&nbsp;</p></td>
-            <multiple name="days_of_week"><td width="@days_of_week.width@@width_units@"><a href="@nav_url_base@&view=day&date=@days_of_week.weekday_date@" title="#calendar.goto_weekday#">@days_of_week.day_short@ @days_of_week.monthday@</td></multiple>
+            <multiple name="days_of_week"><td width="@days_of_week.width@@width_units@"><a href="@days_of_week.weekday_url@" title="#calendar.goto_weekday#">@days_of_week.day_short@ @days_of_week.monthday@</a></td></multiple>
 		</tr>
 		</table>
 	</td>
@@ -67,13 +67,13 @@
 </tr>
 <tr>
 	<td>
-		<table width="100%">
+		<table width="@week_width@@width_units@">
 			<tr>
 				<td>
-					<div class="calendar-back-forward"><a href="@nav_url_base@&view=week&date=@last_week@#calendar" title="#calendar.prev_week#"><img src="/resources/calendar/images/left.gif" alt="#acs-kernel.common_Go#" /> &nbsp; #calendar.prev_week#</a></div>
+					<div class="calendar-back-forward"><a href="@previous_week_url@" title="#calendar.prev_week#"><img src="/resources/calendar/images/left.gif" alt="#acs-kernel.common_Go#" /> &nbsp; #calendar.prev_week#</a></div>
 				</td>
 				<td align="right">
-					<div class="calendar-back-forward"><a href="@nav_url_base@&view=week&date=@next_week@#calendar" title="#calendar.next_week#">#calendar.next_week# &nbsp; <img src="/resources/calendar/images/right.gif" alt="#acs-kernel.common_Go#" /></a></div>
+					<div class="calendar-back-forward"><a href="@next_week_url@" title="#calendar.next_week#">#calendar.next_week# &nbsp; <img src="/resources/calendar/images/right.gif" alt="#acs-kernel.common_Go#" /></a></div>
 				</td>
 			</tr>
 		</table>

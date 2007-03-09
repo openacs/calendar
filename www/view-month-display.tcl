@@ -80,7 +80,7 @@ set previous_month_url "[subst $prev_month_template]"
 set next_month_url "[subst $next_month_template]"
 
 set first_day_of_week [lc_get firstdayofweek]
-set last_day_of_week [expr [expr $first_day_of_week + 7] % 7]
+set last_day_of_week [expr [expr $first_day_of_week + 6] % 7]
 
 set week_days [lc_get day]
 multirow create weekday_names weekday_short

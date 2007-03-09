@@ -22,9 +22,13 @@
 
         <tbody>
 
-                <tr>
+                <!-- tr -->
 
             <multiple name="items">
+
+              <if @items.beginning_of_week_p@ true>
+                <tr>
+              </if>
 
               <if @items.outside_month_p@ true>
                 <td class="cal-month-day-inactive" width="14%">&nbsp;</td>
@@ -56,12 +60,12 @@
               </else>
 
               <if @items.end_of_week_p@ true>
-                </tr><tr>
+                </tr>
               </if>
 
             </multiple>
 
-                </tr>
+                <!-- /tr -->
 
         </tbody>
       </table>

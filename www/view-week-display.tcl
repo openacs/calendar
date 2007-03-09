@@ -292,11 +292,11 @@ if { $adjusted_start_display_hour != 0 } {
 # Navigation Bar
 set dates "[lc_time_fmt $first_weekday_date "%q"] - [lc_time_fmt $last_weekday_date "%q"]"
 if {$portlet_mode_p} {
-    set previous_week_url "?$page_num_urlvar&view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian - 7]]]"
-    set next_week_url "?$page_num_urlvar&view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian + 7]]]"
+    set previous_week_url "?$page_num_urlvar&view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian - 7]]]\#calendar"
+    set next_week_url "?$page_num_urlvar&view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian + 7]]]\#calendar"
 } else {
-    set previous_week_url "?view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian - 7]]]"
-    set next_week_url "?view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian + 7]]]"
+    set previous_week_url "?view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian - 7]]]\#calendar"
+    set next_week_url "?view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian + 7]]]\#calendar"
 }
 
 #Calendar grid.
@@ -323,7 +323,10 @@ set first_weekday_date_secs [clock scan "-24 hours" -base [clock scan "1 day" -b
 set next_week [clock format [expr $first_weekday_date_secs + (7*86400)] -format "%Y-%m-%d"]
 set last_week [clock format [expr $first_weekday_date_secs - (7*86400)] -format "%Y-%m-%d"]
 
-multirow create days_of_week width day_short monthday weekday_date
+multirow create days_of_week width day_short monthday weekday_date weekday_url
+
+set nav_url_base [ad_conn url]?[export_vars -url -entire_form -exclude {date view}]
+
 for {set i 0} {$i < 7} {incr i} {
     set weekday_secs [expr $first_weekday_date_secs + ($i*86400)]
     set trimmed_month \
@@ -331,17 +334,16 @@ for {set i 0} {$i < 7} {incr i} {
     set trimmed_day \
         [string trimleft [clock format $weekday_secs -format "%d"] 0]
     set weekday_date [clock format $weekday_secs -format "%Y-%m-%d"]
+    set weekday_url [export_vars -base [ad_conn url] -url -entire_form {{view day} {date $weekday_date}}]
     #TODO: localize_me
     set weekday_monthday "$trimmed_month/$trimmed_day"
-    multirow append days_of_week [set day_width_$i] [lindex $week_days [expr [expr $i + $first_day_of_week] % 7]] $weekday_monthday $weekday_date
+    multirow append days_of_week [set day_width_$i] [lindex $week_days [expr [expr $i + $first_day_of_week] % 7]] $weekday_monthday $weekday_date $weekday_url
 }
 
 set week_width $time_of_day_width
 for {set i 0} {$i < 7} {incr i} {
     incr week_width [set day_width_$i]
 }
-
-set nav_url_base [ad_conn url]?[export_vars -url -entire_form -exclude {date view}]
 
 if { [info exists export] && [string equal $export print] } {
     set print_html [template::adp_parse [acs_root_dir]/packages/calendar/www/view-print-display [list &items items show_calendar_name_p $show_calendar_name_p]]

@@ -170,7 +170,7 @@ if [string equal $view month] {
             set today_p t
         }
 
-        if { $day_of_week == 0} {
+        if { $day_of_week == 1} {
             set beginning_of_week_p t
         } else {
             set beginning_of_week_p f

@@ -36,6 +36,7 @@
            <td class="months"><a href="@months.url@" title="#calendar.goto_months_name#">@months.name@</a></td>
          </else>
          </group>
+         </tr>
        </multiple>
       </table>
      </td>

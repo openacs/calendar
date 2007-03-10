@@ -115,7 +115,8 @@ multirow create items \
     description \
     name_style_class \
     description_style_class \
-    container_style_class
+    container_style_class \
+    event_print_url
 
 set last_pretty_start_date ""
 # Loop through the events, and add them
@@ -204,7 +205,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     $description \
     "calendar-ItemListName" \
     "calendar-ItemListDescription" \
-    "calendar-ItemListContainer"
+    "calendar-ItemListContainer" \
+    "[subst $event_url_template]&export=print"
 }
 
 set start_year [lc_time_fmt $start_date "%Y"]
@@ -215,6 +217,11 @@ set end_month [lc_time_fmt $end_date "%B"]
 set end_day [lc_time_fmt $end_date "%d"]
 
 set self_url [ad_conn url]
+
+# URLs for period picker
+foreach i {1 7 14 21 30 60} {
+    set period_url_$i "[export_vars -base $self_url -url -entire_form {{period_days $i}}]\#calendar"
+}
 
 if { [info exists export] && [string equal $export print] } {
     set print_html [template::adp_parse [acs_root_dir]/packages/calendar/www/view-print-display [list &items items show_calendar_name_p $show_calendar_name_p]]

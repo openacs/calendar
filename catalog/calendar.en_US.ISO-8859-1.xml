@@ -140,6 +140,7 @@
 than once in your calendar. The event's details are:</msg>
   <msg key="lt_You_can_manage_the_fo">You can manage the following calendars</msg>
   <msg key="lt_You_have_no_party_wid">You have no party wide calendars</msg>
+  <msg key="Manage_Item_Types">Manage Item Types</msg>
   <msg key="Monday">Monday</msg>
   <msg key="New_Type">New Type:</msg>
   <msg key="next_day">Next day</msg>

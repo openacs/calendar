@@ -1,16 +1,16 @@
 <table class="cal-table-display" cellpadding="1" cellspacing="2" width="99%">
 <tr><td align="right" nowrap="nowrap">
-[&nbsp;<a href="@self_url@?period_days=1&@url_vars@#calendar" title="#calendar.events_over_1d#">1</a>
+[&nbsp;<a href="@period_url_1@" title="#calendar.events_over_1d#">1</a>
 &nbsp;|&nbsp;
-<a href="@self_url@?period_days=7&@url_vars@#calendar" title="#calendar.events_over_7d#">7</a>
+<a href="@period_url_7@" title="#calendar.events_over_7d#">7</a>
 &nbsp;|&nbsp;
-<a href="@self_url@?period_days=14&@url_vars@#calendar" title="#calendar.events_over_14d#">14</a>
+<a href="@period_url_14@" title="#calendar.events_over_14d#">14</a>
 &nbsp;|&nbsp;
-<a href="@self_url@?period_days=21&@url_vars@#calendar" title="#calendar.events_over_21d#">21</a>
+<a href="@period_url_21@" title="#calendar.events_over_21d#">21</a>
 &nbsp;|&nbsp;
-<a href="@self_url@?period_days=30&@url_vars@#calendar" title="#calendar.events_over_30d#">30</a>
+<a href="@period_url_30@" title="#calendar.events_over_30d#">30</a>
 &nbsp;|&nbsp;
-<a href="@self_url@?period_days=60&@url_vars@#calendar" title="#calendar.events_over_60d#">60</a>&nbsp;]
+<a href="@period_url_60@" title="#calendar.events_over_60d#">60</a>&nbsp;]
 <formtemplate id="frmdays"></formtemplate>
 </td></tr>
 <tr>
@@ -51,7 +51,7 @@
 			<strong>#calendar.Description#</strong>
             <if @items.description@ eq ""><em>none</em></if><else>@items.description;noquote@</else>
 
-			<a href="@items.event_url@&export=print" onclick="return calOpenPrintView('@items.event_url@&export=print');" title="#calendar.Print#"><img src="/resources/calendar/images/print-list-icon.gif" align="right" border="0" alt="#calendar.Print#"></a>
+			<a href="@items.event_print_url@" onclick="return calOpenPrintView('@items.event_print_url@');" title="#calendar.Print#"><img src="/resources/calendar/images/print-list-icon.gif" align="right" border="0" alt="#calendar.Print#"></a>
 			</td>
 		</tr>
 		</tbody>

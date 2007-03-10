@@ -3,8 +3,13 @@
 <property name="header_stuff">
   <link href="/resources/calendar/calendar.css" rel="stylesheet" type="text/css">
 </property>
+
 <include src="/packages/calendar/www/navbar" view="@view@" base_url="@ad_conn_url@" date="@date@">
-  <div id="viewadp-mini-calendar">
+
+  <table id="valign-hack" border="0" width="100%">
+    <tr>
+      <td valign="top" width="200">
+<!--  <div id="viewadp-mini-calendar"> -->
     <if @view@ eq "list">
       <include src="mini-calendar" base_url="view" view="@view@" date="@date@" period_days="@period_days@">
     </if>
@@ -20,16 +25,18 @@
     </p>
     <p>
     <if @admin_p@ true>
-      <a href="admin/">#calendar.lt_Calendar_Administrati#</a>
+      <a href="admin/" title="#calendar.lt_Calendar_Administrati#">#calendar.lt_Calendar_Administrati#</a>
     </if>
     </p>
   
     <p>
     <include src="cal-options">	
     </p>
-  </div>
+<!--   </div> -->
+            </td>
 
-  <div id="events">   
+      <td valign=top>
+<!--  <div id="events">    -->
     <if @view@ eq "list">
       <include src="view-list-display" start_date=@start_date@ return_url="@return_url@"
       end_date=@end_date@ date=@date@ period_days=@period_days@ sort_by=@sort_by@
@@ -51,6 +58,7 @@
       <include src="view-month-display" date=@date@ return_url="@return_url@"
       show_calendar_name_p=@show_calendar_name_p@>
     </if>
-  </div>
-
-
+<!--   </div> -->
+            </td>
+          </tr>
+        </table>

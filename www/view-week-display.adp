@@ -1,11 +1,17 @@
 <table class="cal-table-display" cellpadding="1" cellspacing="2" width="99%">
 <tr>
-	<td align="center">
+	<td>
+		<table width="@week_width@@width_units@">
+			<tr>
+				<td align="center">
 		<h1>
 		  <a href="@previous_week_url@" title="#calendar.prev_week#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_week#"/></a>
 		  &nbsp;#calendar.Week_of# @week_start_month@ @week_start_day@ @week_start_year@ &ndash; @week_end_month@ @week_end_day@ @week_end_year@&nbsp;
 		  <a href="@next_week_url@" title="#calendar.next_week#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_week#" /></a>
 		</h1>
+              </td>
+          </tr>
+        </table>
 	</td>
 </tr>
 <tr>

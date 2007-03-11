@@ -6,7 +6,7 @@ if {![exists_and_not_null date]} {
     set date [dt_sysdate]
 } 
 
-ad_form -name go-to-date -method get -has_submit 1 -action $base_url  -export [lappend list_of_vars page_num] -form {
+ad_form -name go-to-date -method get -has_submit 1 -action $base_url  -export [lappend list_of_vars page_num] -html {class inline-form} -form {
     {date:text,nospell,optional
 	{label ""}
 	{html {size 10}}

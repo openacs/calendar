@@ -6,10 +6,7 @@
 
 <include src="/packages/calendar/www/navbar" view="@view@" base_url="@ad_conn_url@" date="@date@">
 
-  <table id="valign-hack" border="0" width="100%">
-    <tr>
-      <td valign="top" width="200">
-<!--  <div id="viewadp-mini-calendar"> -->
+  <div id="viewadp-mini-calendar">
     <if @view@ eq "list">
       <include src="mini-calendar" base_url="view" view="@view@" date="@date@" period_days="@period_days@">
     </if>
@@ -32,11 +29,9 @@
     <p>
     <include src="cal-options">	
     </p>
-<!--   </div> -->
-            </td>
+   </div>
 
-      <td valign=top>
-<!--  <div id="events">    -->
+  <div id="events">
     <if @view@ eq "list">
       <include src="view-list-display" start_date=@start_date@ return_url="@return_url@"
       end_date=@end_date@ date=@date@ period_days=@period_days@ sort_by=@sort_by@
@@ -58,7 +53,4 @@
       <include src="view-month-display" date=@date@ return_url="@return_url@"
       show_calendar_name_p=@show_calendar_name_p@>
     </if>
-<!--   </div> -->
-            </td>
-          </tr>
-        </table>
+   </div>

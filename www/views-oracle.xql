@@ -18,7 +18,6 @@
          nvl(e.status_summary, a.status_summary) as status_summary,
          nvl(e.description, a.description) as description,
          e.event_id as item_id,
-         ci.system_type,
          (select type from cal_item_types where item_type_id= ci.item_type_id) as item_type,
 	 cals.calendar_id,
 	 cals.calendar_name
@@ -54,7 +53,6 @@
          nvl(e.status_summary, a.status_summary) as status_summary,
          nvl(e.description, a.description) as description,
          e.event_id as item_id,
-         ci.system_type,
          (select type from cal_item_types where item_type_id= ci.item_type_id) as item_type,
 	 cals.calendar_id,
 	 cals.calendar_name

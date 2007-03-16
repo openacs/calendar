@@ -21,7 +21,7 @@
 	
 	<div class="margin-form margin-form-div">
 		
-		<h1>Calendar Event Details</h1>
+		<h1>#calendar.calendar_event_details#</h1>
 		
 		<div class="form-item-wrapper">
 			<div class="form-label">
@@ -53,7 +53,7 @@
 				<strong>#calendar.Date_1#<if @cal_item.no_time_p@ eq 0> #calendar.and_Time#</if>:</strong>
 			</div>
 			<div class="form-widget">                  
-				<a href="./view?view=day&date=@cal_item.start_date@">@cal_item.pretty_short_start_date@</a>
+				<a href="@goto_date_url@" title="#calendar.goto_cal_item_start_date#">@cal_item.pretty_short_start_date@</a>
 			    <if @cal_item.no_time_p@ eq 0>, #calendar.from# @cal_item.start_time@ #calendar.to# @cal_item.end_time@</if>
 			</div>  
 		</div>
@@ -89,11 +89,11 @@
 		
 		<div class="form-button">
 			<if @write_p@ true>
-		        <a href="cal-item-new?cal_item_id=@cal_item_id@&return_url=@return_url@" class="button">#calendar.edit#</a>
-		        <a href="./cal-item-delete?cal_item_id=@cal_item_id@&return_url=@return_url@" class="button">#calendar.delete#</a>
+		        <a href="@cal_item_new_url@" title="#calendar.edit#" class="button">#calendar.edit#</a>
+		        <a href="@cal_item_delete_url@" title="#calendar.delete#" class="button">#calendar.delete#</a>
 				@attachment_options;noquote@ 
-			 	<a href="ics/@cal_item_id@.ics" class="button">#calendar.sync_with_Outlook#</a>
-				<if @cal_item.recurrence_id@ not nil>(<a  href="ics/@cal_item_id@.ics?all_occurences_p=1">#calendar.all_events#</a>)</if>
+			 	<a href="ics/@cal_item_id@.ics" title="#calendar.sync_with_Outlook#" class="button">#calendar.sync_with_Outlook#</a>
+				<if @cal_item.recurrence_id@ not nil>(<a href="ics/@cal_item_id@.ics?all_occurences_p=1" title="#calendar.all_events#">#calendar.all_events#</a>)</if>
 		
 			</if>
 		</div>

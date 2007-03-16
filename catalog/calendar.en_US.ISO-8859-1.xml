@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="calendar" package_version="2.1.0b6" locale="en_US" charset="ISO-8859-1">
+<message_catalog package_key="calendar" package_version="2.1.0b7" locale="en_US" charset="ISO-8859-1">
 
   <msg key="_You_may_choose_to">. You may choose to:</msg>
   <msg key="Add">Add</msg>
@@ -22,6 +22,7 @@
   <msg key="Calendar">Calendar</msg>
   <msg key="Calendar_Add_Item">Calendar: Add Item</msg>
   <msg key="Calendar_Edit_Item">Calendar: Edit Item</msg>
+  <msg key="calendar_event_details">Calendar Event Details</msg>
   <msg key="Calendar_Item">Calendar Item</msg>
   <msg key="Calendar_Item_Delete">Calendar Item Delete</msg>
   <msg key="Calendar_Item_Types">Calendar Item Types</msg>
@@ -69,6 +70,7 @@
   <msg key="Go_to_monthsname">Go to %months.name%</msg>
   <msg key="Go_to_year_next_year">Go to year %next_year%</msg>
   <msg key="Go_to_year_prev_year">Go to year %prev_year%</msg>
+  <msg key="goto_cal_item_start_date">Go to %cal_item.pretty_short_start_date%</msg>
   <msg key="goto_day_items_day_number">Go to day %items.day_number%</msg>
   <msg key="goto_days_day_number">Go to day %days.day_number%</msg>
   <msg key="goto_items_event_name">Go to %items.event_name%</msg>

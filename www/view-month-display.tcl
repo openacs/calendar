@@ -1,8 +1,4 @@
-ns_log notice "DAVEB102 view-month-display.tcl"
-# FIXME from sloanspace calendar, they have added a system_type attribute to
-# cal_items table, which can be null, class, community, or personal
-# this is used to figure out which CSS class to use, for now we set to 
-# empty string to use generic cal-Item css class DAVEB 20070121
+
 set system_type ""
 if {![info exists date] || [empty_string_p $date]} {
     # Default to todays date in the users (the connection) timezone
@@ -229,7 +225,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         
         set url_stub $url_stubs($calendar_id)
     }
-    
+
     array set display_information \
         [calendar::get_month_multirow_information \
              -current_day $current_day \

@@ -9,7 +9,7 @@ set width_units px
 set hour_height_inside 43
 set hour_height_sep 3
 set hour_height_units px
-set event_bump_delta 10
+set event_bump_delta 25
 
 set time_of_day_width 70
 set event_left_base 0

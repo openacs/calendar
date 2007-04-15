@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<message_catalog package_key="calendar" package_version="2.1.0b7" locale="el_GR" charset="utf-8">
+
+  <msg key="Add_all_day_event">Νέο ολοήμερο συμβάν</msg>
+  <msg key="Add_Item">Προσθήκη νέου</msg>
+  <msg key="Add_item_beginning_at">Νέο συμβάν στις:</msg>
+  <msg key="day_rolling_period">ημερών</msg>
+  <msg key="Events_over_a">Συμβάντα σε διάστημα </msg>
+  <msg key="Go_to_date">Μετάβαση στην ημερομηνία</msg>
+  <msg key="goto_days_day_number">Μετάβαση στην ημέρα %days.day_number%</msg>
+  <msg key="next_day">Επόμενη ημέρα</msg>
+  <msg key="next_month">Επόμενος Μήνας</msg>
+  <msg key="No_Items">Κανένα συμβάν</msg>
+  <msg key="prev_day">Προηγούμενη ημέρα</msg>
+  <msg key="prev_month">Προηγούμενος Μήνας</msg>
+  <msg key="select_views_name">Επιλογή προβολής %views.name%</msg>
+</message_catalog>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<message_catalog package_key="calendar" package_version="2.1.0b6" locale="de_DE" charset="ISO-8859-1">
+<message_catalog package_key="calendar" package_version="2.1.0b7" locale="de_DE" charset="ISO-8859-1">
 
   <msg key="_You_may_choose_to">. Sie können</msg>
   <msg key="Add">Hinzufügen</msg>
@@ -8,7 +8,6 @@
   <msg key="add_an_event">Neuen Eintrag hinzufügen</msg>
   <msg key="Add_an_item">Einen Eintrag hinzufügen</msg>
   <msg key="Add_Item">Eintrag hinzufügen</msg>
-  <msg key="Add_item_beginning_at">Fügen Sie eine Position hinzu die bei  %localized_day_current_hour% on %localized_date_current% beginnt</msg>
   <msg key="Add_Recurrence">OK</msg>
   <msg key="All_Day_Event">Ganztägig</msg>
   <msg key="all_events">Alle Ereignisse</msg>

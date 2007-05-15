@@ -25,8 +25,16 @@ ad_page_contract {
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
-# HAM : try to create a return url back here after creating a new item
+set ad_conn_url [ad_conn url]
+
+set export [ns_queryget export]
+
+if {$export == "print"} {
+    set view "list"
+}
+
 set return_url [ad_urlencode [ad_return_url]]
+set add_item_url [export_vars -base "cal-item-new" {{return_url [ad_return_url]} view date}]
 
 set admin_p [permission::permission_p -object_id $package_id -privilege calendar_admin]
 

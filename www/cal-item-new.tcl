@@ -21,10 +21,9 @@ auth::require_login
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
+set js ""
 
-if { [ns_queryget time_p] == 1 } {
-   set js ""
-} else {
+if { [ns_queryget time_p] != 1 && [ns_queryget start_time] == "" } {
    set js "disableTime('cal_item');"
 }
 
@@ -66,9 +65,8 @@ ad_form -name cal_item  -export { return_url } -form {
     }
     {date:date
         {label "[_ calendar.Date_1]"}
-	{format "YYYY MM DD"}
-        {html {id date} } 
-	{after_html {<input type="button" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');" onclick ="return showCalendarWithDateWidget('date', 'y-m-d');" /> \[<b>[_ calendar.y-m-d]</b>\]} } }
+        {format "YYYY MM DD"}
+        {after_html {<input type="button" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');" onclick ="return showCalendarWithDateWidget('date', 'y-m-d');" /> \[<b>[_ calendar.y-m-d]</b>\]} } }
     {time_p:text(radio)     
         {label "&nbsp;"}
         {html {onClick "javascript:TimePChanged(this);"}} 
@@ -88,7 +86,7 @@ ad_form -name cal_item  -export { return_url } -form {
 
     {description:text(textarea),optional
         {label "[_ calendar.Description]"}
-        {html {cols 45 rows 10 wrap soft} maxlength 255}
+        {html {cols 45 rows 10}}
     }
     {calendar_id:integer(radio)
         {label "[_ calendar.Sharing]"}

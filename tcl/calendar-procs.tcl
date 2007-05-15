@@ -209,7 +209,8 @@ ad_proc -public calendar::get_month_multirow_information {
         set today_p f
     }
     set day_number [expr $current_day - $first_julian_date_of_month +1]
-    set weekday [expr [expr $current_day % 7] +1]
+    set weekday [expr [expr $current_day % 7] + 1]
+    set weekday [ad_decode $weekday 7 0 $weekday]
 
     set beginning_of_week_p f
     set end_of_week_p f

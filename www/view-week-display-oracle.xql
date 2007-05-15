@@ -5,11 +5,11 @@
 
 <fullquery name="select_weekday_info">
 <querytext>
-        select   to_char(to_date(:start_date, 'yyyy-mm-dd'), 'D') 
+        select   to_char(to_date(:start_date, 'YYYY-MM-DD'), 'D') 
         as       day_of_the_week,
-        to_char(next_day(to_date(:start_date, 'yyyy-mm-dd')-7, :first_us_weekday)) 
+        to_char(next_day(to_date(:start_date, 'YYYY-MM-DD')-7, :first_us_weekday)) 
         as       first_weekday_of_the_week,
-        to_char(next_day(to_date(:start_date, 'yyyy-mm-dd'), :last_us_weekday)) 
+        to_char(next_day(to_date(:start_date, 'YYYY-MM-DD')-7, :first_us_weekday) + 6)
         as       last_weekday_of_the_week
         from dual
 </querytext>

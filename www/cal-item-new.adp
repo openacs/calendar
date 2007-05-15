@@ -15,7 +15,7 @@
 </property>
 
 
-<script language="JavaScript">
+<script type="text/javascript" language="JavaScript">
     function disableTime(form_name) {
           <multiple name="time_format_elms">
             document.forms[form_name].elements["start_time.@time_format_elms.name@"].disabled = true;
@@ -51,7 +51,7 @@
   </div>
 
 
-<script language="JavaScript">
+<script type="text/javascript" language="JavaScript">
   // TimePChanged();
   @js;noquote@
 </script>

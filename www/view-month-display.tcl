@@ -294,7 +294,7 @@ if { !$exporting_p } {
             "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
             "?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar" \
             "" \
-	    $num_attachments
+	    ""
     }
 
     # Add cells for remaining days outside the month
@@ -322,7 +322,7 @@ if { !$exporting_p } {
                 "" \
                 "" \
                 "" \
-		$num_attachments
+		""
         }
     }
 }

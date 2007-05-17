@@ -16,7 +16,7 @@ set hour_height_inside 43
 set hour_height_sep 3
 set hour_height_units px
 set bump_right_base 0
-set bump_right_delta 35
+set bump_right_delta 155
 set bump_right_units px
 
 if {[info exists url_stub_callback]} {
@@ -83,7 +83,8 @@ multirow create items \
     end_time \
     top \
     height \
-    style
+    style \
+    num_attachments
 
 set previous_intervals [list]
 
@@ -134,7 +135,8 @@ db_foreach dbqd.calendar.www.views.select_all_day_items {} {
         $pretty_end_time \
         0 \
         0 \
-        "left: ${bump_right_base}${bump_right_units};"
+        "left: ${bump_right_base}${bump_right_units};" \
+	$num_attachments
 
     incr bump_right_base $bump_right_delta
 }
@@ -216,7 +218,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         $pretty_end_time \
         $top \
         $height \
-        "left: ${bump_right}${bump_right_units};"
+        "left: ${bump_right}${bump_right_units};" \
+	$num_attachments
     
     lappend previous_intervals $start_seconds $end_seconds
 }

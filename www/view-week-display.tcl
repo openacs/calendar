@@ -101,7 +101,8 @@ multirow create items \
     style_class \
     top \
     height \
-    left
+    left \
+    num_attachments
 
 # Convert date from user timezone to system timezone
 set first_weekday_of_the_week_tz [lc_time_conn_to_system "$first_weekday_of_the_week 00:00:00"]
@@ -263,7 +264,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         "calendar-Item" \
         $top \
         $height \
-        $left
+        $left \
+	$num_attachments
 
     set current_weekday $day_of_week
 

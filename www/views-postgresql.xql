@@ -19,7 +19,8 @@
              e.event_id as item_id,
              cit.type as item_type,
              cals.calendar_id,
-             cals.calendar_name
+             cals.calendar_name,
+             (select count(1) from attachments where object_id=e.event_id) as num_attachments
              $additional_select_clause
     from     acs_activities a,
              acs_events e,
@@ -56,7 +57,8 @@
          e.event_id as item_id,
          (select type from cal_item_types where item_type_id= ci.item_type_id) as item_type,
 	 cals.calendar_id,
-	 cals.calendar_name
+	 cals.calendar_name,
+         (select count(1) from attachments where object_id=e.event_id) as num_attachments
          $additional_select_clause
     from cal_items ci,
          acs_events e,

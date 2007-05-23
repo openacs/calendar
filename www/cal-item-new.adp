@@ -13,7 +13,7 @@
 <property name="header_stuff">
   <link href="/resources/calendar/calendar.css" rel="stylesheet" type="text/css">
 </property>
-
+<if @link:rowcount@ not nil><property name="&link">link</property></if>
 
 <script type="text/javascript" language="JavaScript">
     function disableTime(form_name) {

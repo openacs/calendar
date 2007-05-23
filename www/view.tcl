@@ -61,5 +61,16 @@ set notification_chunk [notification::display::request_widget \
                             -url [ad_conn url] \
                            ]
 
+# To be replaced by a call to template::head API
+if {![template::multirow exists link]} {
+    template::multirow create link rel type href title lang media
+}
+template::multirow append link \
+    stylesheet \
+    "text/css" \
+    "/resources/calendar/calendar.css" \
+    "" \
+    en \
+    "all"
 
 ad_return_template 

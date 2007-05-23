@@ -48,5 +48,17 @@ set goto_date_url [export_vars -base "./view" {{view day} {date $cal_item(start_
 set cal_item_new_url [export_vars -base "cal-item-new" {cal_item_id return_url}]
 set cal_item_delete_url [export_vars -base "cal-item-delete" {cal_item_id return_url}]
 
+# To be replaced by a call to template::head API
+if {![template::multirow exists link]} {
+    template::multirow create link rel type href title lang media
+}
+template::multirow append link \
+    stylesheet \
+    "text/css" \
+    "/resources/calendar/calendar.css" \
+    "" \
+    en \
+    "all"
+
 ad_return_template 
 

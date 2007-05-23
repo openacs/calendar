@@ -36,6 +36,17 @@ set ansi_date $date
 set calendar_list [calendar::calendar_list]
 set calendar_options [calendar::calendar_list -privilege create]
 
+# To be replaced by a call to template::head API
+if {![template::multirow exists link]} {
+    template::multirow create link rel type href title lang media
+}
+template::multirow append link \
+    stylesheet \
+    "text/css" \
+    "/resources/calendar/calendar.css" \
+    "" \
+    en \
+    "all"
 
 # TODO: Move into ad_form
 if { ![ad_form_new_p -key cal_item_id] } {

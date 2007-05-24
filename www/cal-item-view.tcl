@@ -18,10 +18,6 @@ calendar::item::get -cal_item_id $cal_item_id -array cal_item
 
 set write_p [permission::write_permission_p -object_id $cal_item_id -creation_user $cal_item(creation_user)]
 
-if {[exists_and_not_null return_url]} {
-    set return_url [ad_urlencode $return_url]
-}
-
 # Attachments?
 if {$cal_item(n_attachments) > 0} {
     set item_attachments [attachments::get_attachments -object_id $cal_item(cal_item_id) -return_url [ad_return_url]]

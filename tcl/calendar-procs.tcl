@@ -106,6 +106,8 @@ ad_proc calendar::create { owner_id
 	end;
     }
     ]
+    #removing inherited permissions
+    permission::set_not_inherit -object_id $calendar_id
     
     return $calendar_id
     

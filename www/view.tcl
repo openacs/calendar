@@ -53,6 +53,7 @@ if {$view == "list"} {
     set ansi_day [string trimleft [lindex $ansi_list 2] "0"]
     set end_date [dt_julian_to_ansi [expr [dt_ansi_to_julian $ansi_year $ansi_month $ansi_day ] + $period_days]]
 }
+set calendar_personal_p [calendar::personal_p -calendar_id [lindex [lindex [calendar::calendar_list -package_id $package_id  ] 0] 1] ]
 
 set notification_chunk [notification::display::request_widget \
                             -type calendar_notif \

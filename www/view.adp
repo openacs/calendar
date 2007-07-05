@@ -19,7 +19,9 @@
     </p>
   
     <p>
-    @notification_chunk;noquote@
+    <if @calendar_personal_p@ false>
+	    @notification_chunk;noquote@
+    </if>
     </p>
     <p>
     <if @admin_p@ true>

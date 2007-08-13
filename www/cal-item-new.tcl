@@ -66,7 +66,7 @@ ad_form -name cal_item  -export { return_url } -form {
     {date:date
         {label "[_ calendar.Date_1]"}
         {format "YYYY MM DD"}
-        {after_html {<input type="button" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');" onclick ="return showCalendarWithDateWidget('date', 'y-m-d');" /> \[<b>[_ calendar.y-m-d]</b>\]} } }
+        {after_html {<input type="button" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');" onclick ="return showCalendarWithDateWidget('date', 'y-m-d');" > \[<b>[_ calendar.y-m-d]</b>\]} } }
     {time_p:text(radio)     
         {label "&nbsp;"}
         {html {onClick "javascript:TimePChanged(this);"}} 

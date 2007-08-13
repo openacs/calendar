@@ -5,9 +5,9 @@
 			<tr>
 				<td align="center">
 		<h1>
-		  <a href="@previous_week_url@" title="#calendar.prev_week#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_week#"/></a>
+		  <a href="@previous_week_url@" title="#calendar.prev_week#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_week#"></a>
 		  &nbsp;#calendar.Week_of# @week_start_month@ @week_start_day@ @week_start_year@ &ndash; @week_end_month@ @week_end_day@ @week_end_year@&nbsp;
-		  <a href="@next_week_url@" title="#calendar.next_week#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_week#" /></a>
+		  <a href="@next_week_url@" title="#calendar.next_week#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_week#" ></a>
 		</h1>
               </td>
           </tr>
@@ -76,10 +76,10 @@
 		<table width="@week_width@@width_units@">
 			<tr>
 				<td>
-					<div class="calendar-back-forward"><a href="@previous_week_url@" title="#calendar.prev_week#"><img src="/resources/calendar/images/left.gif" alt="#acs-kernel.common_Go#" /> &nbsp; #calendar.prev_week#</a></div>
+					<div class="calendar-back-forward"><a href="@previous_week_url@" title="#calendar.prev_week#"><img src="/resources/calendar/images/left.gif" alt="#acs-kernel.common_Go#" > &nbsp; #calendar.prev_week#</a></div>
 				</td>
 				<td align="right">
-					<div class="calendar-back-forward"><a href="@next_week_url@" title="#calendar.next_week#">#calendar.next_week# &nbsp; <img src="/resources/calendar/images/right.gif" alt="#acs-kernel.common_Go#" /></a></div>
+					<div class="calendar-back-forward"><a href="@next_week_url@" title="#calendar.next_week#">#calendar.next_week# &nbsp; <img src="/resources/calendar/images/right.gif" alt="#acs-kernel.common_Go#" ></a></div>
 				</td>
 			</tr>
 		</table>

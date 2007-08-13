@@ -1,9 +1,9 @@
 <% ns_log notice "DAVEB 103 view-month-display.adp" %>
 
     <h1 align="center">
-      <a href="@previous_month_url@#calendar" title="#calendar.prev_month#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_month#" /></a>
+      <a href="@previous_month_url@#calendar" title="#calendar.prev_month#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_month#" ></a>
       &nbsp;@month_string@ @year@&nbsp;
-    <a href="@next_month_url@#calendar" title="#calendar.next_month#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_month#" /></a>
+    <a href="@next_month_url@#calendar" title="#calendar.next_month#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_month#" ></a>
     </h1>
 
 <table class="cal-table-display" cellpadding="0" cellspacing="0" border="0" width="99%" summary="calendar grid display for @month_string@ @year@">
@@ -76,10 +76,10 @@
 		<table width="100%">
 			<tr>
 				<td>
-					<div class="calendar-back-forward"><a href="@previous_month_url@#calendar" title="#calendar.prev_month#"><img src="/resources/calendar/images/left.gif" alt="#acs-kernel.common_Go#" /> &nbsp; #calendar.prev_month#</a></div>
+					<div class="calendar-back-forward"><a href="@previous_month_url@#calendar" title="#calendar.prev_month#"><img src="/resources/calendar/images/left.gif" alt="#acs-kernel.common_Go#" > &nbsp; #calendar.prev_month#</a></div>
 				</td>
 				<td align="right">
-					<div class="calendar-back-forward"><a href="@next_month_url@#calendar" title="#calendar.next_month#">#calendar.next_month#&nbsp; <img src="/resources/calendar/images/right.gif" alt="#acs-kernel.common_Go#" /></a></div>
+					<div class="calendar-back-forward"><a href="@next_month_url@#calendar" title="#calendar.next_month#">#calendar.next_month#&nbsp; <img src="/resources/calendar/images/right.gif" alt="#acs-kernel.common_Go#" ></a></div>
 				</td>
 			</tr>
 		</table>

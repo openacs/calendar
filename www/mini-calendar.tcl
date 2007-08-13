@@ -10,7 +10,7 @@ ad_form -name go-to-date -method get -has_submit 1 -action $base_url  -export [l
     {date:text,nospell,optional
 	{label ""}
 	{html {size 10}}
-	{after-html "<br/>[_ acs-datetime.Date_as_YYYYMMDD]"}
+	{after-html "<br>[_ acs-datetime.Date_as_YYYYMMDD]"}
     }
     {btn_ok:text(submit)
         {label "[_ calendar.Go_to_date]"}

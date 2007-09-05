@@ -52,7 +52,10 @@
 
 
 <script type="text/javascript" language="JavaScript">
-  // TimePChanged();
-  @js;noquote@
+      if (document.forms["cal_item"].time_p[0].checked == true ) {
+        // All day event
+        disableTime("cal_item");
+      } else {
+        enableTime("cal_item");
+      }
 </script>
-

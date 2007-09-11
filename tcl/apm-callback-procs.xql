@@ -10,7 +10,7 @@
 </querytext>
 </fullquery>
 
-<fullquery name="calendar::apm::package_after_upgrade.remove_private_notifications">
+<fullquery name="calendar::apm::package_after_upgrade.remove_personal_notifications">
 <querytext>
   delete from notification_requests
   where request_id in (select request_id

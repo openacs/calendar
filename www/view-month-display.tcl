@@ -22,9 +22,13 @@ if {[info exists url_stub_callback]} {
     set portlet_mode_p 1
 }
 
+if {![info exists return_url]} {
+    set return_url [ad_urlencode "../"]
+}
+
 if {[info exists portlet_mode_p] && $portlet_mode_p} {
     set page_num_urlvar "&page_num=$page_num"
-    set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=[ad_urlencode "../"]&action=edit&cal_item_id=\$item_id"
+    set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=$return_url&action=edit&cal_item_id=\$item_id"
     set prev_month_template "?view=month&date=\[ad_urlencode \$prev_month\]&page_num=$page_num"
     set next_month_template "?view=month&date=\[ad_urlencode \$next_month\]&page_num=$page_num"
     set url_stub_callback "calendar_portlet_display::get_url_stub"
@@ -117,7 +121,8 @@ multirow create items \
     time_p \
     add_url \
     day_url \
-    style_class
+    style_class \
+    num_attachments
 
 # Calculate number of greyed days and then add them to the calendar mulitrow
 set greyed_days_before_month [expr [expr [dt_first_day_of_month $this_year $this_month]] -1 ]
@@ -151,7 +156,8 @@ if { !$exporting_p } {
             "" \
             "" \
             "" \
-            ""
+            "" \
+	    ""
     }
 }
 
@@ -209,7 +215,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                 0 \
                 "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
                 "?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar" \
-                "calendar-${system_type}Item"
+                "calendar-${system_type}Item" \
+		$num_attachments
         } 
     }
 
@@ -251,7 +258,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         $time_p \
         "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
         "?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar" \
-        "calendar-${system_type}Item"
+        "calendar-${system_type}Item" \
+	$num_attachments
 }
 
 if { !$exporting_p } {
@@ -285,7 +293,8 @@ if { !$exporting_p } {
             0 \
             "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
             "?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar" \
-            "" 
+            "" \
+	    ""
     }
 
     # Add cells for remaining days outside the month
@@ -312,7 +321,8 @@ if { !$exporting_p } {
                 "" \
                 "" \
                 "" \
-                ""
+                "" \
+		""
         }
     }
 }

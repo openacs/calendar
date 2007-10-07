@@ -21,11 +21,6 @@ auth::require_login
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
-set js ""
-
-if { [ns_queryget time_p] != 1 && [ns_queryget start_time] == "" } {
-   set js "disableTime('cal_item');"
-}
 
 if {![info exists item_type_id]} {
     set item_type_id ""
@@ -36,6 +31,17 @@ set ansi_date $date
 set calendar_list [calendar::calendar_list]
 set calendar_options [calendar::calendar_list -privilege create]
 
+# To be replaced by a call to template::head API
+if {![template::multirow exists link]} {
+    template::multirow create link rel type href title lang media
+}
+template::multirow append link \
+    stylesheet \
+    "text/css" \
+    "/resources/calendar/calendar.css" \
+    "" \
+    en \
+    "all"
 
 # TODO: Move into ad_form
 if { ![ad_form_new_p -key cal_item_id] } {
@@ -49,10 +55,10 @@ if { ![ad_form_new_p -key cal_item_id] } {
 }
 # TODO: Move into ad_form
 if { [exists_and_not_null cal_item_id] } {
-    set page_title "One calendar item"
+    set page_title [_ calendar.Calendar_Edit_Item]
     set ad_form_mode display
 } else {
-    set page_title "Add a calendar item"
+    set page_title [_ calendar.Calendar_Add_Item]
     set ad_form_mode edit
 }
 

@@ -48,7 +48,8 @@
                         <a href="@items.event_url@" title="#calendar.goto_items_event_name#">
                         <if @items.time_p@ true>@items.start_time@</if>
                         @items.event_name@
-                        <if @show_calendar_name_p@>
+                        <if @items.num_attachments@ gt 0><img src="/resources/calendar/images/attach.png" alt=""/></if>
+			<if @show_calendar_name_p@>
                           <span class="cal-text-grey-sml"> [@items.calendar_name@]</span>
                         </if>
                         </a>

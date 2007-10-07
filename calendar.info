@@ -27,6 +27,7 @@
             <callback type="after-install"  proc="calendar::install::package_install"/>
             <callback type="before-uninstall"  proc="calendar::install::package_uninstall"/>
             <callback type="before-upgrade"  proc="calendar::install::package_upgrade"/>
+            <callback type="after-upgrade"  proc="calendar::apm::package_after_upgrade"/>
         </callbacks>
         <parameters>
             <parameter datatype="number"  min_n_values="1"  max_n_values="1"  name="Attachments"  default="0" description="Allow Files to be Uploaded"/>

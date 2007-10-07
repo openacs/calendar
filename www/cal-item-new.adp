@@ -13,7 +13,7 @@
 <property name="header_stuff">
   <link href="/resources/calendar/calendar.css" rel="stylesheet" type="text/css">
 </property>
-
+<if @link:rowcount@ not nil><property name="&link">link</property></if>
 
 <script type="text/javascript" language="JavaScript">
     function disableTime(form_name) {
@@ -52,7 +52,10 @@
 
 
 <script type="text/javascript" language="JavaScript">
-  // TimePChanged();
-  @js;noquote@
+      if (document.forms["cal_item"].time_p[0].checked == true ) {
+        // All day event
+        disableTime("cal_item");
+      } else {
+        enableTime("cal_item");
+      }
 </script>
-

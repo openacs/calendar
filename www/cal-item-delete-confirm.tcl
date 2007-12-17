@@ -22,16 +22,7 @@ set cal_item(no_time_p) [dt_no_time_p -start_time $cal_item(start_time) -end_tim
 
 set date $cal_item(start_date)
 
-# To be replaced by a call to template::head API
-if {![template::multirow exists link]} {
-    template::multirow create link rel type href title lang media
-}
-template::multirow append link \
-    stylesheet \
-    "text/css" \
-    "/resources/calendar/calendar.css" \
-    "" \
-    en \
-    "all"
+# Header stuff
+template::head::add_css -href "/resources/calendar/calendar.css" -media all
 
 ad_return_template

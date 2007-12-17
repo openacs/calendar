@@ -1,10 +1,6 @@
 <master>
 <property name="title">#calendar.Calendar_Item#: @cal_item.name;noquote@</property>
 <property name="context">#calendar.Item#</property>
-<property name="header_stuff">
-  <link href="/resources/calendar/calendar.css" rel="stylesheet" type="text/css">
-</property>
-<if @link:rowcount@ not nil><property name="&link">link</property></if>
 <property name="displayed_object_id">@cal_item_id@</property>
 
 

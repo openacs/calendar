@@ -2,18 +2,12 @@
 <if @ad_form_mode@ eq display>
   <property name="title">#calendar.Calendar_Edit_Item#</property>
   <property name="context">#calendar.Edit#</property>
-  <property name="focus">cal_item.title</property>
 </if>
 <else>
   <property name="title">#calendar.Calendar_Add_Item#</property>
   <property name="context">#calendar.Add#</property>
-  <property name="focus">cal_item.title</property>
 </else>
-<property name="onload">TimePChanged()</property>
-<property name="header_stuff">
-  <link href="/resources/calendar/calendar.css" rel="stylesheet" type="text/css">
-</property>
-<if @link:rowcount@ not nil><property name="&link">link</property></if>
+<property name="focus">cal_item.title</property>
 
 <script type="text/javascript" language="JavaScript">
     function disableTime(form_name) {

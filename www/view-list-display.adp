@@ -1,4 +1,4 @@
-<table class="cal-table-display" cellpadding="1" cellspacing="2" width="99%">
+<table class="cal-table-display" cellpadding="1" cellspacing="2" width="75%">
 <tr><td align="right" nowrap="nowrap">
 [&nbsp;<a href="@period_url_1@" title="#calendar.events_over_1d#">1</a>
 &nbsp;|&nbsp;

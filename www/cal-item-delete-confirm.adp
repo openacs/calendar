@@ -1,10 +1,6 @@
   <master>
     <property name="title">#calendar.Calendar_Item_Delete#: @cal_item.name;noquote@</property>
     <property name="context">#calendar.Delete#</property>
-    <property name="header_stuff">
-      <link href="/resources/calendar/calendar.css" rel="stylesheet" type="text/css">
-    </property>
-    <if @link:rowcount@ not nil><property name="&link">link</property></if>
 
     <table>
 

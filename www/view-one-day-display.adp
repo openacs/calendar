@@ -6,7 +6,7 @@
   </tr>
   <tr>
     <td>
-     <table id="cal-table-day" cellpadding="0" cellspacing="1" border="0" width="100%">
+     <table id="cal-table-day" cellpadding="0" cellspacing="1" border="0" width="75%">
         <tr>
 			<td style="vertical-align: top;"> <div class="day-time-1"><p><a href="@grid_first_add_url@" title="#calendar.Add_item_beginning_at#">@grid_first_hour@</a></p></div></td>
 			<td style="vertical-align: top;" class="day-event-1" width="80%" valign="top">

@@ -9,7 +9,7 @@
 <table class="cal-table-display" cellpadding="0" cellspacing="0" border="0" width="75%" summary="calendar grid display for @month_string@ @year@">
   <tr>
     <multiple name="weekday_names">
-      <th width="14%" class="cal-month-day-title">
+      <th style="width: 14%;" class="cal-month-day-title">
         @weekday_names.weekday_short@
       </th>
     </multiple>
@@ -31,14 +31,14 @@
               </if>
 
               <if @items.outside_month_p@ true>
-                <td class="cal-month-day-inactive" width="14%">&nbsp;</td>
+                <td class="cal-month-day-inactive" style="width: 14%;">&nbsp;</td>
               </if>     
               <else>
                 <if @items.today_p@ true>
-                  <td class="cal-month-today"  width="14%" onclick="javascript:location.href='@items.add_url@';" onkeypress="javascript:acs_KeypressGoto('@items.add_url@',event);">
+                  <td class="cal-month-today"  style="width: 14%;" onclick="javascript:location.href='@items.add_url@';" onkeypress="javascript:acs_KeypressGoto('@items.add_url@',event);">
                 </if>
                 <else>
-                  <td class="cal-month-day"  width="14%" onclick="javascript:location.href='@items.add_url@';"onkeypress="javascript:acs_KeypressGoto('@items.add_url@',event);">
+                  <td class="cal-month-day"  style="width: 14%;" onclick="javascript:location.href='@items.add_url@';"onkeypress="javascript:acs_KeypressGoto('@items.add_url@',event);">
                 </else>
                   &nbsp;<span class="screen-reader-only">[</span><a href="@items.day_url@" title="#calendar.goto_day_items_day_number#">@items.day_number@</a><span class="screen-reader-only"> ]</span>
 

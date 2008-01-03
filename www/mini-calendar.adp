@@ -2,20 +2,20 @@
    <tr>
     <if @view@ eq "month">
         <td>
-          <a href="@prev_year_url@" title="#calendar.prev_year#"><img border="0" src="/resources/calendar/images/left.gif" alt="#calendar.prev_year#"></a>
+          <a href="@prev_year_url@" title="#calendar.prev_year#"><img style="border: 0;" src="/resources/calendar/images/left.gif" alt="#calendar.prev_year#"></a>
         </td>
         <td class="at-a-glance-head-current_view" colspan="2">@curr_month@ @curr_day@ @curr_year@</td>
         <td>
-          <a href="@next_year_url@" title="#calendar.next_year#"><img border="0" src="/resources/calendar/images/right.gif" alt="#calendar.next_year#" ></a>
+          <a href="@next_year_url@" title="#calendar.next_year#"><img style="border: 0;" src="/resources/calendar/images/right.gif" alt="#calendar.next_year#" ></a>
         </td>
     </if>
     <else>
         <td>
-          <a href="@prev_month_url@#calendar" title="#calendar.prev_month#"><img border="0" src="/resources/calendar/images/left.gif" alt="#calendar.prev_month#" ></a>
+          <a href="@prev_month_url@#calendar" title="#calendar.prev_month#"><img style="border: 0;" src="/resources/calendar/images/left.gif" alt="#calendar.prev_month#" ></a>
         </td>
         <td class="at-a-glance-head-current_view" colspan="2">@curr_month@ @curr_day@ @curr_year@</td>
         <td>
-          <a href="@next_month_url@#calendar" title="#calendar.next_month#"><img border="0" src="/resources/calendar/images/right.gif" alt="#calendar.next_month#" ></a>
+          <a href="@next_month_url@#calendar" title="#calendar.next_month#"><img style="border: 0;" src="/resources/calendar/images/right.gif" alt="#calendar.next_month#" ></a>
         </td>
     </else>
 </tr>

@@ -11,7 +11,7 @@
       <include src="mini-calendar" base_url="view" view="@view@" date="@date@">
     </else>
     <p>
-    <a href="@add_item_url@" title="#calendar.Add_Item#"><img border=0 align="left" src="/resources/acs-subsite/add.gif" alt="">#calendar.Add_Item#</a>
+    <a href="@add_item_url@" title="#calendar.Add_Item#"><img style="border: 0; text-align: left" src="/resources/acs-subsite/add.gif" alt="">#calendar.Add_Item#</a>
     </p>
   
     <p>

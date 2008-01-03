@@ -19,7 +19,7 @@
 		<table cellpadding="0" cellspacing="0" border="0" class="cal-week-day-title">
 		<tr>
 			<td><p style="width:@time_of_day_width@@width_units@;margin:0px;">&nbsp;</p></td>
-            <multiple name="days_of_week"><td width="@days_of_week.width@@width_units@"><a href="@days_of_week.weekday_url@" title="#calendar.goto_weekday#">@days_of_week.day_short@ @days_of_week.monthday@</a></td></multiple>
+            <multiple name="days_of_week"><td style="width:@days_of_week.width@@width_units@"><a href="@days_of_week.weekday_url@" title="#calendar.goto_weekday#">@days_of_week.day_short@ @days_of_week.monthday@</a></td></multiple>
 		</tr>
 		</table>
 	</td>
@@ -28,8 +28,8 @@
 	<td>
 		<table id="cal-table-week" cellpadding="0" cellspacing="1" border="0" width="@week_width@@width_units@">
 		<tr>
-			<td style="vertical-align: top;" width="@time_of_day_width@@width_units@"><div class="day-time-1"><p>@grid_first_hour@</p></div></td>
-			<td style="vertical-align: top;" class="week-event-1" width="@day_width_0@@width_units@">
+			<td style="vertical-align: top; width:@time_of_day_width@@width_units@"><div class="day-time-1"><p>@grid_first_hour@</p></div></td>
+			<td style="vertical-align: top; width:@day_width_0@@width_units@" class="week-event-1">
               <div class="week-entry-box">
                 <multiple name="items">
 				  <div class="week-entry-item @items.style_class@" style="position: absolute; top:@items.top@@hour_height_units@; left: @items.left@@width_units@; height:@items.height@@hour_height_units@;" onMouseOver="showCalItem(this,'@items.height@@hour_height_units@',20);" onMouseOut="showCalItem(this,'@items.height@@hour_height_units@',10);">
@@ -38,12 +38,12 @@
                 </multiple>
 			  </div>
             </td>
-			<td class="week-event-1" width="@day_width_1@@width_units@">&nbsp;</td>
-			<td class="week-event-1" width="@day_width_2@@width_units@">&nbsp;</td>
-			<td class="week-event-1" width="@day_width_3@@width_units@">&nbsp;</td>
-			<td class="week-event-1" width="@day_width_4@@width_units@">&nbsp;</td>
-			<td class="week-event-1" width="@day_width_5@@width_units@">&nbsp;</td>
-			<td class="week-event-1" width="@day_width_6@@width_units@">&nbsp;</td>
+			<td class="week-event-1" style="width:@day_width_1@@width_units@">&nbsp;</td>
+			<td class="week-event-1" style="width:@day_width_2@@width_units@">&nbsp;</td>
+			<td class="week-event-1" style="width:@day_width_3@@width_units@">&nbsp;</td>
+			<td class="week-event-1" style="width:@day_width_4@@width_units@">&nbsp;</td>
+			<td class="week-event-1" style="width:@day_width_5@@width_units@">&nbsp;</td>
+			<td class="week-event-1" style="width:@day_width_6@@width_units@">&nbsp;</td>
 		</tr>
         <multiple name="grid">
 		<tr>

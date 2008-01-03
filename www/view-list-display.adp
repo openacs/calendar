@@ -1,5 +1,5 @@
 <table class="cal-table-display" cellpadding="1" cellspacing="2" width="75%">
-<tr><td align="right" nowrap="nowrap">
+<tr><td align="right">
 [&nbsp;<a href="@period_url_1@" title="#calendar.events_over_1d#">1</a>
 &nbsp;|&nbsp;
 <a href="@period_url_7@" title="#calendar.events_over_7d#">7</a>

@@ -9,7 +9,7 @@
 </else>
 <property name="focus">cal_item.title</property>
 
-<script type="text/javascript" language="JavaScript">
+<script type="text/javascript">
     function disableTime(form_name) {
           <multiple name="time_format_elms">
             document.forms[form_name].elements["start_time.@time_format_elms.name@"].disabled = true;
@@ -45,7 +45,7 @@
   </div>
 
 
-<script type="text/javascript" language="JavaScript">
+<script type="text/javascript">
       if (document.forms["cal_item"].time_p[0].checked == true ) {
         // All day event
         disableTime("cal_item");

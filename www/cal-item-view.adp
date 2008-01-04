@@ -10,7 +10,7 @@
 <table width="95%">
 
   <tr>
-  <td valign="top" width="150">
+  <td valign="top" style="width:150px">
   <include src="mini-calendar" base_url="view" view="day" date="@date@">
   </td>	
 

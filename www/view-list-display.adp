@@ -51,7 +51,7 @@
 			<strong>#calendar.Description#</strong>
             <if @items.description@ eq ""><em>none</em></if><else>@items.description;noquote@</else>
 
-			<a href="@items.event_print_url@" onclick="return calOpenPrintView('@items.event_print_url@');" title="#calendar.Print#"><img src="/resources/calendar/images/print-list-icon.gif" align="right" border="0" alt="#calendar.Print#"></a>
+			<a href="@items.event_print_url@" onclick="return calOpenPrintView('@items.event_print_url@');" title="#calendar.Print#"><img src="/resources/calendar/images/print-list-icon.gif" style=" text-align: right; border: 0;" alt="#calendar.Print#"></a>
 			</td>
 		</tr>
 		</tbody>

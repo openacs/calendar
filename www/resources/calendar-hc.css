@@ -1,0 +1,154 @@
+/*  Month View  ---------------------------------------------------*/
+.cal-month-day {
+	background: inherit;
+}
+
+.cal-month-day:hover {
+	background: #555555;
+}
+
+.cal-month-today {
+	background-color: #555555;
+}
+
+.cal-month-today:hover {
+	background: #555555;
+}
+
+.cal-month-day-inactive {
+	background: #aaaaaa;
+}
+
+.cal-month-event {
+	border:1px #ffffff solid;
+	-moz-opacity:1; 
+	filter:alpha(opacity=100);
+}
+
+.cal-month-event a {
+    color: #000000;
+}
+
+.cal-month-table {
+	border-top: 1px #ffffff solid;
+	border-left: 1px #ffffff solid;
+}
+
+.cal-month-table td {
+	border-right: 1px #ffffff solid;
+	border-bottom: 1px #ffffff solid;
+}
+
+/* END Month View  ---------------------------------------------------*/
+
+/* at-a-glance ---------------------------------------------------*/
+/* This is the small cal that appears in month/week/day views on the left hand side*/
+
+#at-a-glance td {
+    border-right: 1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	background-color: inherit;
+}
+
+#at-a-glance td.selected {
+	background-color: #555555;
+}
+
+#at-a-glance td.inactive {
+	background-color: #aaaaaa;
+}
+
+#at-a-glance td.active {
+	background-color: inherit;
+}
+
+#at-a-glance td.active:hover {
+	background-color: #555555;
+}
+
+#at-a-glance td.today {
+	background-color: #555555;
+}
+/* END at-a-glance ---------------------------------------------------*/
+
+
+.cal-text-grey-sml {
+	color: inherit;
+}
+
+/*  Week/Day View Common Styles  ---------------------------------------------------*/
+#cal-table-day, #cal-table-week  {
+	background-color: #ffffff;
+}
+
+.day-time-1 {
+	border:1px #ffffff solid;
+	background-color: #222222;
+}
+
+.day-time-2 {
+	border:1px #ffffff solid;
+	background-color:#555555;
+}
+
+/*  Week View  ---------------------------------------------------*/
+
+.week-event-1 {
+	background-color:#222222;
+}
+
+.week-event-2 {
+	background-color:#555555;
+}
+
+.week-entry-box a {
+	color: #000000;
+}
+
+.week-entry-item {
+	border:1px #ffffff solid;
+	-moz-opacity:1; 
+	filter:alpha(opacity=100);
+}
+
+/*  END Week View  ---------------------------------------------------*/
+
+/*  Day View  ---------------------------------------------------*/
+.day-event-1 {
+	border:0px #ffffff solid;
+	background-color:#222222;
+}
+
+.day-event-2 {
+	border:0px #ffffff solid;
+	background-color:#555555;
+}
+
+.day-entry-item {
+	border:1px #ffffff solid;
+	-moz-opacity:1; 
+	filter:alpha(opacity=100);
+}
+
+.day-entry-item a {
+    color: #000000;
+}
+
+/*  END Day View  ---------------------------------------------------*/
+
+/* view-list-display ---------------------------------------------------*/
+
+.cal-table-list thead {
+	background-color:#555555;
+	color: inherit;
+}
+
+/* END view-list-display ---------------------------------------------------*/
+
+.topnavbar { 
+	background:#555555; 
+}
+
+.topnavbar .active { 
+	background:#222222; 
+}

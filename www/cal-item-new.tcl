@@ -14,7 +14,7 @@ ad_page_contract {
     {julian_date ""}
     {start_time ""}
     {end_time ""}
-    {view "month"}
+    {view "day"}
     {return_url "./"}
 }
 auth::require_login
@@ -34,6 +34,7 @@ set calendar_options [calendar::calendar_list -privilege create]
 # Header stuff
 template::add_body_handler -event "onload" -script "TimePChanged()"
 template::head::add_css -href "/resources/calendar/calendar.css" -media all
+template::head::add_css -alternate -href "/resources/calendar/calendar-hc.css" -title "highContrast"
 
 # TODO: Move into ad_form
 if { ![ad_form_new_p -key cal_item_id] } {

@@ -46,6 +46,7 @@ set cal_item_delete_url [export_vars -base "cal-item-delete" {cal_item_id return
 
 # Header stuff
 template::head::add_css -href "/resources/calendar/calendar.css" -media all
+template::head::add_css -alternate -href "/resources/calendar/calendar-hc.css" -title "highContrast"
 
 ad_return_template 
 

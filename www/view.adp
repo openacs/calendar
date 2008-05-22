@@ -11,17 +11,15 @@
       <include src="mini-calendar" base_url="view" view="@view@" date="@date@">
     </else>
     <p>
-    <a href="@add_item_url@" title="#calendar.Add_Item#"><img style="border: 0; text-align: left" src="/resources/acs-subsite/add.gif" alt="">#calendar.Add_Item#</a>
+    <a href="@add_item_url@" title="#calendar.Add_Item#" class="button">#calendar.Add_Item#</a>
+    <if @admin_p@ true>
+      <a href="admin/" title="#calendar.lt_Calendar_Administrati#" class="button">#calendar.lt_Calendar_Administrati#</a>
+    </if>
     </p>
   
     <p>
     <if @calendar_personal_p@ false>
 	    @notification_chunk;noquote@
-    </if>
-    </p>
-    <p>
-    <if @admin_p@ true>
-      <a href="admin/" title="#calendar.lt_Calendar_Administrati#">#calendar.lt_Calendar_Administrati#</a>
     </if>
     </p>
   

@@ -8,16 +8,15 @@ if {![exists_and_not_null date]} {
 
 ad_form -name go-to-date -method get -has_submit 1 -action $base_url  -export [lappend list_of_vars page_num] -html {class inline-form} -form {
     {date:text,nospell,optional
-	{label ""}
-	{html {size 10}}
-	{after-html "<br>[_ acs-datetime.Date_as_YYYYMMDD]"}
+        {label "[_ acs-datetime.Date]"}
+        {html {size 10}}
     }
     {btn_ok:text(submit)
         {label "[_ calendar.Go_to_date]"}
     } 
     {view:text(hidden)
-	{label ""}
-	{value "day"}
+        {label ""}
+        {value "day"}
     }
 } -on_submit { }
 

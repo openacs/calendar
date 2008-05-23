@@ -75,11 +75,17 @@
     margin-right: 5px;
 }
 
-.at-a-glance-head-current_view {
-	text-align: center;
+#at-a-glance {
+	border-top: 1px solid #B8B8B8;
+    border-left: 1px solid #B8B8B8;
 }
 
-#at-a-glance td {
+#at-a-glance caption img {
+	border: 0;
+    vertical-align: middle;
+}
+
+#at-a-glance th, #at-a-glance td {
     width: 25px;
 	height:25px;
     border-right: 1px solid #B8B8B8;
@@ -89,7 +95,7 @@
 }
 
 #at-a-glance td.months {
-	width: 80px;
+	width: 70px;
 }
 
 #at-a-glance td.selected {

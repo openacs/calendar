@@ -82,10 +82,12 @@ set next_month_url "[subst $next_month_template]"
 set first_day_of_week [lc_get firstdayofweek]
 set last_day_of_week [expr [expr $first_day_of_week + 6] % 7]
 
+set week_days_short [lc_get abday]
 set week_days [lc_get day]
-multirow create weekday_names weekday_short
+multirow create weekday_names weekday_short weekday_long
 for {set i 0} {$i < 7} {incr i} {
-    multirow append weekday_names [lindex $week_days [expr [expr $i + $first_day_of_week] % 7]]
+    set i_day [expr {[expr {$i + $first_day_of_week}] % 7}]
+    multirow append weekday_names [lindex $week_days_short $i_day] [lindex $week_days $i_day]
 }
 
 
@@ -196,12 +198,13 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                      -current_day $current_day \
                      -today_julian_date $today_julian_date \
                      -first_julian_date_of_month $first_julian_date_of_month]
+
             multirow append items \
                 "" \
                 "" \
                 "" \
                 "" \
-                "" \
+                [lindex $week_days_short $display_information(weekday)] \
                 "" \
                 "" \
                 "" \
@@ -244,7 +247,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         [subst $item_template] \
         $description \
         $calendar_name \
-        $pretty_weekday \
+        [lindex $week_days_short $display_information(weekday)] \
         $pretty_start_date \
         $pretty_end_date \
         $pretty_start_time \
@@ -279,7 +282,7 @@ if { !$exporting_p } {
             "" \
             "" \
             "" \
-            "" \
+            [lindex $week_days_short $display_information(weekday)] \
             "" \
             "" \
             "" \

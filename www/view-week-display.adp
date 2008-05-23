@@ -1,5 +1,5 @@
   <table id="cal-table-week" cellpadding="0" cellspacing="1" border="0" width="@week_width@@width_units@">
-    <caption>
+    <caption class="cal-table-caption">
       <a href="@previous_week_url@" title="#calendar.prev_week#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_week#"></a>
       &nbsp;#calendar.Week_of# @week_start_month@ @week_start_day@ @week_start_year@ &ndash; @week_end_month@ @week_end_day@ @week_end_year@&nbsp;
       <a href="@next_week_url@" title="#calendar.next_week#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_week#"></a>

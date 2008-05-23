@@ -34,12 +34,20 @@
 	border-left: 1px #ffffff solid;
 }
 
-.cal-month-table td {
+.cal-month-table th {
+    color: #000000;
+}
+
+.cal-month-table td, .cal-month-table th {
 	border-right: 1px #ffffff solid;
 	border-bottom: 1px #ffffff solid;
 }
 
 /* END Month View  ---------------------------------------------------*/
+
+.cal-table-caption {
+    color: inherit;
+}
 
 /* at-a-glance ---------------------------------------------------*/
 /* This is the small cal that appears in month/week/day views on the left hand side*/
@@ -84,10 +92,6 @@
 /*  Week/Day View Common Styles  ---------------------------------------------------*/
 #cal-table-day, #cal-table-week  {
 	background-color: #ffffff;
-}
-
-#cal-table-day caption, #cal-table-week caption {
-    color: inherit;
 }
 
 #cal-table-day th, #cal-table-week th {

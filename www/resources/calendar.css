@@ -42,19 +42,21 @@
 }
 
 .cal-month-table {
-	border: 0px none;
 	margin: 0px;
 	padding: 0px;
 	border-top: 1px #89A2B3 solid;
 	border-left: 1px #89A2B3 solid;
 }
 
-.cal-month-table td {
+.cal-month-table th {
+    background-color: #ffffff;
+}
+
+.cal-month-table td, .cal-month-table th {
 	border-right: 1px #89A2B3 solid;
 	border-bottom: 1px #89A2B3 solid;
 	padding: 2px;
 }
-
 
 /* END Month View  ---------------------------------------------------*/
 
@@ -66,6 +68,18 @@
 	background-color: #FFFFFF;
 }
 
+
+.cal-table-caption {
+	font-size: 1.2em;
+    font-weight: bold;
+    color: #646c61;
+    margin: 1em;
+}
+
+.cal-table-caption img {
+    border: 0;
+    vertical-align: middle;
+}
 
 /* at-a-glance ---------------------------------------------------*/
 /* This is the small cal that appears in month/week/day views on the left hand side*/
@@ -152,36 +166,9 @@
 }
 
 
-/* Navigation at the bottom of Month/Week views */
-
-.calendar-back-forward {
-	padding-top:6px;
-} 
-
-.calendar-back-forward img {
-	vertical-align:middle;
-	padding-bottom:2px;
-	border:0px;
-}
-/* /Navigation at the bottom of Month/Week views */
-
-
-
 /*  Week/Day View Common Styles  ---------------------------------------------------*/
 #cal-table-day, #cal-table-week  {
 	background-color:#89A2B3;
-}
-
-#cal-table-day caption, #cal-table-week caption {
-	font-size: 1.2em;
-    font-weight: bold;
-    color: #646c61;
-    margin: 1em;
-}
-
-#cal-table-day caption img, #cal-table-week caption img {
-    border: 0;
-    vertical-align: middle;
 }
 
 #cal-table-day th, #cal-table-week th {

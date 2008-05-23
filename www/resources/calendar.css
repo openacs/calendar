@@ -310,10 +310,36 @@
 	border:0px; 
 }
 
+a.cal-icons {
+    background-color: inherit;
+    background-position : left bottom;
+    background-repeat : no-repeat;
+    padding-left : 20px;
+}
 
+a.day-view {
+    background-image: url("/resources/calendar/images/calendar_view_day.gif");
+}
 
+a.week-view {
+    background-image: url("/resources/calendar/images/calendar_view_week.gif");
+}
 
+a.month-view {
+    background-image: url("/resources/calendar/images/calendar_view_month.gif");
+}
 
+a.calendar-view {
+    background-image: url("/resources/calendar/images/calendar-icon.gif");
+}
+
+a.list-view {
+    background-image: url("/resources/calendar/images/list-icon.gif");
+}
+
+a.print-view {
+    background-image: url("/resources/calendar/images/print-icon.gif");
+}
 
 
 

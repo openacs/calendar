@@ -34,13 +34,12 @@ if { [string match /dotlrn* $base_url] } {
     set link "[export_vars -base $base_url {date {view day}}]&export=print"
 }
 
-multirow create views name text url icon spacer selected_p onclick
+multirow create views name text url spacer selected_p onclick
 
 multirow append views \
     "Day" \
     "day" \
     "[export_vars -base $base_url {date {view day}}]${page_num}\#calendar" \
-    "/resources/calendar/images/calendar_view_day.gif" \
     "&nbsp;&nbsp; | &nbsp;&nbsp;" \
     $day_selected_p \
     ""
@@ -49,7 +48,6 @@ multirow append views \
     "Week" \
     "week" \
     "[export_vars -base $base_url {date {view week}}]${page_num}\#calendar" \
-    "/resources/calendar/images/calendar_view_week.gif" \
     "&nbsp;&nbsp; | &nbsp;&nbsp;" \
     $week_selected_p \
     ""
@@ -58,7 +56,6 @@ multirow append views \
     "Month" \
     "month" \
     "[export_vars -base $base_url {date {view month}}]${page_num}\#calendar" \
-    "/resources/calendar/images/calendar_view_month.gif" \
     "&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" \
     $month_selected_p \
     ""
@@ -67,7 +64,6 @@ multirow append views \
     " Calendar" \
     "calendar" \
     "[export_vars -base $base_url {date {view month}}]${page_num}\#calendar" \
-    "/resources/calendar/images/calendar-icon.gif" \
     "&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;" \
     $calendar_selected_p \
     ""
@@ -76,7 +72,6 @@ multirow append views \
     " List" \
     "list" \
     "[export_vars -base $base_url {date {view list}}]${page_num}${url_stub_period_days}\#calendar" \
-    "/resources/calendar/images/list-icon.gif" \
     "&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;" \
     $list_selected_p \
     ""
@@ -85,7 +80,6 @@ multirow append views \
     " Print" \
     "print" \
     "[export_vars -url -base $base_url -entire_form -exclude {export}]&export=print" \
-    "/resources/calendar/images/print-icon.gif" \
     "" \
     f \
     "return calOpenPrintView('[export_vars -url -base $base_url -entire_form -exclude {export}]&export=print');"

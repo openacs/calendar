@@ -4,10 +4,7 @@
     <td>
       <multiple name="views">
         <span<if @views.selected_p@ true> class="active"</if>>
-        <a href="@views.url@" title="#calendar.select_views_name#" <if @views.onclick@ ne "">onclick="@views.onclick@"</if>>
-        <if @views.icon@ ne "">
-          <img src="@views.icon@" class="topnavbar-icon" alt="#calendar.select_views_name#" >
-        </if>
+        <a href="@views.url@" title="#calendar.select_views_name#" class="cal-icons @views.text@-view" <if @views.onclick@ ne "">onclick="@views.onclick@"</if>>
         @views.name;noquote@</a></span>@views.spacer;noquote@
       </multiple>
     </td>

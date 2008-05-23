@@ -34,7 +34,7 @@
           <else>
             <td headers="mday_@items.weekday_num@" class="cal-month-day"  style="width: 14%;" onclick="javascript:location.href='@items.add_url@';"onkeypress="javascript:acs_KeypressGoto('@items.add_url@',event);">
           </else>
-          &nbsp;<span class="screen-reader-only">[</span><a href="@items.day_url@" title="#calendar.goto_day_items_day_number#">@items.day_number@</a><span class="screen-reader-only"> ]</span>
+          &nbsp;<span class="screen-reader-only">[</span><a href="@items.day_url@" title="#calendar.goto_day_items_pretty_date#">@items.day_number@</a><span class="screen-reader-only"> ]</span>
 
           <group column="day_number">
             <if @items.event_name@ true>

@@ -29,6 +29,7 @@ if {[info exists url_stub_callback]} {
 }
 
 set current_date $date
+set pretty_date [lc_time_fmt $current_date %Q]
 
 if {[info exists portlet_mode_p] && $portlet_mode_p} {
     set event_url_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=[ad_urlencode "../"]&action=edit&cal_item_id=\$item_id"

@@ -1,5 +1,5 @@
   <table id="cal-table-day" cellpadding="0" cellspacing="1" border="0" width="90%">
-    <caption class="cal-table-caption">@curr_day_name@ @curr_month@ @curr_day@ @curr_year@</caption>
+    <caption class="cal-table-caption">@pretty_date@</caption>
     <thead>
       <tr>
         <th id="hours">#calendar.Hours#</th>

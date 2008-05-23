@@ -135,7 +135,7 @@ if [string equal $view month] {
             $i
     }
 
-    multirow create days day_number beginning_of_week_p end_of_week_p today_p active_p url weekday day_num
+    multirow create days day_number beginning_of_week_p end_of_week_p today_p active_p url weekday day_num pretty_date
 
     set day_of_week 1
 
@@ -159,6 +159,7 @@ if [string equal $view month] {
             set active_p f
         } 
         set ansi_date [dt_julian_to_ansi $julian_date]
+        set pretty_date [lc_time_fmt $ansi_date %Q]
         
         if {$julian_date == $first_julian_date_of_month} {
             set day_number 1
@@ -189,7 +190,8 @@ if [string equal $view month] {
         multirow append days $day_number $beginning_of_week_p $end_of_week_p $today_p $active_p \
             "[export_vars -base $base_url {{date $ansi_date} view}]${page_num}${url_stub_period_days}" \
             $weekday \
-            $day_num
+            $day_num \
+            $pretty_date
 
         incr day_number
         incr day_of_week

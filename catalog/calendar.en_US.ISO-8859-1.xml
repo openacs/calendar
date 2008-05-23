@@ -73,7 +73,9 @@
   <msg key="Go_to_year_prev_year">Go to year %prev_year%</msg>
   <msg key="goto_cal_item_start_date">Go to %cal_item.pretty_short_start_date%</msg>
   <msg key="goto_day_items_day_number">Go to day %items.day_number%</msg>
+  <msg key="goto_day_items_pretty_date">Go to %items.pretty_date%</msg>
   <msg key="goto_days_day_number">Go to day %days.day_number%</msg>
+  <msg key="goto_days_pretty_date">Go to %days.pretty_date%</msg>
   <msg key="goto_items_event_name">Go to %items.event_name%</msg>
   <msg key="goto_items_without_time_event_name">Go to %items_without_time.event_name%</msg>
   <msg key="goto_months_name">Go to %months.name%</msg>

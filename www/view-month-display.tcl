@@ -108,7 +108,7 @@ multirow create items \
     event_url \
     description \
     calendar_name \
-    weekday \
+    pretty_date \
     start_date \
     end_date \
     start_time \
@@ -205,7 +205,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                 "" \
                 "" \
                 "" \
-                [lindex $week_days $display_information(weekday)] \
+                [lc_time_fmt [dt_julian_to_ansi $current_day] %Q] \
                 "" \
                 "" \
                 "" \
@@ -249,7 +249,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         [subst $item_template] \
         $description \
         $calendar_name \
-        [lindex $week_days $display_information(weekday)] \
+        [lc_time_fmt [dt_julian_to_ansi $current_day] %Q] \
         $pretty_start_date \
         $pretty_end_date \
         $pretty_start_time \
@@ -285,7 +285,7 @@ if { !$exporting_p } {
             "" \
             "" \
             "" \
-            [lindex $week_days $display_information(weekday)] \
+            [lc_time_fmt [dt_julian_to_ansi $current_day] %Q] \
             "" \
             "" \
             "" \

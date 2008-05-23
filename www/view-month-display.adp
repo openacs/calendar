@@ -9,7 +9,7 @@
     <thead>
       <tr>
         <multiple name="weekday_names">
-          <th id="@weekday_names.weekday_short@">
+          <th id="mday_@weekday_names.weekday_num@">
             @weekday_names.weekday_long@
           </th>
         </multiple>
@@ -29,10 +29,10 @@
         </if>     
         <else>
           <if @items.today_p@ true>
-            <td headers="@items.weekday@" class="cal-month-today"  style="width: 14%;" onclick="javascript:location.href='@items.add_url@';" onkeypress="javascript:acs_KeypressGoto('@items.add_url@',event);">
+            <td headers="mday_@items.weekday_num@" class="cal-month-today"  style="width: 14%;" onclick="javascript:location.href='@items.add_url@';" onkeypress="javascript:acs_KeypressGoto('@items.add_url@',event);">
           </if>
           <else>
-            <td headers="@items.weekday@" class="cal-month-day"  style="width: 14%;" onclick="javascript:location.href='@items.add_url@';"onkeypress="javascript:acs_KeypressGoto('@items.add_url@',event);">
+            <td headers="mday_@items.weekday_num@" class="cal-month-day"  style="width: 14%;" onclick="javascript:location.href='@items.add_url@';"onkeypress="javascript:acs_KeypressGoto('@items.add_url@',event);">
           </else>
           &nbsp;<span class="screen-reader-only">[</span><a href="@items.day_url@" title="#calendar.goto_day_items_day_number#">@items.day_number@</a><span class="screen-reader-only"> ]</span>
 

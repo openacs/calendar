@@ -32,7 +32,7 @@
       <thead>
         <tr class="days">
         <multiple name="days_of_week">
-          <th id="@days_of_week.day_long@">@days_of_week.day_short@</th>
+          <th id="day_@days_of_week.day_num@">@days_of_week.day_short@</th>
         </multiple>
         </tr>
       </thead>
@@ -44,18 +44,18 @@
           </if>
           <if @days.active_p@ true>
             <if @days.today_p@ true>
-              <td headers="@days.weekday@" class="today" onclick="javascript:location.href='@days.url@#calendar';" onkeypress="javascript:acs_KeypressGoto('@days.url@#calendar',event);">
+              <td headers="day_@days.day_num@" class="today" onclick="javascript:location.href='@days.url@#calendar';" onkeypress="javascript:acs_KeypressGoto('@days.url@#calendar',event);">
                 <a href="@days.url@#calendar" title="#calendar.goto_days_day_number#">@days.day_number@</a>
               </td>
             </if>
             <else>
-              <td headers="@days.weekday@" class="active" onclick="javascript:location.href='@days.url@#calendar';" onkeypress="javascript:acs_KeypressGoto('@days.url@#calendar',event);">
+              <td headers="day_@days.day_num@" class="active" onclick="javascript:location.href='@days.url@#calendar';" onkeypress="javascript:acs_KeypressGoto('@days.url@#calendar',event);">
                 <a href="@days.url@#calendar" title="#calendar.goto_days_day_number#">@days.day_number@</a>
               </td>
             </else>
           </if>
           <else>
-            <td headers="@days.weekday@" class="inactive" onclick="javascript:location.href='@days.url@#calendar';" onkeypress="javascript:acs_KeypressGoto('@days.url@#calendar',event);">
+            <td headers="day_@days.day_num@" class="inactive" onclick="javascript:location.href='@days.url@#calendar';" onkeypress="javascript:acs_KeypressGoto('@days.url@#calendar',event);">
               <a href="@days.url@#calendar" title="#calendar.goto_days_day_number#">@days.day_number@</a>
             </td>
           </else>

@@ -82,12 +82,11 @@ set next_month_url "[subst $next_month_template]"
 set first_day_of_week [lc_get firstdayofweek]
 set last_day_of_week [expr [expr $first_day_of_week + 6] % 7]
 
-set week_days_short [lc_get abday]
 set week_days [lc_get day]
-multirow create weekday_names weekday_short weekday_long
+multirow create weekday_names weekday_num weekday_long
 for {set i 0} {$i < 7} {incr i} {
     set i_day [expr {[expr {$i + $first_day_of_week}] % 7}]
-    multirow append weekday_names [lindex $week_days_short $i_day] [lindex $week_days $i_day]
+    multirow append weekday_names $i_day [lindex $week_days $i_day]
 }
 
 
@@ -124,7 +123,8 @@ multirow create items \
     add_url \
     day_url \
     style_class \
-    num_attachments
+    num_attachments \
+    weekday_num
 
 # Calculate number of greyed days and then add them to the calendar mulitrow
 set greyed_days_before_month [expr [expr [dt_first_day_of_month $this_year $this_month]] -1 ]
@@ -159,7 +159,8 @@ if { !$exporting_p } {
             "" \
             "" \
             "" \
-	    ""
+            "" \
+            ""
     }
 }
 
@@ -204,7 +205,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                 "" \
                 "" \
                 "" \
-                [lindex $week_days_short $display_information(weekday)] \
+                [lindex $week_days $display_information(weekday)] \
                 "" \
                 "" \
                 "" \
@@ -219,7 +220,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                 "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
                 "?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar" \
                 "calendar-${system_type}Item" \
-		$num_attachments
+                $num_attachments \
+                [lc_time_fmt [dt_julian_to_ansi $current_day] %w]
         } 
     }
 
@@ -247,7 +249,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         [subst $item_template] \
         $description \
         $calendar_name \
-        [lindex $week_days_short $display_information(weekday)] \
+        [lindex $week_days $display_information(weekday)] \
         $pretty_start_date \
         $pretty_end_date \
         $pretty_start_time \
@@ -262,7 +264,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
         "?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar" \
         "calendar-${system_type}Item" \
-	$num_attachments
+        $num_attachments \
+        [lc_time_fmt [dt_julian_to_ansi $current_day] %w]
 }
 
 if { !$exporting_p } {
@@ -282,7 +285,7 @@ if { !$exporting_p } {
             "" \
             "" \
             "" \
-            [lindex $week_days_short $display_information(weekday)] \
+            [lindex $week_days $display_information(weekday)] \
             "" \
             "" \
             "" \
@@ -297,7 +300,8 @@ if { !$exporting_p } {
             "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
             "?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar" \
             "" \
-	    ""
+            "" \
+            [lc_time_fmt [dt_julian_to_ansi $current_day] %w]
     }
 
     # Add cells for remaining days outside the month
@@ -325,7 +329,8 @@ if { !$exporting_p } {
                 "" \
                 "" \
                 "" \
-		""
+                "" \
+                ""
         }
     }
 }

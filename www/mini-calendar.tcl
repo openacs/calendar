@@ -128,14 +128,14 @@ if [string equal $view month] {
     set first_day_of_week [lc_get firstdayofweek]
     set week_days [lc_get abday]
     set long_weekdays [lc_get day]
-    multirow create days_of_week day_short day_long
+    multirow create days_of_week day_short day_num
     for {set i 0} {$i < 7} {incr i} {
         multirow append days_of_week \
             [lindex $week_days [expr [expr $i + $first_day_of_week] % 7]] \
-            [lindex $long_weekdays [expr [expr $i + $first_day_of_week] % 7]]
+            $i
     }
 
-    multirow create days day_number beginning_of_week_p end_of_week_p today_p active_p url weekday
+    multirow create days day_number beginning_of_week_p end_of_week_p today_p active_p url weekday day_num
 
     set day_of_week 1
 
@@ -170,6 +170,7 @@ if [string equal $view month] {
             set today_p t
         }
 
+        set day_num [expr { $day_of_week - 1 }]
         if { $day_of_week == 1} {
             set beginning_of_week_p t
         } else {
@@ -187,7 +188,8 @@ if [string equal $view month] {
 
         multirow append days $day_number $beginning_of_week_p $end_of_week_p $today_p $active_p \
             "[export_vars -base $base_url {{date $ansi_date} view}]${page_num}${url_stub_period_days}" \
-            $weekday
+            $weekday \
+            $day_num
 
         incr day_number
         incr day_of_week

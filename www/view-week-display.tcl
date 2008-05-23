@@ -325,7 +325,7 @@ set first_weekday_date_secs [clock scan "-24 hours" -base [clock scan "1 day" -b
 set next_week [clock format [expr $first_weekday_date_secs + (7*86400)] -format "%Y-%m-%d"]
 set last_week [clock format [expr $first_weekday_date_secs - (7*86400)] -format "%Y-%m-%d"]
 
-multirow create days_of_week width day_short monthday weekday_date weekday_url
+multirow create days_of_week width day_short monthday weekday_date weekday_url day_num
 
 set nav_url_base [ad_conn url]?[export_vars -url -entire_form -exclude {date view}]
 
@@ -339,7 +339,8 @@ for {set i 0} {$i < 7} {incr i} {
     set weekday_url [export_vars -base [ad_conn url] -url -entire_form {{view day} {date $weekday_date}}]
     #TODO: localize_me
     set weekday_monthday "$trimmed_month/$trimmed_day"
-    multirow append days_of_week [set day_width_$i] [lindex $week_days [expr [expr $i + $first_day_of_week] % 7]] $weekday_monthday $weekday_date $weekday_url
+    set i_day [expr { [expr { $i + $first_day_of_week }] % 7 }]
+    multirow append days_of_week [set day_width_$i] [lindex $week_days $i_day] $weekday_monthday $weekday_date $weekday_url $i
 }
 
 set week_width $time_of_day_width

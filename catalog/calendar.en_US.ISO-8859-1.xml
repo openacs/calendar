@@ -57,6 +57,7 @@
   <msg key="edit">edit</msg>
   <msg key="End_Time">End Time</msg>
   <msg key="Event">Event</msg>
+  <msg key="Events">Events</msg>
   <msg key="events_over_1d">Display events for today</msg>
   <msg key="events_over_7d">Display events for the next 7 days</msg>
   <msg key="events_over_14d">Display events for the next 14 days</msg>
@@ -80,6 +81,7 @@
   <msg key="goto_weekday">Go to %days_of_week.day_short% %days_of_week.monthday%</msg>
   <msg key="Grant">Grant</msg>
   <msg key="Grant_Permissions">Grant Permissions</msg>
+  <msg key="Hours">Hours</msg>
   <msg key="is_recurring">Item is recurring.</msg>
   <msg key="Item">Item</msg>
   <msg key="last_week">last week</msg>

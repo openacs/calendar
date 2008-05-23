@@ -172,6 +172,17 @@
 	background-color:#89A2B3;
 }
 
+#cal-table-day caption, #cal-table-week caption {
+	font-size: 1.2em;
+    font-weight: bold;
+    color: #646c61;
+    margin: 1em;
+}
+
+#cal-table-day th, #cal-table-week th {
+    background-color: #ffffff;
+}
+
 .day-time-1 {
 	border:1px #ffffff solid;
 	background-color:#D8E0E6;

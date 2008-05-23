@@ -47,6 +47,7 @@
   <msg key="edit">editar</msg>
   <msg key="End_Time">Fin</msg>
   <msg key="Event">Evento</msg>
+  <msg key="Events">Eventos</msg>
   <msg key="events_over_1d">Mostrar les eventos para hoy</msg>
   <msg key="events_over_7d">Mostrar los eventos de los próximos 7 días</msg>
   <msg key="events_over_14d">Mostrar los eventos de los próximos 14 días</msg>
@@ -70,6 +71,7 @@
   <msg key="goto_weekday">Ir a %days_of_week.day_short% %days_of_week.monthday%</msg>
   <msg key="Grant">Otorgar</msg>
   <msg key="Grant_Permissions">Autorizar</msg>
+  <msg key="Hours">Horas</msg>
   <msg key="is_recurring">El evento se repite</msg>
   <msg key="Item">Evento</msg>
   <msg key="last_week">semana anterior</msg>

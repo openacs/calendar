@@ -93,6 +93,10 @@
 #cal-table-day th, #cal-table-week th {
     background-color: #ffffff;
     color: #000000;
+} 
+
+#cal-table-day th a, #cal-table-week th a {
+    color: #000000;
 }
 
 .day-time-1 {
@@ -165,4 +169,11 @@
 
 .topnavbar .active { 
 	background:#222222; 
+}
+
+.calendar-Item {
+	background-color:#FFFFFF;
+	border: 1px solid #555555;
+	-moz-opacity:1; 
+	filter:alpha(opacity=100);
 }

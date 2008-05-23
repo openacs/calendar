@@ -179,6 +179,11 @@
     margin: 1em;
 }
 
+#cal-table-day caption img, #cal-table-week caption img {
+    border: 0;
+    vertical-align: middle;
+}
+
 #cal-table-day th, #cal-table-week th {
     background-color: #ffffff;
 }

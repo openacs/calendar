@@ -28,7 +28,7 @@
     </p>
    </div>
 
-  <div id="events">
+  <div id="viewadp-cal-table">
     <if @view@ eq "list">
       <include src="view-list-display" start_date=@start_date@ return_url="@return_url@"
       end_date=@end_date@ date=@date@ period_days=@period_days@ sort_by=@sort_by@

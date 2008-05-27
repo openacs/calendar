@@ -6,17 +6,11 @@
 
 
 
-
-<table width="95%">
-
-  <tr>
-  <td valign="top" style="width:150px">
+<div id="viewadp-mini-calendar">
   <include src="mini-calendar" base_url="view" view="day" date="@date@">
-  </td>	
+</div>	
 
-  <td valign="top"> 
-	
-	<div class="margin-form margin-form-div">
+<div id="viewadp-cal-table" class="margin-form margin-form-div">
 		
 		<h1>#calendar.calendar_event_details#</h1>
 		
@@ -94,7 +88,4 @@
 		
 			</if>
 		</div>
-		
-		
-	</div>
-</table>
+</div>

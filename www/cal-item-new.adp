@@ -40,7 +40,7 @@
     <include src="mini-calendar" base_url="view" view="@view@" date="@ansi_date@">
   </div>
         
-  <div id="events">   
+  <div id="viewadp-cal-table">   
     <formtemplate id="cal_item"></formtemplate>
   </div>
 

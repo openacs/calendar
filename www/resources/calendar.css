@@ -156,14 +156,15 @@
 /* cal-item-view, cal-item-new ---------------------------------------------------*/
 
 #viewadp-mini-calendar {
-         width: 240px;
+         width: 25%;
          float: left;
+         margin-bottom: 1em;
 }
 
-#events {
-         margin-left: 250px;
-         margin-right: 0px;
-         margin-bottom: 0px;
+#viewadp-cal-table {
+         float: right;
+         width: 75%;
+         margin-bottom: 1em;
 }
 
 

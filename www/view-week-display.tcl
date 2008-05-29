@@ -133,8 +133,12 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     set start_time [lc_time_fmt $ansi_start_date "%X"]
     set end_time [lc_time_fmt $ansi_end_date "%X"]
 
+    set start_hour [format %.0f [lc_time_fmt $ansi_start_date "%H"]]
+    set end_hour [format %.0f [lc_time_fmt $ansi_end_date "%H"]]
+
     set ansi_this_date [dt_julian_to_ansi [expr $first_weekday_julian + $current_weekday]]
-    if {[string equal $start_time "12:00 AM"] && [string equal $end_time "12:00 AM"]} {
+
+    if { $start_time eq $end_time } {
         set no_time_p t
     } else {
         set no_time_p f
@@ -162,7 +166,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         set previous_intervals [list]
     }
     
-    if {[string equal $no_time_p t]} {
+    if { $no_time_p } {
         #All day event
         set top_hour 0
         set top_minutes 0
@@ -189,29 +193,6 @@ db_foreach dbqd.calendar.www.views.select_items {} {
             set adjusted_end_display_hour $end_hour
         }
 
-
-#         if { $start_hour < 9 } {
-#             set top_hour 9
-#             set top_minutes 0
-#         } elseif { $start_hour > 21 } {
-#             set top_hour 22
-#             set top_minutes 0
-#         } else {
-#             set top_hour $start_hour
-#             set top_minutes $start_minutes
-#         }
-
-#         if { $end_hour < 9 } {
-#             set bottom_hour 9
-#             set bottom_minutes 0
-#         } elseif { $end_hour > 21 } {
-#             set bottom_hour 22
-#             set bottom_minutes 0
-#         } else {
-#             set bottom_hour $end_hour
-#             set bottom_minutes $end_minutes
-#         }
-
     }
 
     set top [expr ($top_hour * ($hour_height_inside+$hour_height_sep)) \
@@ -228,12 +209,13 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     #Assumption: for any given day we will loop through all-day events
     #before looping through regular events.
     set bumps 0
-    if {$start_hour == 0 && $start_minutes == 0 && $end_hour == 0 && $end_minutes == 0} {
+    if { $no_time_p } {
         #All-day event.
         incr event_left_base $event_bump_delta
         incr all_day_events
     } else {
         #Regular event.
+        set name "$name ($start_time - $end_time)"
         foreach {previous_start previous_end} $previous_intervals {
             if { ($start_seconds >= $previous_start && $start_seconds < $previous_end) || ($previous_start >= $start_seconds && $previous_start < $end_seconds) } {
                 incr bumps

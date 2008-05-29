@@ -45,9 +45,15 @@ ad_proc -public calendar::item::new {
         set activity_id [db_exec_plsql insert_activity {} ]
         
         # Convert from user timezone to system timezone
-        set start_date [lc_time_conn_to_system $start_date]
-        set end_date [lc_time_conn_to_system $end_date]        
-        
+        if { $start_date ne $end_date } {
+
+            # Convert to server timezone only if it's not an all-day event
+            # otherwise, keep the start and end time as 00:00
+
+            set start_date [lc_time_conn_to_system $start_date]
+            set end_date [lc_time_conn_to_system $end_date]        
+        }
+
         set timespan_id [db_exec_plsql insert_timespan {}]
         
         # create the cal_item
@@ -109,7 +115,7 @@ ad_proc -public calendar::item::get {
 	set row(end_date_ansi) [lc_time_system_to_conn $row(end_date_ansi)]
     }
 
-    if { $row(start_date_ansi) ==  $row(end_date_ansi) && [string equal [lc_time_fmt $row(start_date_ansi) "%T"] "00:00:00"]} {
+    if { $row(start_date_ansi) eq $row(end_date_ansi) } {
         set row(time_p) 0
     } else {
         set row(time_p) 1
@@ -187,8 +193,14 @@ ad_proc -public calendar::item::edit {
         }
 
         # Convert from user timezone to system timezone
-        set start_date [lc_time_conn_to_system $start_date]
-        set end_date [lc_time_conn_to_system $end_date]        
+        if { $start_date ne $end_date } {
+
+            # Convert to server timezone only if it's not an all-day event
+            # otherwise, keep the start and end time as 00:00
+
+            set start_date [lc_time_conn_to_system $start_date]
+            set end_date [lc_time_conn_to_system $end_date]        
+        }
 
         db_dml update_event {}
 

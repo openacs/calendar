@@ -92,9 +92,10 @@ for {set i 0} {$i < 7} {incr i} {
 
 # Get the beginning and end of the month in the system timezone
 set first_date_of_month [dt_julian_to_ansi $first_julian_date_of_month]
-set first_date_of_month_system [lc_time_conn_to_system "$first_date_of_month 00:00:00"]
 set last_date_in_month [dt_julian_to_ansi $last_julian_date_in_month]
-set last_date_in_month_system [lc_time_conn_to_system "$last_date_in_month 23:59:59"]
+
+set first_date_of_month_system "$first_date_of_month 00:00:00"
+set last_date_in_month_system "$last_date_in_month 23:59:59"
 
 set day_number $first_day
 
@@ -172,10 +173,16 @@ set additional_select_clause ""
 set interval_limitation_clause [db_map dbqd.calendar.www.views.month_interval_limitation]
 
 db_foreach dbqd.calendar.www.views.select_items {} {
-    # Convert from system timezone to user timezone
-    set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
-    set ansi_end_date [lc_time_system_to_conn $ansi_end_date]
+    if { $ansi_start_date eq $ansi_end_date } {
+        set time_p 0
+    } else {
+        set time_p 1
+        # Convert from system timezone to user timezone
+        set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
+        set ansi_end_date [lc_time_system_to_conn $ansi_end_date]
 
+    }
+    
     # Localize
     set pretty_weekday [lc_time_fmt $ansi_start_date "%A"]
     set pretty_start_date [lc_time_fmt $ansi_start_date "%x"]
@@ -183,13 +190,6 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     set pretty_start_time [lc_time_fmt $ansi_start_date "%X"]
     set pretty_end_time [lc_time_fmt $ansi_end_date "%X"]
 
-    if { [string equal $ansi_start_date $ansi_end_date] && \
-      [string equal [lc_time_fmt $ansi_start_date "%T"] "00:00:00"] } {
-        set time_p 0
-    } else {
-        set time_p 1
-    }
-    
     set julian_start_date [dt_ansi_to_julian_single_arg $ansi_start_date]
 
     if {!$exporting_p && $current_day < $julian_start_date} {

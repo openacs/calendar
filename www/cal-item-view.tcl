@@ -26,7 +26,7 @@ if {$cal_item(n_attachments) > 0} {
 }
 
 # no time?
-set cal_item(no_time_p) [dt_no_time_p -start_time $cal_item(start_time) -end_time $cal_item(end_time)]
+set cal_item(no_time_p) [expr {!$cal_item(time_p)}]
 
 # Attachment URLs
 if {[calendar::attachments_enabled_p]} {

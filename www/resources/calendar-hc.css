@@ -22,7 +22,6 @@
 .cal-month-event {
 	border:1px #ffffff solid;
 	opacity:1; 
-	filter:alpha(opacity=100);
 }
 
 .cal-month-event a {
@@ -130,7 +129,6 @@
 .week-entry-item {
 	border:1px #ffffff solid;
 	opacity:1; 
-	filter:alpha(opacity=100);
 }
 
 /*  END Week View  ---------------------------------------------------*/
@@ -149,7 +147,6 @@
 .day-entry-item {
 	border:1px #ffffff solid;
 	opacity:1; 
-	filter:alpha(opacity=100);
 }
 
 .day-entry-item a {
@@ -179,5 +176,4 @@
 	background-color:#FFFFFF;
 	border: 1px solid #555555;
 	opacity:1; 
-	filter:alpha(opacity=100);
 }

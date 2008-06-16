@@ -21,7 +21,7 @@
 
 .cal-month-event {
 	border:1px #ffffff solid;
-	-moz-opacity:1; 
+	opacity:1; 
 	filter:alpha(opacity=100);
 }
 
@@ -129,7 +129,7 @@
 
 .week-entry-item {
 	border:1px #ffffff solid;
-	-moz-opacity:1; 
+	opacity:1; 
 	filter:alpha(opacity=100);
 }
 
@@ -148,7 +148,7 @@
 
 .day-entry-item {
 	border:1px #ffffff solid;
-	-moz-opacity:1; 
+	opacity:1; 
 	filter:alpha(opacity=100);
 }
 
@@ -178,6 +178,6 @@
 .calendar-Item {
 	background-color:#FFFFFF;
 	border: 1px solid #555555;
-	-moz-opacity:1; 
+	opacity:1; 
 	filter:alpha(opacity=100);
 }

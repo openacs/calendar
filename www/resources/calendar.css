@@ -33,7 +33,7 @@
 	font-weight: normal;
     overflow: hidden;
 	border:1px #ffffff solid;
-	-moz-opacity:.9; 
+	opacity:.9; 
 	filter:alpha(opacity=90);
 }
 
@@ -227,10 +227,10 @@
 	width:65px;
 	border:1px #ffffff solid;
 	height:28px;
-	-moz-opacity:.9; 
+	opacity:.9; 
 	filter:alpha(opacity=90);
 	overflow:hidden; 
-	cursor: hand;
+	cursor: pointer;
 	right:0px;
 }
 
@@ -263,7 +263,7 @@
 	height:43px;
     overflow: hidden;
 	border:1px #ffffff solid;
-	-moz-opacity:.9; 
+	opacity:.9; 
 	filter:alpha(opacity=90);
     font-size: 90%;
 }
@@ -386,7 +386,7 @@ a.print-view {
 .calendar-Item {
 	background-color:#FFFFFF;
 	border: 1px solid #89A2B3;
-	-moz-opacity:.9; 
+	opacity:.9; 
 	filter:alpha(opacity=90);
 }
 

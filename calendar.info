@@ -17,6 +17,7 @@
         <package_instance_name>#calendar.Calendar#</package_instance_name>
 
         <provides url="calendar" version="2.1.0b8"/>
+        <requires url="attachments" version="0.10"/>
         <requires url="acs-datetime" version="5.2.2"/>
         <requires url="acs-events" version="0.6d2"/>
         <requires url="acs-lang" version="5.3.1a1"/>

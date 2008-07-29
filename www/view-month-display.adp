@@ -1,9 +1,9 @@
   <table class="cal-month-table" cellpadding="0" cellspacing="0" border="0" width="90%">
 
     <caption class="cal-table-caption">
-      <a href="@previous_month_url@#calendar" title="#calendar.prev_month#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_month#" ></a>
+      <a href="@previous_month_url@#calendar" title="#calendar.prev_month#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_month#"></a>
       &nbsp;@month_string@ @year@&nbsp;
-      <a href="@next_month_url@#calendar" title="#calendar.next_month#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_month#" ></a>
+      <a href="@next_month_url@#calendar" title="#calendar.next_month#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_month#"></a>
     </caption>
 
     <thead>
@@ -42,7 +42,7 @@
                 <a href="@items.event_url@" title="#calendar.goto_items_event_name#">
                   <if @items.time_p@ true>@items.start_time@</if>
                   @items.event_name@
-                  <if @items.num_attachments@ gt 0><img src="/resources/calendar/images/attach.png" alt=""/></if>
+                  <if @items.num_attachments@ gt 0><img src="/resources/calendar/images/attach.png" alt=""></if>
                   <if @show_calendar_name_p@>
                     <span class="cal-text-grey-sml"> [@items.calendar_name@]</span>
                   </if>

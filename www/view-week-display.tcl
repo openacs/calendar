@@ -111,7 +111,7 @@ set last_weekday_of_the_week_tz [lc_time_conn_to_system "$last_weekday_of_the_we
 set order_by_clause " order by to_char(start_date, 'J'), to_char(start_date,'HH24:MI')"
 set interval_limitation_clause [db_map dbqd.calendar.www.views.week_interval_limitation]
 set additional_limitations_clause ""
-set additional_select_clause " , (to_date(start_date,'YYYY-MM-DD HH24:MI:SS')  - to_date(:first_weekday_of_the_week_tz,         'YYYY-MM-DD HH24:MI:SS')) as day_of_week"
+set additional_select_clause [db_map dow]
 if { [exists_and_not_null cal_system_type] } {
     append additional_limitations_clause " and system_type = :cal_system_type "
 }

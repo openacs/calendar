@@ -14,6 +14,12 @@
         from dual
 </querytext>
 </fullquery>
+	
+<partialquery name="dow">
+<querytext>
+   , to_char(to_date(:start_date, 'YYYY-MM-DD'), 'D') as day_of_the_week
+</querytext>
+</partialquery>
 
 <fullquery name="select_week_info">
 <querytext>

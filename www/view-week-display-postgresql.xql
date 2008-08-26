@@ -14,6 +14,12 @@
         from     dual
 </querytext>
 </fullquery>
+	
+<partialquery name="dow">
+<querytext>
+   , extract(dow from start_date) as day_of_week
+</querytext>
+</partialquery>
 
 <fullquery name="select_week_items">
 <querytext>
@@ -22,8 +28,7 @@ select   to_char(start_date, :ansi_date_format) as ansi_start_date,
          coalesce(e.name, a.name) as name,
          coalesce(e.status_summary, a.status_summary) as status_summary,
          e.event_id as item_id,
-         (to_date(start_date,:ansi_date_format)  - to_date(:first_weekday_of_the_week_tz,
-         :ansi_date_format)) as day_of_week,
+         extract(dow from start_date) as day_of_week,
          cals.calendar_id,
 	 cals.calendar_name,
          cit.type as item_type

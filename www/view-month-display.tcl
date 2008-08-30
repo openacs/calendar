@@ -83,17 +83,19 @@ set first_day_of_week [lc_get firstdayofweek]
 set last_day_of_week [expr [expr $first_day_of_week + 6] % 7]
 
 set week_days [lc_get day]
-multirow create weekday_names weekday_short
+multirow create weekday_names weekday_num weekday_long
 for {set i 0} {$i < 7} {incr i} {
-    multirow append weekday_names [lindex $week_days [expr [expr $i + $first_day_of_week] % 7]]
+    set i_day [expr {[expr {$i + $first_day_of_week}] % 7}]
+    multirow append weekday_names $i_day [lindex $week_days $i_day]
 }
 
 
 # Get the beginning and end of the month in the system timezone
 set first_date_of_month [dt_julian_to_ansi $first_julian_date_of_month]
-set first_date_of_month_system [lc_time_conn_to_system "$first_date_of_month 00:00:00"]
 set last_date_in_month [dt_julian_to_ansi $last_julian_date_in_month]
-set last_date_in_month_system [lc_time_conn_to_system "$last_date_in_month 23:59:59"]
+
+set first_date_of_month_system "$first_date_of_month 00:00:00"
+set last_date_in_month_system "$last_date_in_month 23:59:59"
 
 set day_number $first_day
 
@@ -107,7 +109,7 @@ multirow create items \
     event_url \
     description \
     calendar_name \
-    weekday \
+    pretty_date \
     start_date \
     end_date \
     start_time \
@@ -122,7 +124,8 @@ multirow create items \
     add_url \
     day_url \
     style_class \
-    num_attachments
+    num_attachments \
+    weekday_num
 
 # Calculate number of greyed days and then add them to the calendar mulitrow
 set greyed_days_before_month [expr [expr [dt_first_day_of_month $this_year $this_month]] -1 ]
@@ -157,7 +160,8 @@ if { !$exporting_p } {
             "" \
             "" \
             "" \
-	    ""
+            "" \
+            ""
     }
 }
 
@@ -169,10 +173,16 @@ set additional_select_clause ""
 set interval_limitation_clause [db_map dbqd.calendar.www.views.month_interval_limitation]
 
 db_foreach dbqd.calendar.www.views.select_items {} {
-    # Convert from system timezone to user timezone
-    set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
-    set ansi_end_date [lc_time_system_to_conn $ansi_end_date]
+    if { $ansi_start_date eq $ansi_end_date } {
+        set time_p 0
+    } else {
+        set time_p 1
+        # Convert from system timezone to user timezone
+        set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
+        set ansi_end_date [lc_time_system_to_conn $ansi_end_date]
 
+    }
+    
     # Localize
     set pretty_weekday [lc_time_fmt $ansi_start_date "%A"]
     set pretty_start_date [lc_time_fmt $ansi_start_date "%x"]
@@ -180,13 +190,6 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     set pretty_start_time [lc_time_fmt $ansi_start_date "%X"]
     set pretty_end_time [lc_time_fmt $ansi_end_date "%X"]
 
-    if { [string equal $ansi_start_date $ansi_end_date] && \
-      [string equal [lc_time_fmt $ansi_start_date "%T"] "00:00:00"] } {
-        set time_p 0
-    } else {
-        set time_p 1
-    }
-    
     set julian_start_date [dt_ansi_to_julian_single_arg $ansi_start_date]
 
     if {!$exporting_p && $current_day < $julian_start_date} {
@@ -196,12 +199,13 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                      -current_day $current_day \
                      -today_julian_date $today_julian_date \
                      -first_julian_date_of_month $first_julian_date_of_month]
+
             multirow append items \
                 "" \
                 "" \
                 "" \
                 "" \
-                "" \
+                [lc_time_fmt [dt_julian_to_ansi $current_day] %Q] \
                 "" \
                 "" \
                 "" \
@@ -216,7 +220,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                 "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
                 "?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar" \
                 "calendar-${system_type}Item" \
-		$num_attachments
+                $num_attachments \
+                [lc_time_fmt [dt_julian_to_ansi $current_day] %w]
         } 
     }
 
@@ -244,7 +249,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         [subst $item_template] \
         $description \
         $calendar_name \
-        $pretty_weekday \
+        [lc_time_fmt [dt_julian_to_ansi $current_day] %Q] \
         $pretty_start_date \
         $pretty_end_date \
         $pretty_start_time \
@@ -259,7 +264,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
         "?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar" \
         "calendar-${system_type}Item" \
-	$num_attachments
+        $num_attachments \
+        [lc_time_fmt [dt_julian_to_ansi $current_day] %w]
 }
 
 if { !$exporting_p } {
@@ -279,7 +285,7 @@ if { !$exporting_p } {
             "" \
             "" \
             "" \
-            "" \
+            [lc_time_fmt [dt_julian_to_ansi $current_day] %Q] \
             "" \
             "" \
             "" \
@@ -294,7 +300,8 @@ if { !$exporting_p } {
             "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
             "?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar" \
             "" \
-	    ""
+            "" \
+            [lc_time_fmt [dt_julian_to_ansi $current_day] %w]
     }
 
     # Add cells for remaining days outside the month
@@ -322,7 +329,8 @@ if { !$exporting_p } {
                 "" \
                 "" \
                 "" \
-		""
+                "" \
+                ""
         }
     }
 }

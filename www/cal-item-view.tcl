@@ -26,7 +26,7 @@ if {$cal_item(n_attachments) > 0} {
 }
 
 # no time?
-set cal_item(no_time_p) [dt_no_time_p -start_time $cal_item(start_time) -end_time $cal_item(end_time)]
+set cal_item(no_time_p) [expr {!$cal_item(time_p)}]
 
 # Attachment URLs
 if {[calendar::attachments_enabled_p]} {
@@ -46,6 +46,7 @@ set cal_item_delete_url [export_vars -base "cal-item-delete" {cal_item_id return
 
 # Header stuff
 template::head::add_css -href "/resources/calendar/calendar.css" -media all
+template::head::add_css -alternate -href "/resources/calendar/calendar-hc.css" -title "highContrast"
 
 ad_return_template 
 

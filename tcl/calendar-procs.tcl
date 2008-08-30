@@ -224,7 +224,8 @@ ad_proc -public calendar::get_month_multirow_information {
     return [list day_number $day_number \
                 today_p $today_p \
                 beginning_of_week_p $beginning_of_week_p \
-                end_of_week_p $end_of_week_p]
+                end_of_week_p $end_of_week_p \
+                weekday $weekday]
 }
 
 ad_proc -public calendar::from_sql_datetime {

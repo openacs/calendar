@@ -8,16 +8,15 @@ if {![exists_and_not_null date]} {
 
 ad_form -name go-to-date -method get -has_submit 1 -action $base_url  -export [lappend list_of_vars page_num] -html {class inline-form} -form {
     {date:text,nospell,optional
-	{label ""}
-	{html {size 10}}
-	{after-html "<br>[_ acs-datetime.Date_as_YYYYMMDD]"}
+        {label "[_ acs-datetime.Date]"}
+        {html {size 10}}
     }
     {btn_ok:text(submit)
         {label "[_ calendar.Go_to_date]"}
     } 
     {view:text(hidden)
-	{label ""}
-	{value "day"}
+        {label ""}
+        {value "day"}
     }
 } -on_submit { }
 
@@ -127,15 +126,16 @@ if [string equal $view month] {
     set next_month_url "$base_url?view=$view&date=[ad_urlencode $next_month]${page_num}${url_stub_period_days}"
     
     set first_day_of_week [lc_get firstdayofweek]
-    #set week_days [list S M T W T F Sa]
     set week_days [lc_get abday]
-    multirow create days_of_week day_short
+    set long_weekdays [lc_get day]
+    multirow create days_of_week day_short day_num
     for {set i 0} {$i < 7} {incr i} {
-        multirow append days_of_week [lindex $week_days [expr [expr $i + $first_day_of_week] % 7]]
+        multirow append days_of_week \
+            [lindex $week_days [expr [expr $i + $first_day_of_week] % 7]] \
+            $i
     }
 
-
-    multirow create days day_number beginning_of_week_p end_of_week_p today_p active_p url
+    multirow create days day_number beginning_of_week_p end_of_week_p today_p active_p url weekday day_num pretty_date
 
     set day_of_week 1
 
@@ -159,6 +159,7 @@ if [string equal $view month] {
             set active_p f
         } 
         set ansi_date [dt_julian_to_ansi $julian_date]
+        set pretty_date [lc_time_fmt $ansi_date %Q]
         
         if {$julian_date == $first_julian_date_of_month} {
             set day_number 1
@@ -170,6 +171,7 @@ if [string equal $view month] {
             set today_p t
         }
 
+        set day_num [expr { $day_of_week - 1 }]
         if { $day_of_week == 1} {
             set beginning_of_week_p t
         } else {
@@ -183,8 +185,14 @@ if [string equal $view month] {
             set end_of_week_p f
         }
 
+        set weekday [lindex $long_weekdays $day_of_week]
+
         multirow append days $day_number $beginning_of_week_p $end_of_week_p $today_p $active_p \
-            "[export_vars -base $base_url {{date $ansi_date} view}]${page_num}${url_stub_period_days}"
+            "[export_vars -base $base_url {{date $ansi_date} view}]${page_num}${url_stub_period_days}" \
+            $weekday \
+            $day_num \
+            $pretty_date
+
         incr day_number
         incr day_of_week
     }

@@ -64,5 +64,6 @@ set notification_chunk [notification::display::request_widget \
 
 # Header stuff
 template::head::add_css -href "/resources/calendar/calendar.css" -media all 
+template::head::add_css -alternate -href "/resources/calendar/calendar-hc.css" -title "highContrast"
 
 ad_return_template 

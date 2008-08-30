@@ -29,6 +29,7 @@ if {[info exists url_stub_callback]} {
 }
 
 set current_date $date
+set pretty_date [lc_time_fmt $current_date %Q]
 
 if {[info exists portlet_mode_p] && $portlet_mode_p} {
     set event_url_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=[ad_urlencode "../"]&action=edit&cal_item_id=\$item_id"
@@ -90,7 +91,7 @@ set previous_intervals [list]
 
 # Loop through the items without time
 
-set additional_limitations_clause " and to_char(start_date, 'HH24:MI') = '00:00' and  to_char(end_date, 'HH24:MI') = '00:00'"
+set additional_limitations_clause " and to_char(start_date, 'HH24:MI') = to_char(end_date, 'HH24:MI')"
 if { [exists_and_not_null cal_system_type] } {
     append additional_limitations_clause " and system_type = :cal_system_type "
 }
@@ -141,11 +142,11 @@ db_foreach dbqd.calendar.www.views.select_all_day_items {} {
     incr bump_right_base $bump_right_delta
 }
 
-set additional_limitations_clause " and (to_char(start_date, 'HH24:MI') <> '00:00' or to_char(end_date, 'HH24:MI') <> '00:00')"
+set additional_limitations_clause " and to_char(start_date, 'HH24:MI') <> to_char(end_date, 'HH24:MI')"
 if { [exists_and_not_null cal_system_type] } {
     append additional_limitations_clause " and system_type = :cal_system_type "
 }
-set order_by_clause " order by to_char(start_date,'HH24')"
+set order_by_clause " order by to_char(start_date,'HH24:MI')"
 set day_items_per_hour {}
 
 set adjusted_start_display_hour $start_display_hour
@@ -166,6 +167,9 @@ db_foreach dbqd.calendar.www.views.select_items {} {
 
     set start_time [lc_time_fmt $ansi_start_date "%X"]
     set end_time [lc_time_fmt $ansi_end_date "%X"]
+
+    set start_hour [format %.0f [lc_time_fmt $ansi_start_date "%H"]]
+    set end_hour [format %.0f [lc_time_fmt $ansi_end_date "%H"]]
 
     if { $start_hour < $adjusted_start_display_hour && \
              [string equal \

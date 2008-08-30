@@ -11,17 +11,15 @@
       <include src="mini-calendar" base_url="view" view="@view@" date="@date@">
     </else>
     <p>
-    <a href="@add_item_url@" title="#calendar.Add_Item#"><img style="border: 0; text-align: left" src="/resources/acs-subsite/add.gif" alt="">#calendar.Add_Item#</a>
+    <a href="@add_item_url@" title="#calendar.Add_Item#" class="button">#calendar.Add_Item#</a>
+    <if @admin_p@ true>
+      <a href="admin/" title="#calendar.lt_Calendar_Administrati#" class="button">#calendar.lt_Calendar_Administrati#</a>
+    </if>
     </p>
   
     <p>
     <if @calendar_personal_p@ false>
 	    @notification_chunk;noquote@
-    </if>
-    </p>
-    <p>
-    <if @admin_p@ true>
-      <a href="admin/" title="#calendar.lt_Calendar_Administrati#">#calendar.lt_Calendar_Administrati#</a>
     </if>
     </p>
   
@@ -30,7 +28,7 @@
     </p>
    </div>
 
-  <div id="events">
+  <div id="viewadp-cal-table">
     <if @view@ eq "list">
       <include src="view-list-display" start_date=@start_date@ return_url="@return_url@"
       end_date=@end_date@ date=@date@ period_days=@period_days@ sort_by=@sort_by@
@@ -38,8 +36,11 @@
     </if>
 
     <if @view@ eq "day">
-      <include src="view-one-day-display" date="@date@" start_hour=0 end_hour=23 return_url="@return_url@"
-      show_calendar_name_p=@show_calendar_name_p@>
+      <include src="view-one-day-display" date="@date@" 
+       start_display_hour=7 
+       end_display_hour=22
+       return_url="@return_url@"
+       show_calendar_name_p=@show_calendar_name_p@>
     </if>
     
     <if @view@ eq "week">

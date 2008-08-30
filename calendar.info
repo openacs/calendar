@@ -7,22 +7,22 @@
     <initial-install-p>f</initial-install-p>
     <singleton-p>f</singleton-p>
     
-    <version name="2.1.0b8" url="http://openacs.org/repository/download/apm/calendar-2.1.0b8.apm">
+    <version name="2.4.0" url="http://openacs.org/repository/download/apm/calendar-2.4.0.apm">
         <owner url="mailto:openacs-calendar@dirkgomez.de">Dirk Gomez</owner>
         <summary>Personal and shared event calendars.</summary>
-        <release-date>2007-06-15</release-date>
+        <release-date>2008-06-12</release-date>
         <vendor url="http://openacs.org">OpenACS</vendor>
         <description format="text/html">Manage group and shared calendars with download.</description>
         <maturity>0</maturity>
         <package_instance_name>#calendar.Calendar#</package_instance_name>
 
-        <provides url="calendar" version="2.1.0b8"/>
+        <provides url="calendar" version="2.4.0"/>
         <requires url="attachments" version="0.10"/>
         <requires url="acs-datetime" version="5.2.2"/>
         <requires url="acs-events" version="0.6d2"/>
-        <requires url="acs-lang" version="5.3.1a1"/>
-        <requires url="notifications" version="5.3.0d1"/>
-        <requires url="ref-timezones" version="5.3.1a1"/>
+        <requires url="acs-lang" version="5.4.2"/>
+        <requires url="notifications" version="5.4.2"/>
+        <requires url="ref-timezones" version="5.4.2"/>
 
         <callbacks>
             <callback type="after-install"  proc="calendar::install::package_install"/>

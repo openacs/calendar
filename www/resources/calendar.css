@@ -33,8 +33,7 @@
 	font-weight: normal;
     overflow: hidden;
 	border:1px #ffffff solid;
-	-moz-opacity:.9; 
-	filter:alpha(opacity=90);
+	opacity:.9; 
 }
 
 .cal-month-event a {
@@ -42,19 +41,21 @@
 }
 
 .cal-month-table {
-	border: 0px none;
 	margin: 0px;
 	padding: 0px;
 	border-top: 1px #89A2B3 solid;
 	border-left: 1px #89A2B3 solid;
 }
 
-.cal-month-table td {
+.cal-month-table th {
+    background-color: #ffffff;
+}
+
+.cal-month-table td, .cal-month-table th {
 	border-right: 1px #89A2B3 solid;
 	border-bottom: 1px #89A2B3 solid;
 	padding: 2px;
 }
-
 
 /* END Month View  ---------------------------------------------------*/
 
@@ -67,6 +68,18 @@
 }
 
 
+.cal-table-caption {
+	font-size: 1.2em;
+    font-weight: bold;
+    color: #646c61;
+    margin: 1em;
+}
+
+.cal-table-caption img {
+    border: 0;
+    vertical-align: middle;
+}
+
 /* at-a-glance ---------------------------------------------------*/
 /* This is the small cal that appears in month/week/day views on the left hand side*/
 
@@ -75,11 +88,17 @@
     margin-right: 5px;
 }
 
-.at-a-glance-head-current_view {
-	text-align: center;
+#at-a-glance {
+	border-top: 1px solid #B8B8B8;
+    border-left: 1px solid #B8B8B8;
 }
 
-#at-a-glance td {
+#at-a-glance caption img {
+	border: 0;
+    vertical-align: middle;
+}
+
+#at-a-glance th, #at-a-glance td {
     width: 25px;
 	height:25px;
     border-right: 1px solid #B8B8B8;
@@ -89,7 +108,7 @@
 }
 
 #at-a-glance td.months {
-	width: 80px;
+	width: 70px;
 }
 
 #at-a-glance td.selected {
@@ -136,34 +155,25 @@
 /* cal-item-view, cal-item-new ---------------------------------------------------*/
 
 #viewadp-mini-calendar {
-         width: 240px;
+         width: 25%;
          float: left;
+         margin-bottom: 1em;
 }
 
-#events {
-         /* margin-left: 250px; */
-         margin-bottom: 0px;
+#viewadp-cal-table {
+         float: right;
+         width: 75%;
+         margin-bottom: 1em;
 }
-
-
-/* Navigation at the bottom of Month/Week views */
-
-.calendar-back-forward {
-	padding-top:6px;
-} 
-
-.calendar-back-forward img {
-	vertical-align:middle;
-	padding-bottom:2px;
-	border:0px;
-}
-/* /Navigation at the bottom of Month/Week views */
-
 
 
 /*  Week/Day View Common Styles  ---------------------------------------------------*/
 #cal-table-day, #cal-table-week  {
 	background-color:#89A2B3;
+}
+
+#cal-table-day th, #cal-table-week th {
+    background-color: #ffffff;
 }
 
 .day-time-1 {
@@ -203,6 +213,7 @@
 	width:100%;
 	top:0px;
 	z-index:3;
+    font-size: 90%;
 }
 
 .week-entry-box a {
@@ -215,10 +226,9 @@
 	width:65px;
 	border:1px #ffffff solid;
 	height:28px;
-	-moz-opacity:.9; 
-	filter:alpha(opacity=90);
+	opacity:.9; 
 	overflow:hidden; 
-	cursor: hand;
+	cursor: pointer;
 	right:0px;
 }
 
@@ -251,8 +261,7 @@
 	height:43px;
     overflow: hidden;
 	border:1px #ffffff solid;
-	-moz-opacity:.9; 
-	filter:alpha(opacity=90);
+	opacity:.9; 
     font-size: 90%;
 }
 
@@ -310,10 +319,36 @@
 	border:0px; 
 }
 
+a.cal-icons {
+    background-color: inherit;
+    background-position : left bottom;
+    background-repeat : no-repeat;
+    padding-left : 20px;
+}
 
+a.day-view {
+    background-image: url("/resources/calendar/images/calendar_view_day.gif");
+}
 
+a.week-view {
+    background-image: url("/resources/calendar/images/calendar_view_week.gif");
+}
 
+a.month-view {
+    background-image: url("/resources/calendar/images/calendar_view_month.gif");
+}
 
+a.calendar-view {
+    background-image: url("/resources/calendar/images/calendar-icon.gif");
+}
+
+a.list-view {
+    background-image: url("/resources/calendar/images/list-icon.gif");
+}
+
+a.print-view {
+    background-image: url("/resources/calendar/images/print-icon.gif");
+}
 
 
 
@@ -348,8 +383,7 @@
 .calendar-Item {
 	background-color:#FFFFFF;
 	border: 1px solid #89A2B3;
-	-moz-opacity:.9; 
-	filter:alpha(opacity=90);
+	opacity:.9; 
 }
 
 .calendar-classItem {

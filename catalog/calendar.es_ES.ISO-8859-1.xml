@@ -47,6 +47,7 @@
   <msg key="edit">editar</msg>
   <msg key="End_Time">Fin</msg>
   <msg key="Event">Evento</msg>
+  <msg key="Events">Eventos</msg>
   <msg key="events_over_1d">Mostrar les eventos para hoy</msg>
   <msg key="events_over_7d">Mostrar los eventos de los próximos 7 días</msg>
   <msg key="events_over_14d">Mostrar los eventos de los próximos 14 días</msg>
@@ -62,7 +63,9 @@
   <msg key="Go_to_year_prev_year">Ir al año %prev_year%</msg>
   <msg key="goto_cal_item_start_date">Ir a %cal_item.pretty_short_start_date%</msg>
   <msg key="goto_day_items_day_number">Ir al día %items.day_number%</msg>
+  <msg key="goto_day_items_pretty_date">Ir a %items.pretty_date%</msg>
   <msg key="goto_days_day_number">Ir al día %days.day_number%</msg>
+  <msg key="goto_days_pretty_date">Ir a %days.pretty_date%</msg>
   <msg key="goto_items_event_name">Ir a %items.event_name%</msg>
   <msg key="goto_items_without_time_event_name">Ir a %items_without_time.event_name%</msg>
   <msg key="goto_months_name">Ir a %months.name%</msg>
@@ -70,6 +73,7 @@
   <msg key="goto_weekday">Ir a %days_of_week.day_short% %days_of_week.monthday%</msg>
   <msg key="Grant">Otorgar</msg>
   <msg key="Grant_Permissions">Autorizar</msg>
+  <msg key="Hours">Horas</msg>
   <msg key="is_recurring">El evento se repite</msg>
   <msg key="Item">Evento</msg>
   <msg key="last_week">semana anterior</msg>

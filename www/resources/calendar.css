@@ -157,13 +157,17 @@
 #viewadp-mini-calendar {
          width: 25%;
          float: left;
-         margin-bottom: 1em;
+         margin-bottom: 1em; 
 }
 
 #viewadp-cal-table {
-         float: right;
+         margin-left: 25%;
          width: 75%;
          margin-bottom: 1em;
+}
+
+#viewadp-cal-table table.cal-table-list {
+  height: 25em;
 }
 
 
@@ -293,7 +297,6 @@
 
 .cal-table-list tbody td {
 	padding-left:5px;
-	text-align:left;
 	padding-top:5px;
 	padding-bottom:5px;
 }

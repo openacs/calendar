@@ -1,4 +1,4 @@
-<table class="cal-table-display" cellpadding="1" cellspacing="2" width="75%">
+<table class="cal-table-list" cellpadding="1" cellspacing="2" width="75%">
 <tr><td align="right">
 [&nbsp;<a href="@period_url_1@" title="#calendar.events_over_1d#">1</a>
 &nbsp;|&nbsp;
@@ -14,7 +14,7 @@
 <formtemplate id="frmdays"></formtemplate>
 </td></tr>
 <tr>
-	<td align="center">
+	<td align="center" valign="top">
 		<h1>@start_month@ @start_day@ @start_year@ &ndash; @end_month@ @end_day@ @end_year@</h1>
 	</td>
 </tr>
@@ -66,7 +66,7 @@
 
 </if>
 <else>
-<tr><td><i>#calendar.No_Items#</i></td></tr>
+<tr><td valign="top"><i>#calendar.No_Items#</i></td></tr>
 </else>
 
 </table>

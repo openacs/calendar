@@ -168,6 +168,7 @@ ad_proc -public calendar::item::edit {
     {-description:required}
     {-item_type_id ""}
     {-edit_all_p 0}
+    {-edit_past_events_p 1}
     {-calendar_id ""}
 } {
     Edit the item
@@ -186,7 +187,8 @@ ad_proc -public calendar::item::edit {
                     -name $name \
                     -description $description \
                     -item_type_id $item_type_id \
-                    -calendar_id $calendar_id
+                    -calendar_id $calendar_id \
+                    -edit_past_events_p $edit_past_events_p
 
                 return
             }
@@ -283,25 +285,35 @@ ad_proc -public calendar::item::edit_recurrence {
     {-description:required}
     {-item_type_id ""}
     {-calendar_id ""}
+    {-edit_past_events_p "t"}
 } {
     edit a recurrence
 } {
     set recurrence_id [db_string select_recurrence_id {}]
-    
+    set edit_past_events_p [string map {0 f 1 t} [string is true $edit_past_events_p]]
     db_transaction {
         db_exec_plsql recurrence_timespan_update {}
-
-        db_dml recurrence_events_update {}
+        # compare this event to the original one we are
+        # editing DAVEB 2007-03-15
+        calendar::item::get \
+            -cal_item_id $event_id \
+            -array orig_event
         
         set colspecs [list]
+        foreach col {name description} {
+            if {$orig_event($col) ne [set $col]} {
+                lappend colspecs "$col = :$col"
+            }
+        }
+        if {[llength $colspecs]} {
+            db_dml recurrence_events_update {}
+        }
+	set colspecs [list]
         lappend colspecs {item_type_id = :item_type_id}
         if { ![empty_string_p $calendar_id] } {
             lappend colspecs {on_which_calendar = :calendar_id}
 
             db_dml update_context_id {
-                update acs_objects
-                set    context_id = :calendar_id
-                where  object_id in (select event_id from acs_events where recurrence_id = :recurrence_id)
             }
         }
 

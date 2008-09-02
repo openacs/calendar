@@ -17,8 +17,12 @@ if {[info exists url_stub_callback]} {
     set portlet_mode_p 0 
 }
 
+if {![info exists return_url]} {
+    set return_url [ad_urlencode "../"]
+}
+
 if {[info exists portlet_mode_p] && $portlet_mode_p} {
-    set event_url_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=[ad_urlencode "../"]&action=edit&cal_item_id=\$item_id"
+    set event_url_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=$return_url&action=edit&cal_item_id=\$item_id"
     set url_stub_callback "calendar_portlet_display::get_url_stub"
     set page_num_formvar [export_form_vars page_num]
     set page_num "&page_num=$page_num"

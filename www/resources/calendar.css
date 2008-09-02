@@ -170,6 +170,9 @@
   height: 25em;
 }
 
+#viewadp-cal-table .form-item-wrapper {
+clear: none;
+}
 
 /*  Week/Day View Common Styles  ---------------------------------------------------*/
 #cal-table-day, #cal-table-week  {

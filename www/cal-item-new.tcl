@@ -103,10 +103,11 @@ if { [ad_form_new_p -key cal_item_id] } {
     }
 } else {
     ad_form -extend -name cal_item -form {
-        {edit_all_p:text(radio)
-            {label "[_ calendar.Apply_to_all]"}
-            {options {{"[_ calendar.Yes]" 1}
-                {"[_ calendar.No]" 0} }}
+        {edit_what:text(radio)
+            {label "[_ calendar.Apply_Changes_to]"}
+             {options {{"[_ calendar.This_Event]" this}
+                {"[_ calendar.All_Past_and_Future_Events]" all} 
+                {"[_ calendar.This_and_All_Future_Events]" future}}}
         }
     }
 }
@@ -218,10 +219,10 @@ ad_form -extend -name cal_item -validate {
     # this is a usability issue, since it prevents unexpected
     # behavior. According to carlb, this is how palm os works
     # and that sounds like a reasonable interface to emulate
-    # set edit_all_p $repeat_p
+    # set edit_what $repeat_p
     if { !$repeat_p } {
-        element set_properties cal_item edit_all_p -widget hidden
-        element set_value cal_item edit_all_p 0
+        element set_properties cal_item edit_what -widget hidden
+        element set_value cal_item edit_what 0
     }
     # To support green calendar
     # set date [template::util::date::from_ansi $ansi_start_date]
@@ -285,9 +286,24 @@ ad_form -extend -name cal_item -validate {
     # set up the datetimes
     set start_date [calendar::to_sql_datetime -date $date -time $start_time -time_p $time_p]
     set end_date [calendar::to_sql_datetime -date $date -time $end_time -time_p $time_p]
-
-
-
+    set edit_all_p 0
+    set edit_past_events_p 0
+    if {[info exists edit_what]} {
+        switch $edit_what {
+            this {
+                set edit_all_p 0
+                set edit_past_events_p 0
+            }
+            all {
+                set edit_all_p 1
+                set edit_past_events_p 1
+            }
+            future {
+                set edit_all_p 1
+                set edit_past_events_p 0
+            }
+        }
+    }
     # Do the edit
     calendar::item::edit \
         -cal_item_id $cal_item_id \
@@ -297,12 +313,13 @@ ad_form -extend -name cal_item -validate {
         -description $description \
         -item_type_id $item_type_id \
         -edit_all_p $edit_all_p \
+        -edit_past_events_p $edit_past_events_p \
         -calendar_id $calendar_id
-    
+
     if { [string compare $return_url "./"] } {
     	ad_returnredirect $return_url
     } else {
-	ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]	
+	ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]
     }
     ad_script_abort
 }

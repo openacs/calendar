@@ -30,27 +30,42 @@
 
   <div id="viewadp-cal-table">
     <if @view@ eq "list">
-      <include src="view-list-display" start_date=@start_date@ return_url="@return_url@"
-      end_date=@end_date@ date=@date@ period_days=@period_days@ sort_by=@sort_by@
-      show_calendar_name_p=@show_calendar_name_p@ export=@export@> 
+      <include src="view-list-display"
+        portlet_p="0"
+        start_date="@start_date@"
+        return_url="@return_url@"
+        end_date="@end_date@"
+        date="@date@"
+        period_days="@period_days@"
+        sort_by="@sort_by@"
+        show_calendar_name_p="@show_calendar_name_p@"
+        export="@export@"> 
     </if>
 
     <if @view@ eq "day">
-      <include src="view-one-day-display" date="@date@" 
-       start_display_hour=7 
-       end_display_hour=22
-       return_url="@return_url@"
-       show_calendar_name_p=@show_calendar_name_p@>
+      <include src="view-one-day-display"
+        date="@date@" 
+        start_display_hour="7"
+        end_display_hour="22"
+        return_url="@return_url@"
+        calendar_url=""
+        show_calendar_name_p="@show_calendar_name_p@">
     </if>
     
     <if @view@ eq "week">
-      <include src="view-week-display" date="@date@" return_url="@return_url@"
-      show_calendar_name_p=@show_calendar_name_p@>
+      <include src="view-week-display"
+        date="@date@"
+        return_url="@return_url@"
+        calendar_url=""
+        show_calendar_name_p="@show_calendar_name_p@">
     </if>
     
     
     <if @view@ eq "month">
-      <include src="view-month-display" date=@date@ return_url="@return_url@"
-      show_calendar_name_p=@show_calendar_name_p@>
+      <include src="view-month-display"
+        date="@date@"
+        return_url="@return_url@"
+        calendar_url=""
+        show_calendar_name_p="@show_calendar_name_p@">
     </if>
    </div>

@@ -8,36 +8,6 @@ if { ![info exists period_days] } {
     }
 }
 
-if {[info exists url_stub_callback]} {
-    # This parameter is only set if this file is called from .LRN.
-    # This way I make sure that for the time being this adp/tcl
-    # snippet is backwards-compatible.
-    set portlet_mode_p 1
-} else {
-    set portlet_mode_p 0 
-}
-
-if {![info exists return_url]} {
-    set return_url [ad_urlencode "../"]
-}
-
-if {[info exists portlet_mode_p] && $portlet_mode_p} {
-    set event_url_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=$return_url&action=edit&cal_item_id=\$item_id"
-    set url_stub_callback "calendar_portlet_display::get_url_stub"
-    set page_num_formvar [export_form_vars page_num]
-    set page_num "&page_num=$page_num"
-} else {
-    set event_url_template "cal-item-view?cal_item_id=\$item_id"
-    set url_stub_callback ""
-    set page_num_formvar ""
-    set page_num ""
-    set base_url ""
-}
-
-if { ![info exists url_template] } {
-    set url_template {?sort_by=$sort_by}
-}
-
 if { ![info exists show_calendar_name_p] } {
     set show_calendar_name_p 1
 }
@@ -66,14 +36,6 @@ if {[exists_and_not_null calendar_id_list]} {
 #}
 set end_date [clock format [clock scan "+${period_days} days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
 
-if {[exists_and_not_null page_num]} {
-    set page_num_formvar [export_form_vars page_num]
-    set page_num "&page_num=$page_num"
-} else {
-    set page_num_formvar ""
-    set page_num ""
-}
-
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
@@ -97,9 +59,6 @@ if {![empty_string_p $start_date] && ![empty_string_p $end_date]} {
 set today_date [dt_sysdate]    
 set today_ansi_list [dt_ansi_to_list $today_date]
 set today_julian_date [dt_ansi_to_julian [lindex $today_ansi_list 0] [lindex $today_ansi_list 1] [lindex $today_ansi_list 2]]
-
-set item_type_url "?view=list&sort_by=item_type&start_date=$start_date&period_days=$period_days$page_num"
-set start_date_url "?view=list&sort_by=start_date&start_date=$start_date&period_days=$period_days$page_num"
 
 set view list
 set form_vars [export_vars -form -entire_form -exclude {period_days}]
@@ -183,21 +142,11 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         set today ""
     }
 
-    # reset url stub
-    set url_stub ""
-    
-    # In case we need to dispatch to a different URL (ben)
-    if {![empty_string_p $url_stub_callback]} {
-        # Cache the stuff
-        if {![info exists url_stubs($calendar_id)]} {
-            set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
-	}
-        set url_stub $url_stubs($calendar_id)
-    }
+    set event_url [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {return_url {cal_item_id $item_id}}]
     
     multirow append items \
 	$name \
-	[subst $event_url_template] \
+	$event_url \
 	$calendar_name \
 	$item_type \
 	$pretty_weekday \
@@ -210,7 +159,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     "calendar-ItemListName" \
     "calendar-ItemListDescription" \
     "calendar-ItemListContainer" \
-    "[subst $event_url_template]&export=print"
+    $event_url&[export_vars {{export print}}]
 }
 
 set start_year [lc_time_fmt $start_date "%Y"]

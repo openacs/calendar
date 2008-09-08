@@ -21,6 +21,7 @@
          (select type from cal_item_types where item_type_id= ci.item_type_id) as item_type,
 	 cals.calendar_id,
 	 cals.calendar_name,
+         cals.package_id as cal_package_id,
          (select count(1) from attachments where object_id=e.event_id) as num_attachments
          $additional_select_clause
     from cal_items ci,
@@ -57,6 +58,7 @@
          (select type from cal_item_types where item_type_id= ci.item_type_id) as item_type,
 	 cals.calendar_id,
 	 cals.calendar_name,
+         cals.package_id as cal_package_id,
          (select count(1) from attachments where object_id=e.event_id) as num_attachments
          $additional_select_clause
     from cal_items ci,

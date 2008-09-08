@@ -1,7 +1,6 @@
 #Expects:
 #  date (required but empty string okay): YYYY-MM-DD
 #  show_calendar_name_p (optional): 0 or 1
-#  url_stub_callback (optional): 
 
 #Display constants, should match up with default styles in calendar.css.
 set day_width 70
@@ -24,29 +23,7 @@ for {set i 0} {$i < 10} {incr i} {
     set day_width_$i $day_width
 }
 
-if {[info exists url_stub_callback]} {
-    # This parameter is only set if this file is called from .LRN.
-    # This way I make sure that for the time being this adp/tcl
-    # snippet is backwards-compatible.
-    set portlet_mode_p 1
-} else {
-    set portlet_mode_p 0 
-}
-
 set current_date $date
-
-if {[info exists portlet_mode_p] && $portlet_mode_p} {
-    set event_url_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=[ad_urlencode "../"]&action=edit&cal_item_id=\$item_id"
-    set url_stub_callback "calendar_portlet_display::get_url_stub"
-    set page_num_formvar [export_form_vars page_num]
-    set page_num_urlvar "&page_num=$page_num"
-} else {
-    set event_url_template "cal-item-view?cal_item_id=\$item_id"
-    set url_stub_callback ""
-    set page_num_formvar ""
-    set page_num_urlvar ""
-    set base_url ""
-}
 
 if { ![info exists show_calendar_name_p] } {
     set show_calendar_name_p 1
@@ -144,16 +121,6 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         set no_time_p f
     }
 
-    # In case we need to dispatch to a different URL (ben)
-    if {![empty_string_p $url_stub_callback]} {
-        # Cache the stuff
-        if {![info exists url_stubs($calendar_id)]} {
-            set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
-        }
-        
-        set url_stub $url_stubs($calendar_id)
-    }
-
     if { $day_of_week != $loop_day_of_week } {
         set day_width_$loop_day_of_week [expr ($day_width) + (($max_bumps+$all_day_events) * $event_bump_delta) + 5]
         set event_left_base 0
@@ -228,9 +195,11 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     incr top [expr $bumps*5]
     incr left [expr $bumps*$event_bump_delta]
 
+    set event_url [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {return_url {cal_item_id $item_id}}]
+
     multirow append items \
         "$name" \
-        [subst $event_url_template] \
+        $event_url \
         $description \
         $calendar_name \
         $start_date_weekday \
@@ -241,8 +210,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         $start_time \
         $end_time \
         $no_time_p \
-        "?view=day&date=$ansi_start_date&page_num_urlvar" \
-        "${base_url}cal-item-new?date=${ansi_this_date}&start_time=&end_time=" \
+        ?[export_vars {{view day} {date ansi_start_date} page_num}] \
+        [export_vars -base ${calendar_url}cal-item-new {{date $ansi_this_date} {start_time ""} {end_time ""}}] \
         "calendar-Item" \
         $top \
         $height \
@@ -275,13 +244,10 @@ if { $adjusted_start_display_hour != 0 } {
 
 # Navigation Bar
 set dates "[lc_time_fmt $first_weekday_date "%q"] - [lc_time_fmt $last_weekday_date "%q"]"
-if {$portlet_mode_p} {
-    set previous_week_url "?$page_num_urlvar&view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian - 7]]]\#calendar"
-    set next_week_url "?$page_num_urlvar&view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian + 7]]]\#calendar"
-} else {
-    set previous_week_url "?view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian - 7]]]\#calendar"
-    set next_week_url "?view=week&date=[ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian + 7]]]\#calendar"
-}
+set prev_date_ansi [ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian - 7]]]
+set previous_week_url ?[export_vars {page_num {view week} {date $prev_date_ansi}}]\#calendar
+set next_date_ansi [ad_urlencode [dt_julian_to_ansi [expr $first_weekday_julian + 7]]]
+set next_week_url ?[export_vars {page_num {view week} {date $next_date_ansi}}]\#calendar
 
 #Calendar grid.
 set grid_start $adjusted_start_display_hour

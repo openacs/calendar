@@ -15,49 +15,13 @@ if { [exists_and_not_null export] } {
 
 dt_get_info $date
 
-if {[info exists url_stub_callback]} {
-    # This parameter is only set if this file is called from .LRN.
-    # This way I make sure that for the time being this adp/tcl
-    # snippet is backwards-compatible.
-    set portlet_mode_p 1
-}
-
 if {![info exists return_url]} {
     set return_url [ad_urlencode "../"]
-}
-
-if {[info exists portlet_mode_p] && $portlet_mode_p} {
-    set page_num_urlvar "&page_num=$page_num"
-    set item_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=$return_url&action=edit&cal_item_id=\$item_id"
-    set prev_month_template "?view=month&date=\[ad_urlencode \$prev_month\]&page_num=$page_num"
-    set next_month_template "?view=month&date=\[ad_urlencode \$next_month\]&page_num=$page_num"
-    set url_stub_callback "calendar_portlet_display::get_url_stub"
-} else {
-    set item_template "cal-item-view?cal_item_id=\$item_id"
-    set prev_month_template "view?view=month&\date=[ad_urlencode $prev_month]"
-    set next_month_template "view?view=month&\date=[ad_urlencode $next_month]"
-    set url_stub_callback ""
-    set page_num_urlvar ""
-    set base_url ""
 }
 
 if { ![info exists show_calendar_name_p] } {
     set show_calendar_name_p 1
 }
-
-if { [info exists calendar_id_list] } {
-    if {[llength $calendar_id_list] > 1} {
-        set force_calendar_id [calendar::have_private_p -return_id 1 -calendar_id_list $calendar_id_list -party_id [ad_conn user_id]]
-    } else {
-        set force_calendar_id [lindex $calendar_id_list 0]
-    }
-
-    calendar::get -calendar_id $force_calendar_id -array force_calendar
-    set base_url [apm_package_url_from_id $force_calendar(package_id)]
-} else {
-    set base_url ""
-}
-
 
 if {[exists_and_not_null calendar_id_list]} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
@@ -76,8 +40,8 @@ set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 set today_date [dt_sysdate]    
 
-set previous_month_url "[subst $prev_month_template]"
-set next_month_url "[subst $next_month_template]"
+set previous_month_url ?[export_vars {{view month} {date $prev_month} page_num}]
+set next_month_url ?[export_vars {{view month} {date $next_month} page_num}]
 
 set first_day_of_week [lc_get firstdayofweek]
 set last_day_of_week [expr [expr $first_day_of_week + 6] % 7]
@@ -200,12 +164,14 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                      -today_julian_date $today_julian_date \
                      -first_julian_date_of_month $first_julian_date_of_month]
 
+            set current_day_ansi [dt_julian_to_ansi $current_day]
+
             multirow append items \
                 "" \
                 "" \
                 "" \
                 "" \
-                [lc_time_fmt [dt_julian_to_ansi $current_day] %Q] \
+                [lc_time_fmt $current_day_ansi %Q] \
                 "" \
                 "" \
                 "" \
@@ -217,25 +183,12 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                 $display_information(today_p) \
                 f \
                 0 \
-                "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
-                "?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar" \
+                [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}] \
+                ?[export_vars {{view day} {date $current_day_ansi} page_num}] \
                 "calendar-${system_type}Item" \
                 $num_attachments \
-                [lc_time_fmt [dt_julian_to_ansi $current_day] %w]
+                [lc_time_fmt $current_day_ansi %w]
         } 
-    }
-
-    # reset url stub
-    set url_stub ""
-    
-    # In case we need to dispatch to a different URL (ben)
-    if {![empty_string_p $url_stub_callback]} {
-        # Cache the stuff
-        if {![info exists url_stubs($calendar_id)]} {
-            set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
-	}
-        
-        set url_stub $url_stubs($calendar_id)
     }
 
     array set display_information \
@@ -244,12 +197,14 @@ db_foreach dbqd.calendar.www.views.select_items {} {
              -today_julian_date $today_julian_date \
              -first_julian_date_of_month $first_julian_date_of_month]
 
+    set current_day_ansi [dt_julian_to_ansi $current_day]
+
     multirow append items \
         $name \
-        [subst $item_template] \
+        [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {return_url {cal_item_id $item_id}}] \
         $description \
         $calendar_name \
-        [lc_time_fmt [dt_julian_to_ansi $current_day] %Q] \
+        [lc_time_fmt $current_day_ansi %Q] \
         $pretty_start_date \
         $pretty_end_date \
         $pretty_start_time \
@@ -261,11 +216,11 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         $display_information(today_p) \
         f \
         $time_p \
-        "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
-        "?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar" \
+        [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}]" \
+        ?[export_vars {{view day} {date $current_day_ansi} page_num}] \
         "calendar-${system_type}Item" \
         $num_attachments \
-        [lc_time_fmt [dt_julian_to_ansi $current_day] %w]
+        [lc_time_fmt $current_day_ansi %w]
 }
 
 if { !$exporting_p } {
@@ -279,13 +234,15 @@ if { !$exporting_p } {
                  -current_day $current_day \
                  -today_julian_date $today_julian_date \
                  -first_julian_date_of_month $first_julian_date_of_month]
+
+        set current_day_ansi [dt_julian_to_ansi $current_day]
         
         multirow append items \
             "" \
             "" \
             "" \
             "" \
-            [lc_time_fmt [dt_julian_to_ansi $current_day] %Q] \
+            [lc_time_fmt $current_day_ansi %Q] \
             "" \
             "" \
             "" \
@@ -297,11 +254,11 @@ if { !$exporting_p } {
             $display_information(today_p) \
             f \
             0 \
-            "${base_url}cal-item-new?date=[dt_julian_to_ansi $current_day]&start_time=&end_time" \
-            "?view=day&date=[dt_julian_to_ansi $current_day]&$page_num_urlvar" \
+            [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}] \
+            ?[export_vars {{view day} {date $current_day_ansi} page_num}] \
             "" \
             "" \
-            [lc_time_fmt [dt_julian_to_ansi $current_day] %w]
+            [lc_time_fmt $current_day_ansi %w]
     }
 
     # Add cells for remaining days outside the month

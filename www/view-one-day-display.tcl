@@ -9,7 +9,6 @@ set system_type ""
 #  show_calendar_name_p (optional): 0 or 1
 #  start_display_hour (optional): 0-23
 #  end_display_hour (optional): 0-23
-#  url_stub_callback (optional): 
 
 #Display constants, should match up with default styles in calendar.css.
 set hour_height_inside 43
@@ -19,27 +18,8 @@ set bump_right_base 0
 set bump_right_delta 155
 set bump_right_units px
 
-if {[info exists url_stub_callback]} {
-    # This parameter is only set if this file is called from .LRN.
-    # This way I make sure that for the time being this adp/tcl
-    # snippet is backwards-compatible.
-    set portlet_mode_p 1
-} else {
-    set portlet_mode_p 0 
-}
-
 set current_date $date
 set pretty_date [lc_time_fmt $current_date %Q]
-
-if {[info exists portlet_mode_p] && $portlet_mode_p} {
-    set event_url_template "\${url_stub}cal-item-view?show_cal_nav=0&return_url=[ad_urlencode "../"]&action=edit&cal_item_id=\$item_id"
-    set url_stub_callback "calendar_portlet_display::get_url_stub"
-    set hour_template "calendar/cal-item-new?date=$current_date&start_time=\$grid_hour"
-} else {
-    set event_url_template "cal-item-view?cal_item_id=\$item_id"
-    set url_stub_callback ""
-    set hour_template {cal-item-new?date=$current_date&start_time=$grid_hour}
-}
 
 if { ![info exists show_calendar_name_p] } {
     set show_calendar_name_p 1
@@ -104,6 +84,7 @@ set interval_limitation_clause [db_map dbqd.calendar.www.views.day_interval_limi
 #query but slows this one.
 db_foreach dbqd.calendar.www.views.select_all_day_items {} {
 
+
     # Localize
     set pretty_weekday [lc_time_fmt $ansi_start_date "%A"]
     set pretty_start_date [lc_time_fmt $ansi_start_date "%x"]
@@ -111,22 +92,12 @@ db_foreach dbqd.calendar.www.views.select_all_day_items {} {
     set pretty_start_time [lc_time_fmt $ansi_start_date "%X"]
     set pretty_end_time [lc_time_fmt $ansi_end_date "%X"]
     
-    # In case we need to dispatch to a different URL (ben).
-    # The calculated url_stub is fed back into the event_url_template.
-    set url_stub ""
-    if {![empty_string_p $url_stub_callback]} {
-        # Cache the url stub lookup.
-        if {![info exists url_stubs($calendar_id)]} {
-            set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
-        }
-        
-        set url_stub $url_stubs($calendar_id)
-    }
+    set event_url [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {return_url {cal_item_id $item_id}}]
 
     #height will be overwritten once we know how the vertical hour span.
     multirow append items 1 "calendar-${system_type}Item" \
         $name \
-        [subst $event_url_template] \
+        $event_url \
         $description \
         $calendar_name \
         $pretty_weekday \
@@ -153,7 +124,6 @@ set adjusted_start_display_hour $start_display_hour
 set adjusted_end_display_hour $end_display_hour
 
 db_foreach dbqd.calendar.www.views.select_items {} {
-
 
     set ansi_start_date [lc_time_system_to_conn $ansi_start_date]
     set ansi_end_date [lc_time_system_to_conn $ansi_end_date]
@@ -198,21 +168,11 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         }
     }
 
-    # In case we need to dispatch to a different URL (ben).
-    # The calculated url_stub is fed back into the event_url_template.
-    set url_stub ""
-    if {![empty_string_p $url_stub_callback]} {
-        # Cache the url stub lookup.
-        if {![info exists url_stubs($calendar_id)]} {
-            set url_stubs($calendar_id) [$url_stub_callback $calendar_id]
-        }
-        
-        set url_stub $url_stubs($calendar_id)
-    }
+    set event_url [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {return_url {cal_item_id $item_id}}]
 
     multirow append items 0 "calendar-${system_type}Item" \
         "$name ($start_time - $end_time)" \
-        [subst $event_url_template] \
+        $event_url \
         $description \
         $calendar_name \
         $pretty_weekday \
@@ -245,13 +205,7 @@ if { $adjusted_start_display_hour != 0 } {
 
 db_1row dbqd.calendar.www.views.select_day_info {}
 
-if {$portlet_mode_p} {
-    set previous_week_url "?page_num=$page_num&date=[ns_urlencode $yesterday]"
-    set next_week_url "?page_num=$page_num&&date=[ns_urlencode $tomorrow]"
-} else {
-    set previous_week_url "view?view=day&date=[ns_urlencode $yesterday]"
-    set next_week_url "view?view=day&date=[ns_urlencode $tomorrow]"
-}
+
 set dates [lc_time_fmt $date "%q"]
 set curr_day_name [lc_time_fmt $date "%A"]
 set curr_month [lc_time_fmt $date "%B"]
@@ -262,13 +216,15 @@ set curr_year [lc_time_fmt $date "%Y"]
 set grid_start $adjusted_start_display_hour
 set grid_first_hour [lc_time_fmt "$current_date $grid_start:00:00" "%X"]
 set grid_hour $grid_start
-set grid_first_add_url [subst $hour_template]
+set grid_first_add_url [export_vars -base ${calendar_url}cal-item-new \
+                           {{date $current_date} {start_time $grid_hour}}]
 incr grid_start
 
 multirow create grid hour add_url
 for { set grid_hour $grid_start } { $grid_hour <= $adjusted_end_display_hour } { incr grid_hour } {
     set localized_grid_hour [lc_time_fmt "$current_date $grid_hour:00:00" "%X"]
-    multirow append grid $localized_grid_hour [subst $hour_template]
+    multirow append grid $localized_grid_hour \
+        [export_vars -base ${calendar_url}cal-item-new {{date $current_date} {start_time $grid_hour}}]
 }
 
 if { [info exists export] && [string equal $export print] } {

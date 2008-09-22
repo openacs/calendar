@@ -168,8 +168,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     set start_time [lc_time_fmt $ansi_start_date "%X"]
     set end_time [lc_time_fmt $ansi_end_date "%X"]
 
-    set start_hour [format %.0f [lc_time_fmt $ansi_start_date "%H"]]
-    set end_hour [format %.0f [lc_time_fmt $ansi_end_date "%H"]]
+    scan [lc_time_fmt $ansi_start_date "%H"] %d start_hour 
+    scan [lc_time_fmt $ansi_end_date "%H"] %d end_hour 
 
     if { $start_hour < $adjusted_start_display_hour && \
              [string equal \

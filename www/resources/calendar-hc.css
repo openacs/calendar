@@ -46,6 +46,7 @@
 
 .cal-table-caption {
     color: inherit;
+    background: #222222;
 }
 
 /* at-a-glance ---------------------------------------------------*/
@@ -157,9 +158,8 @@
 
 /* view-list-display ---------------------------------------------------*/
 
-.cal-table-list thead {
-	background-color:#555555;
-	color: inherit;
+.list-table caption {
+    background: #222222;
 }
 
 /* END view-list-display ---------------------------------------------------*/

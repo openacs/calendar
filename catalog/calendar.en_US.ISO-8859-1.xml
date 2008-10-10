@@ -191,6 +191,7 @@ than once in your calendar. The event's details are:</msg>
   <msg key="sync_with_Outlook">sync with Outlook</msg>
   <msg key="Thursday">Thursday</msg>
   <msg key="Time">Time:</msg>
+  <msg key="Time_1">Time</msg>
   <msg key="Title">Title:</msg>
   <msg key="Title_1">Title</msg>
   <msg key="to">to</msg>

@@ -25,7 +25,7 @@
 }
 
 .cal-month-day-inactive {
-	background: #E6E6E6;
+	background: #F0EFF0;
 }
 
 .cal-month-event {
@@ -121,7 +121,7 @@
 }
 
 #at-a-glance td.inactive {
-	background-color: #E6E6E6;
+	background-color: #F0EFF0;
 }
 
 #at-a-glance a {
@@ -147,9 +147,8 @@
 
 .cal-text-grey-sml {
 	font-size: .75em;
-	color: #666666;
+	color: #444444;
 	font-weight: normal;
-
 }
 
 /* cal-item-view, cal-item-new ---------------------------------------------------*/
@@ -284,7 +283,7 @@
 
 
 .topnavbar { 
-	background:#dddddd; 
+	background:#e7e6e7; 
 	height:25px; 
 	text-align:center; 
 }

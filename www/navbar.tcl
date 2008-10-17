@@ -37,7 +37,7 @@ if { [string match /dotlrn* $base_url] } {
 multirow create views name text url spacer selected_p onclick
 
 multirow append views \
-    "Day" \
+    [_ calendar.Day] \
     "day" \
     "[export_vars -base $base_url {date {view day}}]${page_num}\#calendar" \
     "&nbsp;&nbsp; | &nbsp;&nbsp;" \
@@ -45,7 +45,7 @@ multirow append views \
     ""
 
 multirow append views \
-    "Week" \
+    [_ calendar.Week] \
     "week" \
     "[export_vars -base $base_url {date {view week}}]${page_num}\#calendar" \
     "&nbsp;&nbsp; | &nbsp;&nbsp;" \
@@ -53,33 +53,33 @@ multirow append views \
     ""
 
 multirow append views \
-    "Month" \
+    [_ calendar.Month] \
     "month" \
     "[export_vars -base $base_url {date {view month}}]${page_num}\#calendar" \
     "&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" \
     $month_selected_p \
     ""
 
-multirow append views \
-    " Calendar" \
-    "calendar" \
-    "[export_vars -base $base_url {date {view month}}]${page_num}\#calendar" \
-    "&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;" \
-    $calendar_selected_p \
-    ""
+# multirow append views \
+#     " Calendar" \
+#     "calendar" \
+#     "[export_vars -base $base_url {date {view month}}]${page_num}\#calendar" \
+#     "&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;" \
+#     $calendar_selected_p \
+#     ""
 
 multirow append views \
-    " List" \
+    [_ calendar.List] \
     "list" \
     "[export_vars -base $base_url {date {view list}}]${page_num}${url_stub_period_days}\#calendar" \
-    "&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;" \
+    "" \
     $list_selected_p \
     ""
 
-multirow append views \
-    " Print" \
-    "print" \
-    "[export_vars -url -base $base_url -entire_form -exclude {export}]&export=print" \
-    "" \
-    f \
-    "return calOpenPrintView('[export_vars -url -base $base_url -entire_form -exclude {export}]&export=print');"
+# multirow append views \
+#     " Print" \
+#     "print" \
+#     "[export_vars -url -base $base_url -entire_form -exclude {export}]&export=print" \
+#     "" \
+#     f \
+#     "return calOpenPrintView('[export_vars -url -base $base_url -entire_form -exclude {export}]&export=print');"

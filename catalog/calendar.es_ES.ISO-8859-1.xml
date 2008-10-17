@@ -34,6 +34,7 @@
   <msg key="Current_Permissions">Permisos actuales</msg>
   <msg key="Date">Fecha:</msg>
   <msg key="Date_1">Fecha</msg>
+  <msg key="Day">Día</msg>
   <msg key="day">día</msg>
   <msg key="day_rolling_period">días</msg>
   <msg key="day_s">día(s)</msg>
@@ -77,6 +78,7 @@
   <msg key="is_recurring">El evento se repite</msg>
   <msg key="Item">Evento</msg>
   <msg key="last_week">semana anterior</msg>
+  <msg key="List">Lista</msg>
   <msg key="lt_Are_you_sure_you_want">¿Desea realmente borrar este calendario? Todos los eventos y permisos asociados serán borrados también.</msg>
   <msg key="lt_Are_you_sure_you_want_1">¿Desea realmente borrar este evento?</msg>
   <msg key="lt_Audiences_for_calenda">Audiencias del calendario</msg>
@@ -130,6 +132,7 @@
   <msg key="lt_You_have_no_party_wid">No tiene acceso a calendarios algunos</msg>
   <msg key="Manage_Item_Types">Administrar los tipos de eventos</msg>
   <msg key="Monday">Lunes</msg>
+  <msg key="Month">Mes</msg>
   <msg key="New_Type">Categoría nueva:</msg>
   <msg key="next_day">Día siguiente</msg>
   <msg key="next_month">Mes siguiente</msg>
@@ -182,6 +185,7 @@
   <msg key="Use_Hours_Below">Horario:</msg>
   <msg key="view">Vista</msg>
   <msg key="Wednesday">Miércoles</msg>
+  <msg key="Week">Semana</msg>
   <msg key="Week_of">Semana</msg>
   <msg key="y-m-d">aaaa-mm-dd</msg>
   <msg key="year">año</msg>

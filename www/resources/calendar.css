@@ -25,7 +25,7 @@
 }
 
 .cal-month-day-inactive {
-	background: #E6E6E6;
+	background: #F0EFF0;
 }
 
 .cal-month-event {
@@ -67,12 +67,11 @@
 	background-color: #FFFFFF;
 }
 
-
 .cal-table-caption {
 	font-size: 1.2em;
     font-weight: bold;
-    color: #646c61;
     margin: 1em;
+    background: #fff;
 }
 
 .cal-table-caption img {
@@ -121,7 +120,7 @@
 }
 
 #at-a-glance td.inactive {
-	background-color: #E6E6E6;
+	background-color: #F0EFF0;
 }
 
 #at-a-glance a {
@@ -147,9 +146,8 @@
 
 .cal-text-grey-sml {
 	font-size: .75em;
-	color: #666666;
+	color: #444444;
 	font-weight: normal;
-
 }
 
 /* cal-item-view, cal-item-new ---------------------------------------------------*/
@@ -157,21 +155,13 @@
 #viewadp-mini-calendar {
          width: 25%;
          float: left;
-         margin-bottom: 1em; 
-}
-
-#viewadp-cal-table {
-         margin-left: 25%;
-         width: 75%;
          margin-bottom: 1em;
 }
 
-#viewadp-cal-table table.cal-table-list {
-  height: 25em;
-}
-
-#viewadp-cal-table .form-item-wrapper {
-clear: none;
+#viewadp-cal-table {
+         float: right;
+         width: 75%;
+         margin-bottom: 1em;
 }
 
 /*  Week/Day View Common Styles  ---------------------------------------------------*/
@@ -185,7 +175,7 @@ clear: none;
 
 .day-time-1 {
 	border:1px #ffffff solid;
-	background-color:#D8E0E6;
+	background-color:#F0EFF0;
 	height:43px;
 }
 .day-time-1 p, .day-time-2 p {
@@ -195,7 +185,7 @@ clear: none;
 
 .day-time-2 {
 	border:1px #ffffff solid;
-	background-color:#e8edf1;
+	background-color:#f0eff0;
 	height:43px;
 }
 
@@ -280,35 +270,18 @@ clear: none;
 
 /* view-list-display ---------------------------------------------------*/
 
-.cal-table-list {
-	padding:5px;
-}
-
-.cal-table-list td {
-	padding-top:2px;
-	padding-bottom:2px;
-	padding-left:5px;
-	padding-right:5px;
-}
-
-.cal-table-list thead {
-	background-color:#547083;
-	font-weight:bold;
-	color:#ffffff;
-	padding:0px;
-}
-
-.cal-table-list tbody td {
-	padding-left:5px;
-	padding-top:5px;
-	padding-bottom:5px;
+.list-table caption {
+	font-size: 1.2em;
+    font-weight: bold;
+    margin: 1em;
+    background: #fff;
 }
 
 /* END view-list-display ---------------------------------------------------*/
 
 
 .topnavbar { 
-	background:#dddddd; 
+	background:#e7e6e7; 
 	height:25px; 
 	text-align:center; 
 }
@@ -356,15 +329,7 @@ a.print-view {
     background-image: url("/resources/calendar/images/print-icon.gif");
 }
 
-
-
-
-
-
-
-
 /* UNUSED?*/
-
 
 .cal-row-dark {
         background: #DDEEFF;
@@ -384,46 +349,10 @@ a.print-view {
 	border: 0px solid #7D7DFF;
 }
 
-
-
 .calendar-Item {
 	background-color:#FFFFFF;
 	border: 1px solid #89A2B3;
 	opacity:.9; 
-}
-
-.calendar-classItem {
-	background-color:#F2E18F;
-}
-
-.calendar-communityItem {
-	background-color:#DBC9C3;
-}
-
-.calendar-personalItem {
-	background-color:#CBD3AB;
-}
-
-
-.cal-table-list .calendar-personalItemListName {
-	background-color:#CBD3AB;
-}
-.cal-table-list .calendar-personalItemListDescription {
-	border:1px #CBD3AB solid;
-}
-
-.cal-table-list .calendar-classItemListName {
-	background-color:#F2E18F;
-}
-.cal-table-list .calendar-classItemListDescription {
-	border:1px #F2E18F solid;
-}
-
-.cal-table-list .calendar-communityItemListName {
-	background-color:#DBC9C3;
-}
-.cal-table-list .calendar-communityItemListDescription {
-	border:1px #DBC9C3 solid;
 }
 
 .bottomnavbar { 

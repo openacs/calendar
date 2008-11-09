@@ -76,10 +76,7 @@ multirow create items \
     end_time \
     today \
     description \
-    name_style_class \
-    description_style_class \
-    container_style_class \
-    event_print_url
+    calendar_name
 
 set last_pretty_start_date ""
 # Loop through the events, and add them
@@ -106,11 +103,11 @@ db_foreach dbqd.calendar.www.views.select_items {} {
 
     # Localize
     set pretty_weekday [lc_time_fmt $ansi_start_date "%A"]
-    set pretty_start_date [lc_time_fmt $ansi_start_date "%x"]
-    set pretty_end_date [lc_time_fmt $ansi_end_date "%x"]
+    set pretty_start_date [lc_time_fmt $ansi_start_date "%Q"]
+    set pretty_end_date [lc_time_fmt $ansi_end_date "%Q"]
     set pretty_start_time [lc_time_fmt $ansi_start_date "%X"]
     set pretty_end_time [lc_time_fmt $ansi_end_date "%X"]
-    set pretty_today [lc_time_fmt $ansi_today "%x"]
+    set pretty_today [lc_time_fmt $ansi_today "%Q"]
 
     set start_date_seconds [clock scan [lc_time_fmt $ansi_start_date "%Y-%m-%d"]]
     set today_seconds [clock scan [lc_time_fmt $ansi_today "%Y-%m-%d"]]
@@ -144,6 +141,10 @@ db_foreach dbqd.calendar.www.views.select_items {} {
 
     set event_url [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {return_url {cal_item_id $item_id}}]
     
+    if { !$show_calendar_name_p } {
+        set calendar_name ""
+    }
+
     multirow append items \
 	$name \
 	$event_url \
@@ -156,10 +157,37 @@ db_foreach dbqd.calendar.www.views.select_items {} {
 	$pretty_end_time \
 	$today \
     $description \
-    "calendar-ItemListName" \
-    "calendar-ItemListDescription" \
-    "calendar-ItemListContainer" \
-    $event_url&[export_vars {{export print}}]
+        $calendar_name
+}
+
+template::list::create -name "items-list" -multirow items -no_data [_ calendar.No_Items] -caption $title -elements {
+    start_date {
+        label "[_ calendar.Date_1]"
+    }
+    time {
+        label "[_ calendar.Time_1]"
+        display_template {
+              <if @items.start_time@ ne @items.end_time@>
+                @items.start_time@ &ndash; @items.end_time@
+              </if>
+              <else>
+                #calendar.All_Day_Event#
+              </else>
+        }
+    }
+    event {
+        label "[_ calendar.Event]"
+        display_col event_name
+        link_url_col event_url
+        link_html {title "#calendar.goto_items_event_name#"}
+    }
+    calendar {
+        label "[_ calendar.Calendar]"
+        display_col calendar_name
+    }
+    description {
+        label "[_ calendar.Description]"
+    }
 }
 
 set start_year [lc_time_fmt $start_date "%Y"]
@@ -198,7 +226,7 @@ set noprocessing_vars [list]
     }
 
 
-ad_form -name frmdays -has_submit 1 -html {style float:right} -export $noprocessing_vars -form {
+ad_form -name frmdays -has_submit 1 -html {class "inline-form"} -export $noprocessing_vars -form {
     {period_days:integer,optional
         {label ""}
         {html {size 3} {maxlength 3} {class "cal-input-field"}}

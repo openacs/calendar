@@ -171,7 +171,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                 "" \
                 "" \
                 "" \
-                [lc_time_fmt $current_day_ansi %Q] \
+                [lc_time_fmt [dt_julian_to_ansi $current_day] %Q] \
                 "" \
                 "" \
                 "" \

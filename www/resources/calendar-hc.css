@@ -9,10 +9,21 @@
 
 .cal-month-today {
 	background-color: #555555;
+    color: #fff;
 }
 
 .cal-month-today:hover {
 	background: #555555;
+}
+
+.cal-month-today a:link, .cal-month-today a:visited {
+    color: inherit;
+    background: inherit;
+}
+
+.cal-month-today a:hover {
+	color: #222222;
+	background-color: #cccc3d;
 }
 
 .cal-month-day-inactive {
@@ -24,7 +35,7 @@
 	opacity:1; 
 }
 
-.cal-month-event a {
+.cal-month-event a:link, .cal-month-event a:visited {
     color: #000000;
 }
 
@@ -46,6 +57,7 @@
 
 .cal-table-caption {
     color: inherit;
+    background: #222222;
 }
 
 /* at-a-glance ---------------------------------------------------*/
@@ -70,6 +82,11 @@
 	background-color: #aaaaaa;
 }
 
+#at-a-glance td.inactive a:link, #at-a-glance td.inactive a:visited {
+    background: inherit;
+	color: #000;
+}
+
 #at-a-glance td.active {
 	background-color: inherit;
 }
@@ -81,6 +98,17 @@
 #at-a-glance td.today {
 	background-color: #555555;
 }
+
+#at-a-glance td.today a:link, #at-a-glance td.today a:visited, #at-a-glance td.selected a:link, #at-a-glance td.selected a:visited {
+    color: #fff;
+    background:inherit;
+}
+
+#at-a-glance td.today a:hover, #at-a-glance td.selected a:hover {
+	color: #222222;
+	background-color: #cccc3d;
+}
+
 /* END at-a-glance ---------------------------------------------------*/
 
 
@@ -109,8 +137,16 @@
 
 .day-time-2 {
 	border:1px #ffffff solid;
-	background-color:#555555;
+	background-color:#343434;
 }
+.day-time-2 a:link, .day-time-2 a:visited {
+	color: #fff59e;
+}
+	
+.day-time-2 a:hover {
+	color: #222222;
+}
+
 
 /*  Week View  ---------------------------------------------------*/
 
@@ -157,19 +193,29 @@
 
 /* view-list-display ---------------------------------------------------*/
 
-.cal-table-list thead {
-	background-color:#555555;
-	color: inherit;
+.list-table caption {
+    background: #222222;
 }
 
 /* END view-list-display ---------------------------------------------------*/
 
 .topnavbar { 
-	background:#555555; 
+	background:#555555;
+    color: #ffffff; 
 }
 
 .topnavbar .active { 
 	background:#222222; 
+}
+
+a.cal-icons {
+    background-color: inherit;
+    color: #ffffff;
+}
+
+a.cal-icons:hover {
+	color: #222222;
+	background-color: #cccc3d;
 }
 
 .calendar-Item {

@@ -37,7 +37,7 @@ if {[calendar::attachments_enabled_p]} {
 
 set date $cal_item(start_date)
 set show_synch_p [parameter::get -package_id $package_id -parameter ShowSynchP -default 1]
-set cal_item(description) [ad_html_text_convert -from text/enhanced -to text/html $cal_item(description)]
+set cal_item(description) [ad_html_text_convert -from text/enhanced -to text/html -- $cal_item(description)]
 
 # actions URLs
 set goto_date_url [export_vars -base "./view" {{view day} {date $cal_item(start_date)}}]

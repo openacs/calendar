@@ -35,7 +35,7 @@ ad_proc -public calendar::item::new {
     {-end_date:required}
     {-name:required}
     {-description:required}
-    {-calendar_id:required}
+    {-calendar_id ""}
     {-item_type_id ""}
 } {
     if {[dates_valid_p -start_date $start_date -end_date $end_date]} {
@@ -67,11 +67,10 @@ ad_proc -public calendar::item::new {
 	
 	db_dml set_item_type_id "update cal_items set item_type_id=:item_type_id where cal_item_id=:cal_item_id"
 
-		# removing inherited permissions
-		if { [calendar::personal_p -calendar_id $calendar_id] } {
-			permission::set_not_inherit -object_id $cal_item_id
-		}
-		# ##
+        # removing inherited permissions
+        if { $calendar_id ne "" && [calendar::personal_p -calendar_id $calendar_id] } {
+            permission::set_not_inherit -object_id $cal_item_id
+        }
 
         assign_permission  $cal_item_id  $creation_user read
         assign_permission  $cal_item_id  $creation_user write

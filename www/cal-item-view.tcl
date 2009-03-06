@@ -16,6 +16,14 @@ permission::require_permission -object_id $cal_item_id -privilege read
 
 calendar::item::get -cal_item_id $cal_item_id -array cal_item
 
+# Honor the related link redirection facility long implemented in acs-events, but
+# ignored by calendar.
+if { $cal_item(redirect_to_rel_link_p) eq "t" &&
+     $cal_item(related_link_url) ne "" } {
+    ad_returnredirect $cal_item(related_link_url)
+    ad_script_abort
+}
+
 set write_p [permission::write_permission_p -object_id $cal_item_id -creation_user $cal_item(creation_user)]
 
 # Attachments?

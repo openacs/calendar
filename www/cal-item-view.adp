@@ -22,15 +22,28 @@
 				@cal_item.name@
 			</div>	  
 		</div>
-		<div class="form-item-wrapper">
+                <if @cal_item.description@ not nil>
+		  <div class="form-item-wrapper">
 			<div class="form-label">
 				<strong>#calendar.Description#:</strong>
 			</div>
-
 			<div class="form-widget">                  
 				@cal_item.description;noquote@
 			</div>  
-		</div>
+		  </div>
+                </if>
+                <if @cal_item.related_link_url@ not nil>
+		  <div class="form-item-wrapper">
+                    <div class="form-label">
+                      <strong>#calendar.RelatedLink#:</strong>
+                    </div>
+                    <div class="form-widget">                  
+                      <a href="@cal_item.related_link_url;noquote@" title="@cal_item.related_link_text@">
+                        @cal_item.related_link_text@
+                      </a>
+                    </div>  
+                  </div>
+                </if>
 		<div class="form-item-wrapper">
 			<div class="form-label">
 				<strong>#calendar.Sharing#:</strong>

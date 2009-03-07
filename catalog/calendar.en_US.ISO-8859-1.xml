@@ -172,6 +172,7 @@ than once in your calendar. The event's details are:</msg>
   <msg key="private">private</msg>
   <msg key="Public">Public:</msg>
   <msg key="public">public</msg>
+  <msg key="RelatedLink">Related Link</msg>
   <msg key="Repeat">Repeat</msg>
   <msg key="Repeat_1">Repeat?</msg>
   <msg key="Repeat_every">Repeat every</msg>

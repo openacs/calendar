@@ -65,7 +65,10 @@
          on_which_calendar as calendar_id,
          c.calendar_name,
          o.creation_user,
-         c.package_id as calendar_package_id
+         c.package_id as calendar_package_id,
+         e.related_link_url,
+         e.related_link_text,
+         e.redirect_to_rel_link_p
        from
          acs_events e join timespans s
            on (e.timespan_id = s.timespan_id)

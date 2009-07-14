@@ -228,9 +228,8 @@ set noprocessing_vars [list]
 
 ad_form -name frmdays -has_submit 1 -html {class "inline-form"} -export $noprocessing_vars -form {
     {period_days:integer,optional
-        {label ""}
+        {label "[_ calendar.days]"}
         {html {size 3} {maxlength 3} {class "cal-input-field"}}
         {value "$period_days"}
-        {after_html "[_ calendar.days]"}
     }
 } -on_submit { }

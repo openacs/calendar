@@ -187,6 +187,7 @@ template::list::create -name "items-list" -multirow items -no_data [_ calendar.N
     }
     description {
         label "[_ calendar.Description]"
+        display_template {@items.description;noquote@}
     }
 }
 

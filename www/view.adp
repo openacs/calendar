@@ -17,15 +17,11 @@
     </if>
     </p>
   
-    <p>
     <if @calendar_personal_p@ false>
-	    @notification_chunk;noquote@
+	    <p>@notification_chunk;noquote@</p>
     </if>
-    </p>
   
-    <p>
     <include src="cal-options">	
-    </p>
    </div>
 
   <div id="viewadp-cal-table">

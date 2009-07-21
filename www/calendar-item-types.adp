@@ -1,7 +1,11 @@
 <master>
-<property name="title">#calendar.Calendar_Item_Types#</property>
+<property name="&doc">doc</property>
 <property name="context">@context;noquote@</property>
 
-<listtemplate name="item_types"></listtemplate>
-<formtemplate id="add-new-item-type"></formtemplate> 
+<h1>#calendar.Manage_Item_Types#</h1>
 
+<h2>#calendar.Calendar_Item_Types#</h2>
+<listtemplate name="item_types"></listtemplate>
+
+<h2>#calendar.Add_an_Item_Type#</h2>
+<formtemplate id="add-new-item-type"></formtemplate> 

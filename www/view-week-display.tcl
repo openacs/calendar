@@ -228,17 +228,15 @@ db_foreach dbqd.calendar.www.views.select_items {} {
 set day_width_$loop_day_of_week [expr ($day_width) + (($max_bumps+$all_day_events) * $event_bump_delta) + 5]
 
 #Now correct the top attribute for the adjusted start.
-if { $adjusted_start_display_hour != 0 } {
-    set num_items [multirow size items]
-    for {set i 1} {$i <= $num_items } {incr i} {
-        if { [multirow get items $i no_time_p] } {
-            multirow set items $i height \
-                [expr ($adjusted_end_display_hour-$adjusted_start_display_hour+1)*($hour_height_inside+$hour_height_sep)]
-        } else {
-            set currval [multirow get items $i top]
-            multirow set items $i top \
-                [expr $currval - ($adjusted_start_display_hour*($hour_height_inside+$hour_height_sep))]
-        }
+set num_items [multirow size items]
+for {set i 1} {$i <= $num_items } {incr i} {
+    if { [multirow get items $i no_time_p] } {
+        multirow set items $i height \
+            [expr ($adjusted_end_display_hour-$adjusted_start_display_hour+1)*($hour_height_inside+$hour_height_sep)]
+    } else {
+        set currval [multirow get items $i top]
+        multirow set items $i top \
+            [expr $currval - ($adjusted_start_display_hour*($hour_height_inside+$hour_height_sep))]
     }
 }
 

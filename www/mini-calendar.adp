@@ -2,12 +2,12 @@
   <caption>
     <if @view@ eq "month">
       <a href="@prev_year_url@" title="#calendar.prev_year#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_year#"></a>
-      @curr_month@ @curr_day@ @curr_year@
+      @curr_date_pretty@
       <a href="@next_year_url@" title="#calendar.next_year#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_year#" ></a>
     </if>
     <else>
       <a href="@prev_month_url@#calendar" title="#calendar.prev_month#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_month#" ></a>
-      @curr_month@ @curr_day@ @curr_year@
+      @curr_date_pretty@
       <a href="@next_month_url@#calendar" title="#calendar.next_month#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_month#" ></a>
     </else>
   </caption>
@@ -75,7 +75,7 @@
   <else>
     <a href="@today_url@" title="#calendar.goto_today#">#acs-datetime.Today#</a> 
   </else>
-  #acs-datetime.is# <%=[dt_ansi_to_pretty]%>
+  #acs-datetime.is# @today@
   </p>
 
   <formtemplate id="go-to-date"></formtemplate>

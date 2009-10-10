@@ -8,6 +8,7 @@
   <msg key="Add_all_day_event">Añadir un evento para todo el día</msg>
   <msg key="add_an_event">Añadir un evento</msg>
   <msg key="Add_an_item">Añadir un evento</msg>
+  <msg key="Add_an_Item_Type">Añadir un tipo</msg>
   <msg key="Add_Item">Añadir evento</msg>
   <msg key="Add_item_beginning_at">Añadir un evento que empiece a esta hora</msg>
   <msg key="Add_Recurrence">Añadir evento periódico</msg>
@@ -23,7 +24,7 @@
   <msg key="calendar_event_details">Detalles del evento</msg>
   <msg key="Calendar_Item">Evento</msg>
   <msg key="Calendar_Item_Delete">Borrar evento</msg>
-  <msg key="Calendar_Item_Types">Categorías para eventos</msg>
+  <msg key="Calendar_Item_Types">Tipos de eventos</msg>
   <msg key="Calendar_Name">Nombre del calendario</msg>
   <msg key="Calendar_Permissions">Permisos para el calendario</msg>
   <msg key="Calendar_Permissions_1">Permisos para el calendario</msg>
@@ -133,7 +134,7 @@
   <msg key="Manage_Item_Types">Administrar los tipos de eventos</msg>
   <msg key="Monday">Lunes</msg>
   <msg key="Month">Mes</msg>
-  <msg key="New_Type">Categoría nueva:</msg>
+  <msg key="New_Type">Tipo nuevo:</msg>
   <msg key="next_day">Día siguiente</msg>
   <msg key="next_month">Mes siguiente</msg>
   <msg key="next_week">Semana siguiente</msg>
@@ -154,6 +155,7 @@
   <msg key="private">privado</msg>
   <msg key="Public">Público:</msg>
   <msg key="public">público</msg>
+  <msg key="RelatedLink">Enlace asociado</msg>
   <msg key="Repeat">Repetir</msg>
   <msg key="Repeat_1">¿Evento periódico?</msg>
   <msg key="Repeat_every">Repetir cada</msg>
@@ -179,8 +181,8 @@
   <msg key="Title_1">Título</msg>
   <msg key="to">a</msg>
   <msg key="Tuesday">Martes</msg>
-  <msg key="Type">Categoría:</msg>
-  <msg key="Type_1">Categoría</msg>
+  <msg key="Type">Tipo:</msg>
+  <msg key="Type_1">Tipo</msg>
   <msg key="Type_Help">Su evento puede ser clasificado. Elija un tipo de la lista.</msg>
   <msg key="Use_Hours_Below">Horario:</msg>
   <msg key="view">Vista</msg>

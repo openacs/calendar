@@ -8,6 +8,7 @@
 
 <div id="viewadp-mini-calendar">
   <include src="mini-calendar" base_url="view" view="day" date="@date@">
+  <include src="cal-options">	
 </div>	
 
 <div id="viewadp-cal-table" class="margin-form margin-form-div">

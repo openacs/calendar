@@ -14,7 +14,9 @@
   <msg key="Add_Recurrence">Add Recurrence</msg>
   <msg key="All_Day_Event">All Day Event</msg>
   <msg key="all_events">all events</msg>
+  <msg key="All_Past_and_Future_Events">All Past and Future Events</msg>
   <msg key="and_Time">and Time</msg>
+  <msg key="Apply_Changes_to">Apply Changes to</msg>
   <msg key="Apply_to_all">Apply to all events</msg>
   <msg key="Attachments">Attachments:</msg>
   <msg key="Audiences_for_item">Audiences for item %cal_item_name%</msg>
@@ -194,6 +196,8 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Submit_query">Submit query</msg>
   <msg key="Sunday">Sunday</msg>
   <msg key="sync_with_Outlook">sync with Outlook</msg>
+  <msg key="This_and_All_Future_Events">This and All Future Events</msg>
+  <msg key="This_Event">This Event</msg>
   <msg key="Thursday">Thursday</msg>
   <msg key="Time">Time:</msg>
   <msg key="Time_1">Time</msg>

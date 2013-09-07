@@ -13,7 +13,7 @@ ad_page_contract {
 }
 
 # Permission check
-ad_require_permission $calendar_id calendar_admin
+permission::require_permission -object_id $calendar_id -privilege calendar_admin
 
 # Add the type
 calendar::item_type_new -calendar_id $calendar_id -type $type

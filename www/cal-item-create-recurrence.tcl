@@ -16,7 +16,7 @@ ad_page_contract {
 
 
 auth::require_login
-ad_require_permission $cal_item_id cal_item_write
+permission::require_permission -object_id $cal_item_id -privilege cal_item_write
 
 calendar::item::get -cal_item_id $cal_item_id -array cal_item
 

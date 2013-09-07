@@ -11,7 +11,7 @@ ad_page_contract {
 }
 
 # Permission check
-ad_require_permission $calendar_id calendar_admin
+permission::require_permission -object_id $calendar_id -privilege calendar_admin
 
 # List the item types and allow addition of a new one
 set item_types [calendar::get_item_types -calendar_id $calendar_id]

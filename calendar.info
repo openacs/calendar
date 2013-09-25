@@ -13,7 +13,8 @@
         <release-date>2013-09-08</release-date>
         <vendor url="http://openacs.org">OpenACS</vendor>
         <description format="text/html">Manage group and shared calendars with download.</description>
-        <maturity>0</maturity>
+        <license>GPL version 2</license>
+        <maturity>2</maturity>
         <package_instance_name>#calendar.Calendar#</package_instance_name>
 
         <provides url="calendar" version="2.6.0"/>

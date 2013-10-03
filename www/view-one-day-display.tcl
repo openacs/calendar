@@ -33,13 +33,13 @@ if { ![info exists end_display_hour]} {
     set end_display_hour 23
 }
 
-if {[exists_and_not_null calendar_id_list]} {
+if {([info exists calendar_id_list] && $calendar_id_list ne "")} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
 }
 
-if {[empty_string_p $date]} {
+if {$date eq ""} {
     # Default to todays date in the users (the connection) timezone
     set server_now_time [dt_systime]
     set user_now_time [lc_time_system_to_conn $server_now_time]
@@ -72,7 +72,7 @@ set previous_intervals [list]
 # Loop through the items without time
 
 set additional_limitations_clause " and to_char(start_date, 'HH24:MI') = to_char(end_date, 'HH24:MI')"
-if { [exists_and_not_null cal_system_type] } {
+if { ([info exists cal_system_type] && $cal_system_type ne "") } {
     append additional_limitations_clause " and system_type = :cal_system_type "
 }
 set additional_select_clause ""
@@ -114,7 +114,7 @@ db_foreach dbqd.calendar.www.views.select_all_day_items {} {
 }
 
 set additional_limitations_clause " and to_char(start_date, 'HH24:MI') <> to_char(end_date, 'HH24:MI')"
-if { [exists_and_not_null cal_system_type] } {
+if { ([info exists cal_system_type] && $cal_system_type ne "") } {
     append additional_limitations_clause " and system_type = :cal_system_type "
 }
 set order_by_clause " order by to_char(start_date,'HH24:MI')"
@@ -159,7 +159,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                  + ($start_minutes*$hour_height_inside/60)]
     set bottom [expr ($end_hour * ($hour_height_inside+$hour_height_sep)) \
                  + ($end_minutes*$hour_height_inside/60)]
-    set height [expr $bottom - $top - 2]
+    set height [expr {$bottom - $top - 2}]
 
     set bump_right $bump_right_base
     foreach {previous_start previous_end} $previous_intervals {
@@ -197,7 +197,7 @@ for {set i 1} {$i <= $num_items } {incr i} {
     } else {
         set currval [multirow get items $i top]
         multirow set items $i top \
-            [expr $currval - ($adjusted_start_display_hour*($hour_height_inside+$hour_height_sep))]
+            [expr {$currval - ($adjusted_start_display_hour*($hour_height_inside+$hour_height_sep))}]
     }
 }
 
@@ -225,7 +225,7 @@ for { set grid_hour $grid_start } { $grid_hour <= $adjusted_end_display_hour } {
         [export_vars -base ${calendar_url}cal-item-new {{date $current_date} {start_time $grid_hour}}]
 }
 
-if { [info exists export] && [string equal $export print] } {
+if { [info exists export] && $export eq "print" } {
     set print_html [template::adp_parse [acs_root_dir]/packages/calendar/www/view-print-display [list &items items show_calendar_name_p $show_calendar_name_p]]
     ns_return 200 text/html $print_html
     ad_script_abort

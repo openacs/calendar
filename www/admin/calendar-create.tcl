@@ -30,13 +30,13 @@ set calendar_id [calendar_create $party_id "f" $calendar_name]
 # if the permission is private, we would have to wait until
 # the user selects an audience.
 
-if { [string equal $calendar_permission "public"]} {
+if {$calendar_permission eq "public"} {
 
     # assign the permission to the calendar
     calendar_assign_permissions $calendar_id $party_id $calendar_permission
     ad_returnredirect  "one?action=permission&calendar_id=$calendar_id"
 
-} elseif { [string equal $calendar_permission "private"]} {
+} elseif {$calendar_permission eq "private"} {
 
     # this would be a special case where they'd have to select their audience first
     ad_returnredirect  "one?action=permission&calendar_id=$calendar_id&calendar_permission=private"

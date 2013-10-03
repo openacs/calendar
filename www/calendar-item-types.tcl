@@ -51,7 +51,7 @@ multirow create item_types col1 col2 col2_url
 foreach item_type $item_types {
     set item_type_id [lindex $item_type 1]
     set type [lindex $item_type 0]
-    if {[empty_string_p $item_type_id]} {
+    if {$item_type_id eq ""} {
         continue
     }
     multirow append item_types "$type" "[_ acs-kernel.common_Delete]" [export_vars -base "item-type-delete" {calendar_id item_type_id}]

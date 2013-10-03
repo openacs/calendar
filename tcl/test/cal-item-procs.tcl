@@ -48,10 +48,10 @@ aa_register_case -cats api cal_item_edit_recurrence {
             set recurrence_event_ids [db_list q "select cal_item_id as cal_item_id from acs_events, cal_items where cal_item_id=event_id and recurrence_id=:recurrence_id" ]
             foreach event_id $recurrence_event_ids {
                  calendar::item::get -cal_item_id $event_id -array cal_item
-                set passed [expr {$passed && [string equal $ci_name $cal_item(name)]}]
+                set passed [expr {$passed && $ci_name eq $cal_item(name)}]
 # for some reason the description is not set                
 
-                set passed [expr {$passed && [string equal $ci_description $cal_item(description)]}]
+                set passed [expr {$passed && $ci_description eq $cal_item(description)}]
                 lappend recurrence_event_ids $event_id
             }
             aa_true "Name correct on all recurrences" $passed
@@ -72,9 +72,9 @@ aa_register_case -cats api cal_item_edit_recurrence {
 
             foreach event_id $recurrence_event_ids {
                  calendar::item::get -cal_item_id $event_id -array cal_item
-                set passed [expr {$passed && [string equal $ci_name $cal_item(name)]}]
+                set passed [expr {$passed && $ci_name eq $cal_item(name)}]
 # for some reason the description is not set                
-                set passed [expr {$passed && [string equal $ci_description $cal_item(description)]}]
+                set passed [expr {$passed && $ci_description eq $cal_item(description)}]
             }
             aa_true "Name correct on all recurrences 2" $passed
 
@@ -94,9 +94,9 @@ aa_register_case -cats api cal_item_edit_recurrence {
 
             foreach event_id $recurrence_event_ids {
                  calendar::item::get -cal_item_id $event_id -array cal_item
-                set passed [expr {$passed && [string equal $new_names($event_id) $cal_item(name)]}]
+                set passed [expr {$passed && $new_names($event_id) eq $cal_item(name)}]
 # for some reason the description is not set                
-                set passed [expr {$passed && [string equal $ci_description $cal_item(description)]}]
+                set passed [expr {$passed && $ci_description eq $cal_item(description)}]
             }
             aa_true "New individual names are correct" $passed
             
@@ -113,8 +113,8 @@ aa_register_case -cats api cal_item_edit_recurrence {
             set passed 1
             foreach event_id $recurrence_event_ids {
                  calendar::item::get -cal_item_id $event_id -array cal_item
-                set passed [expr {$passed && [string equal $new_names($event_id) $cal_item(name)]}]
-                set passed [expr {$passed && [string equal $ci_description $cal_item(description)]}]
+                set passed [expr {$passed && $new_names($event_id) eq $cal_item(name)}]
+                set passed [expr {$passed && $ci_description eq $cal_item(description)}]
             }
             aa_true "Edited item and New individual names are correct" $passed
 
@@ -129,8 +129,8 @@ aa_register_case -cats api cal_item_edit_recurrence {
             set passed 1
             foreach event_id $recurrence_event_ids {
                  calendar::item::get -cal_item_id $event_id -array cal_item
-                set passed [expr {$passed && [string equal "New Name" $cal_item(name)]}]
-                set passed [expr {$passed && [string equal $ci_description $cal_item(description)]}]
+                set passed [expr {$passed && "New Name" eq $cal_item(name)}]
+                set passed [expr {$passed && $ci_description eq $cal_item(description)}]
             }
             aa_true "Edited item name and New individual names are updated" $passed
 

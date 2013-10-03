@@ -21,10 +21,10 @@ ad_proc -private calendar::fts::datasource { cal_item_id } {
 
     # build a text content 
     foreach key {description pretty_day_of_week start_time end_time full_start_date start_date_ansi} {
-        if {[string eq $key start_time]} { 
+        if {$key eq "start_time"} { 
             append content "from "
         }
-        if {[string eq $key end_time]} { 
+        if {$key eq "end_time"} { 
             append content "to "
         }
         append content "$row($key) "

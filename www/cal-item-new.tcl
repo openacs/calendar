@@ -47,7 +47,7 @@ if { ![ad_form_new_p -key cal_item_id] } {
     set calendar_id [lindex [lindex $calendar_options 0] 1]
 }
 # TODO: Move into ad_form
-if { [exists_and_not_null cal_item_id] } {
+if { ([info exists cal_item_id] && $cal_item_id ne "") } {
     set page_title [_ calendar.Calendar_Edit_Item]
     set ad_form_mode display
 } else {
@@ -121,7 +121,7 @@ set format_string [lc_get formbuilder_time_format]
 
 multirow create time_format_elms name
 
-while { ![empty_string_p $format_string] } {
+while { $format_string ne "" } {
     # Snip off the next token
     regexp {([^/\-.: ]*)([/\-.: ]*)(.*)} \
           $format_string match word sep format_string
@@ -174,11 +174,11 @@ ad_form -extend -name cal_item -validate {
     
     set date [calendar::from_sql_datetime -sql_date $ansi_date  -format "YYY-MM-DD"]
     set repeat_p 0
-    if {[info exists start_time] && ![empty_string_p $start_time] && $start_time != 0} {
+    if {[info exists start_time] && $start_time ne "" && $start_time != 0} {
 	# Set the start time
 	set start_hour $start_time
 	set start_time "{} {} {} $start_time 0 {} {HH24:MI}"
-	set end_time "{} {} {} [expr $start_hour + 1] 0 {} {HH24:MI}"
+	set end_time "{} {} {} [expr {$start_hour + 1}] 0 {} {HH24:MI}"
 	set time_p 1 
     } else {
 	set time_p 0 
@@ -214,7 +214,7 @@ ad_form -extend -name cal_item -validate {
     } else {
 	set js "enableTime('cal_item');"
     }
-    if { [empty_string_p $repeat_p] } {
+    if { $repeat_p eq "" } {
         set repeat_p 0
     } else {
         set repeat_p 1
@@ -263,7 +263,7 @@ ad_form -extend -name cal_item -validate {
     if {$repeat_p} {
         ad_returnredirect [export_vars -base cal-item-create-recurrence { return_url cal_item_id}]
     } else {
-        if { [string compare $return_url "./"] } {
+        if {$return_url ne "./"  } {
     		ad_returnredirect $return_url
     	} else {
 		ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]	
@@ -320,7 +320,7 @@ ad_form -extend -name cal_item -validate {
         -edit_past_events_p $edit_past_events_p \
         -calendar_id $calendar_id
 
-    if { [string compare $return_url "./"] } {
+    if {$return_url ne "./"  } {
     	ad_returnredirect $return_url
     } else {
 	ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]

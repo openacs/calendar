@@ -44,7 +44,7 @@ if { ![ad_form_new_p -key cal_item_id] } {
         where  cal_item_id = :cal_item_id
     } -default ""]
 } else {
-    set calendar_id [lindex [lindex $calendar_options 0] 1]
+    set calendar_id [lindex $calendar_options 0 1]
 }
 # TODO: Move into ad_form
 if { ([info exists cal_item_id] && $cal_item_id ne "") } {
@@ -188,7 +188,7 @@ ad_form -extend -name cal_item -validate {
         set js "disableTime('cal_item');"
     }
     # set the calendar_id before setting item_types form element (see top of script) DAVEB
-    set calendar_id [lindex [lindex $calendar_options 0] 1]
+    set calendar_id [lindex $calendar_options 0 1]
 } -edit_request {
     calendar::item::get -cal_item_id $cal_item_id -array cal_item
 

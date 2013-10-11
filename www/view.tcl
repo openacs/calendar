@@ -56,7 +56,7 @@ if {$view eq "list"} {
 if { $user_id eq 0 } {
     set calendar_personal_p 0
 } else {
-    set calendar_personal_p [calendar::personal_p -calendar_id [lindex [lindex [calendar::calendar_list -package_id $package_id  ] 0] 1] ]
+    set calendar_personal_p [calendar::personal_p -calendar_id [lindex [calendar::calendar_list -package_id $package_id  ] 0 1] ]
 }
 set notification_chunk [notification::display::request_widget \
                             -type calendar_notif \

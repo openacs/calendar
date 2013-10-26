@@ -152,7 +152,7 @@ if {$view eq "month"} {
     set day_number [expr {$days_in_last_month - $active_days_before_month + 1}]
 
     for {set julian_date $calendar_starts_with_julian_date} {$julian_date <= $last_julian_date + 7} {incr julian_date} {
-        if {$julian_date > $last_julian_date_in_month && $end_of_week_p eq "t" } {
+        if {$julian_date > $last_julian_date_in_month && $end_of_week_p == "t" } {
             break
         }
         set today_p f

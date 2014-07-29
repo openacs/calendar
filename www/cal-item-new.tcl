@@ -8,8 +8,8 @@ ad_page_contract {
     @cvs-id $Id$
 } {
     {calendar_id:integer ""}
-    cal_item_id:integer,optional
-    item_type_id:integer,optional
+    cal_item_id:naturalnum,optional
+    item_type_id:naturalnum,optional
     {date ""}
     {julian_date ""}
     {start_time ""}

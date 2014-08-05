@@ -5,7 +5,7 @@ ad_page_contract {
     @author Ben Adida (ben@openforce.net)
     @creation-date April 25, 2002
 } {
-    recurrence_id
+    recurrence_id:naturalnum,notnull
     {return_url "./"}
 }
 

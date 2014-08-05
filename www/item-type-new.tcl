@@ -8,7 +8,7 @@ ad_page_contract {
     @creation-date Mar 16, 2002
     @cvs-id $Id$
 } {
-    calendar_id:notnull
+    calendar_id:naturalnum,notnull
     type:notnull
 }
 

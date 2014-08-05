@@ -9,7 +9,7 @@ ad_page_contract {
     @creation-date 10 Mar 2002
     @cvs-id $Id$
 } {
-    cal_item_id
+    cal_item_id:naturalnum,notnull
     {return_url "./"}
     {days_of_week:multiple ""}
 } 

@@ -5,7 +5,7 @@ ad_page_contract {
     @creation-date April 09, 2002
     @cvs-id $Id$
 } {
-    cal_item_id:integer
+    cal_item_id:naturalnum,notnull
     {return_url [ad_return_url]}
 }
 

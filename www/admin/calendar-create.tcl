@@ -15,7 +15,7 @@ ad_page_contract {
     @creation-date Dec 14, 2000
     @cvs-id $Id$
 } {
-    {party_id:notnull}
+    {party_id:naturalnum,notnull}
     {calendar_name:notnull}
     {calendar_permission "private"}
 }

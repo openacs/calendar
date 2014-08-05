@@ -8,7 +8,7 @@ ad_page_contract {
     @creation-date May 28, 2002
     @cvs-id $Id$
 } {
-    cal_item_id:integer
+    cal_item_id:naturalnum,notnull
 }
 
 ad_returnredirect "ics/${cal_item_id}.ics"

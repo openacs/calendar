@@ -7,7 +7,7 @@ ad_page_contract {
     @creation-date May 29, 2002
     @cvs-id $Id$
 } {
-    {calendar_id:integer ""}
+    {calendar_id:naturalnum ""}
     cal_item_id:naturalnum,optional
     item_type_id:naturalnum,optional
     {date ""}

@@ -15,7 +15,7 @@ ad_proc -private calendar::fts::datasource { cal_item_id } {
     @param cal_item_id
 
     @author davis@xarg.net
-    @creation_date 2004-04-01
+    @creation-date 2004-04-01
 } {
     calendar::item::get -cal_item_id $cal_item_id -array row
 
@@ -43,7 +43,7 @@ ad_proc -private calendar::fts::url { cal_item_id } {
     returns a url for an event to the search package
 
     @author davis@xarg.net
-    @creation_date 2004-04-01
+    @creation-date 2004-04-01
 } {
     calendar::item::get -cal_item_id $cal_item_id -array row
     return "[ad_url][apm_package_url_from_id $row(calendar_package_id)]cal-item-view?cal_item_id=$cal_item_id"

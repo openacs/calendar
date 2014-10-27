@@ -5,7 +5,7 @@ ad_page_contract {
     @creation-date Dec 14, 2000
     @cvs-id $Id$
 } {
-    {calendar_id:integer,optional}
+    {calendar_id:naturalnum,optional}
 }
 
 set page_title "Add/Edit Calendar"

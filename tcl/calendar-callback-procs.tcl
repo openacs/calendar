@@ -15,7 +15,7 @@ ad_proc -callback merge::MergeShowUserInfo -impl calendar {
     set return_msg [list $msg]
     
     set cals [db_list get_calendars {*SQL*} ]
-    if { [empty_string_p $cals ] } {
+    if { $cals eq "" } {
 	lappend return_msg "none"
     } else {
 	lappend return_msg $cals

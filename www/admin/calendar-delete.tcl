@@ -1,7 +1,7 @@
 ad_page_contract {
     Delete calendar
 } {
-    calendar_id:integer
+    calendar_id:naturalnum,notnull
 }
 
 # We know we have admin privs here

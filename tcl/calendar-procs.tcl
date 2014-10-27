@@ -25,7 +25,7 @@ ad_proc calendar::make_datetime {
     
     # MUST CONVERT TO ARRAYS! (ben)
     array set event_date_arr $event_date
-    if {![empty_string_p $event_time]} {
+    if {$event_time ne ""} {
         array set event_time_arr $event_time
     }
     
@@ -34,7 +34,7 @@ ad_proc calendar::make_datetime {
     set day    $event_date_arr(day)
     set month  $event_date_arr(month)
     
-    if {![empty_string_p $event_time]} {
+    if {$event_time ne ""} {
         # extract from event_time
         set hours $event_time_arr(hours)
         set minutes $event_time_arr(minutes)
@@ -67,7 +67,7 @@ ad_proc calendar::make_datetime {
 	set day "0$day"
     }
     
-    if {[empty_string_p $event_time]} {
+    if {$event_time eq ""} {
         return "$year-$month-$day"
     } else {
         return "$year-$month-$day $hours:$minutes"
@@ -133,18 +133,18 @@ ad_proc -public calendar::assign_permissions { calendar_id
     # if the permission is public, oassign the magic object
     # and set permission to read
 
-    if { [string equal $cal_privilege "public"] } {
+    if {$cal_privilege eq "public"} {
 	
         set party_id [acs_magic_object "the_public"]
 	set cal_privilege "calendar_read"
-    } elseif { [string equal $cal_privilege "private"] } {
+    } elseif {$cal_privilege eq "private"} {
 	set cal_privilege "calendar_read"
     } 
 
-    if { [empty_string_p $revoke] } {
+    if { $revoke eq "" } {
 	# grant the permissions
         permission::grant -object_id $calendar_id -party_id $party_id -privilege $cal_privilege
-    } elseif { [string equal $revoke "revoke"] } {
+    } elseif {$revoke eq "revoke"} {
 	# revoke the permissions
         permission::revoke -object_id $calendar_id -party_id $party_id -privilege $cal_privilege
     }    
@@ -172,9 +172,9 @@ ad_proc -public calendar::have_private_p {
         set result [db_string get_calendar_info {} -default 0]
     }
     
-    if { ![string equal $result "0"] } {
+    if { $result ne "0" } {
 
-	if { [string equal $return_id "1"] } {
+	if {$return_id eq "1"} {
 	    return $result
 	} else {
 	    return 1
@@ -203,15 +203,15 @@ ad_proc -public calendar::get_month_multirow_information {
     @creation-date 20-July-2003
 } {
     set first_day_of_week [lc_get firstdayofweek]
-    set last_day_of_week [expr [expr $first_day_of_week + 6] % 7]
+    set last_day_of_week [expr {[expr {$first_day_of_week + 6}] % 7}]
 
     if {$current_day == $today_julian_date} {
         set today_p t 
     } else {
         set today_p f
     }
-    set day_number [expr $current_day - $first_julian_date_of_month +1]
-    set weekday [expr [expr $current_day % 7] + 1]
+    set day_number [expr {$current_day - $first_julian_date_of_month +1}]
+    set weekday [expr {[expr {$current_day % 7}] + 1}]
     set weekday [ad_decode $weekday 7 0 $weekday]
 
     set beginning_of_week_p f
@@ -312,16 +312,16 @@ ad_proc -public calendar::calendar_list {
     {-privilege ""}
 } {
     # If no user_id
-    if {[empty_string_p $user_id]} {
+    if {$user_id eq ""} {
         set user_id [ad_conn user_id]
     }
 
-    if {[empty_string_p $package_id]} {
+    if {$package_id eq ""} {
         set package_id [ad_conn package_id]
     }
     
     set permissions_clause {}
-    if { ![empty_string_p $privilege] } {
+    if { $privilege ne "" } {
         set permissions_clause [db_map permissions_clause]
     }
 
@@ -332,8 +332,8 @@ ad_proc -public calendar::adjust_date {
     {-date ""}
     {-julian_date ""}
 } {
-    if {[empty_string_p $date]} {
-        if {![empty_string_p $julian_date]} {
+    if {$date eq ""} {
+        if {$julian_date ne ""} {
             set date [dt_julian_to_ansi $julian_date]
         } else {
             set date [dt_sysdate]
@@ -349,7 +349,7 @@ ad_proc -public calendar::new {
     {-calendar_name:required}
     {-package_id ""}
 } {
-    if { [empty_string_p $package_id] } {
+    if { $package_id eq "" } {
         set package_id [ad_conn package_id]
     }
     set extra_vars [ns_set create]
@@ -369,7 +369,7 @@ ad_proc -public calendar::personal_p {
     
     @param user_id The user whose calendar you want to check
 } {
-    if { [empty_string_p $user_id] } {
+    if { $user_id eq "" } {
         set user_id [ad_conn user_id]
     }
     calendar::get -calendar_id $calendar_id -array calendar
@@ -415,7 +415,7 @@ ad_proc -public calendar::item_type_new {
 } {
     creates a new item type
 } {
-    if {[empty_string_p $item_type_id]} {
+    if {$item_type_id eq ""} {
         set item_type_id [db_nextval cal_item_type_seq]
     }
 
@@ -495,7 +495,7 @@ ad_proc -public calendar::do_notifications {
     append new_content "[_ calendar.Start_Time]: $cal_item(start_date_ansi) $cal_item(start_time)<br>\n"
     append new_content "[_ calendar.to]: $cal_item(end_date_ansi) $cal_item(end_time)<br>\n"
 
-    if {![empty_string_p $repeat_p] && $repeat_p} {
+    if {$repeat_p ne "" && $repeat_p} {
         append new_content "[_ calendar.is_recurring]"
     }
 

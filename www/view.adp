@@ -1,5 +1,5 @@
 <master>
-<property name="title">#calendar.Calendars#</property>
+<property name="doc(title)">#calendar.Calendars#</property>
 
 <include src="/packages/calendar/www/navbar" view="@view@" base_url="@ad_conn_url@" date="@date@">
 

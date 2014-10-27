@@ -9,20 +9,24 @@ ad_page_contract {
     @creation-date 10 Mar 2002
     @cvs-id $Id$
 } {
-    cal_item_id
+    cal_item_id:naturalnum,notnull
     {return_url "./"}
     {days_of_week:multiple ""}
 } 
 
 
 auth::require_login
-ad_require_permission $cal_item_id cal_item_write
+permission::require_permission -object_id $cal_item_id -privilege cal_item_write
 
 calendar::item::get -cal_item_id $cal_item_id -array cal_item
 
 set dow_string ""
-foreach dow [list [list "#calendar.Sunday#" 0] [list "#calendar.Monday#" 1] [list "#calendar.Tuesday#" 2] [list "#calendar.Wednesday#" 3] [list "#calendar.Thursday#" 4] [list "#calendar.Friday#" 5] [list "#calendar.Saturday#" 6]] {
-        if {[lindex $dow 1] == [expr "$cal_item(day_of_week) -1"]} {
+foreach dow {
+    {"#calendar.Sunday#" 0} {"#calendar.Monday#" 1} {"#calendar.Tuesday#" 2} 
+    {"#calendar.Wednesday#" 3} {"#calendar.Thursday#" 4} {"#calendar.Friday#" 5}
+    {"#calendar.Saturday#" 6}
+} {
+        if {[lindex $dow 1] == $cal_item(day_of_week) - 1} {
                 set checked_html "CHECKED"
         } else {
                 set checked_html ""

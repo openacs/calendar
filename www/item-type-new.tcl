@@ -8,12 +8,12 @@ ad_page_contract {
     @creation-date Mar 16, 2002
     @cvs-id $Id$
 } {
-    calendar_id:notnull
+    calendar_id:naturalnum,notnull
     type:notnull
 }
 
 # Permission check
-ad_require_permission $calendar_id calendar_admin
+permission::require_permission -object_id $calendar_id -privilege calendar_admin
 
 # Add the type
 calendar::item_type_new -calendar_id $calendar_id -type $type

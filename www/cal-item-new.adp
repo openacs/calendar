@@ -1,10 +1,10 @@
 <master>
 <if @ad_form_mode@ eq display>
-  <property name="title">#calendar.Calendar_Edit_Item#</property>
+  <property name="doc(title)">#calendar.Calendar_Edit_Item#</property>
   <property name="context">#calendar.Edit#</property>
 </if>
 <else>
-  <property name="title">#calendar.Calendar_Add_Item#</property>
+  <property name="doc(title)">#calendar.Calendar_Add_Item#</property>
   <property name="context">#calendar.Add#</property>
 </else>
 <property name="focus">cal_item.title</property>

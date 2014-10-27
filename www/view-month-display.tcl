@@ -1,13 +1,13 @@
 
 set system_type ""
-if {![info exists date] || [empty_string_p $date]} {
+if {![info exists date] || $date eq ""} {
     # Default to todays date in the users (the connection) timezone
     set server_now_time [dt_systime]
     set user_now_time [lc_time_system_to_conn $server_now_time]
     set date [lc_time_fmt $user_now_time "%x"]
 }
 
-if { [exists_and_not_null export] } {
+if { ([info exists export] && $export ne "") } {
     set exporting_p 1
 } else {
     set exporting_p 0
@@ -23,7 +23,7 @@ if { ![info exists show_calendar_name_p] } {
     set show_calendar_name_p 1
 }
 
-if {[exists_and_not_null calendar_id_list]} {
+if {([info exists calendar_id_list] && $calendar_id_list ne "")} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
@@ -34,7 +34,7 @@ set this_year [dt_trim_leading_zeros [lindex $date_list 0]]
 set this_month [dt_trim_leading_zeros [lindex $date_list 1]]
 set this_day [dt_trim_leading_zeros [lindex $date_list 2]]
 
-set month_string [lindex [dt_month_names] [expr $this_month - 1]]
+set month_string [lindex [dt_month_names] $this_month-1]
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
@@ -44,7 +44,7 @@ set previous_month_url ?[export_vars {{view month} {date $prev_month} page_num}]
 set next_month_url ?[export_vars {{view month} {date $next_month} page_num}]
 
 set first_day_of_week [lc_get firstdayofweek]
-set last_day_of_week [expr [expr $first_day_of_week + 6] % 7]
+set last_day_of_week [expr {[expr {$first_day_of_week + 6}] % 7}]
 
 set week_days [lc_get day]
 multirow create weekday_names weekday_num weekday_long
@@ -93,7 +93,7 @@ multirow create items \
 
 # Calculate number of greyed days and then add them to the calendar mulitrow
 set greyed_days_before_month [expr [expr [dt_first_day_of_month $this_year $this_month]] -1 ]
-set greyed_days_before_month [expr [expr $greyed_days_before_month + 7 - $first_day_of_week] % 7]
+set greyed_days_before_month [expr {[expr {$greyed_days_before_month + 7 - $first_day_of_week}] % 7}]
 
 if { !$exporting_p } {
 
@@ -216,7 +216,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         $display_information(today_p) \
         f \
         $time_p \
-        [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}]" \
+        [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}] \
         ?[export_vars {{view day} {date $current_day_ansi} page_num}] \
         "calendar-${system_type}Item" \
         $num_attachments \
@@ -262,10 +262,10 @@ if { !$exporting_p } {
     }
 
     # Add cells for remaining days outside the month
-    set remaining_days [expr [expr $first_day_of_week + 6 - $current_day % 7] % 7]
+    set remaining_days [expr {[expr {$first_day_of_week + 6 - $current_day % 7}] % 7}]
     
     if {$remaining_days > 0} {
-        for {} {$current_day <= [expr $last_julian_date_in_month + $remaining_days]} {incr current_day} {
+        for {} {$current_day <= $last_julian_date_in_month + $remaining_days} {incr current_day} {
             multirow append items \
                 "" \
                 "" \
@@ -292,7 +292,7 @@ if { !$exporting_p } {
     }
 }
 
-if { [info exists export] && [string equal $export print] } {
+if { [info exists export] && $export eq "print" } {
     set print_html [template::adp_parse [acs_root_dir]/packages/calendar/www/view-print-display [list &items items show_calendar_name_p $show_calendar_name_p]]
     ns_return 200 text/html $print_html
     ad_script_abort

@@ -1,7 +1,7 @@
 #
 # A script that assumes
 #
-# cal_item_id
+# cal_item_id:naturalnum,notnull
 #
 # This will pull out information about the event and 
 # display it with some options.
@@ -10,7 +10,7 @@
 ad_page_contract {
     Confirm Deletion
 } {
-    cal_item_id
+    cal_item_id:naturalnum,notnull
 }
 
 auth::require_login

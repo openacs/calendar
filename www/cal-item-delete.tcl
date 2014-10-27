@@ -4,7 +4,7 @@ ad_page_contract {
     @author Ben Adida (ben@openforce.net)
     @creation-date 2002-06-02
 } {
-    cal_item_id:integer,notnull
+    cal_item_id:naturalnum,notnull
     {return_url "view"}
     {confirm_p 0}
 }

@@ -15,6 +15,7 @@ ad_proc -deprecated calendar_have_private_p {
     {-calendar_id_list {}}
     party_id 
 } {
+    @see calendar::have_private_p
 } {
     calendar::have_private_p -return_id $return_id -calendar_id_list $calendar_id_list $party_id
 }
@@ -24,6 +25,7 @@ ad_proc -deprecated calendar_assign_permissions { calendar_id
                                       cal_privilege
                                       {revoke ""}                        
 } {
+    @see calendar::assign_permissions
 } {
     calendar::assign_permissions $calendar_id \
 	$party_id \
@@ -33,10 +35,11 @@ ad_proc -deprecated calendar_assign_permissions { calendar_id
 
 ad_proc -deprecated calendar_create { owner_id
                           private_p          
-                          {calendar_name ""}       
+                          {calendar_name ""}
 } {
+    @see calendar::create
 } {
-    calendar_create $owner_id $private_p $calendar_name
+    calendar::create $owner_id $private_p $calendar_name
 }
 
 ad_proc -deprecated calendar_make_datetime {
@@ -44,7 +47,8 @@ ad_proc -deprecated calendar_make_datetime {
     {event_time ""}
 } {
     given a date, and a time, construct the proper date string
-    to be imported into oracle. (yyyy-mm-dd hh24:mi format)s
+    to be imported into oracle. (yyyy-mm-dd hh24:mi format)
+    @see calendar::make_datetime
 } {
     calendar::make_datetime $event_date $event_time
 }

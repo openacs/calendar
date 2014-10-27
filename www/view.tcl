@@ -14,7 +14,7 @@ ad_page_contract {
     {period_days:integer {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
 } -validate {
     valid_date -requires { date } {
-        if {![string equal $date ""]} {
+        if {$date ne "" } {
             if {[catch {set date [clock format [clock scan $date] -format "%Y-%m-%d"]} err]} {
                 ad_complain "Your input was not valid. It has to be in the form YYYYMMDD."
             }
@@ -29,7 +29,7 @@ set ad_conn_url [ad_conn url]
 
 set export [ns_queryget export]
 
-if {$export == "print"} {
+if {$export eq "print"} {
     set view "list"
 }
 
@@ -42,8 +42,8 @@ set show_calendar_name_p [parameter::get -parameter Show_Calendar_Name_p -defaul
 
 set date [calendar::adjust_date -date $date]
 
-if {$view == "list"} {
-    if {[empty_string_p $start_date]} {
+if {$view eq "list"} {
+    if {$start_date eq ""} {
         set start_date $date
     }
 
@@ -51,12 +51,12 @@ if {$view == "list"} {
     set ansi_year [lindex $ansi_list 0]
     set ansi_month [string trimleft [lindex $ansi_list 1] "0"]
     set ansi_day [string trimleft [lindex $ansi_list 2] "0"]
-    set end_date [dt_julian_to_ansi [expr [dt_ansi_to_julian $ansi_year $ansi_month $ansi_day ] + $period_days]]
+    set end_date [dt_julian_to_ansi [expr {[dt_ansi_to_julian $ansi_year $ansi_month $ansi_day ] + $period_days}]]
 }
 if { $user_id eq 0 } {
     set calendar_personal_p 0
 } else {
-    set calendar_personal_p [calendar::personal_p -calendar_id [lindex [lindex [calendar::calendar_list -package_id $package_id  ] 0] 1] ]
+    set calendar_personal_p [calendar::personal_p -calendar_id [lindex [calendar::calendar_list -package_id $package_id  ] 0 1] ]
 }
 set notification_chunk [notification::display::request_widget \
                             -type calendar_notif \

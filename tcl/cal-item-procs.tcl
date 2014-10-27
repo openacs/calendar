@@ -23,7 +23,7 @@ ad_proc -private calendar::item::dates_valid_p {
 } {
     set dates_valid_p [db_string dates_valid_p_select {}]
 
-    if {[string equal $dates_valid_p 1]} {
+    if {$dates_valid_p eq "1"} {
         return 1
     } else {
         return 0
@@ -127,7 +127,7 @@ ad_proc -public calendar::item::get {
     set row(start_date) [lc_time_fmt $row(start_date_ansi) "%Y-%m-%d"]
     set row(end_date) [lc_time_fmt $row(end_date_ansi) "%Y-%m-%d"]
 
-    set row(day_of_week) [expr [lc_time_fmt $row(start_date_ansi) "%w"] + 1]
+    set row(day_of_week) [expr {[lc_time_fmt $row(start_date_ansi) "%w"] + 1}]
     set row(pretty_day_of_week) [lc_time_fmt $row(start_date_ansi) "%A"]
     set row(day_of_month) [lc_time_fmt $row(start_date_ansi) "%d"]
     set row(pretty_short_start_date) [lc_time_fmt $row(start_date_ansi) "%x"]
@@ -178,7 +178,7 @@ ad_proc -public calendar::item::edit {
             set recurrence_id [db_string select_recurrence_id {}]
 
             # If the recurrence id is NULL, then we stop here and just do the normal update
-            if {![empty_string_p $recurrence_id]} {
+            if {$recurrence_id ne ""} {
                 calendar::item::edit_recurrence \
                     -event_id $cal_item_id \
                     -start_date $start_date \
@@ -216,7 +216,7 @@ ad_proc -public calendar::item::edit {
             # Update the item_type_id and calendar_id
             set colspecs [list]
             lappend colspecs "item_type_id = :item_type_id"
-            if { ![empty_string_p $calendar_id] } {
+            if { $calendar_id ne "" } {
                 lappend colspecs "on_which_calendar = :calendar_id"
 
                 db_dml update_context_id {
@@ -256,12 +256,12 @@ ad_proc calendar::item::assign_permission { cal_item_id
     update the permission of the specific cal_item
     if revoke is set to revoke, then we revoke all permissions
 } {
-    if { ![string equal $revoke "revoke"] } {
-	if { ![string equal $permission "cal_item_read"] } {
+    if { $revoke ne "revoke" } {
+	if { $permission ne "cal_item_read" } {
             permission::grant -object_id $cal_item_id -party_id $party_id -privilege cal_item_read
 	}
         permission::grant -object_id $cal_item_id -party_id $party_id -privilege $permission
-    } elseif { [string equal $revoke "revoke"] } {
+    } elseif {$revoke eq "revoke"} {
         permission::revoke -object_id $cal_item_id -party_id $party_id -privilege $permission
 
     }
@@ -309,7 +309,7 @@ ad_proc -public calendar::item::edit_recurrence {
         }
 	set colspecs [list]
         lappend colspecs {item_type_id = :item_type_id}
-        if { ![empty_string_p $calendar_id] } {
+        if { $calendar_id ne "" } {
             lappend colspecs {on_which_calendar = :calendar_id}
 
             db_dml update_context_id {

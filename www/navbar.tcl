@@ -1,34 +1,34 @@
 #expects: view
 
-if {![exists_and_not_null base_url]} {
+if {(![info exists base_url] || $base_url eq "")} {
     set base_url [ad_conn url]
 }
 
-if {![exists_and_not_null date]} {
+if {(![info exists date] || $date eq "")} {
     set date [dt_sysdate]
 }
 
-if {[exists_and_not_null page_num]} {
+if {([info exists page_num] && $page_num ne "")} {
     set page_num "&page_num=$page_num"
 } else {
     set page_num ""
 }
 
-if {![exists_and_not_null period_days] || [string equal $period_days [parameter::get -parameter ListView_DefaultPeriodDays -default 31]]} {
+if {(![info exists period_days] || $period_days eq "") || $period_days eq [parameter::get -parameter ListView_DefaultPeriodDays -default 31]} {
     set url_stub_period_days ""
 } else {
     set url_stub_period_days "&period_days=${period_days}"
 }
 
 foreach test_view {list day week month calendar} {
-    if { [string equal $test_view $view] } {
+    if {$test_view eq $view} {
         set ${test_view}_selected_p t
     } else {
         set ${test_view}_selected_p f
     }
 }
 
-if { [string match /dotlrn* $base_url] } {
+if { [string match "/dotlrn*" $base_url] } {
     set link "[export_vars -url -base $base_url -entire_form -exclude {export}]&export=print"
 } else {
     set link "[export_vars -base $base_url {date {view day}}]&export=print"

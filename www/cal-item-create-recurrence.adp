@@ -8,7 +8,7 @@
 
 
 <master>
-<property name="title">#calendar.lt_Calendars_Repeating_E#</property>
+<property name="doc(title)">#calendar.lt_Calendars_Repeating_E#</property>
 <property name="context">#calendar.Repeat#</property>
 
 #calendar.lt_You_are_choosing_to_m#

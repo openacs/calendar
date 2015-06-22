@@ -490,8 +490,8 @@ ad_proc -public calendar::do_notifications {
     set url "[ad_url][ad_conn package_url]"
 
     set new_content ""
-    append new_content "[_ calendar.Calendar]:  <a href=\"${url}\">[ad_conn instance_name]</a><br>\n"
-    append new_content "[_ calendar.Calendar_Item]: <a href=\"${url}cal-item-view?cal_item_id=$cal_item_id\">$cal_item(name)</a><br>\n"
+    append new_content "[_ calendar.Calendar]:  <a href=\"[ns_quotehtml $url]\">[ad_conn instance_name]</a><br>\n"
+    append new_content "[_ calendar.Calendar_Item]: <a href=\"[ns_quotehtml ${url}cal-item-view?cal_item_id=$cal_item_id]\">$cal_item(name)</a><br>\n"
     append new_content "[_ calendar.Start_Time]: $cal_item(start_date_ansi) $cal_item(start_time)<br>\n"
     append new_content "[_ calendar.to]: $cal_item(end_date_ansi) $cal_item(end_time)<br>\n"
 

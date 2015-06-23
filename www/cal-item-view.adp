@@ -39,7 +39,7 @@
                       <strong>#calendar.RelatedLink#:</strong>
                     </div>
                     <div class="form-widget">                  
-                      <a href="@cal_item.related_link_url;noquote@" title="@cal_item.related_link_text@">
+                      <a href="@cal_item.related_link_url@" title="@cal_item.related_link_text@">
                         @cal_item.related_link_text@
                       </a>
                     </div>  

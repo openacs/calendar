@@ -273,7 +273,7 @@ set last_week [clock format [expr {$first_weekday_date_secs - (7*86400)}] -forma
 
 multirow create days_of_week width day_short monthday weekday_date weekday_url day_num
 
-set nav_url_base [ad_conn url]?[export_vars -url -entire_form -exclude {date view}]
+set nav_url_base [export_vars -base [ad_conn url] -entire_form -exclude {date view}]
 
 for {set i 0} {$i < 7} {incr i} {
     set weekday_secs [expr {$first_weekday_date_secs + ($i*86400)}]

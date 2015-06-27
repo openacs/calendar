@@ -62,7 +62,7 @@ set today_julian_date [dt_ansi_to_julian [lindex $today_ansi_list 0] [lindex $to
 
 set view list
 set form_vars [export_vars -form -entire_form -exclude {period_days}]
-set url_vars [export_vars -url -entire_form -exclude {period_days}]
+set url_vars [export_vars -entire_form -exclude {period_days}]
 
 multirow create items \
     event_name \

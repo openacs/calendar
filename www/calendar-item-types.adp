@@ -1,6 +1,6 @@
 <master>
 <property name="&doc">doc</property>
-<property name="context">@context;noquote@</property>
+<property name="context">@context;literal@</property>
 
 <h1>#calendar.Manage_Item_Types#</h1>
 

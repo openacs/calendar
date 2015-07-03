@@ -1,7 +1,7 @@
 <master>
 <property name="doc(title)">#calendar.Calendar_Item#: @cal_item.name;noquote@</property>
 <property name="context">#calendar.Item#</property>
-<property name="displayed_object_id">@cal_item_id@</property>
+<property name="displayed_object_id">@cal_item_id;literal@</property>
 
 
 

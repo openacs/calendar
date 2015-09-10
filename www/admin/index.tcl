@@ -70,3 +70,9 @@ template::list::create \
     }
 
 set permissions_url [export_vars -base permissions { { object_id {[ad_conn package_id]} } }]
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -81,3 +81,9 @@ ad_proc -callback merge::MergePackageUser -impl calendar {
     # 	}
     return $return_msg
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

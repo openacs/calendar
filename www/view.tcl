@@ -70,3 +70,9 @@ template::head::add_css -href "/resources/calendar/calendar.css" -media all
 template::head::add_css -alternate -href "/resources/calendar/calendar-hc.css" -title "highContrast"
 
 ad_return_template 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

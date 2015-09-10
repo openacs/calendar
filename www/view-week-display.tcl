@@ -299,3 +299,9 @@ if { [info exists export] && $export eq "print" } {
     ns_return 200 text/html $print_html
     ad_script_abort
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -222,3 +222,9 @@ ad_form -name choose_new_date -show_required_p f -has_edit 0 -has_submit 0 -form
         {label ""}
         {format {MM DD YYYY}}}
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

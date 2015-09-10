@@ -52,3 +52,9 @@ ad_proc -deprecated calendar_make_datetime {
 } {
     calendar::make_datetime $event_date $event_time
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

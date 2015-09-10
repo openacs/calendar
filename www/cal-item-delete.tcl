@@ -19,3 +19,9 @@ if {!$confirm_p} {
 calendar::item::delete -cal_item_id $cal_item_id
 
 ad_returnredirect $return_url
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

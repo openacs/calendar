@@ -234,3 +234,9 @@ ad_form -name frmdays -has_submit 1 -html {class "inline-form"} -export $noproce
         {value "$period_days"}
     }
 } -on_submit { }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

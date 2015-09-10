@@ -21,3 +21,9 @@ calendar::item_type_delete -calendar_id $calendar_id -item_type_id $item_type_id
 ad_returnredirect "calendar-item-types?calendar_id=$calendar_id"
 
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

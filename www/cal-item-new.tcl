@@ -329,3 +329,9 @@ ad_form -extend -name cal_item -validate {
 }
 
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

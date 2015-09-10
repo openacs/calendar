@@ -12,3 +12,9 @@ ad_page_contract {
 calendar::item::delete_recurrence -recurrence_id $recurrence_id
 
 ad_returnredirect $return_url
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

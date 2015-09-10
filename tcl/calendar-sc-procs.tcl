@@ -94,3 +94,9 @@ ad_proc -private calendar::sc::register_acs_event_fts_impl {} {
 
    acs_sc::impl::new_from_spec -spec $spec
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

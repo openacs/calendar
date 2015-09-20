@@ -58,12 +58,7 @@ if { $user_id eq 0 } {
 } else {
     set calendar_personal_p [calendar::personal_p -calendar_id [lindex [calendar::calendar_list -package_id $package_id  ] 0 1] ]
 }
-set notification_chunk [notification::display::request_widget \
-                            -type calendar_notif \
-                            -object_id $package_id \
-                            -pretty_name [ad_conn instance_name] \
-                            -url [ad_conn url] \
-                           ]
+set instance_name [ad_conn instance_name]
 
 # Header stuff
 template::head::add_css -href "/resources/calendar/calendar.css" -media all 

@@ -18,7 +18,9 @@
     </p>
   
     <if @calendar_personal_p@ false>
-	    <p>@notification_chunk;noquote@</p>
+       <p><include src="/packages/notifications/lib/notification-widget" type="calendar_notif"
+	 	   object_id="@package_id;literal@"
+	 	   pretty_name="@instance_name;literal@" >
     </if>
   
     <include src="cal-options">	

@@ -24,6 +24,7 @@
         <requires url="acs-lang" version="5.9.0"/>
         <requires url="notifications" version="5.9.0"/>
         <requires url="ref-timezones" version="5.9.0"/>
+	<requires url="acs-tcl" version="5.9.1d7"/>
 
         <callbacks>
             <callback type="after-install"  proc="calendar::install::package_install"/>

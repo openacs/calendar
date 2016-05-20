@@ -6,7 +6,7 @@ ad_page_contract {
     @cvs-id $Id$
 } {
     cal_item_id:naturalnum,notnull
-    {return_url [ad_return_url]}
+    {return_url:localurl [ad_return_url]}
 }
 
 set user_id [ad_conn user_id]

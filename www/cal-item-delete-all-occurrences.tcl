@@ -6,7 +6,7 @@ ad_page_contract {
     @creation-date April 25, 2002
 } {
     recurrence_id:naturalnum,notnull
-    {return_url "./"}
+    {return_url:localurl "./"}
 }
 
 calendar::item::delete_recurrence -recurrence_id $recurrence_id

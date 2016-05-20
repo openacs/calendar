@@ -10,7 +10,7 @@ ad_page_contract {
     @cvs-id $Id$
 } {
     cal_item_id:naturalnum,notnull
-    {return_url "./"}
+    {return_url:localurl "./"}
     {days_of_week:multiple ""}
 } 
 

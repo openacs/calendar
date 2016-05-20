@@ -15,7 +15,7 @@ ad_page_contract {
     {start_time ""}
     {end_time ""}
     {view "day"}
-    {return_url "./"}
+    {return_url:localurl "./"}
 }
 auth::require_login
 

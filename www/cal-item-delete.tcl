@@ -5,7 +5,7 @@ ad_page_contract {
     @creation-date 2002-06-02
 } {
     cal_item_id:naturalnum,notnull
-    {return_url "view"}
+    {return_url:localurl "view"}
     {confirm_p:boolean 0}
 }
 

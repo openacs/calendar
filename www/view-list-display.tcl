@@ -8,22 +8,28 @@ if { ![info exists period_days] } {
     }
 }
 
-if { ![info exists show_calendar_name_p] } {
+if { ![info exists show_calendar_name_p] || $show_calendar_name_p eq "" } {
     set show_calendar_name_p 1
 }
-if { (![info exists sort_by] || $sort_by eq "") } {
+if { ![info exists sort_by] || $sort_by eq ""} {
     set sort_by "start_date"
 }
 
-if { (![info exists start_date] || $start_date eq "") } {
+if { ![info exists start_date] || $start_date eq "" } {
     set start_date [clock format [clock seconds] -format "%Y-%m-%d 00:00"]
+} elseif {[catch {clock scan $start_date} errorMsg]} {
+    ad_page_contract_handle_datasource_error "invalid start date"
+    ad_script_abort
 }
 
-if { (![info exists end_date] || $end_date eq "") } {
+if { ![info exists end_date] || $end_date eq "" } {
     set end_date [clock format [clock scan "+30 days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
+} elseif {[catch {clock scan $end_date} errorMsg]} {
+    ad_page_contract_handle_datasource_error "invalid end date"
+    ad_script_abort
 }
 
-if {([info exists calendar_id_list] && $calendar_id_list ne "")} {
+if { [info exists calendar_id_list] && $calendar_id_list ne "" } {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 

@@ -5,12 +5,12 @@ if { ![info exists period_days] } {
      @cvs-id $Id$
     } {
 	{period_days:integer,notnull {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
-    }
-} -validate {
-    valid_period_days  -requires { period_days } {
-        # tcl allows in for relative times just 6 digits, including the "+"
-        if {$period_days > 99999} {
-            ad_complain "Invalid time period."
+    } -validate {
+        valid_period_days  -requires { period_days } {
+            # tcl allows in for relative times just 6 digits, including the "+"
+            if {$period_days > 99999} {
+                ad_complain "Invalid time period."
+            }
         }
     }
 }

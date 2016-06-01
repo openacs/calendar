@@ -4,7 +4,14 @@ if { ![info exists period_days] } {
      @author Sven Schmitt (s.lrn@gmx.net)
      @cvs-id $Id$
     } {
-	{period_days:integer {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
+	{period_days:integer,notnull {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
+    }
+} -validate {
+    valid_period_days  -requires { period_days } {
+        # tcl allows in for relative times just 6 digits, including the "+"
+        if {$period_days > 99999} {
+            ad_complain "Invalid time period."
+        }
     }
 }
 
@@ -35,13 +42,7 @@ if { [info exists calendar_id_list] && $calendar_id_list ne "" } {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
 }
 
-#if { (![info exists period_days] || $period_days eq "") } {
-#    set period_days [parameter::get -parameter ListView_DefaultPeriodDays -default 31]
-#}  else {
-#    set end_date [clock format [clock scan "+${period_days} days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
-#}
 set end_date [clock format [clock scan "+${period_days} days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
-
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 

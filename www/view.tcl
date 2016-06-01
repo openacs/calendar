@@ -16,7 +16,7 @@ ad_page_contract {
     valid_date -requires { date } {
         if {$date ne "" } {
             if {[catch {set date [clock format [clock scan $date] -format "%Y-%m-%d"]} err]} {
-                ad_complain "Your input was not valid. It has to be in the form YYYYMMDD."
+                ad_complain "Your input was not valid. It has to be in the form YYYY-MM-DD."
             }
         }
     }

@@ -13,11 +13,19 @@ ad_page_contract {
     {start_date ""}
     {period_days:integer,notnull {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
 } -validate {
+    
     valid_date -requires { date } {
         if {$date ne "" } {
             if {[catch {set date [clock format [clock scan $date] -format "%Y-%m-%d"]} err]} {
                 ad_complain "Your input was not valid. It has to be in the form YYYY-MM-DD."
             }
+        }
+    }
+    
+    valid_period_days  -requires { period_days } {
+        # tcl allows in for relative times just 6 digits, including the "+"
+        if {$period_days > 99999} {
+            ad_complain "Invalid time period."
         }
     }
 }

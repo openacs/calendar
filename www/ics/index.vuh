@@ -27,3 +27,9 @@ ns_return 200 application/x-msoutlook $ics_stuff
 
 # This is for testing
 # ns_return 200 text/plain $ics_stuff
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

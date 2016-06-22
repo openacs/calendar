@@ -83,7 +83,7 @@
 					<ul>
 						<%
 						foreach attachment $item_attachments {
-							template::adp_puts "<li><img src=\"/resources/acs-subsite/attach.png\"><a href=\"[lindex $attachment 2]\">[lindex $attachment 1]</a> &nbsp;\[<a href=\"[lindex $attachment 3]\">#attachments.remove#</a>\]</li>"
+							template::adp_puts "<li><img src=\"/resources/acs-subsite/attach.png\"><a href="\"[lindex" $attachment 2]\">[lindex $attachment 1]</a> &nbsp;\[<a href="\"[lindex" $attachment 3]\">#attachments.remove#</a>\]</li>"
 						}
 						%>
 					</ul>

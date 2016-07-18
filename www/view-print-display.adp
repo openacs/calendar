@@ -1,5 +1,6 @@
 <html>
 <head>
+<title>Print Calender</title>
 <style type="text/css">
 body {
     font-family: Verdana, Arial, Helvetica, sans-serif;

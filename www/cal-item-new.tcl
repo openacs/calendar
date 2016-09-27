@@ -47,7 +47,7 @@ if { ![ad_form_new_p -key cal_item_id] } {
     set calendar_id [lindex $calendar_options 0 1]
 }
 # TODO: Move into ad_form
-if { ([info exists cal_item_id] && $cal_item_id ne "") } {
+if { [info exists cal_item_id] && $cal_item_id ne "" } {
     set page_title [_ calendar.Calendar_Edit_Item]
     set ad_form_mode display
 } else {
@@ -65,10 +65,10 @@ ad_form -name cal_item  -export { return_url } -form {
     {date:date
         {label "[_ calendar.Date_1]"}
         {format "YYYY MM DD"}
-        {after_html {<input type="button" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');" onclick ="return showCalendarWithDateWidget('date', 'y-m-d');" > \[<b>[_ calendar.y-m-d]</b>\]} } }
+        {after_html {<input type="button" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');" id='cal_item.date-button'> \[<b>[_ calendar.y-m-d]</b>\]} }
+    }
     {time_p:text(radio)     
         {label "&nbsp;"}
-        {html {onClick "javascript:TimePChanged(this);"}} 
         {options {{"[_ calendar.All_Day_Event]" 0}
                   {"[_ calendar.Use_Hours_Below]" 1} }}
     }
@@ -92,6 +92,40 @@ ad_form -name cal_item  -export { return_url } -form {
         {options $calendar_options}
     }
 }
+
+template::add_body_script -script {
+    function TimePChanged(elm) {
+      var form_name = "cal_item";
+
+      if (elm == null) return;
+      if (document.forms == null) return;
+      if (document.forms[form_name] == null) return;
+      if (elm.value == 0) {
+         disableTime(form_name);
+      } else {
+         enableTime(form_name);
+      }
+    }
+    
+    document.getElementById('cal_item:elements:time_p:0').addEventListener('click', function (event) {
+        TimePChanged(this); return false;
+    });
+    document.getElementById('cal_item:elements:time_p:1').addEventListener('click', function (event) {
+        TimePChanged(this); return false;
+    });
+    document.getElementById('cal_item.date-button').addEventListener('click', function (event) {
+        event.preventDefault();
+        return showCalendarWithDateWidget('date', 'y-m-d');
+    });
+    
+    if (document.forms["cal_item"].time_p[0].checked == true ) {
+        // All day event
+        disableTime("cal_item");
+    } else {
+        enableTime("cal_item");
+    }
+}
+
 
 if { [ad_form_new_p -key cal_item_id] } {
     ad_form -extend -name cal_item -form {

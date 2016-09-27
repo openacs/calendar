@@ -44,18 +44,18 @@
           </if>
           <if @days.active_p@ true>
             <if @days.today_p@ true>
-              <td headers="day_@days.day_num@" class="today" onclick="javascript:location.href='@days.url@#calendar';" onkeypress="javascript:acs_KeypressGoto('@days.url@#calendar',event);">
+              <td headers="day_@days.day_num@" class="today" id="@days.id;literal@">
                 <a href="@days.url@#calendar" title="#calendar.goto_days_pretty_date#">@days.day_number@</a>
               </td>
             </if>
             <else>
-              <td headers="day_@days.day_num@" class="active" onclick="javascript:location.href='@days.url@#calendar';" onkeypress="javascript:acs_KeypressGoto('@days.url@#calendar',event);">
+              <td headers="day_@days.day_num@" class="active" id="@days.id;literal@">
                 <a href="@days.url@#calendar" title="#calendar.goto_days_pretty_date#">@days.day_number@</a>
               </td>
             </else>
           </if>
           <else>
-            <td headers="day_@days.day_num@" class="inactive" onclick="javascript:location.href='@days.url@#calendar';" onkeypress="javascript:acs_KeypressGoto('@days.url@#calendar',event);">
+            <td headers="day_@days.day_num@" class="inactive" id="@days.id;literal@">
               <a href="@days.url@#calendar" title="#calendar.goto_days_pretty_date#">@days.day_number@</a>
             </td>
           </else>

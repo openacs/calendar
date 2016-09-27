@@ -140,7 +140,7 @@ if {$view eq "month"} {
             $i
     }
 
-    multirow create days day_number beginning_of_week_p end_of_week_p today_p active_p url weekday day_num pretty_date
+    multirow create days day_number beginning_of_week_p end_of_week_p today_p active_p url weekday day_num pretty_date id
 
     set day_of_week 1
 
@@ -191,13 +191,26 @@ if {$view eq "month"} {
         }
 
         set weekday [lindex $long_weekdays $day_of_week]
-
+        set url "[export_vars -base $base_url {{date $ansi_date} view}]${page_num}${url_stub_period_days}"
         multirow append days $day_number $beginning_of_week_p $end_of_week_p $today_p $active_p \
-            "[export_vars -base $base_url {{date $ansi_date} view}]${page_num}${url_stub_period_days}" \
+            $url \
             $weekday \
             $day_num \
-            $pretty_date
+            $pretty_date \
+            mini-calendar-$ansi_date
 
+        template::add_body_script -script [subst {
+            var e =  document.getElementById('mini-calendar-$ansi_date');
+            e.addEventListener('click', function (event) {
+                event.preventDefault();
+                location.href = '$url#calendar';
+            });
+            e.addEventListener('keypress', function (event) {
+                event.preventDefault();
+                acs_KeypressGoto('$url#calendar',event);
+            });
+        }]
+        
         incr day_number
         incr day_of_week
     }

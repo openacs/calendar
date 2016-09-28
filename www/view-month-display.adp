@@ -29,10 +29,10 @@
         </if>     
         <else>
           <if @items.today_p@ true>
-            <td headers="mday_@items.weekday_num@" class="cal-month-today"  style="width: 14%;" onclick="javascript:location.href='@items.add_url@';" onkeypress="javascript:acs_KeypressGoto('@items.add_url@',event);">
+            <td headers="mday_@items.weekday_num@" class="cal-month-today" style="width: 14%;" id="@items.id;literal@">
           </if>
           <else>
-            <td headers="mday_@items.weekday_num@" class="cal-month-day"  style="width: 14%;" onclick="javascript:location.href='@items.add_url@';"onkeypress="javascript:acs_KeypressGoto('@items.add_url@',event);">
+            <td headers="mday_@items.weekday_num@" class="cal-month-day" style="width: 14%;" id="@items.id;literal@">
           </else>
           &nbsp;<span class="screen-reader-only">[</span><a href="@items.day_url@" title="#calendar.goto_day_items_pretty_date#">@items.day_number@</a><span class="screen-reader-only"> ]</span>
 
@@ -43,9 +43,7 @@
                   <if @items.time_p@ true>@items.start_time@</if>
                   @items.event_name@
                   <if @items.num_attachments@ gt 0><img src="/resources/calendar/images/attach.png" alt=""></if>
-                  <if @show_calendar_name_p@>
-                    <span class="cal-text-grey-sml"> [@items.calendar_name@]</span>
-                  </if>
+                  <if @show_calendar_name_p@><span class="cal-text-grey-sml"> [@items.calendar_name@]</span></if>
                 </a>
               </div>
             </if>

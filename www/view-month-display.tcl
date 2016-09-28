@@ -7,7 +7,7 @@ if {![info exists date] || $date eq ""} {
     set date [lc_time_fmt $user_now_time "%x"]
 }
 
-if { ([info exists export] && $export ne "") } {
+if { [info exists export] && $export ne "" } {
     set exporting_p 1
 } else {
     set exporting_p 0
@@ -23,16 +23,16 @@ if { ![info exists show_calendar_name_p] } {
     set show_calendar_name_p 1
 }
 
-if {([info exists calendar_id_list] && $calendar_id_list ne "")} {
+if {[info exists calendar_id_list] && $calendar_id_list ne ""} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
 }
 
-set date_list [dt_ansi_to_list $date]
-set this_year [dt_trim_leading_zeros [lindex $date_list 0]]
+set date_list  [dt_ansi_to_list $date]
+set this_year  [dt_trim_leading_zeros [lindex $date_list 0]]
 set this_month [dt_trim_leading_zeros [lindex $date_list 1]]
-set this_day [dt_trim_leading_zeros [lindex $date_list 2]]
+set this_day   [dt_trim_leading_zeros [lindex $date_list 2]]
 
 set month_string [lindex [dt_month_names] $this_month-1]
 
@@ -44,12 +44,12 @@ set previous_month_url ?[export_vars {{view month} {date $prev_month} page_num}]
 set next_month_url ?[export_vars {{view month} {date $next_month} page_num}]
 
 set first_day_of_week [lc_get firstdayofweek]
-set last_day_of_week [expr {[expr {$first_day_of_week + 6}] % 7}]
+set last_day_of_week [expr {($first_day_of_week + 6) % 7}]
 
 set week_days [lc_get day]
 multirow create weekday_names weekday_num weekday_long
 for {set i 0} {$i < 7} {incr i} {
-    set i_day [expr {[expr {$i + $first_day_of_week}] % 7}]
+    set i_day [expr {($i + $first_day_of_week) % 7}]
     multirow append weekday_names $i_day [lindex $week_days $i_day]
 }
 
@@ -89,11 +89,12 @@ multirow create items \
     day_url \
     style_class \
     num_attachments \
-    weekday_num
+    weekday_num \
+    id
 
 # Calculate number of greyed days and then add them to the calendar mulitrow
-set greyed_days_before_month [expr [expr [dt_first_day_of_month $this_year $this_month]] -1 ]
-set greyed_days_before_month [expr {[expr {$greyed_days_before_month + 7 - $first_day_of_week}] % 7}]
+set greyed_days_before_month [expr {[dt_first_day_of_month $this_year $this_month] - 1}]
+set greyed_days_before_month [expr {($greyed_days_before_month + 7 - $first_day_of_week) % 7}]
 
 if { !$exporting_p } {
 
@@ -125,6 +126,7 @@ if { !$exporting_p } {
             "" \
             "" \
             "" \
+            "" \
             ""
     }
 }
@@ -148,11 +150,11 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     }
     
     # Localize
-    set pretty_weekday [lc_time_fmt $ansi_start_date "%A"]
+    set pretty_weekday    [lc_time_fmt $ansi_start_date "%A"]
     set pretty_start_date [lc_time_fmt $ansi_start_date "%x"]
-    set pretty_end_date [lc_time_fmt $ansi_end_date "%x"]
+    set pretty_end_date   [lc_time_fmt $ansi_end_date "%x"]
     set pretty_start_time [lc_time_fmt $ansi_start_date "%X"]
-    set pretty_end_time [lc_time_fmt $ansi_end_date "%X"]
+    set pretty_end_time   [lc_time_fmt $ansi_end_date "%X"]
 
     set julian_start_date [dt_ansi_to_julian_single_arg $ansi_start_date]
 
@@ -165,7 +167,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                      -first_julian_date_of_month $first_julian_date_of_month]
 
             set current_day_ansi [dt_julian_to_ansi $current_day]
-
+            set add_url  [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}]
             multirow append items \
                 "" \
                 "" \
@@ -183,11 +185,24 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                 $display_information(today_p) \
                 f \
                 0 \
-                [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}] \
+                $add_url \
                 ?[export_vars {{view day} {date $current_day_ansi} page_num}] \
                 "calendar-${system_type}Item" \
                 $num_attachments \
-                [lc_time_fmt $current_day_ansi %w]
+                [lc_time_fmt $current_day_ansi %w] \
+                month-calendar-$current_day_ansi
+
+            add_body_script -script [subst {
+                var e =  document.getElementById('month-calendar-$current_day_ansi');
+                e.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    location.href = '$add_url';
+                });
+                e.addEventListener('keypress', function (event) {
+                    event.preventDefault();
+                    acs_KeypressGoto('$add_url',event);
+                });
+            }]
         } 
     }
 
@@ -198,7 +213,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
              -first_julian_date_of_month $first_julian_date_of_month]
 
     set current_day_ansi [dt_julian_to_ansi $current_day]
-
+    set add_url [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}]
     multirow append items \
         $name \
         [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {return_url {cal_item_id $item_id}}] \
@@ -216,11 +231,24 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         $display_information(today_p) \
         f \
         $time_p \
-        [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}] \
+        $add_url \
         ?[export_vars {{view day} {date $current_day_ansi} page_num}] \
         "calendar-${system_type}Item" \
         $num_attachments \
-        [lc_time_fmt $current_day_ansi %w]
+        [lc_time_fmt $current_day_ansi %w] \
+        month-calendar-$current_day_ansi
+    
+    add_body_script -script [subst {
+        var e =  document.getElementById('month-calendar-$current_day_ansi');
+        e.addEventListener('click', function (event) {
+            event.preventDefault();
+            location.href = '$add_url';
+        });
+        e.addEventListener('keypress', function (event) {
+            event.preventDefault();
+            acs_KeypressGoto('$add_url',event);
+        });
+    }]
 }
 
 if { !$exporting_p } {
@@ -236,7 +264,8 @@ if { !$exporting_p } {
                  -first_julian_date_of_month $first_julian_date_of_month]
 
         set current_day_ansi [dt_julian_to_ansi $current_day]
-        
+        set add_url [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}]
+
         multirow append items \
             "" \
             "" \
@@ -254,15 +283,29 @@ if { !$exporting_p } {
             $display_information(today_p) \
             f \
             0 \
-            [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}] \
+            $add_url \
             ?[export_vars {{view day} {date $current_day_ansi} page_num}] \
             "" \
             "" \
-            [lc_time_fmt $current_day_ansi %w]
+            [lc_time_fmt $current_day_ansi %w] \
+            month-calendar-$current_day_ansi
+        
+            add_body_script -script [subst {
+                var e =  document.getElementById('month-calendar-$current_day_ansi');
+                e.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    location.href = '$add_url';
+                });
+                e.addEventListener('keypress', function (event) {
+                    event.preventDefault();
+                    acs_KeypressGoto('$add_url',event);
+                });
+            }]
+        
     }
 
     # Add cells for remaining days outside the month
-    set remaining_days [expr {[expr {$first_day_of_week + 6 - $current_day % 7}] % 7}]
+    set remaining_days [expr {($first_day_of_week + 6 - $current_day % 7) % 7}]
     
     if {$remaining_days > 0} {
         for {} {$current_day <= $last_julian_date_in_month + $remaining_days} {incr current_day} {
@@ -282,6 +325,7 @@ if { !$exporting_p } {
                 f \
                 "" \
                 t \
+                "" \
                 "" \
                 "" \
                 "" \

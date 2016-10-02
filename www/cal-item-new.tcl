@@ -106,24 +106,6 @@ template::add_body_script -script {
          enableTime(form_name);
       }
     }
-    
-    document.getElementById('cal_item:elements:time_p:0').addEventListener('click', function (event) {
-        TimePChanged(this); return false;
-    });
-    document.getElementById('cal_item:elements:time_p:1').addEventListener('click', function (event) {
-        TimePChanged(this); return false;
-    });
-    document.getElementById('cal_item.date-button').addEventListener('click', function (event) {
-        event.preventDefault();
-        return showCalendarWithDateWidget('date', 'y-m-d');
-    });
-    
-    if (document.forms["cal_item"].time_p[0].checked == true ) {
-        // All day event
-        disableTime("cal_item");
-    } else {
-        enableTime("cal_item");
-    }
 }
 
 
@@ -360,7 +342,22 @@ ad_form -extend -name cal_item -validate {
 	ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]
     }
     ad_script_abort
+    
+} -on_request {
+    template::add_event_listener -id cal_item:elements:time_p:0 -script {TimePChanged(this);}
+    template::add_event_listener -id cal_item:elements:time_p:1 -script {TimePChanged(this);}
+    template::add_event_listener -id cal_item.date-button -script {showCalendarWithDateWidget('date', 'y-m-d');}
+
+    template::add_body_script -script {
+        if (document.forms["cal_item"].time_p[0].checked == true ) {
+            // All day event
+            disableTime("cal_item");
+        } else {
+            enableTime("cal_item");
+        }
+    }
 }
+
 
 
 

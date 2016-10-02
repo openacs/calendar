@@ -4,7 +4,7 @@
     <td>
       <multiple name="views">
         <span<if @views.selected_p@ true> class="active"</if>>
-        <a href="@views.url@" title="#calendar.select_views_name#" class="cal-icons @views.text@-view" <if @views.onclick@ ne "">onclick="@views.onclick@"</if>>
+        <a href="@views.url@" title="#calendar.select_views_name#" class="cal-icons @views.text@-view">
         @views.name;noquote@</a></span>@views.spacer;noquote@
       </multiple>
     </td>

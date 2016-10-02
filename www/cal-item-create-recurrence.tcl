@@ -61,7 +61,7 @@ ad_form -name cal_item  -export {return_url} -form {
     {recur_until:date
         {label "[_ calendar.lt_Repeat_this_event_unt]"}
         {format "YYYY MM DD"}
-        {after_html {<input type="button" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');" onclick ="return showCalendarWithDateWidget('recur_until', 'y-m-d');"> \[<b>[_ calendar.y-m-d]</b>\]} 
+        {after_html {<input type="button" id="cal-item-recur-until" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');"> \[<b>[_ calendar.y-m-d]</b>\]} 
         }
         
     }
@@ -105,6 +105,9 @@ ad_form -name cal_item  -export {return_url} -form {
     ad_script_abort
 } -has_submit 1
 
+template::add_event_listener \
+    -id cal-item-recur-until \
+    -script {showCalendarWithDateWidget('recur_until', 'y-m-d');}
 
 ad_return_template
 

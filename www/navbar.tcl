@@ -34,39 +34,35 @@ if { [string match "/dotlrn*" $base_url] } {
     set link "[export_vars -base $base_url {date {view day}}]&export=print"
 }
 
-multirow create views name text url spacer selected_p onclick
+multirow create views name text url spacer selected_p
 
 multirow append views \
     [_ calendar.Day] \
     "day" \
     "[export_vars -base $base_url {date {view day}}]${page_num}\#calendar" \
     "&nbsp;&nbsp; | &nbsp;&nbsp;" \
-    $day_selected_p \
-    ""
+    $day_selected_p
 
 multirow append views \
     [_ calendar.Week] \
     "week" \
     "[export_vars -base $base_url {date {view week}}]${page_num}\#calendar" \
     "&nbsp;&nbsp; | &nbsp;&nbsp;" \
-    $week_selected_p \
-    ""
+    $week_selected_p
 
 multirow append views \
     [_ calendar.Month] \
     "month" \
     "[export_vars -base $base_url {date {view month}}]${page_num}\#calendar" \
     "&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" \
-    $month_selected_p \
-    ""
+    $month_selected_p 
 
 multirow append views \
     [_ calendar.List] \
     "list" \
     "[export_vars -base $base_url {date {view list}}]${page_num}${url_stub_period_days}\#calendar" \
     "" \
-    $list_selected_p \
-    ""
+    $list_selected_p
 
 
 # Local variables:

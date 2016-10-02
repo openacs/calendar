@@ -7,7 +7,7 @@
     <initial-install-p>f</initial-install-p>
     <singleton-p>f</singleton-p>
     
-    <version name="2.6.1d3" url="http://openacs.org/repository/download/apm/calendar-2.6.1d3.apm">
+    <version name="2.6.1d4" url="http://openacs.org/repository/download/apm/calendar-2.6.1d4.apm">
         <owner url="mailto:openacs-calendar@dirkgomez.de">Dirk Gomez</owner>
         <summary>Personal and shared event calendars.</summary>
         <release-date>2015-10-04</release-date>
@@ -17,7 +17,7 @@
         <maturity>2</maturity>
         <package_instance_name>#calendar.Calendar#</package_instance_name>
 
-        <provides url="calendar" version="2.6.1d3"/>
+        <provides url="calendar" version="2.6.1d4"/>
         <requires url="attachments" version="0.10"/>
         <requires url="acs-datetime" version="5.9.0"/>
         <requires url="acs-events" version="0.6d2"/>
@@ -25,6 +25,7 @@
         <requires url="notifications" version="5.9.0"/>
         <requires url="ref-timezones" version="5.9.0"/>
 	<requires url="acs-tcl" version="5.9.1d7"/>
+	<requires url="acs-templating" version="5.9.1d7"/>
 
         <callbacks>
             <callback type="after-install"  proc="calendar::install::package_install"/>

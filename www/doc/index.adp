@@ -8,7 +8,7 @@
 its current form it provides a UI for storing events that have a
 time or that last a day, and it offers a list view, a day, week,
 and month view.</p>
-<p>The project plan for calendar can be found at <a href="%20http://openacs.org/projects/openacs/packages/calendar/">http://openacs.org/projects/openacs/packages/calendar/</a>.
+<p>The project plan for calendar can be found at <a href="http://openacs.org/projects/openacs/packages/calendar/">http://openacs.org/projects/openacs/packages/calendar/</a>.
 The maintainer of this package is <a href="mailto:openacs-calendar\@dirkgomez.de">Dirk Gomez</a>
 </p>
 <h2>The Data Model</h2>

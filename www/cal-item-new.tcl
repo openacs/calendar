@@ -32,7 +32,7 @@ set calendar_list [calendar::calendar_list]
 set calendar_options [calendar::calendar_list -privilege create]
 
 # Header stuff
-template::add_body_handler -event "onload" -script "TimePChanged()"
+template::add_body_handler -event "load" -script "TimePChanged();"
 template::head::add_css -href "/resources/calendar/calendar.css" -media all
 template::head::add_css -alternate -href "/resources/calendar/calendar-hc.css" -title "highContrast"
 

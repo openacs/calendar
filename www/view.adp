@@ -12,12 +12,12 @@
     </else>
     <p>
     <a href="@add_item_url@" title="#calendar.Add_Item#" class="button">#calendar.Add_Item#</a>
-    <if @admin_p@ true>
+    <if @admin_p;literal@ true>
       <a href="admin/" title="#calendar.lt_Calendar_Administrati#" class="button">#calendar.lt_Calendar_Administrati#</a>
     </if>
     </p>
   
-    <if @calendar_personal_p@ false>
+    <if @calendar_personal_p;literal@ false>
        <p><include src="/packages/notifications/lib/notification-widget" type="calendar_notif"
 	 	   object_id="@package_id;literal@"
 	 	   pretty_name="@instance_name@" >

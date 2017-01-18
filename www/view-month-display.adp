@@ -20,15 +20,15 @@
 
       <multiple name="items">
 
-        <if @items.beginning_of_week_p@ true>
+        <if @items.beginning_of_week_p;literal@ true>
           <tr>
         </if>
 
-        <if @items.outside_month_p@ true>
+        <if @items.outside_month_p;literal@ true>
           <td class="cal-month-day-inactive" style="width: 14%;">&nbsp;</td>
         </if>     
         <else>
-          <if @items.today_p@ true>
+          <if @items.today_p;literal@ true>
             <td headers="mday_@items.weekday_num@" class="cal-month-today" style="width: 14%;" id="@items.id;literal@">
           </if>
           <else>
@@ -40,10 +40,10 @@
             <if @items.event_name@ true>
               <div class="cal-month-event @items.style_class@">
                 <a href="@items.event_url@" title="#calendar.goto_items_event_name#">
-                  <if @items.time_p@ true>@items.start_time@</if>
+                  <if @items.time_p;literal@ true>@items.start_time@</if>
                   @items.event_name@
                   <if @items.num_attachments@ gt 0><img src="/resources/calendar/images/attach.png" alt=""></if>
-                  <if @show_calendar_name_p@><span class="cal-text-grey-sml"> [@items.calendar_name@]</span></if>
+                  <if @show_calendar_name_p;literal@ true><span class="cal-text-grey-sml"> [@items.calendar_name@]</span></if>
                 </a>
               </div>
             </if>
@@ -52,7 +52,7 @@
         </td>
         </else>
 
-        <if @items.end_of_week_p@ true>
+        <if @items.end_of_week_p;literal@ true>
           </tr>
         </if>
 

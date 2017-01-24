@@ -25,7 +25,7 @@ ad_form -name go-to-date -method get -has_submit 1 -action $base_url  \
 
 if {[info exists page_num] && $page_num ne ""} {
     set page_num_formvar [export_vars -form {page_num}]
-    set page_num "&amp;page_num=$page_num"
+    set page_num "&page_num=$page_num"
 } else {
     set page_num_formvar ""
     set page_num ""

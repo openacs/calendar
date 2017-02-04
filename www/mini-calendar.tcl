@@ -214,7 +214,7 @@ if {$view eq "month"} {
 
 set today_url "$base_url?view=day&date=[ad_urlencode [dt_sysdate]]${page_num}${url_stub_period_days}"
 
-if { $view eq "day" && [dt_sysdate] == $date } {
+if { $view eq "day" && [dt_sysdate] eq $date } {
     set today_p t
 } else {
     set today_p f

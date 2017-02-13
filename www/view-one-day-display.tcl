@@ -33,7 +33,7 @@ if { ![info exists end_display_hour]} {
     set end_display_hour 23
 }
 
-if {([info exists calendar_id_list] && $calendar_id_list ne "")} {
+if {[info exists calendar_id_list] && $calendar_id_list ne ""} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
@@ -114,7 +114,7 @@ db_foreach dbqd.calendar.www.views.select_all_day_items {} {
 }
 
 set additional_limitations_clause " and to_char(start_date, 'HH24:MI') <> to_char(end_date, 'HH24:MI')"
-if { ([info exists cal_system_type] && $cal_system_type ne "") } {
+if { [info exists cal_system_type] && $cal_system_type ne "" } {
     append additional_limitations_clause " and system_type = :cal_system_type "
 }
 set order_by_clause " order by to_char(start_date,'HH24:MI')"

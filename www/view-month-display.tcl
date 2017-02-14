@@ -30,9 +30,9 @@ if {[info exists calendar_id_list] && $calendar_id_list ne ""} {
 }
 
 set date_list  [dt_ansi_to_list $date]
-set this_year  [dt_trim_leading_zeros [lindex $date_list 0]]
-set this_month [dt_trim_leading_zeros [lindex $date_list 1]]
-set this_day   [dt_trim_leading_zeros [lindex $date_list 2]]
+set this_year  [util::trim_leading_zeros [lindex $date_list 0]]
+set this_month [util::trim_leading_zeros [lindex $date_list 1]]
+set this_day   [util::trim_leading_zeros [lindex $date_list 2]]
 
 set month_string [lindex [dt_month_names] $this_month-1]
 

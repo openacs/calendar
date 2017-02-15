@@ -14,7 +14,9 @@
   <msg key="Add_Recurrence">Añadir evento periódico</msg>
   <msg key="All_Day_Event">Evento para todo el día</msg>
   <msg key="all_events">Todos los eventos</msg>
+  <msg key="All_Past_and_Future_Events">Todos los eventos pasados y futuros</msg>
   <msg key="and_Time">y hora</msg>
+  <msg key="Apply_Changes_to">Aplicar cambios a</msg>
   <msg key="Apply_to_all">Aplicar a todos los eventos</msg>
   <msg key="Attachments">Archivos adjuntos:</msg>
   <msg key="Audiences_for_item">Audiencia para el evento</msg>
@@ -88,7 +90,7 @@
   <msg key="lt_Calendar_Choose_Calen">Calendario: elegir calendario</msg>
   <msg key="lt_Calendar_detail_listi">Detalles del calendario: mostrando toda la información del calendario personal</msg>
   <msg key="lt_Calendar_Item_Adminis">Administración de eventos</msg>
-  <msg key="lt_Calendar_Item_Permiss">&quot;Permisos sobre eventos del calendario&quot;</msg>
+  <msg key="lt_Calendar_Item_Permiss">&#34;Permisos sobre eventos del calendario&#34;</msg>
   <msg key="lt_Calendars_Repeating_E">Calendarios: eventos periódicos</msg>
   <msg key="lt_Create_a_new_calendar">Crear un nuevo calendario</msg>
   <msg key="lt_delete_all_occurrence">borrar todas las ocurrencias</msg>
@@ -116,7 +118,7 @@
         
             &amp;lt;if %days.active_p% true&amp;gt;
               &amp;lt;if %days.today_p% true&amp;gt;
-                &amp;lt;td class=&amp;quot;today&amp;quot; onclick=&amp;quot;javascript:location.href='%days.url%';&amp;quot;&amp;gt;
+                &amp;lt;td class=&amp;quot;today&amp;quot; onclick=&amp;quot;javascript:location.href=&#39;%days.url%&#39;;&amp;quot;&amp;gt;
                   &amp;lt;a href=&amp;quot;%days.url%&amp;quot; title=&amp;quot;&amp;lt;#_ Go to %month_name% %days.day_number%, %year%</msg>
   <msg key="lt_Hide_Checked_Calendar">Ocultar los calendarios seleccionados</msg>
   <msg key="lt_Manage_Calendar_Audie">Administrar las Audiencias del Calendario</msg>
@@ -174,6 +176,8 @@
   <msg key="Submit_query">Enviar solicitud</msg>
   <msg key="Sunday">Domingo</msg>
   <msg key="sync_with_Outlook">sincronizar con Outlook:</msg>
+  <msg key="This_and_All_Future_Events">Este y todos los eventos futuros</msg>
+  <msg key="This_Event">Este evento</msg>
   <msg key="Thursday">Jueves</msg>
   <msg key="Time">Hora:</msg>
   <msg key="Time_1">Hora</msg>

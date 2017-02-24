@@ -195,7 +195,6 @@ db_foreach dbqd.calendar.www.views.select_items {} {
             add_body_script -script [subst {
                 var e =  document.getElementById('month-calendar-$current_day_ansi');
                 e.addEventListener('click', function (event) {
-                    event.preventDefault();
                     location.href = '$add_url';
                 });
                 e.addEventListener('keypress', function (event) {
@@ -213,7 +212,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
              -first_julian_date_of_month $first_julian_date_of_month]
 
     set current_day_ansi [dt_julian_to_ansi $current_day]
-    set add_url [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}]
+    set add_url [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}]    
     multirow append items \
         $name \
         [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {return_url {cal_item_id $item_id}}] \
@@ -241,7 +240,6 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     add_body_script -script [subst {
         var e =  document.getElementById('month-calendar-$current_day_ansi');
         e.addEventListener('click', function (event) {
-            event.preventDefault();
             location.href = '$add_url';
         });
         e.addEventListener('keypress', function (event) {
@@ -293,7 +291,6 @@ if { !$exporting_p } {
             add_body_script -script [subst {
                 var e =  document.getElementById('month-calendar-$current_day_ansi');
                 e.addEventListener('click', function (event) {
-                    event.preventDefault();
                     location.href = '$add_url';
                 });
                 e.addEventListener('keypress', function (event) {

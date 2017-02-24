@@ -37,7 +37,7 @@
           &nbsp;<span class="screen-reader-only">[</span><a href="@items.day_url@" title="#calendar.goto_day_items_pretty_date#">@items.day_number@</a><span class="screen-reader-only"> ]</span>
 
           <group column="day_number">
-            <if @items.event_name@ true>
+            <if @items.event_name@ ne "">
               <div class="cal-month-event @items.style_class@">
                 <a href="@items.event_url@" title="#calendar.goto_items_event_name#">
                   <if @items.time_p;literal@ true>@items.start_time@</if>

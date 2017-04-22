@@ -1,6 +1,6 @@
 
 ad_page_contract {
-    delete all occurences of a recurring item
+    delete all occurrences of a recurring item
     
     @author Ben Adida (ben@openforce.net)
     @creation-date April 25, 2002

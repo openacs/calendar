@@ -155,8 +155,8 @@ ad_proc -public calendar::have_private_p {
     {-calendar_id_list {}}
     {-party_id party_id }
 } {
-    check to see if ther user have a private calendar
-    if -return_id is 1, then proc will return the calendar_id
+    Check to see if the user has a private calendar.
+    When the provided -return_id is 1, then proc will return the calendar_id
 
     @param calendar_id_list If you supply the calendar_id_list, then we'll only search 
     for a personal calendar among the calendars supplied here.

@@ -111,9 +111,9 @@ approved events on a calendar on arsdigita.com. A common visitor
 does not have to be registered with the site to be able to obtain
 this event information through their personal calendar. To allow
 this functionality, the calendars for groups and parties would need
-to support all the event managment and calendar views had by
+to support all the event management and calendar views had by
 individual calendars, and in addition, the role of calendar
-administrator must be assigned to handle event managment.</p>
+administrator must be assigned to handle event management.</p>
 <p>
 <strong>Administrators for</strong> a group and party wide
 calendar are given create, read, and write permissions on each

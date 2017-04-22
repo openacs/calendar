@@ -193,7 +193,7 @@ as
         is
 
         begin
-                  -- Erase the cal_item assoicated with the id
+                  -- Erase the cal_item associated with the id
                 delete from     cal_items
                 where           cal_item_id = cal_item.del.cal_item_id;
                 

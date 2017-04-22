@@ -101,7 +101,7 @@ show errors
   -- or read, write, delete and invite to any member of the party
   -- on a cal_item basis or on a calendar basis(all items). 
 begin
-        acs_privilege.create_privilege('calendar_admin', 'calendar adminstrator');
+        acs_privilege.create_privilege('calendar_admin', 'calendar administrator');
         acs_privilege.add_child('admin', 'calendar_admin');
         acs_privilege.add_child('calendar_admin', 'calendar_read');
         acs_privilege.add_child('calendar_admin', 'calendar_write');

@@ -35,7 +35,7 @@ foreach dow {
     set dow_string "$dow_string <INPUT TYPE=checkbox name=days_of_week value=[lindex $dow 1] $checked_html id=\"cal_item:elements:interval_type:days_of_week:[lindex $dow 1]\" >[lindex $dow 0] &nbsp;\n"
 }
 
-set recurrance_options [list \
+set recurrence_options [list \
                             [list [_ calendar.day_s] day] \
                             [list "$dow_string [_ calendar.of_the_week]" week] \
                             [list "[_ calendar.day] $cal_item(day_of_month) [_ calendar.of_the_month]" month_by_date] \
@@ -55,7 +55,7 @@ ad_form -name cal_item  -export {return_url} -form {
 
     {interval_type:text(radio)
         {label ""}
-        {options $recurrance_options}
+        {options $recurrence_options}
     }
 
     {recur_until:date

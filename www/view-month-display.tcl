@@ -1,7 +1,7 @@
 
 set system_type ""
 if {![info exists date] || $date eq ""} {
-    # Default to todays date in the users (the connection) timezone
+    # Default to today's date in the users (the connection) timezone
     set server_now_time [dt_systime]
     set user_now_time [lc_time_system_to_conn $server_now_time]
     set date [lc_time_fmt $user_now_time "%x"]

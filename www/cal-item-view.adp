@@ -98,7 +98,7 @@
 		        <a href="@cal_item_delete_url@" title="#calendar.delete#" class="button">#calendar.delete#</a>
 				@attachment_options;noquote@ 
 			 	<a href="ics/@cal_item_id@.ics" title="#calendar.sync_with_Outlook#" class="button">#calendar.sync_with_Outlook#</a>
-				<if @cal_item.recurrence_id@ not nil>(<a href="ics/@cal_item_id@.ics?all_occurences_p=1" title="#calendar.all_events#">#calendar.all_events#</a>)</if>
+				<if @cal_item.recurrence_id@ not nil>(<a href="ics/@cal_item_id@.ics?all_occurrences_p=1" title="#calendar.all_events#">#calendar.all_events#</a>)</if>
 		
 			</if>
 		</div>

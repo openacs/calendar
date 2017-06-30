@@ -39,7 +39,7 @@ ad_proc calendar::make_datetime {
         set hours $event_time_arr(hours)
         set minutes $event_time_arr(minutes)
         
-        # AM/PM? (ben - openacs fix)
+        # AM/PM? (ben - OpenACS fix)
         if {[info exists event_time_arr(ampm)]} {
             if {$event_time_arr(ampm)} {
                 if {$hours < 12} {

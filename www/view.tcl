@@ -25,7 +25,7 @@ ad_page_contract {
     }
     
     valid_period_days  -requires { period_days } {
-        # tcl allows in for relative times just 6 digits, including the "+"
+        # Tcl allows in for relative times just 6 digits, including the "+"
         if {$period_days > 99999} {
             ad_complain "Invalid time period."
         }

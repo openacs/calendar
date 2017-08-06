@@ -130,7 +130,7 @@ Jane can make changes on her own.</p>
 <ul>
 <li><a href="http://www.arsdigita.com/doc/calendar/design.html">Design
 Document</a></li><li><a href="http://www.arsdigita.com/doc/calendar/index.html">System
-Overview</a></li><li><a href="http://6916.lcs.mit.edu/class/6916-f2000/page-7/">MIT's 6.916
+Overview</a></li><li><a href="http://6916.lcs.mit.edu/class/6916-f2000/page-7/">MIT&#39;s 6.916
 course calendar</a></li><li>
 <a href="http://www.imc.org/pdi/">vCalendar/iCalendar</a>
 proposed standards</li><li><a href="http://www.arsdigita.com/doc/calendar/acceptance.txt">Acceptance

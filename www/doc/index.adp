@@ -58,5 +58,5 @@ Document</a></li></ul>
 <hr>
 <address><a href="mailto:openacs-calendar\@dirkgomez.de">Dirk
 Gomez</a></address>
-<!-- Created: Mon Aug 13 14:17:34 EDT 2001 --><!-- hhmts start -->
-Last modified: Thu Jan 22 23:51:17 CET 2004 <!-- hhmts end -->
+<!-- Created: Mon Aug 13 14:17:34 EDT 2001 --><!-- hhmts start -->Last modified: Wed Oct 26 14:02:57 CEST 2016 
+<!-- hhmts end -->

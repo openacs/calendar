@@ -33,14 +33,14 @@ if { ![info exists end_display_hour]} {
     set end_display_hour 23
 }
 
-if {([info exists calendar_id_list] && $calendar_id_list ne "")} {
+if {[info exists calendar_id_list] && $calendar_id_list ne ""} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
 }
 
 if {$date eq ""} {
-    # Default to todays date in the users (the connection) timezone
+    # Default to today's date in the users (the connection) timezone
     set server_now_time [dt_systime]
     set user_now_time [lc_time_system_to_conn $server_now_time]
     set date [lc_time_fmt $user_now_time "%F"]
@@ -114,7 +114,7 @@ db_foreach dbqd.calendar.www.views.select_all_day_items {} {
 }
 
 set additional_limitations_clause " and to_char(start_date, 'HH24:MI') <> to_char(end_date, 'HH24:MI')"
-if { ([info exists cal_system_type] && $cal_system_type ne "") } {
+if { [info exists cal_system_type] && $cal_system_type ne "" } {
     append additional_limitations_clause " and system_type = :cal_system_type "
 }
 set order_by_clause " order by to_char(start_date,'HH24:MI')"
@@ -141,34 +141,38 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     scan [lc_time_fmt $ansi_start_date "%H"] %d start_hour 
     scan [lc_time_fmt $ansi_end_date "%H"] %d end_hour 
 
-    if { $start_hour < $adjusted_start_display_hour && \
-             [string equal \
-                  [string range $ansi_start_date 0 9] \
-                  [string range $ansi_end_date 0 9]] } {
+    if { $start_hour < $adjusted_start_display_hour
+         && [string range $ansi_start_date 0 9] eq [string range $ansi_end_date 0 9]
+     } {
         set adjusted_start_display_hour $start_hour
     }
 
-    if { $end_hour > $adjusted_end_display_hour && \
-             [string equal \
-                  [string range $ansi_start_date 0 9] \
-                  [string range $ansi_end_date 0 9]] } {
+    if { $end_hour > $adjusted_end_display_hour
+         && [string range $ansi_start_date 0 9] eq [string range $ansi_end_date 0 9]
+     } {
         set adjusted_end_display_hour $end_hour
     }
 
-    set top [expr ($start_hour * ($hour_height_inside+$hour_height_sep)) \
-                 + ($start_minutes*$hour_height_inside/60)]
-    set bottom [expr ($end_hour * ($hour_height_inside+$hour_height_sep)) \
-                 + ($end_minutes*$hour_height_inside/60)]
+    set top [expr {($start_hour * ($hour_height_inside+$hour_height_sep)) 
+                       + ($start_minutes*$hour_height_inside/60)}]
+    set bottom [expr {($end_hour * ($hour_height_inside+$hour_height_sep)) 
+                      + ($end_minutes*$hour_height_inside/60)}]
     set height [expr {$bottom - $top - 2}]
 
     set bump_right $bump_right_base
     foreach {previous_start previous_end} $previous_intervals {
-        if { ($start_seconds >= $previous_start && $start_seconds < $previous_end) || ($previous_start >= $start_seconds && $previous_start < $end_seconds) } {
+        if { ($start_seconds >= $previous_start && $start_seconds < $previous_end)
+             || ($previous_start >= $start_seconds && $previous_start < $end_seconds)
+         } {
                 incr bump_right $bump_right_delta
         }
     }
 
-    set event_url [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {return_url {cal_item_id $item_id}}]
+    set event_url [export_vars \
+                       -base [site_node::get_url_from_object_id \
+                                  -object_id $cal_package_id]cal-item-view {
+                                      return_url {cal_item_id $item_id}
+                                  }]
 
     multirow append items 0 "calendar-${system_type}Item" \
         "$name ($start_time - $end_time)" \
@@ -193,7 +197,8 @@ set num_items [multirow size items]
 for {set i 1} {$i <= $num_items } {incr i} {
     if { [multirow get items $i all_day_p] } {
         multirow set items $i height \
-            [expr ($adjusted_end_display_hour-$adjusted_start_display_hour+1)*($hour_height_inside+$hour_height_sep)]
+            [expr {($adjusted_end_display_hour - $adjusted_start_display_hour + 1)
+                   * ($hour_height_inside + $hour_height_sep)}]
     } else {
         set currval [multirow get items $i top]
         multirow set items $i top \
@@ -230,3 +235,9 @@ if { [info exists export] && $export eq "print" } {
     ns_return 200 text/html $print_html
     ad_script_abort
 }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -24,12 +24,12 @@
         <div class="form-label">
           <strong>
             #calendar.Date_1#
-            <if @cal_item.no_time_p@ eq 0> #calendar.and_Time#</if>:
+            <if @cal_item.no_time_p;literal@ false> #calendar.and_Time#</if>:
           </strong>
         </div>
         <div class="form-widget">
           <a href="@view_url@">@cal_item.pretty_short_start_date@</a>
-          <if @cal_item.no_time_p@ eq 0>, #calendar.from# @cal_item.start_time@ #calendar.to# @cal_item.end_time@</if>
+          <if @cal_item.no_time_p;literal@ false>, #calendar.from# @cal_item.start_time@ #calendar.to# @cal_item.end_time@</if>
         </div>
       </div>
       <div class="form-item-wrapper">

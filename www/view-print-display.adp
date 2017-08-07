@@ -1,5 +1,6 @@
 <html>
 <head>
+<title>Print Calender</title>
 <style type="text/css">
 body {
     font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -8,7 +9,9 @@ body {
 </style>
 <body>
 
-<input type="button" onclick="window.print();" value="#calendar.Print#"> <input type="button" value="#calendar.Close_Window#" onclick="window.close();"><br><br>
+<a class="button" href="#" id="print">#calendar.Print#</a>
+<a class="button" href="#" id="close">#calendar.Close_Window#</a>
+<br><br>
 
 <if @items:rowcount@ gt 0>
   <multiple name="items">

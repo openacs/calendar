@@ -39,7 +39,7 @@ ad_proc calendar::make_datetime {
         set hours $event_time_arr(hours)
         set minutes $event_time_arr(minutes)
         
-        # AM/PM? (ben - openacs fix)
+        # AM/PM? (ben - OpenACS fix)
         if {[info exists event_time_arr(ampm)]} {
             if {$event_time_arr(ampm)} {
                 if {$hours < 12} {
@@ -155,8 +155,8 @@ ad_proc -public calendar::have_private_p {
     {-calendar_id_list {}}
     {-party_id party_id }
 } {
-    check to see if ther user have a private calendar
-    if -return_id is 1, then proc will return the calendar_id
+    Check to see if the user has a private calendar.
+    When the provided -return_id is 1, then proc will return the calendar_id
 
     @param calendar_id_list If you supply the calendar_id_list, then we'll only search 
     for a personal calendar among the calendars supplied here.
@@ -529,3 +529,9 @@ ad_proc -public calendar::notification::get_url {
 }
     
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

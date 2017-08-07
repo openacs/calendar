@@ -6,7 +6,7 @@ ad_page_contract {
     @cvs-id $Id$
 } {
     cal_item_id:naturalnum,notnull
-    {return_url [ad_return_url]}
+    {return_url:localurl [ad_return_url]}
 }
 
 set user_id [ad_conn user_id]
@@ -58,3 +58,9 @@ template::head::add_css -alternate -href "/resources/calendar/calendar-hc.css" -
 
 ad_return_template 
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

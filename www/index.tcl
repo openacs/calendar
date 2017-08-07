@@ -21,3 +21,9 @@ if { ![calendar::have_private_p -party_id $user_id] } {
 } 
 
 ad_returnredirect "view"    
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

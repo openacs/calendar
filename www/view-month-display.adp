@@ -20,32 +20,30 @@
 
       <multiple name="items">
 
-        <if @items.beginning_of_week_p@ true>
+        <if @items.beginning_of_week_p;literal@ true>
           <tr>
         </if>
 
-        <if @items.outside_month_p@ true>
+        <if @items.outside_month_p;literal@ true>
           <td class="cal-month-day-inactive" style="width: 14%;">&nbsp;</td>
         </if>     
         <else>
-          <if @items.today_p@ true>
-            <td headers="mday_@items.weekday_num@" class="cal-month-today"  style="width: 14%;" onclick="javascript:location.href='@items.add_url@';" onkeypress="javascript:acs_KeypressGoto('@items.add_url@',event);">
+          <if @items.today_p;literal@ true>
+            <td headers="mday_@items.weekday_num@" class="cal-month-today" style="width: 14%;" id="@items.id;literal@">
           </if>
           <else>
-            <td headers="mday_@items.weekday_num@" class="cal-month-day"  style="width: 14%;" onclick="javascript:location.href='@items.add_url@';"onkeypress="javascript:acs_KeypressGoto('@items.add_url@',event);">
+            <td headers="mday_@items.weekday_num@" class="cal-month-day" style="width: 14%;" id="@items.id;literal@">
           </else>
           &nbsp;<span class="screen-reader-only">[</span><a href="@items.day_url@" title="#calendar.goto_day_items_pretty_date#">@items.day_number@</a><span class="screen-reader-only"> ]</span>
 
           <group column="day_number">
-            <if @items.event_name@ true>
+            <if @items.event_name@ ne "">
               <div class="cal-month-event @items.style_class@">
                 <a href="@items.event_url@" title="#calendar.goto_items_event_name#">
-                  <if @items.time_p@ true>@items.start_time@</if>
+                  <if @items.time_p;literal@ true>@items.start_time@</if>
                   @items.event_name@
                   <if @items.num_attachments@ gt 0><img src="/resources/calendar/images/attach.png" alt=""></if>
-                  <if @show_calendar_name_p@>
-                    <span class="cal-text-grey-sml"> [@items.calendar_name@]</span>
-                  </if>
+                  <if @show_calendar_name_p;literal@ true><span class="cal-text-grey-sml"> [@items.calendar_name@]</span></if>
                 </a>
               </div>
             </if>
@@ -54,7 +52,7 @@
         </td>
         </else>
 
-        <if @items.end_of_week_p@ true>
+        <if @items.end_of_week_p;literal@ true>
           </tr>
         </if>
 

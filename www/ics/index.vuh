@@ -8,7 +8,7 @@ ad_page_contract {
     @creation-date June 20, 2002
     @cvs-id $Id$
 } {
-    {all_occurences_p 0}
+    {all_occurrences_p 0}
 }
 
 set path [ad_conn path_info]
@@ -21,9 +21,15 @@ if {![regexp {([0-9]*)\.ics} $path all cal_item_id]} {
 
 permission::require_permission -object_id $cal_item_id -privilege read
 
-set ics_stuff [calendar::outlook::format_item -cal_item_id $cal_item_id -all_occurences_p $all_occurences_p]
+set ics_stuff [calendar::outlook::format_item -cal_item_id $cal_item_id -all_occurrences_p $all_occurrences_p]
 
 ns_return 200 application/x-msoutlook $ics_stuff
 
 # This is for testing
 # ns_return 200 text/plain $ics_stuff
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

@@ -17,7 +17,7 @@
        <multiple name="months">
          <tr>
          <group column="new_row_p">
-         <if @months.current_month_p@ true>
+         <if @months.current_month_p;literal@ true>
           <td class="months selected"><a href="@months.url@" title="#calendar.goto_months_name#">@months.name@</a></td>
          </if>
          <else>
@@ -39,28 +39,28 @@
 
       <tbody>
         <multiple name="days">
-          <if @days.beginning_of_week_p@ true>
+          <if @days.beginning_of_week_p;literal@ true>
             <tr>
           </if>
-          <if @days.active_p@ true>
-            <if @days.today_p@ true>
-              <td headers="day_@days.day_num@" class="today" onclick="javascript:location.href='@days.url@#calendar';" onkeypress="javascript:acs_KeypressGoto('@days.url@#calendar',event);">
+          <if @days.active_p;literal@ true>
+            <if @days.today_p;literal@ true>
+              <td headers="day_@days.day_num@" class="today" id="@days.id;literal@">
                 <a href="@days.url@#calendar" title="#calendar.goto_days_pretty_date#">@days.day_number@</a>
               </td>
             </if>
             <else>
-              <td headers="day_@days.day_num@" class="active" onclick="javascript:location.href='@days.url@#calendar';" onkeypress="javascript:acs_KeypressGoto('@days.url@#calendar',event);">
+              <td headers="day_@days.day_num@" class="active" id="@days.id;literal@">
                 <a href="@days.url@#calendar" title="#calendar.goto_days_pretty_date#">@days.day_number@</a>
               </td>
             </else>
           </if>
           <else>
-            <td headers="day_@days.day_num@" class="inactive" onclick="javascript:location.href='@days.url@#calendar';" onkeypress="javascript:acs_KeypressGoto('@days.url@#calendar',event);">
+            <td headers="day_@days.day_num@" class="inactive" id="@days.id;literal@">
               <a href="@days.url@#calendar" title="#calendar.goto_days_pretty_date#">@days.day_number@</a>
             </td>
           </else>
     
-          <if @days.end_of_week_p@ true>
+          <if @days.end_of_week_p;literal@ true>
             </tr>
           </if>
         </multiple>
@@ -69,7 +69,7 @@
  </table>
 
   <p>
-  <if @today_p@ true>
+  <if @today_p;literal@ true>
     #acs-datetime.Today#
   </if>
   <else>

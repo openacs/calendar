@@ -10,7 +10,7 @@ ad_page_contract {
     @cvs-id $Id$
 } {
     cal_item_id:naturalnum,notnull
-    {return_url "./"}
+    {return_url:localurl "./"}
     {days_of_week:multiple ""}
 } 
 
@@ -35,7 +35,7 @@ foreach dow {
     set dow_string "$dow_string <INPUT TYPE=checkbox name=days_of_week value=[lindex $dow 1] $checked_html id=\"cal_item:elements:interval_type:days_of_week:[lindex $dow 1]\" >[lindex $dow 0] &nbsp;\n"
 }
 
-set recurrance_options [list \
+set recurrence_options [list \
                             [list [_ calendar.day_s] day] \
                             [list "$dow_string [_ calendar.of_the_week]" week] \
                             [list "[_ calendar.day] $cal_item(day_of_month) [_ calendar.of_the_month]" month_by_date] \
@@ -55,13 +55,13 @@ ad_form -name cal_item  -export {return_url} -form {
 
     {interval_type:text(radio)
         {label ""}
-        {options $recurrance_options}
+        {options $recurrence_options}
     }
 
     {recur_until:date
         {label "[_ calendar.lt_Repeat_this_event_unt]"}
         {format "YYYY MM DD"}
-        {after_html {<input type="button" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');" onclick ="return showCalendarWithDateWidget('recur_until', 'y-m-d');"> \[<b>[_ calendar.y-m-d]</b>\]} 
+        {after_html {<input type="button" id="cal-item-recur-until" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');"> \[<b>[_ calendar.y-m-d]</b>\]} 
         }
         
     }
@@ -105,6 +105,15 @@ ad_form -name cal_item  -export {return_url} -form {
     ad_script_abort
 } -has_submit 1
 
+template::add_event_listener \
+    -id cal-item-recur-until \
+    -script {showCalendarWithDateWidget('recur_until', 'y-m-d');}
 
 ad_return_template
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

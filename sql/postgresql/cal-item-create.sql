@@ -176,7 +176,7 @@ BEGIN
     delete from 	cal_items
     where		cal_item_id = delete__cal_item_id;
  	
-	-- Erase all the priviledges
+	-- Erase all the privileges
     delete from 	acs_permissions
     where		object_id = delete__cal_item_id;
 

@@ -137,3 +137,8 @@ aa_register_case -cats api cal_item_edit_recurrence {
 
         }
 }
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

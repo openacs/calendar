@@ -12,3 +12,9 @@ set page_title "Add User"
 
 set context [list [list [export_vars -base permissions { object_id }] "Permissions"] $page_title]
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

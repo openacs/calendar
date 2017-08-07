@@ -55,11 +55,11 @@
 		</div>
 		<div class="form-item-wrapper">
 			<div class="form-label">
-				<strong>#calendar.Date_1#<if @cal_item.no_time_p@ eq 0> #calendar.and_Time#</if>:</strong>
+				<strong>#calendar.Date_1#<if @cal_item.no_time_p;literal@ false> #calendar.and_Time#</if>:</strong>
 			</div>
 			<div class="form-widget">                  
 				<a href="@goto_date_url@" title="#calendar.goto_cal_item_start_date#">@cal_item.pretty_short_start_date@</a>
-			    <if @cal_item.no_time_p@ eq 0>, #calendar.from# @cal_item.start_time@ #calendar.to# @cal_item.end_time@</if>
+			    <if @cal_item.no_time_p;literal@ false>, #calendar.from# @cal_item.start_time@ #calendar.to# @cal_item.end_time@</if>
 			</div>  
 		</div>
 		
@@ -83,7 +83,7 @@
 					<ul>
 						<%
 						foreach attachment $item_attachments {
-							template::adp_puts "<li><img src=\"/resources/acs-subsite/attach.png\"><a href=\"[lindex $attachment 2]\">[lindex $attachment 1]</a> &nbsp;\[<a href=\"[lindex $attachment 3]\">#attachments.remove#</a>\]</li>"
+							template::adp_puts "<li><img src=\"/resources/acs-subsite/attach.png\"><a href="\"[lindex" $attachment 2]\">[lindex $attachment 1]</a> &nbsp;\[<a href="\"[lindex" $attachment 3]\">#attachments.remove#</a>\]</li>"
 						}
 						%>
 					</ul>
@@ -93,12 +93,12 @@
 		</if>
 		
 		<div class="form-button">
-			<if @write_p@ true>
+			<if @write_p;literal@ true>
 		        <a href="@cal_item_new_url@" title="#calendar.edit#" class="button">#calendar.edit#</a>
 		        <a href="@cal_item_delete_url@" title="#calendar.delete#" class="button">#calendar.delete#</a>
 				@attachment_options;noquote@ 
 			 	<a href="ics/@cal_item_id@.ics" title="#calendar.sync_with_Outlook#" class="button">#calendar.sync_with_Outlook#</a>
-				<if @cal_item.recurrence_id@ not nil>(<a href="ics/@cal_item_id@.ics?all_occurences_p=1" title="#calendar.all_events#">#calendar.all_events#</a>)</if>
+				<if @cal_item.recurrence_id@ not nil>(<a href="ics/@cal_item_id@.ics?all_occurrences_p=1" title="#calendar.all_events#">#calendar.all_events#</a>)</if>
 		
 			</if>
 		</div>

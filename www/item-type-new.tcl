@@ -21,3 +21,9 @@ calendar::item_type_new -calendar_id $calendar_id -type $type
 ad_returnredirect "calendar-item-types?calendar_id=$calendar_id"
 
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

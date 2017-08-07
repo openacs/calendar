@@ -7,17 +7,27 @@ ad_page_contract {
     @creation-date May 29, 2002
     @cvs-id $Id$
 } {
-    {view {[parameter::get -parameter DefaultView -default day]}}
+    {view:word {[parameter::get -parameter DefaultView -default day]}}
     {date ""}
     {sort_by ""}
     {start_date ""}
-    {period_days:integer {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
+    {period_days:integer,notnull {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
 } -validate {
+    
     valid_date -requires { date } {
         if {$date ne "" } {
-            if {[catch {set date [clock format [clock scan $date] -format "%Y-%m-%d"]} err]} {
-                ad_complain "Your input was not valid. It has to be in the form YYYYMMDD."
+            if {[catch {set date [clock format [clock scan $date -format "%Y-%m-%d"] -format "%Y-%m-%d"]} err]
+                && [catch {set date [clock format [clock scan $date  -format "%Y%m%d"] -format "%Y-%m-%d"]} err]
+            } {
+                ad_complain "Your input was not valid. It has to be in the form YYYY-MM-DD."
             }
+        }
+    }
+    
+    valid_period_days  -requires { period_days } {
+        # Tcl allows in for relative times just 6 digits, including the "+"
+        if {$period_days > 99999} {
+            ad_complain "Invalid time period."
         }
     }
 }
@@ -58,15 +68,16 @@ if { $user_id eq 0 } {
 } else {
     set calendar_personal_p [calendar::personal_p -calendar_id [lindex [calendar::calendar_list -package_id $package_id  ] 0 1] ]
 }
-set notification_chunk [notification::display::request_widget \
-                            -type calendar_notif \
-                            -object_id $package_id \
-                            -pretty_name [ad_conn instance_name] \
-                            -url [ad_conn url] \
-                           ]
+set instance_name [ad_conn instance_name]
 
 # Header stuff
 template::head::add_css -href "/resources/calendar/calendar.css" -media all 
 template::head::add_css -alternate -href "/resources/calendar/calendar-hc.css" -title "highContrast"
 
 ad_return_template 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

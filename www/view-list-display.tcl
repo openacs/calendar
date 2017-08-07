@@ -4,38 +4,45 @@ if { ![info exists period_days] } {
      @author Sven Schmitt (s.lrn@gmx.net)
      @cvs-id $Id$
     } {
-	{period_days:integer {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
+	{period_days:integer,notnull {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
+    } -validate {
+        valid_period_days  -requires { period_days } {
+            # Tcl allows in for relative times just 6 digits, including the "+"
+            if {$period_days > 99999} {
+                ad_complain "Invalid time period."
+            }
+        }
     }
 }
 
-if { ![info exists show_calendar_name_p] } {
+if { ![info exists show_calendar_name_p] || $show_calendar_name_p eq "" } {
     set show_calendar_name_p 1
 }
-if { (![info exists sort_by] || $sort_by eq "") } {
+if { ![info exists sort_by] || $sort_by eq ""} {
     set sort_by "start_date"
 }
 
-if { (![info exists start_date] || $start_date eq "") } {
+if { ![info exists start_date] || $start_date eq "" } {
     set start_date [clock format [clock seconds] -format "%Y-%m-%d 00:00"]
+} elseif {[catch {clock scan $start_date} errorMsg]} {
+    ad_page_contract_handle_datasource_error "invalid start date"
+    ad_script_abort
 }
 
-if { (![info exists end_date] || $end_date eq "") } {
+if { ![info exists end_date] || $end_date eq "" } {
     set end_date [clock format [clock scan "+30 days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
+} elseif {[catch {clock scan $end_date} errorMsg]} {
+    ad_page_contract_handle_datasource_error "invalid end date"
+    ad_script_abort
 }
 
-if {([info exists calendar_id_list] && $calendar_id_list ne "")} {
+if { [info exists calendar_id_list] && $calendar_id_list ne "" } {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
 }
 
-#if { (![info exists period_days] || $period_days eq "") } {
-#    set period_days [parameter::get -parameter ListView_DefaultPeriodDays -default 31]
-#}  else {
-#    set end_date [clock format [clock scan "+${period_days} days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
-#}
 set end_date [clock format [clock scan "+${period_days} days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
-
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
@@ -230,7 +237,13 @@ set noprocessing_vars [list]
 ad_form -name frmdays -has_submit 1 -html {class "inline-form"} -export $noprocessing_vars -form {
     {period_days:integer,optional
         {label "[_ calendar.days]"}
-        {html {size 3} {maxlength 3} {class "cal-input-field"}}
+        {html {size 3 maxlength 3 class "cal-input-field"}}
         {value "$period_days"}
     }
 } -on_submit { }
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

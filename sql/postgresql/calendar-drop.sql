@@ -113,24 +113,23 @@ where 	privilege in (
 ------------------------------------------------
 
 DROP TABLE calendars;
-CREATE FUNCTION inline_0 ()
-RETURNS integer
-AS 'begin
-	PERFORM acs_attribute__drop_attribute (''calendar'',''owner_id'');
-	PERFORM acs_attribute__drop_attribute (''calendar'',''private_p'');
-	DELETE FROM acs_objects WHERE object_type = ''calendar'';
-	PERFORM acs_object_type__drop_type (''calendar'', ''f'');
+
+CREATE OR REPLACE FUNCTION inline_0 () RETURNS integer AS $$
+BEGIN
+	PERFORM acs_attribute__drop_attribute ('calendar','owner_id');
+	PERFORM acs_attribute__drop_attribute ('calendar','private_p');
+	DELETE FROM acs_objects WHERE object_type = 'calendar';
+	PERFORM acs_object_type__drop_type ('calendar', 'f');
 
 	return 0;
-    end;'
-LANGUAGE 'plpgsql';
+END;
+$$ LANGUAGE plpgsql;
 
 SELECT inline_0 ();
-
 DROP FUNCTION inline_0 ();
 
 
-DELETE FROM acs_objects WHERE object_type='calendar';
+DELETE FROM acs_objects WHERE object_type = 'calendar';
 
 DROP FUNCTION calendar__new (
        integer,            -- calendar.calendar_id%TYPE

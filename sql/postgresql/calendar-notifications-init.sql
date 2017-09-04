@@ -5,13 +5,12 @@
 --
 -- procedure inline_0/0
 --
-CREATE OR REPLACE FUNCTION inline_0(
-
-) RETURNS integer AS $$
-DECLARE
+create or replace function inline_0(
+) returns integer AS $$
+declare
         impl_id integer;
         v_notification_id   integer;
-BEGIN
+begin
         -- the notification type impl
         impl_id := acs_sc_impl__new (
                       'NotificationType',
@@ -64,7 +63,7 @@ BEGIN
         from notification_delivery_methods where short_name in ('email');
 
 	return (0);
-END;
+end;
 
 $$ LANGUAGE plpgsql;
 

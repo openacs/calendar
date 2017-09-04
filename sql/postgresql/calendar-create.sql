@@ -65,76 +65,76 @@
 --  calendar_ojbect 
 ----------------------------------------------------------- 
 
-CREATE FUNCTION inline_0()
-RETURNS integer
-AS 'declare
+create or replace function inline_0(
+) returns integer AS $$
+declare
 	attr_id acs_attributes.attribute_id%TYPE;
-    begin
+begin
 	PERFORM 
 	    acs_object_type__create_type(
-		''calendar'',	-- object_type
-		''Calendar'',	-- pretty_name
-		''Calendar'',	-- pretty_plural
-		''acs_object'',	-- supertype
-		''calendars'',	-- table_name
-		''calendar_id'',-- id_column
+		'calendar',	-- object_type
+		'Calendar',	-- pretty_name
+		'Calendar',	-- pretty_plural
+		'acs_object',	-- supertype
+		'calendars',	-- table_name
+		'calendar_id',  -- id_column
 		null,		-- package_name
-		''f'',		-- abstract_p
+		'f',		-- abstract_p
 		null,		-- type_extension_table
 		null		-- name_method
 	    );
 		
 	    attr_id := acs_attribute__create_attribute (
-		''calendar'',       -- object_type
-	        ''owner_id'',     -- attribute_name
-        	''integer'',         -- datatype
-	        ''Owner'',        -- pretty_name
-        	''Owners'',       -- pretty_plural
-	        null,                -- table_name (default)
-	        null,                -- column_name (default)
-        	null,                -- default_value (default)
-	        1,                   -- min_n_values (default)
-        	1,                   -- max_n_values (default)
-	        null,                -- sort_order (default)
-        	''type_specific'',   -- storage (default)
-	        ''f''                -- static_p (default)
+		'calendar',       -- object_type
+	        'owner_id',       -- attribute_name
+        	'integer',        -- datatype
+	        'Owner',          -- pretty_name
+        	'Owners',         -- pretty_plural
+	        null,             -- table_name (default)
+	        null,             -- column_name (default)
+        	null,             -- default_value (default)
+	        1,                -- min_n_values (default)
+        	1,                -- max_n_values (default)
+	        null,             -- sort_order (default)
+        	'type_specific',  -- storage (default)
+	        'f'               -- static_p (default)
 	    );
 
 	    attr_id := acs_attribute__create_attribute (
-		''calendar'',       -- object_type
-	        ''private_p'',     -- attribute_name
-        	''string'',         -- datatype
-	        ''Private Calendar'',        -- pretty_name
-        	''Private Calendars'',       -- pretty_plural
+		'calendar',          -- object_type
+	        'private_p',         -- attribute_name
+        	'string',            -- datatype
+	        'Private Calendar',  -- pretty_name
+        	'Private Calendars', -- pretty_plural
 	        null,                -- table_name (default)
 	        null,                -- column_name (default)
         	null,                -- default_value (default)
 	        1,                   -- min_n_values (default)
         	1,                   -- max_n_values (default)
 	        null,                -- sort_order (default)
-        	''type_specific'',   -- storage (default)
-	        ''f''                -- static_p (default)
+        	'type_specific',     -- storage (default)
+	        'f'                  -- static_p (default)
 	    );
 
 	    attr_id := acs_attribute__create_attribute (
-		''calendar'',       -- object_type
-	        ''calendar_name'',     -- attribute_name
-        	''string'',         -- datatype
-	        ''Calendar Name'',        -- pretty_name
-        	''Calendar Names'',       -- pretty_plural
+		'calendar',          -- object_type
+	        'calendar_name',     -- attribute_name
+        	'string',            -- datatype
+	        'Calendar Name',     -- pretty_name
+        	'Calendar Names',    -- pretty_plural
 	        null,                -- table_name (default)
 	        null,                -- column_name (default)
         	null,                -- default_value (default)
 	        1,                   -- min_n_values (default)
         	1,                   -- max_n_values (default)
 	        null,                -- sort_order (default)
-        	''type_specific'',   -- storage (default)
-	        ''f''                -- static_p (default)
+        	'type_specific',     -- storage (default)
+	        'f'                  -- static_p (default)
 	    );
 	    return 0;
 
-    end;' 
-LANGUAGE 'plpgsql';
+end;
+$$ LANGUAGE plpgsql;
 
 SELECT inline_0();
 
@@ -224,33 +224,26 @@ create table cal_item_types (
 
 select define_function_args ('calendar__new', 'calendar_id,calendar_name,object_type;calendar,owner_id,private_p,package_id,context_id,creation_date,creation_user,creation_ip');
 
-CREATE FUNCTION calendar__new (
-       integer,            -- calendar.calendar_id%TYPE
-       varchar(200),            -- calendar.calendar_name%TYPE
-       varchar,            -- acs_objects.object_type%TYPE
-       integer,            -- calendar.owner_id%TYPE
-       boolean,            -- calendar.private_p
-       integer,            -- calendar.package_id
-       integer,            -- acs_objects.context_id%TYPE
-       timestamptz,        -- acs_objects.creation_date%TYPE
-       integer,            -- acs_objects.creation_user%TYPE
-       varchar             -- acs_objects.creation_ip%TYPE
-)
-RETURNS integer 
-AS 'declare
-	v_calendar_id           calendars.calendar_id%TYPE;
-	new__calendar_id	alias for $1;
-	new__calendar_name	alias for $2;
-	new__object_type	alias for $3;
-	new__owner_id		alias for $4;
-	new__private_p		alias for $5;
-	new__package_id		alias for $6;
-	new__context_id		alias for $7;
-	new__creation_date	alias for $8;
-	new__creation_user	alias for $9;
-	new__creation_ip	alias for $10;
+--
+-- procedure calendar__new/10
+--
 
-    begin
+create or replace function calendar__new(
+   new__calendar_id integer,
+   new__calendar_name varchar(200),
+   new__object_type varchar, -- default 'calendar'
+   new__owner_id integer,
+   new__private_p boolean,
+   new__package_id integer,
+   new__context_id integer,
+   new__creation_date timestamptz,
+   new__creation_user integer,
+   new__creation_ip varchar
+
+) returns integer AS $$
+declare
+	v_calendar_id           calendars.calendar_id%TYPE;
+begin
         v_calendar_id := acs_object__new(
 		new__calendar_id,
 		new__object_type,
@@ -267,23 +260,27 @@ AS 'declare
 	PERFORM acs_permission__grant_permission (
               v_calendar_id,
               new__owner_id,
-              ''calendar_admin''
+              'calendar_admin'
         );
 
 
 	return v_calendar_id;
-    end;'
-LANGUAGE 'plpgsql';   
+end;
+$$ LANGUAGE plpgsql;
+
+
+--
+-- procedure calendar__delete/1
+--
 
 select define_function_args('calendar__delete','calendar_id');
 
-CREATE FUNCTION calendar__delete(
+create or replace function calendar__delete(
        integer            -- calendar.calendar_id%TYPE
-)
-RETURNS integer
-AS 'declare
+) returns integer AS $$
+declare
 	delete__calendar_id		alias for $1;
-    begin
+begin
 	delete from calendars
 	where calendar_id = delete__calendar_id;
 
@@ -302,8 +299,8 @@ AS 'declare
 	PERFORM acs_object__delete(delete__calendar_id);
 
     return 0;
-    end;'
-LANGUAGE 'plpgsql';
+end;
+$$ LANGUAGE plpgsql;
 	
 
 

@@ -11,8 +11,8 @@
 --  cal_item_ojbect 
 ----------------------------------------------------------
 
-CREATE OR REPLACE FUNCTION inline_0 () RETURNS integer AS $$
-BEGIN
+create or replace function inline_0 () returns integer AS $$
+begin
     PERFORM acs_object_type__create_type (
 	'cal_item',		-- object_type
  	'Calendar Item',	-- pretty_name
@@ -26,15 +26,15 @@ BEGIN
 	null			-- name_method
 	);
     return 0;
-END;
+end;
 $$ LANGUAGE plpgsql;
 
 SELECT inline_0 (); 
 
 DROP FUNCTION inline_0 ();
 
-CREATE OR REPLACE FUNCTION inline_1 ()  RETURNS integer AS $$
-BEGIN
+create or replace function inline_1 ()  returns integer AS $$
+begin
     PERFORM acs_attribute__create_attribute (
 	'cal_item',		-- object_type
 	'on_which_calendar',	-- attribute_name
@@ -51,7 +51,7 @@ BEGIN
  	'f'			-- static_p (default)
  	);
     return 0;
-END;
+end;
 $$ LANGUAGE plpgsql;
 
 SELECT inline_1 ();
@@ -109,7 +109,7 @@ create index cal_items_on_which_calendar_idx on cal_items (on_which_calendar);
 select define_function_args('cal_item__new','cal_item_id;null,on_which_calendar;null,name,description,html_p;null,status_summary;null,timespan_id;null,activity_id;null,recurrence_id;null,object_type;"cal_item",context_id;null,creation_date;now(),creation_user;null,creation_ip;null');
 
 
-CREATE OR REPLACE FUNCTION cal_item__new(
+create or replace function cal_item__new(
    new__cal_item_id integer,       -- default null
    new__on_which_calendar integer, -- default null
    new__name varchar,
@@ -126,11 +126,11 @@ CREATE OR REPLACE FUNCTION cal_item__new(
     integer,                       -- default null
    new__creation_ip varchar        -- default null
 
-) RETURNS integer AS $$
-DECLARE
+) returns integer AS $$
+declare
     v_cal_item_id		cal_items.cal_item_id%TYPE;
 
-BEGIN
+begin
     v_cal_item_id := acs_event__new(
 	new__cal_item_id,	-- event_id
 	new__name,		-- name
@@ -154,7 +154,7 @@ BEGIN
 
     return v_cal_item_id;
 
-END;
+end;
 $$ LANGUAGE plpgsql;
 
 
@@ -167,11 +167,11 @@ $$ LANGUAGE plpgsql;
 --
 select define_function_args('cal_item__delete','cal_item_id');
 
-CREATE OR REPLACE FUNCTION cal_item__delete(
+create or replace function cal_item__delete(
    delete__cal_item_id integer
-) RETURNS integer AS $$
-DECLARE
-BEGIN
+) returns integer AS $$
+declare
+begin
 	-- Erase the cal_item associated with the id
     delete from 	cal_items
     where		cal_item_id = delete__cal_item_id;
@@ -183,7 +183,7 @@ BEGIN
     PERFORM acs_event__delete(delete__cal_item_id);
 
     return 0;
-END;
+end;
 $$ LANGUAGE plpgsql;
 
 
@@ -193,12 +193,12 @@ $$ LANGUAGE plpgsql;
 --
 select define_function_args('cal_item__delete_all','recurrence_id');
 
-CREATE OR REPLACE FUNCTION cal_item__delete_all(
+create or replace function cal_item__delete_all(
    delete__recurrence_id integer
-) RETURNS integer AS $$
-DECLARE
+) returns integer AS $$
+declare
     v_event                             RECORD;
-BEGIN
+begin
     for v_event in 
 	select event_id from acs_events
         where recurrence_id= delete__recurrence_id
@@ -210,5 +210,5 @@ BEGIN
 
     return 0;
 
-END;
+end;
 $$ LANGUAGE plpgsql;

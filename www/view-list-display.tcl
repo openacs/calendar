@@ -91,16 +91,11 @@ set last_pretty_start_date ""
 set interval_limitation_clause [db_map dbqd.calendar.www.views.list_interval_limitation]
 set order_by_clause " order by $sort_by"
 set additional_limitations_clause ""
-if { ([info exists cal_system_type] && $cal_system_type ne "") } {
+if { [info exists cal_system_type] && $cal_system_type ne "" } {
     append additional_limitations_clause " and system_type = :cal_system_type "
 }
 
-if {[string match [db_type] "postgresql"]} {
-    set sysdate "now()"
-} else {
-    set sysdate "sysdate"
-}
-set additional_select_clause " , to_char($sysdate, 'YYYY-MM-DD HH24:MI:SS') as ansi_today, recurrence_id"
+set additional_select_clause " , to_char(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS') as ansi_today, recurrence_id"
 
 db_foreach dbqd.calendar.www.views.select_items {} {
     # Timezonize
@@ -219,22 +214,22 @@ if { [info exists export] && $export eq "print" } {
 }
 
 
-set noprocessing_vars [list]
-
-
-    set the_form [ns_getform]
-    if { $the_form ne "" } {
-	for { set i 0 } { $i < [ns_set size $the_form] } { incr i } {
-	    set varname [ns_set key $the_form $i]
-	    set varvalue [ns_set value $the_form $i]
-	    if {!($varname eq "period_days") && !([string match "__*" $varname]) && !([string match "form:*" $varname])} {
-		lappend noprocessing_vars [list $varname $varvalue]
-	    }
-	}
+set excluded_vars {}
+set the_form [ns_getform]
+if { $the_form ne "" } {
+    for { set i 0 } { $i < [ns_set size $the_form] } { incr i } {
+        set varname [ns_set key $the_form $i]
+        if {$varname eq "period_days" ||
+            [string match "__*" $varname] ||
+            [string match "form:*" $varname]} {
+            lappend excluded_vars $varname
+        }
     }
+}
 
+set exported_vars [export_vars -entire_form -no_empty -form -exclude $excluded_vars]
 
-ad_form -name frmdays -has_submit 1 -html {class "inline-form"} -export $noprocessing_vars -form {
+ad_form -name frmdays -has_submit 1 -html {class "inline-form"} -form {
     {period_days:integer,optional
         {label "[_ calendar.days]"}
         {html {size 3 maxlength 3 class "cal-input-field"}}

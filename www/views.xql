@@ -45,7 +45,7 @@
     where    e.timespan_id = s.timespan_id
     and      s.interval_id = t.interval_id
     and      e.activity_id = a.activity_id
-    and      start_date between $interval_limitation_clause
+    and      $interval_limitation_clause
     and      ci.cal_item_id= e.event_id
     and      cals.calendar_id = ci.on_which_calendar
     and      e.event_id = ci.cal_item_id
@@ -82,7 +82,7 @@
     where    e.timespan_id = s.timespan_id
     and      s.interval_id = t.interval_id
     and      e.activity_id = a.activity_id
-    and      start_date between $interval_limitation_clause
+    and      $interval_limitation_clause
     and      ci.cal_item_id = e.event_id
     and      cals.calendar_id = ci.on_which_calendar
     and      e.event_id = ci.cal_item_id
@@ -103,28 +103,28 @@
 
 <partialquery name="month_interval_limitation">      
   <querytext>
-    cast(:first_date_of_month_system as timestamp with time zone)
+    start_date between cast(:first_date_of_month_system as timestamp with time zone)
     and cast(:last_date_in_month_system as timestamp with time zone)
   </querytext>
 </partialquery>
 
 <partialquery name="day_interval_limitation">      
   <querytext>
-    to_date(:current_date,'YYYY-MM-DD') 
+    start_date between to_date(:current_date,'YYYY-MM-DD') 
     and to_date(:current_date,'YYYY-MM-DD') + cast('23 hours 59 minutes 59 seconds' as interval)
   </querytext>
 </partialquery>
 
 <partialquery name="week_interval_limitation">      
   <querytext>
-    to_date(:first_weekday_of_the_week_tz, 'YYYY-MM-DD HH24:MI:SS')
+    start_date between to_date(:first_weekday_of_the_week_tz, 'YYYY-MM-DD HH24:MI:SS')
     and to_date(:last_weekday_of_the_week_tz, 'YYYY-MM-DD HH24:MI:SS')
   </querytext>
 </partialquery>
 
 <partialquery name="list_interval_limitation">      
   <querytext>
-    cast(:start_date as timestamp with time zone)
+    start_date between cast(:start_date as timestamp with time zone)
     and cast(:end_date as timestamp with time zone)
   </querytext>
 </partialquery>

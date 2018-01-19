@@ -15,7 +15,7 @@
 <p>
 <strong>#calendar.Date#</strong> @cal_item.start_date@<br>
 <strong>#calendar.Time#</strong>
-<if @cal_item.time_p@>
+<if @cal_item.time_p;literal@ true>
   @cal_item.start_time@ - @cal_item.end_time@
 </if>
 <else>

@@ -19,8 +19,7 @@ permission::require_permission -object_id $calendar_id -privilege calendar_admin
 calendar::item_type_new -calendar_id $calendar_id -type $type
 
 ad_returnredirect "calendar-item-types?calendar_id=$calendar_id"
-
-
+ad_script_abort
 
 # Local variables:
 #    mode: tcl

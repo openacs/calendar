@@ -44,12 +44,7 @@ if {$calendar_permission eq "public"} {
     # This would be a special case where they'd have to select their audience first
     ad_returnredirect  "one?action=permission&calendar_id=$calendar_id&calendar_permission=private"
 }
-
-
-
-
-
-
+ad_script_abort
 
 # Local variables:
 #    mode: tcl

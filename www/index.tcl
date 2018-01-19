@@ -21,6 +21,7 @@ if { ![calendar::have_private_p -party_id $user_id] } {
 } 
 
 ad_returnredirect "view"    
+ad_script_abort
 
 # Local variables:
 #    mode: tcl

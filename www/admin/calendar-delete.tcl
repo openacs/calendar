@@ -9,7 +9,7 @@ ad_page_contract {
 calendar::delete -calendar_id $calendar_id
 
 ad_returnredirect .
-
+ad_script_abort
 
 # Local variables:
 #    mode: tcl

@@ -12,6 +12,7 @@ ad_page_contract {
 calendar::item::delete_recurrence -recurrence_id $recurrence_id
 
 ad_returnredirect $return_url
+ad_script_abort
 
 # Local variables:
 #    mode: tcl

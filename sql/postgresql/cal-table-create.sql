@@ -77,7 +77,7 @@ create table cal_party_prefs (
                                 ),
           -- unique constraint between calendar_id and party_id
           -- this ensures that each party has only one set of 
-          -- perferences per calendar
+          -- preferences per calendar
         constraint cal_party_prefs_un unique(calendar_id, party_id)
 );
 

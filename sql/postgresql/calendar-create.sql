@@ -22,7 +22,7 @@
 
   select acs_privilege__create_privilege('cal_item_create', 'Add an new item', null); 
   select acs_privilege__create_privilege('cal_item_read',   'view an cal_item', null);
-  select acs_privilege__create_privilege('cal_item_write',  'Edit an exsiting cal_item', null);
+  select acs_privilege__create_privilege('cal_item_write',  'Edit an existing cal_item', null);
   select acs_privilege__create_privilege('cal_item_delete', 'Delete cal_item', null );
   select acs_privilege__create_privilege('cal_item_invite', 'Allow others to view cal_item', null); 
 
@@ -39,8 +39,8 @@
   select acs_privilege__add_child('read', 'calendar_show');         
 	
   select acs_privilege__create_privilege('calendar_create', 'Create a new calendar', null);
-  select acs_privilege__create_privilege('calendar_read', 'View items on an exsiting calendar', null);	
-  select acs_privilege__create_privilege('calendar_write', 'Edit items of an exsiting calendar', null);
+  select acs_privilege__create_privilege('calendar_read', 'View items on an existing calendar', null);	
+  select acs_privilege__create_privilege('calendar_write', 'Edit items of an existing calendar', null);
   select acs_privilege__create_privilege('calendar_delete','Delete an calendar', null);
 
   select acs_privilege__add_child('create', 'calendar_create');

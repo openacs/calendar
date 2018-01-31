@@ -19,7 +19,7 @@
 begin
         acs_privilege.create_privilege('cal_item_create', 'Add an new item'); 
         acs_privilege.create_privilege('cal_item_read',   'view an cal_item');
-        acs_privilege.create_privilege('cal_item_write',  'Edit an exsiting cal_item');
+        acs_privilege.create_privilege('cal_item_write',  'Edit an existing cal_item');
         acs_privilege.create_privilege('cal_item_delete', 'Delete cal_item' );
         acs_privilege.create_privilege('cal_item_invite', 'Allow others to view cal_item'); 
 
@@ -56,15 +56,15 @@ show errors
   -- creating the basic set of permissions for calendar. 
   --
   -- 1. calendar_create: make a new calendar 
-  -- 2. calendar_read: can view all items on an exsiting calendar
-  -- 3. calendar_write: can edit all items on an exsiting calendar 
+  -- 2. calendar_read: can view all items on an existing calendar
+  -- 3. calendar_write: can edit all items on an existing calendar 
   -- 4. calendar_delete: delete an existing calendar 
 
 
 begin
         acs_privilege.create_privilege('calendar_create', 'Create a new calendar'); 
-        acs_privilege.create_privilege('calendar_read', 'View items on an exsiting calendar');
-        acs_privilege.create_privilege('calendar_write', 'Edit items of an exsiting calendar');
+        acs_privilege.create_privilege('calendar_read', 'View items on an existing calendar');
+        acs_privilege.create_privilege('calendar_write', 'Edit items of an existing calendar');
         acs_privilege.create_privilege('calendar_delete','Delete an calendar' );
 
 

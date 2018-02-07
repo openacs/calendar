@@ -209,25 +209,26 @@ for {set i 1} {$i <= $num_items } {incr i} {
 db_1row dbqd.calendar.www.views.select_day_info {}
 
 
-set dates [lc_time_fmt $date "%q"]
+set dates         [lc_time_fmt $date "%q"]
 set curr_day_name [lc_time_fmt $date "%A"]
-set curr_month [lc_time_fmt $date "%B"]
-set curr_day [lc_time_fmt $date "%d"]
-set curr_year [lc_time_fmt $date "%Y"]
+set curr_month    [lc_time_fmt $date "%B"]
+set curr_day      [lc_time_fmt $date "%d"]
+set curr_year     [lc_time_fmt $date "%Y"]
 
 #Calendar grid.
+set return_url [ad_return_url]
 set grid_start $adjusted_start_display_hour
 set grid_first_hour [lc_time_fmt "$current_date $grid_start:00:00" "%X"]
 set grid_hour $grid_start
 set grid_first_add_url [export_vars -base ${calendar_url}cal-item-new \
-                           {{date $current_date} {start_time $grid_hour}}]
+                           {{date $current_date} {start_time $grid_hour} return_url}]
 incr grid_start
 
 multirow create grid hour add_url
 for { set grid_hour $grid_start } { $grid_hour <= $adjusted_end_display_hour } { incr grid_hour } {
     set localized_grid_hour [lc_time_fmt "$current_date $grid_hour:00:00" "%X"]
     multirow append grid $localized_grid_hour \
-        [export_vars -base ${calendar_url}cal-item-new {{date $current_date} {start_time $grid_hour}}]
+        [export_vars -base ${calendar_url}cal-item-new {{date $current_date} {start_time $grid_hour} return_url}]
 }
 
 if { [info exists export] && $export eq "print" } {

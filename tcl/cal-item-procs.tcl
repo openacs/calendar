@@ -148,14 +148,14 @@ ad_proc -public calendar::item::add_recurrence {
 } {
     db_transaction {
         set recurrence_id [db_exec_plsql create_recurrence {}]
-        
+
         db_dml update_event {}
-        
         db_exec_plsql insert_instances {}
         
         # Make sure they're all in the calendar!
         db_dml insert_cal_items {}
     }
+    return $recurrence_id
 }
 
 
@@ -320,7 +320,7 @@ ad_proc -public calendar::item::edit_recurrence {
     }
 }
 
-ad_proc -public calendar_item_add_recurrence {
+ad_proc -public -deprecated calendar_item_add_recurrence {
     {-cal_item_id:required}
     {-interval_type:required}
     {-every_n:required}
@@ -328,20 +328,16 @@ ad_proc -public calendar_item_add_recurrence {
     {-recur_until ""}
 } {
     Adds a recurrence for a calendar item
-} {
-    # We do things in a transaction
-    db_transaction {
-        set recurrence_id [db_exec_plsql create_recurrence {}]
-        
-        db_dml update_event "update acs_events set recurrence_id= :recurrence_id where event_id= :cal_item_id"
 
-        db_exec_plsql insert_instances {}
-        
-        # Make sure they're all in the calendar!
-        db_dml insert_cal_items "
-        insert into cal_items (cal_item_id, on_which_calendar)
-        select event_id, (select on_which_calendar as calendar_id from cal_items where cal_item_id = :cal_item_id) from acs_events where recurrence_id= :recurrence_id and event_id <> :cal_item_id"
-    }
+    @see calendar::item::add_recurrence
+} {
+    return [calendar::item::add_recurrence \
+                -cal_item_id $cal_item_id \
+                -interval_type $interval_type \
+                -every_n $every_n \
+                -days_of_week $days_of_week \
+                -recur_until $recur_until
+           ]
 }
 
 # Local variables:

@@ -1,13 +1,28 @@
+ad_include_contract {
+    Display one week calendar view
+
+    Expects:
+      date (empty string okay): YYYY-MM-DD
+      show_calendar_name_p (optional): 0 or 1
+      calendar_id_list: optional list of calendar_ids
+      export: may be "print"
+} {
+    {date ""}
+    {show_calendar_name_p:boolean 1}
+    {calendar_id_list ""}
+    {export ""}
+    {return_url:optional}
+}
 
 set system_type ""
-if {![info exists date] || $date eq ""} {
+if {$date eq ""} {
     # Default to today's date in the users (the connection) timezone
     set server_now_time [dt_systime]
     set user_now_time [lc_time_system_to_conn $server_now_time]
     set date [lc_time_fmt $user_now_time "%x"]
 }
 
-if { [info exists export] && $export ne "" } {
+if { $export ne "" } {
     set exporting_p 1
 } else {
     set exporting_p 0
@@ -19,11 +34,8 @@ if {![info exists return_url]} {
     set return_url [ad_urlencode "../"]
 }
 
-if { ![info exists show_calendar_name_p] } {
-    set show_calendar_name_p 1
-}
 
-if {[info exists calendar_id_list] && $calendar_id_list ne ""} {
+if {$calendar_id_list ne ""} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
@@ -167,7 +179,9 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                      -first_julian_date_of_month $first_julian_date_of_month]
 
             set current_day_ansi [dt_julian_to_ansi $current_day]
-            set add_url  [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}]
+            set add_url  [export_vars -base ${calendar_url}cal-item-new {
+                {date $current_day_ansi} {start_time ""} {end_time ""}
+            }]
             multirow append items \
                 "" \
                 "" \
@@ -212,10 +226,14 @@ db_foreach dbqd.calendar.www.views.select_items {} {
              -first_julian_date_of_month $first_julian_date_of_month]
 
     set current_day_ansi [dt_julian_to_ansi $current_day]
-    set add_url [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}]    
+    set add_url [export_vars -base ${calendar_url}cal-item-new {
+        {date $current_day_ansi} {start_time ""} {end_time ""}
+    }]
     multirow append items \
         $name \
-        [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {return_url {cal_item_id $item_id}}] \
+        [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {
+            return_url {cal_item_id $item_id}
+        }] \
         $description \
         $calendar_name \
         [lc_time_fmt $current_day_ansi %Q] \
@@ -262,7 +280,9 @@ if { !$exporting_p } {
                  -first_julian_date_of_month $first_julian_date_of_month]
 
         set current_day_ansi [dt_julian_to_ansi $current_day]
-        set add_url [export_vars -base ${calendar_url}cal-item-new {{date $current_day_ansi} {start_time ""} {end_time ""}}]
+        set add_url [export_vars -base ${calendar_url}cal-item-new {
+            {date $current_day_ansi} {start_time ""} {end_time ""}
+        }]
 
         multirow append items \
             "" \
@@ -333,7 +353,7 @@ if { !$exporting_p } {
     }
 }
 
-if { [info exists export] && $export eq "print" } {
+if { $export eq "print" } {
     set print_html [template::adp_parse [acs_root_dir]/packages/calendar/www/view-print-display [list &items items show_calendar_name_p $show_calendar_name_p]]
     ns_return 200 text/html $print_html
     ad_script_abort

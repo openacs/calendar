@@ -1,42 +1,45 @@
-if { ![info exists period_days] } {
-    ad_page_contract  {
-     Some documentation.
-     @author Sven Schmitt (s.lrn@gmx.net)
-     @cvs-id $Id$
-    } {
-	{period_days:integer,notnull {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
-    } -validate {
-        valid_period_days  -requires { period_days } {
-            # Tcl allows in for relative times just 6 digits, including the "+"
-            if {$period_days > 99999} {
-                ad_complain "Invalid time period."
-            }
+ad_include_contract {
+    Display list calendar view
+
+    Expects:
+      date: ignored, looks like passed ni for symmetry
+      start_date: startinig date for the list
+      period_days:integer
+      show_calendar_name_p (optional): 0 or 1
+      calendar_id_list: optional list of calendar_ids
+      export: may be "print"
+} {
+    {period_days:integer,notnull {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
+    {show_calendar_name_p:boolean 1}
+    {sort_by "start_date"}
+    {start_date {[clock format [clock seconds] -format "%Y-%m-%d 00:00"]}}
+    {cal_system_type ""}
+    {date:optional}
+    {calendar_id_list ""}
+    {export ""}
+    {return_url:optional}
+} -validate {
+    valid_period_days -requires { period_days } {
+        # Tcl allows in for relative times just 6 digits, including the "+"
+        if {$period_days > 99999} {
+            ad_complain "Invalid time period"
+        }
+    }
+    valid_start_date -requires { start_date } {
+        if {[catch {clock scan $start_date} errorMsg]} {
+            ad_complain "invalid start date"
         }
     }
 }
 
-if { ![info exists show_calendar_name_p] || $show_calendar_name_p eq "" } {
-    set show_calendar_name_p 1
-}
-if { ![info exists sort_by] || $sort_by eq ""} {
+#
+# sort_by is passed down, maybe as empty
+#
+if {$sort_by eq ""} {
     set sort_by "start_date"
 }
 
-if { ![info exists start_date] || $start_date eq "" } {
-    set start_date [clock format [clock seconds] -format "%Y-%m-%d 00:00"]
-} elseif {[catch {clock scan $start_date} errorMsg]} {
-    ad_page_contract_handle_datasource_error "invalid start date"
-    ad_script_abort
-}
-
-if { ![info exists end_date] || $end_date eq "" } {
-    set end_date [clock format [clock scan "+30 days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
-} elseif {[catch {clock scan $end_date} errorMsg]} {
-    ad_page_contract_handle_datasource_error "invalid end date"
-    ad_script_abort
-}
-
-if { [info exists calendar_id_list] && $calendar_id_list ne "" } {
+if { $calendar_id_list ne "" } {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
@@ -91,7 +94,7 @@ set last_pretty_start_date ""
 set interval_limitation_clause [db_map dbqd.calendar.www.views.list_interval_limitation]
 set order_by_clause " order by $sort_by"
 set additional_limitations_clause ""
-if { [info exists cal_system_type] && $cal_system_type ne "" } {
+if { $cal_system_type ne "" } {
     append additional_limitations_clause " and system_type = :cal_system_type "
 }
 
@@ -141,7 +144,9 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         set today ""
     }
 
-    set event_url [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {return_url {cal_item_id $item_id}}]
+    set event_url [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {
+        return_url {cal_item_id $item_id}
+    }]
     
     if { !$show_calendar_name_p } {
         set calendar_name ""
@@ -207,8 +212,9 @@ foreach i {1 7 14 21 30 60} {
     set period_url_$i "[export_vars -base $self_url -url -entire_form {{period_days $i}}]\#calendar"
 }
 
-if { [info exists export] && $export eq "print" } {
-    set print_html [template::adp_parse [acs_root_dir]/packages/calendar/www/view-print-display [list &items items show_calendar_name_p $show_calendar_name_p]]
+if { $export eq "print" } {
+    set print_html [template::adp_parse [acs_root_dir]/packages/calendar/www/view-print-display \
+                        [list &items items show_calendar_name_p $show_calendar_name_p]]
     ns_return 200 text/html $print_html
     ad_script_abort
 }

@@ -1,14 +1,30 @@
+ad_include_contract {
+    Display one day calendar view
+
+    Expects:
+      date (required but empty string okay): YYYY-MM-DD
+      show_calendar_name_p (optional): 0 or 1
+      start_display_hour (optional): 0-23
+      end_display_hour (optional): 0-23
+      calendar_id_list: optional list of calendar_ids
+      export: may be "print"
+} {
+    {date}
+    {show_calendar_name_p:boolean 1}
+    {start_display_hour:integer 0}
+    {end_display_hour:integer 23}
+    {calendar_id_list ""}
+    {cal_system_type ""}
+    {export ""}
+    {return_url:optional}    
+}
+
 # FIXME from sloanspace calendar, they have added a system_type attribute to
 # cal_items table, which can be null, class, community, or personal
 # this is used to figure out which CSS class to use, for now we set to 
 # empty string to use generic cal-Item css class DAVEB 20070121
 set system_type ""
 
-#Expects:
-#  date (required but empty string okay): YYYY-MM-DD
-#  show_calendar_name_p (optional): 0 or 1
-#  start_display_hour (optional): 0-23
-#  end_display_hour (optional): 0-23
 
 #Display constants, should match up with default styles in calendar.css.
 set hour_height_inside 43
@@ -18,22 +34,8 @@ set bump_right_base 0
 set bump_right_delta 155
 set bump_right_units px
 
-set current_date $date
-set pretty_date [lc_time_fmt $current_date %Q]
 
-if { ![info exists show_calendar_name_p] } {
-    set show_calendar_name_p 1
-}
-
-if { ![info exists start_display_hour]} {
-    set start_display_hour 0
-}
-
-if { ![info exists end_display_hour]} {
-    set end_display_hour 23
-}
-
-if {[info exists calendar_id_list] && $calendar_id_list ne ""} {
+if {$calendar_id_list ne ""} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
@@ -45,10 +47,11 @@ if {$date eq ""} {
     set user_now_time [lc_time_system_to_conn $server_now_time]
     set date [lc_time_fmt $user_now_time "%F"]
 }
+set current_date $date
+set pretty_date [lc_time_fmt $current_date %Q]
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
-
 
 multirow create items \
     all_day_p \
@@ -72,7 +75,7 @@ set previous_intervals [list]
 # Loop through the items without time
 
 set additional_limitations_clause " and to_char(start_date, 'HH24:MI') = to_char(end_date, 'HH24:MI')"
-if { ([info exists cal_system_type] && $cal_system_type ne "") } {
+if { $cal_system_type ne "" } {
     append additional_limitations_clause " and system_type = :cal_system_type "
 }
 set additional_select_clause ""
@@ -84,7 +87,6 @@ set interval_limitation_clause [db_map dbqd.calendar.www.views.day_interval_limi
 #query but slows this one.
 db_foreach dbqd.calendar.www.views.select_all_day_items {} {
 
-
     # Localize
     set pretty_weekday [lc_time_fmt $ansi_start_date "%A"]
     set pretty_start_date [lc_time_fmt $ansi_start_date "%x"]
@@ -92,7 +94,9 @@ db_foreach dbqd.calendar.www.views.select_all_day_items {} {
     set pretty_start_time [lc_time_fmt $ansi_start_date "%X"]
     set pretty_end_time [lc_time_fmt $ansi_end_date "%X"]
     
-    set event_url [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {return_url {cal_item_id $item_id}}]
+    set event_url [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {
+        return_url {cal_item_id $item_id}
+    }]
 
     #height will be overwritten once we know how the vertical hour span.
     multirow append items 1 "calendar-${system_type}Item" \
@@ -114,7 +118,7 @@ db_foreach dbqd.calendar.www.views.select_all_day_items {} {
 }
 
 set additional_limitations_clause " and to_char(start_date, 'HH24:MI') <> to_char(end_date, 'HH24:MI')"
-if { [info exists cal_system_type] && $cal_system_type ne "" } {
+if { $cal_system_type ne "" } {
     append additional_limitations_clause " and system_type = :cal_system_type "
 }
 set order_by_clause " order by to_char(start_date,'HH24:MI')"
@@ -154,7 +158,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     }
 
     set top [expr {($start_hour * ($hour_height_inside+$hour_height_sep)) 
-                       + ($start_minutes*$hour_height_inside/60)}]
+                   + ($start_minutes*$hour_height_inside/60)}]
     set bottom [expr {($end_hour * ($hour_height_inside+$hour_height_sep)) 
                       + ($end_minutes*$hour_height_inside/60)}]
     set height [expr {$bottom - $top - 2}]
@@ -164,7 +168,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         if { ($start_seconds >= $previous_start && $start_seconds < $previous_end)
              || ($previous_start >= $start_seconds && $previous_start < $end_seconds)
          } {
-                incr bump_right $bump_right_delta
+            incr bump_right $bump_right_delta
         }
     }
 
@@ -208,7 +212,6 @@ for {set i 1} {$i <= $num_items } {incr i} {
 
 db_1row dbqd.calendar.www.views.select_day_info {}
 
-
 set dates         [lc_time_fmt $date "%q"]
 set curr_day_name [lc_time_fmt $date "%A"]
 set curr_month    [lc_time_fmt $date "%B"]
@@ -220,8 +223,10 @@ set return_url [ad_return_url]
 set grid_start $adjusted_start_display_hour
 set grid_first_hour [lc_time_fmt "$current_date $grid_start:00:00" "%X"]
 set grid_hour $grid_start
-set grid_first_add_url [export_vars -base ${calendar_url}cal-item-new \
-                           {{date $current_date} {start_time $grid_hour} return_url}]
+set grid_first_add_url [export_vars -base ${calendar_url}cal-item-new {
+    {date $current_date} {start_time $grid_hour} return_url
+}]
+
 incr grid_start
 
 multirow create grid hour add_url

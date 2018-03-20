@@ -1,6 +1,19 @@
-#Expects:
-#  date (required but empty string okay): YYYY-MM-DD
-#  show_calendar_name_p (optional): 0 or 1
+ad_include_contract {
+    Display one week calendar view
+
+    Expects:
+      date (required but empty string okay): YYYY-MM-DD
+      show_calendar_name_p (optional): 0 or 1
+      calendar_id_list: optional list of calendar_ids
+      export: may be "print"
+} {
+    {date}
+    {show_calendar_name_p:boolean 1}
+    {calendar_id_list ""}
+    {cal_system_type ""}
+    {export ""}
+    {return_url:optional}    
+}
 
 #Display constants, should match up with default styles in calendar.css.
 set day_width 70
@@ -23,13 +36,7 @@ for {set i 0} {$i < 10} {incr i} {
     set day_width_$i $day_width
 }
 
-set current_date $date
-
-if { ![info exists show_calendar_name_p] } {
-    set show_calendar_name_p 1
-}
-
-if {([info exists calendar_id_list] && $calendar_id_list ne "")} {
+if {$calendar_id_list ne ""} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
 } else {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
@@ -41,6 +48,7 @@ if {$date eq ""} {
     set user_now_time [lc_time_system_to_conn $server_now_time]
     set date [lc_time_fmt $user_now_time "%x"]
 }
+set current_date $date
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
@@ -89,7 +97,7 @@ set order_by_clause " order by to_char(start_date, 'J'), to_char(start_date,'HH2
 set interval_limitation_clause [db_map dbqd.calendar.www.views.week_interval_limitation]
 set additional_limitations_clause ""
 set additional_select_clause [db_map dow]
-if { ([info exists cal_system_type] && $cal_system_type ne "") } {
+if { $cal_system_type ne "" } {
     append additional_limitations_clause " and system_type = :cal_system_type "
 }
 
@@ -296,7 +304,7 @@ for {set i 0} {$i < 7} {incr i} {
     incr week_width [set day_width_$i]
 }
 
-if { [info exists export] && $export eq "print" } {
+if { $export eq "print" } {
     set print_html [template::adp_parse [acs_root_dir]/packages/calendar/www/view-print-display [list &items items show_calendar_name_p $show_calendar_name_p]]
     ns_return 200 text/html $print_html
     ad_script_abort

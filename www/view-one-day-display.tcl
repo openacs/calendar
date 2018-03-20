@@ -16,12 +16,12 @@ ad_include_contract {
     {calendar_id_list ""}
     {cal_system_type ""}
     {export ""}
-    {return_url:optional}    
+    {return_url:optional}
 }
 
 # FIXME from sloanspace calendar, they have added a system_type attribute to
 # cal_items table, which can be null, class, community, or personal
-# this is used to figure out which CSS class to use, for now we set to 
+# this is used to figure out which CSS class to use, for now we set to
 # empty string to use generic cal-Item css class DAVEB 20070121
 set system_type ""
 
@@ -36,9 +36,9 @@ set bump_right_units px
 
 
 if {$calendar_id_list ne ""} {
-    set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar]
 } else {
-    set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar]
 }
 
 if {$date eq ""} {
@@ -80,7 +80,7 @@ if { $cal_system_type ne "" } {
 }
 set additional_select_clause ""
 set order_by_clause " order by name"
-set interval_limitation_clause [db_map dbqd.calendar.www.views.day_interval_limitation] 
+set interval_limitation_clause [db_map dbqd.calendar.www.views.day_interval_limitation]
 
 #AG: the "select_all_day_items" query is identical to "select_items"
 #just without the Oracle +ORDERED hint, which speeds every other
@@ -93,7 +93,7 @@ db_foreach dbqd.calendar.www.views.select_all_day_items {} {
     set pretty_end_date [lc_time_fmt $ansi_end_date "%x"]
     set pretty_start_time [lc_time_fmt $ansi_start_date "%X"]
     set pretty_end_time [lc_time_fmt $ansi_end_date "%X"]
-    
+
     set event_url [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {
         return_url {cal_item_id $item_id}
     }]
@@ -112,7 +112,7 @@ db_foreach dbqd.calendar.www.views.select_all_day_items {} {
         0 \
         0 \
         "left: ${bump_right_base}${bump_right_units};" \
-	$num_attachments
+        $num_attachments
 
     incr bump_right_base $bump_right_delta
 }
@@ -142,8 +142,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     set start_time [lc_time_fmt $ansi_start_date "%X"]
     set end_time [lc_time_fmt $ansi_end_date "%X"]
 
-    scan [lc_time_fmt $ansi_start_date "%H"] %d start_hour 
-    scan [lc_time_fmt $ansi_end_date "%H"] %d end_hour 
+    scan [lc_time_fmt $ansi_start_date "%H"] %d start_hour
+    scan [lc_time_fmt $ansi_end_date "%H"] %d end_hour
 
     if { $start_hour < $adjusted_start_display_hour
          && [string range $ansi_start_date 0 9] eq [string range $ansi_end_date 0 9]
@@ -157,9 +157,9 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         set adjusted_end_display_hour $end_hour
     }
 
-    set top [expr {($start_hour * ($hour_height_inside+$hour_height_sep)) 
+    set top [expr {($start_hour * ($hour_height_inside+$hour_height_sep))
                    + ($start_minutes*$hour_height_inside/60)}]
-    set bottom [expr {($end_hour * ($hour_height_inside+$hour_height_sep)) 
+    set bottom [expr {($end_hour * ($hour_height_inside+$hour_height_sep))
                       + ($end_minutes*$hour_height_inside/60)}]
     set height [expr {$bottom - $top - 2}]
 
@@ -191,8 +191,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         $top \
         $height \
         "left: ${bump_right}${bump_right_units};" \
-	$num_attachments
-    
+        $num_attachments
+
     lappend previous_intervals $start_seconds $end_seconds
 }
 

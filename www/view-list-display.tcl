@@ -40,9 +40,9 @@ if {$sort_by eq ""} {
 }
 
 if { $calendar_id_list ne "" } {
-    set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar]
 } else {
-    set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar]
 }
 
 set end_date [clock format [clock scan "+${period_days} days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
@@ -66,7 +66,7 @@ if {$start_date ne "" && $end_date ne ""} {
     set title "[_ acs-datetime.Items_from] [lc_time_fmt $start_date "%q"] [_ acs-datetime.to] [lc_time_fmt $end_date "%q"]"
 }
 
-set today_date [dt_sysdate]    
+set today_date [dt_sysdate]
 set today_ansi_list [dt_ansi_to_list $today_date]
 set today_julian_date [dt_ansi_to_julian [lindex $today_ansi_list 0] [lindex $today_ansi_list 1] [lindex $today_ansi_list 2]]
 
@@ -147,22 +147,22 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     set event_url [export_vars -base [site_node::get_url_from_object_id -object_id $cal_package_id]cal-item-view {
         return_url {cal_item_id $item_id}
     }]
-    
+
     if { !$show_calendar_name_p } {
         set calendar_name ""
     }
 
     multirow append items \
-	$name \
-	$event_url \
-	$calendar_name \
-	$item_type \
-	$pretty_weekday \
-	$pretty_start_date \
-	$pretty_end_date \
-	$pretty_start_time \
-	$pretty_end_time \
-	$today \
+        $name \
+        $event_url \
+        $calendar_name \
+        $item_type \
+        $pretty_weekday \
+        $pretty_start_date \
+        $pretty_end_date \
+        $pretty_start_time \
+        $pretty_end_time \
+        $today \
     $description \
         $calendar_name
 }

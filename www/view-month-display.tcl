@@ -36,9 +36,9 @@ if {![info exists return_url]} {
 
 
 if {$calendar_id_list ne ""} {
-    set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar]
 } else {
-    set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar]
 }
 
 set date_list  [dt_ansi_to_list $date]
@@ -50,7 +50,7 @@ set month_string [lindex [dt_month_names] $this_month-1]
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
-set today_date [dt_sysdate]    
+set today_date [dt_sysdate]
 
 set previous_month_url ?[export_vars {{view month} {date $prev_month} page_num}]
 set next_month_url ?[export_vars {{view month} {date $next_month} page_num}]
@@ -160,7 +160,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         set ansi_end_date [lc_time_system_to_conn $ansi_end_date]
 
     }
-    
+
     # Localize
     set pretty_weekday    [lc_time_fmt $ansi_start_date "%A"]
     set pretty_start_date [lc_time_fmt $ansi_start_date "%x"]
@@ -216,7 +216,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                     acs_KeypressGoto('$add_url',event);
                 });
             }]
-        } 
+        }
     }
 
     array set display_information \
@@ -254,7 +254,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         $num_attachments \
         [lc_time_fmt $current_day_ansi %w] \
         month-calendar-$current_day_ansi
-    
+
     add_body_script -script [subst {
         var e =  document.getElementById('month-calendar-$current_day_ansi');
         e.addEventListener('click', function (event) {
@@ -307,7 +307,7 @@ if { !$exporting_p } {
             "" \
             [lc_time_fmt $current_day_ansi %w] \
             month-calendar-$current_day_ansi
-        
+
             add_body_script -script [subst {
                 var e =  document.getElementById('month-calendar-$current_day_ansi');
                 e.addEventListener('click', function (event) {
@@ -318,12 +318,12 @@ if { !$exporting_p } {
                     acs_KeypressGoto('$add_url',event);
                 });
             }]
-        
+
     }
 
     # Add cells for remaining days outside the month
     set remaining_days [expr {($first_day_of_week + 6 - $current_day % 7) % 7}]
-    
+
     if {$remaining_days > 0} {
         for {} {$current_day <= $last_julian_date_in_month + $remaining_days} {incr current_day} {
             multirow append items \

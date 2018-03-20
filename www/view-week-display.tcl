@@ -12,7 +12,7 @@ ad_include_contract {
     {calendar_id_list ""}
     {cal_system_type ""}
     {export ""}
-    {return_url:optional}    
+    {return_url:optional}
 }
 
 #Display constants, should match up with default styles in calendar.css.
@@ -37,9 +37,9 @@ for {set i 0} {$i < 10} {incr i} {
 }
 
 if {$calendar_id_list ne ""} {
-    set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar] 
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar]
 } else {
-    set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar] 
+    set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar]
 }
 
 if {$date eq ""} {
@@ -64,7 +64,7 @@ set last_us_weekday [lindex [lc_get -locale en_US day] [expr {($first_day_of_wee
 
 db_1row select_weekday_info {}
 db_1row select_week_info {}
-    
+
 set current_weekday 0
 
 #s/item_id/url
@@ -140,7 +140,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         set max_bumps 0
         set previous_intervals [list]
     }
-    
+
     if { $no_time_p } {
         #All day event
         set top_hour 0
@@ -227,7 +227,7 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         $top \
         $height \
         $left \
-	$num_attachments
+        $num_attachments
 
     set current_weekday $day_of_week
 

@@ -40,7 +40,7 @@ delete from acs_objects where object_type='cal_item';
 
   -- drop attributes and acs_object_type
 begin;
-  -- drop attibutes
+  -- drop attributes
 	select acs_attribute__drop_attribute (
            'cal_item',
            'on_which_calendar'

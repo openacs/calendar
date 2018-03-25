@@ -81,7 +81,7 @@ create table cal_party_prefs (
 
 comment on table cal_party_prefs is '
         Table cal_user_prefs would stores custom information
-        about each indivdual user. This would include time zone
+        about each individual user. This would include time zone
         which is the first day of the week, monday or sunday, 
         and the likes. 
 ';

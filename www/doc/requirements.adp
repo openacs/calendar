@@ -505,7 +505,7 @@ where permissions can be set for different parties</p>
 party/groups/person to the entire calendar</p>
 <p>
 <strong>40.10.30</strong> Cal Admin can also add new user
-party/groups/person to indivdual calendar items</p>
+party/groups/person to individual calendar items</p>
 <p><strong>40.20 Calendar Items Administration</strong></p>
 <p>
 <strong>40.20.10</strong> Provides the funcationality to delete,

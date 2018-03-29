@@ -62,7 +62,7 @@
   select acs_privilege__add_child('calendar_admin', 'cal_item_invite');
 
 ---------------------------------------------------------- 
---  calendar_ojbect 
+--  calendar_object
 ----------------------------------------------------------- 
 
 create or replace function inline_0(

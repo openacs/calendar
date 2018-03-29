@@ -8,7 +8,7 @@
 -- ported by Lilian Tong (tong@ebt.ee.usyd.edu.au)
 
 ---------------------------------------------------------- 
---  cal_item_ojbect 
+--  cal_item_object
 ----------------------------------------------------------
 
 create or replace function inline_0 () returns integer AS $$

@@ -382,12 +382,15 @@ ad_proc -public calendar::personal_p {
 
 ad_proc -public calendar::get {
     {-calendar_id:required}
-    {-array:required}
+    {-array}
 } {
     Get calendar info
 } {
-    upvar 1 $array row
+    if {[info exists array]} {
+        upvar 1 $array row
+    }
     db_1row select_calendar {} -column_array row
+    return [array get row]
 }
     
 

@@ -19,7 +19,7 @@ ad_proc -private calendar::item::dates_valid_p {
     {-start_date:required}
     {-end_date:required}
 } {
-    A sanity check that the start time is before the end time. 
+    A sanity check that the start time is before the end time.
 } {
     return [db_string dates_valid_p_select {}]
 }
@@ -31,10 +31,10 @@ ad_proc -public calendar::item::new {
     {-description:required}
     {-calendar_id ""}
     {-item_type_id ""}
-    {-package_id ""}    
+    {-package_id ""}
     {-location ""}
     {-cal_uid ""}
-    {-ical_vars ""}    
+    {-ical_vars ""}
 } {
     Insert a new calendar item into the database
 } {
@@ -52,9 +52,9 @@ ad_proc -public calendar::item::new {
         # together with the ical_vars.
         #
         if {$cal_uid ne ""} {
-            db_dml insert_cal_uid {} 
+            db_dml insert_cal_uid {}
         }
-        
+
         # Convert from user timezone to system timezone
         if { $start_date ne $end_date } {
 
@@ -62,21 +62,21 @@ ad_proc -public calendar::item::new {
             # otherwise, keep the start and end time as 00:00
 
             set start_date [lc_time_conn_to_system $start_date]
-            set end_date [lc_time_conn_to_system $end_date]        
+            set end_date [lc_time_conn_to_system $end_date]
         }
 
         set timespan_id [db_exec_plsql insert_timespan {}]
-        
+
         # create the cal_item
         # we are leaving the name and description fields in acs_event
         # blank to abide by the definition that an acs_event is an acs_activity
         # with added on temporal information
-        
-        # by default, the cal_item permissions 
+
+        # by default, the cal_item permissions
         # are going to be inherited from the calendar permissions
         set cal_item_id [db_exec_plsql cal_item_add {}]
-	
-	db_dml set_item_type_id "update cal_items set item_type_id=:item_type_id where cal_item_id=:cal_item_id"
+
+        db_dml set_item_type_id "update cal_items set item_type_id=:item_type_id where cal_item_id=:cal_item_id"
 
         # removing inherited permissions
         if { $calendar_id ne "" && [calendar::personal_p -calendar_id $calendar_id] } {
@@ -120,11 +120,11 @@ ad_proc -public calendar::item::get {
 
     db_1row $query_name {} -column_array row
     if {$normalize_time_to_utc} {
-	set row(start_date_ansi) [lc_time_local_to_utc $row(start_date_ansi)]
-	set row(end_date_ansi)   [lc_time_local_to_utc $row(end_date_ansi)]
+        set row(start_date_ansi) [lc_time_local_to_utc $row(start_date_ansi)]
+        set row(end_date_ansi)   [lc_time_local_to_utc $row(end_date_ansi)]
     } else {
-	set row(start_date_ansi) [lc_time_system_to_conn $row(start_date_ansi)]
-	set row(end_date_ansi)   [lc_time_system_to_conn $row(end_date_ansi)]
+        set row(start_date_ansi) [lc_time_system_to_conn $row(start_date_ansi)]
+        set row(end_date_ansi)   [lc_time_system_to_conn $row(end_date_ansi)]
     }
 
     if { $row(start_date_ansi) eq $row(end_date_ansi) } {
@@ -148,7 +148,7 @@ ad_proc -public calendar::item::get {
     set row(full_end_date)           [lc_time_fmt $row(end_date_ansi) "%x"]
 
     set row(end_time) [lc_time_fmt $row(end_date_ansi) "%X"]
-    
+
     return [array get row]
 }
 
@@ -166,7 +166,7 @@ ad_proc -public calendar::item::add_recurrence {
 
         db_dml update_event {}
         db_exec_plsql insert_instances {}
-        
+
         # Make sure they're all in the calendar!
         db_dml insert_cal_items {}
     }
@@ -219,7 +219,7 @@ ad_proc -public calendar::item::edit {
             # otherwise, keep the start and end time as 00:00
 
             set start_date [lc_time_conn_to_system $start_date]
-            set end_date   [lc_time_conn_to_system $end_date]        
+            set end_date   [lc_time_conn_to_system $end_date]
         }
 
         db_dml update_event {}
@@ -247,7 +247,7 @@ ad_proc -public calendar::item::edit {
 
             # call edit procedure
             db_exec_plsql update_interval {}
-            
+
             # Update the item_type_id and calendar_id
             set colspecs [list]
             lappend colspecs "item_type_id = :item_type_id"
@@ -260,7 +260,7 @@ ad_proc -public calendar::item::edit {
                     where  object_id = :cal_item_id
                 }
             }
-            
+
             db_dml update_item_type_id [subst {
                 update cal_items
                 set    [join $colspecs ", "]
@@ -283,18 +283,18 @@ ad_proc -public calendar::item::delete {
     db_exec_plsql delete_cal_item {}
 }
 
-ad_proc calendar::item::assign_permission { cal_item_id 
+ad_proc calendar::item::assign_permission { cal_item_id
                                      party_id
-                                     permission 
+                                     permission
                                      {revoke ""}
 } {
     update the permission of the specific cal_item
     if revoke is set to revoke, then we revoke all permissions
 } {
     if { $revoke ne "revoke" } {
-	if { $permission ne "cal_item_read" } {
+        if { $permission ne "cal_item_read" } {
             permission::grant -object_id $cal_item_id -party_id $party_id -privilege cal_item_read
-	}
+        }
         permission::grant -object_id $cal_item_id -party_id $party_id -privilege $permission
     } elseif {$revoke eq "revoke"} {
         permission::revoke -object_id $cal_item_id -party_id $party_id -privilege $permission
@@ -332,7 +332,7 @@ ad_proc -public calendar::item::edit_recurrence {
         calendar::item::get \
             -cal_item_id $event_id \
             -array orig_event
-        
+
         set colspecs [list]
         foreach col {name description} {
             if {$orig_event($col) ne [set $col]} {
@@ -342,7 +342,7 @@ ad_proc -public calendar::item::edit_recurrence {
         if {[llength $colspecs]} {
             db_dml recurrence_events_update {}
         }
-	set colspecs [list]
+        set colspecs [list]
         lappend colspecs {item_type_id = :item_type_id}
         if { $calendar_id ne "" } {
             lappend colspecs {on_which_calendar = :calendar_id}

@@ -65,7 +65,9 @@ select acs_event__insert_instances(:cal_item_id, NULL);
 					:calendar_id,
 					now(),
 					:creation_user,
-					:creation_ip
+					:creation_ip,
+					:package_id,					
+					:location
 	)
 
      </querytext>
@@ -112,5 +114,12 @@ select
   )
 </querytext>
 </fullquery>
+
+<fullquery name="calendar::item::edit.cal_uid_upsert">      
+  <querytext>
+    select cal_uid__upsert(:cal_uid, :activity_id, :ical_vars) from dual
+  </querytext>
+</fullquery> 
+
 
 </queryset>

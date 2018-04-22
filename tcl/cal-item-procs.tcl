@@ -21,13 +21,7 @@ ad_proc -private calendar::item::dates_valid_p {
 } {
     A sanity check that the start time is before the end time. 
 } {
-    set dates_valid_p [db_string dates_valid_p_select {}]
-
-    if {$dates_valid_p eq "1"} {
-        return 1
-    } else {
-        return 0
-    }
+    return [db_string dates_valid_p_select {}]
 }
 
 ad_proc -public calendar::item::new {
@@ -37,12 +31,29 @@ ad_proc -public calendar::item::new {
     {-description:required}
     {-calendar_id ""}
     {-item_type_id ""}
+    {-package_id ""}    
+    {-location ""}
+    {-cal_uid ""}
+    {-ical_vars ""}    
 } {
+    Insert a new calendar item into the database
+} {
+    if {$package_id eq ""} {
+        set package_id [ad_conn package_id]
+    }
     if {[dates_valid_p -start_date $start_date -end_date $end_date]} {
         set creation_ip [ad_conn peeraddr]
         set creation_user [ad_conn user_id]
 
         set activity_id [db_exec_plsql insert_activity {} ]
+
+        #
+        # In case we have a cal_uid, save it in the cal_uids table
+        # together with the ical_vars.
+        #
+        if {$cal_uid ne ""} {
+            db_dml insert_cal_uid {} 
+        }
         
         # Convert from user timezone to system timezone
         if { $start_date ne $end_date } {
@@ -59,7 +70,7 @@ ad_proc -public calendar::item::new {
         # create the cal_item
         # we are leaving the name and description fields in acs_event
         # blank to abide by the definition that an acs_event is an acs_activity
-        # with added on temperoal information
+        # with added on temporal information
         
         # by default, the cal_item permissions 
         # are going to be inherited from the calendar permissions
@@ -88,13 +99,15 @@ ad_proc -public calendar::item::new {
 
 ad_proc -public calendar::item::get {
     {-cal_item_id:required}
-    {-array:required}
+    {-array}
     {-normalize_time_to_utc 0}
 } {
     Get the data for a calendar item
 
 } {
-    upvar $array row
+    if {[info exists array]} {
+        upvar $array row
+    }
     if { [catch  {
       set attachments_enabled_p [calendar::attachments_enabled_p]
     }] } { set attachments_enabled_p 0 }
@@ -108,10 +121,10 @@ ad_proc -public calendar::item::get {
     db_1row $query_name {} -column_array row
     if {$normalize_time_to_utc} {
 	set row(start_date_ansi) [lc_time_local_to_utc $row(start_date_ansi)]
-	set row(end_date_ansi) [lc_time_local_to_utc $row(end_date_ansi)]
+	set row(end_date_ansi)   [lc_time_local_to_utc $row(end_date_ansi)]
     } else {
 	set row(start_date_ansi) [lc_time_system_to_conn $row(start_date_ansi)]
-	set row(end_date_ansi) [lc_time_system_to_conn $row(end_date_ansi)]
+	set row(end_date_ansi)   [lc_time_system_to_conn $row(end_date_ansi)]
     }
 
     if { $row(start_date_ansi) eq $row(end_date_ansi) } {
@@ -124,17 +137,19 @@ ad_proc -public calendar::item::get {
     set row(start_time) [lc_time_fmt $row(start_date_ansi) "%X"]
 
     # Unfortunately, SQL has weekday starting at 1 = Sunday
-    set row(start_date) [lc_time_fmt $row(start_date_ansi) "%Y-%m-%d"]
-    set row(end_date) [lc_time_fmt $row(end_date_ansi) "%Y-%m-%d"]
+    set row(start_date)              [lc_time_fmt $row(start_date_ansi) "%Y-%m-%d"]
+    set row(end_date)                [lc_time_fmt $row(end_date_ansi) "%Y-%m-%d"]
 
-    set row(day_of_week) [expr {[lc_time_fmt $row(start_date_ansi) "%w"] + 1}]
-    set row(pretty_day_of_week) [lc_time_fmt $row(start_date_ansi) "%A"]
-    set row(day_of_month) [lc_time_fmt $row(start_date_ansi) "%d"]
+    set row(day_of_week)             [expr {[lc_time_fmt $row(start_date_ansi) "%w"] + 1}]
+    set row(pretty_day_of_week)      [lc_time_fmt $row(start_date_ansi) "%A"]
+    set row(day_of_month)            [lc_time_fmt $row(start_date_ansi) "%d"]
     set row(pretty_short_start_date) [lc_time_fmt $row(start_date_ansi) "%x"]
-    set row(full_start_date) [lc_time_fmt $row(start_date_ansi) "%x"]
-    set row(full_end_date) [lc_time_fmt $row(end_date_ansi) "%x"]
+    set row(full_start_date)         [lc_time_fmt $row(start_date_ansi) "%x"]
+    set row(full_end_date)           [lc_time_fmt $row(end_date_ansi) "%x"]
 
     set row(end_time) [lc_time_fmt $row(end_date_ansi) "%X"]
+    
+    return [array get row]
 }
 
 ad_proc -public calendar::item::add_recurrence {
@@ -169,6 +184,9 @@ ad_proc -public calendar::item::edit {
     {-edit_all_p 0}
     {-edit_past_events_p 1}
     {-calendar_id ""}
+    {-location ""}
+    {-cal_uid ""}
+    {-ical_vars ""}
 } {
     Edit the item
 
@@ -179,6 +197,7 @@ ad_proc -public calendar::item::edit {
 
             # If the recurrence id is NULL, then we stop here and just do the normal update
             if {$recurrence_id ne ""} {
+                ns_log notice "recurrence_id $recurrence_id"
                 calendar::item::edit_recurrence \
                     -event_id $cal_item_id \
                     -start_date $start_date \
@@ -200,7 +219,7 @@ ad_proc -public calendar::item::edit {
             # otherwise, keep the start and end time as 00:00
 
             set start_date [lc_time_conn_to_system $start_date]
-            set end_date [lc_time_conn_to_system $end_date]        
+            set end_date   [lc_time_conn_to_system $end_date]        
         }
 
         db_dml update_event {}
@@ -210,6 +229,22 @@ ad_proc -public calendar::item::edit {
         db_1row get_interval_id {}
 
         db_transaction {
+            #
+            # If a cal_uid is given, update the attributes in the
+            # cal_uid mapping table
+            #
+            if {$cal_uid ne ""} {
+                #
+                # We have to determine the activity id for the upsert
+                # operation in cal_uids.
+                #
+                set activity_id [db_string select_activity_id {
+                    select activity_id from acs_events where event_id = :cal_item_id
+                }]
+                #ns_log notice "======= cal_uid_upsert with activity_id $activity_id"
+                db_exec_plsql cal_uid_upsert {}
+            }
+
             # call edit procedure
             db_exec_plsql update_interval {}
             
@@ -226,11 +261,11 @@ ad_proc -public calendar::item::edit {
                 }
             }
             
-            db_dml update_item_type_id "
-            update cal_items
-            set    [join $colspecs ", "]
-            where  cal_item_id= :cal_item_id
-        "
+            db_dml update_item_type_id [subst {
+                update cal_items
+                set    [join $colspecs ", "]
+                where  cal_item_id= :cal_item_id
+            }]
 
         calendar::do_notifications -mode Edited -cal_item_id $cal_item_id
         }

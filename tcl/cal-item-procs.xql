@@ -1,11 +1,20 @@
 <?xml version="1.0"?>
 <queryset>
 
+<fullquery name="calendar::item::new.insert_cal_uid">
+    <querytext>
+        insert into cal_uids 
+            (cal_uid, on_which_activity, ical_vars)
+        values
+            (:cal_uid, :activity_id, :ical_vars)
+    </querytext>
+</fullquery>
+
 <fullquery name="calendar::item::dates_valid_p.dates_valid_p_select">      
 <querytext>          
   select CASE
     WHEN cast(:start_date as timestamp with time zone) <= cast(:end_date as timestamp with time zone) THEN 1
-    ELSE -1
+    ELSE 0
   END from dual
 </querytext>
 </fullquery>
@@ -28,7 +37,8 @@
          c.package_id as calendar_package_id,
          e.related_link_url,
          e.related_link_text,
-         e.redirect_to_rel_link_p
+         e.redirect_to_rel_link_p,
+	 e.location
        from
          acs_events e join timespans s
            on (e.timespan_id = s.timespan_id)
@@ -67,7 +77,8 @@
          c.package_id as calendar_package_id,
          e.related_link_url,
          e.related_link_text,
-         e.redirect_to_rel_link_p
+         e.redirect_to_rel_link_p,
+ 	 e.location
        from
          acs_events e join timespans s
            on (e.timespan_id = s.timespan_id)
@@ -185,8 +196,9 @@ select recurrence_id from acs_events where event_id= :cal_item_id
     <querytext>
     update acs_events
     set    name = :name,
-           description = :description
-    where  event_id= :cal_item_id
+           description = :description,
+           location = :location
+    where  event_id = :cal_item_id
     </querytext>
 </fullquery>
 

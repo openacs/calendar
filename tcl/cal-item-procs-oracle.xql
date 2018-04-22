@@ -61,7 +61,9 @@ end;
           item_type_id       => :item_type_id,
 	  creation_user      => :creation_user,
 	  creation_ip        => :creation_ip,
-          context_id         => :calendar_id
+          context_id         => :calendar_id,
+          package_id         => :package_id,	  
+	  location           => :location
 	);
 	end;
     
@@ -93,6 +95,17 @@ end;
     
       </querytext>
 </fullquery>
+
+
+<fullquery name="calendar::item::edit.cal_uid_upsert">      
+  <querytext>
+
+    begin
+         cal_uid.upsert(:cal_uid, :activity_id, :ical_vars);
+    end;
+  </querytext>
+</fullquery> 
+
 
  
 <fullquery name="calendar::item::delete_recurrence.delete_cal_item_recurrence">      

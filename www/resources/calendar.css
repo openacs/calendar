@@ -254,12 +254,12 @@
 
 .day-entry-item {
 	position:absolute;
-	width:65px;
+	width:130px;
 	height:43px;
-    overflow: hidden;
+	overflow: hidden;
 	border:1px #ffffff solid;
 	opacity:.9; 
-    font-size: 90%;
+	font-size: 90%;
 }
 
 .day-entry-item p {

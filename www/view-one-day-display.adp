@@ -12,7 +12,7 @@
         <td headers="events" style="vertical-align: top; width:80%" class="day-event-1" valign="top">
           <div id="day-entry-box">
             <multiple name="items">
-              <div id="day-entry-@items.rownum@" class="day-entry-item @items.style_class@" style="top: @items.top@@hour_height_units@; height: @items.height@@hour_height_units@; @items.style@"><p><if @items.num_attachments@ gt 0><img src="/resources/calendar/images/attach.png" alt=""></if><a href="@items.event_url@" title="#calendar.goto_items_event_name#">@items.event_name@</a></p></div>
+              <div id="day-entry-@items.rownum@" class="day-entry-item @items.style_class@" style="top: @items.top@@hour_height_units@; height: @items.height@@hour_height_units@; @items.style@"><p><if @items.num_attachments@ gt 0><img src="/resources/calendar/images/attach.png" alt=""></if><a href="@items.event_url@" title="#calendar.goto_items_event_name#">@items.event_name@ <span class='time-span'>@items.event_span@</span></a></p></div>
             </multiple>
           </div><!-- day-entry-box -->
         </td>

@@ -388,3 +388,10 @@ a.cal-export-option, a.cal-export-option:link, a.cal-export-option:visited, a.ca
   text-decoration: underline;
 }
 
+.calendar-Item span.time-span {
+    font-size: smaller;
+    color: #999;
+}
+.calendar-Item {
+    line-height: 1.1em;
+}

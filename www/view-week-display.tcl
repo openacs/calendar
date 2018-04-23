@@ -70,6 +70,7 @@ set current_weekday 0
 #s/item_id/url
 multirow create items \
     event_name \
+    event_span \
     event_url \
     description \
     calendar_name \
@@ -183,12 +184,17 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     #before looping through regular events.
     set bumps 0
     if { $no_time_p } {
-        #All-day event.
+        #
+        # All-day event.
+        #
         incr event_left_base $event_bump_delta
         incr all_day_events
+        set span ""
     } else {
-        #Regular event.
-        set name "$name ($start_time - $end_time)"
+        #
+        # Regular event.
+        #
+        set span "($start_time - $end_time)"
         foreach {previous_start previous_end} $previous_intervals {
             if { ($start_seconds >= $previous_start && $start_seconds < $previous_end)
                  || ($previous_start >= $start_seconds && $previous_start < $end_seconds)
@@ -209,7 +215,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                        }]
 
     multirow append items \
-        "$name" \
+        $name \
+        $span \
         $event_url \
         $description \
         $calendar_name \

@@ -57,6 +57,7 @@ multirow create items \
     all_day_p \
     style_class \
     event_name \
+    event_span \
     event_url \
     description \
     calendar_name \
@@ -101,6 +102,7 @@ db_foreach dbqd.calendar.www.views.select_all_day_items {} {
     #height will be overwritten once we know how the vertical hour span.
     multirow append items 1 "calendar-${system_type}Item" \
         $name \
+        "" \
         $event_url \
         $description \
         $calendar_name \
@@ -179,7 +181,8 @@ db_foreach dbqd.calendar.www.views.select_items {} {
                                   }]
 
     multirow append items 0 "calendar-${system_type}Item" \
-        "$name ($start_time - $end_time)" \
+        $name \
+        "($start_time - $end_time)" \
         $event_url \
         $description \
         $calendar_name \

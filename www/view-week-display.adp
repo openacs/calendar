@@ -23,7 +23,7 @@
           <div class="week-entry-box">
             <multiple name="items">
               <div class="week-entry-item @items.style_class@" style="position: absolute; top:@items.top@@hour_height_units@; left: @items.left@@width_units@; height:@items.height@@hour_height_units@;">
-                <p><if @items.num_attachments@ gt 0><img src="/resources/calendar/images/attach.png" alt=""></if><a href="@items.event_url@" title="#calendar.goto_items_event_name#">@items.event_name@</a></p>
+                <p><if @items.num_attachments@ gt 0><img src="/resources/calendar/images/attach.png" alt=""></if><a href="@items.event_url@" title="#calendar.goto_items_event_name#">@items.event_name@ <span class='time-span'>@items.event_span@</span></a></p>
               </div>
             </multiple>
           </div>

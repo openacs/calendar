@@ -1,9 +1,9 @@
 ad_page_contract {
 
     Manage the calendar item types
-    
+
     @author Ben Adida (ben@openforce.net)
-    
+
     @creation-date Mar 16, 2002
     @cvs-id $Id$
 } {
@@ -22,7 +22,7 @@ ad_form -name add-new-item-type -action item-type-new -has_submit 1 -form {
     {calendar_id:text(hidden)
         {value $calendar_id}
     }
-    {type:text,nospell 
+    {type:text,nospell
         {label "[_ calendar.New_Type]"}
         {html {size 20}}
     }
@@ -49,8 +49,7 @@ template::list::create \
 multirow create item_types col1 col2 col2_url
 
 foreach item_type $item_types {
-    set item_type_id [lindex $item_type 1]
-    set type [lindex $item_type 0]
+    lassign $item_type type item_type_id
     if {$item_type_id eq ""} {
         continue
     }

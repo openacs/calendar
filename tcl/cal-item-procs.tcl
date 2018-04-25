@@ -249,7 +249,7 @@ ad_proc -public calendar::item::edit {
             db_exec_plsql update_interval {}
 
             # Update the item_type_id and calendar_id
-            set colspecs [list]
+            set colspecs {}
             lappend colspecs "item_type_id = :item_type_id"
             if { $calendar_id ne "" } {
                 lappend colspecs "on_which_calendar = :calendar_id"
@@ -333,7 +333,7 @@ ad_proc -public calendar::item::edit_recurrence {
             -cal_item_id $event_id \
             -array orig_event
 
-        set colspecs [list]
+        set colspecs {}
         foreach col {name description} {
             if {$orig_event($col) ne [set $col]} {
                 lappend colspecs "$col = :$col"
@@ -342,7 +342,7 @@ ad_proc -public calendar::item::edit_recurrence {
         if {[llength $colspecs]} {
             db_dml recurrence_events_update {}
         }
-        set colspecs [list]
+        set colspecs {}
         lappend colspecs {item_type_id = :item_type_id}
         if { $calendar_id ne "" } {
             lappend colspecs {on_which_calendar = :calendar_id}

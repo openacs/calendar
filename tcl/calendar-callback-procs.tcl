@@ -45,7 +45,7 @@ ad_proc -callback merge::MergePackageUser -impl calendar {
             # each item of the from_user_id list of lists
             lassign $calendar l_cal_id l_pkg_id
 
-            # if the pkg_id of this cal_id is the
+            # if the pkg_id of this cal_id is
             # the same for some to_user_id cal
             # we have to delete it, else we must
             # change the items from one cal to the other one

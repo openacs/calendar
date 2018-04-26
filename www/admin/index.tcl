@@ -13,7 +13,7 @@ set user_id [ad_conn user_id]
 
 set package_id [ad_conn package_id]
 set page_title [_ calendar.lt_Calendar_Administrati]
-set context [list]
+set context {}
 
 db_multirow calendars select_calendars {
     select c.calendar_name, 

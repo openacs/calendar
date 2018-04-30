@@ -54,16 +54,19 @@ end;
       
 	begin
 	:1 := cal_item.new(
-	  on_which_calendar  => :calendar_id,
-          name               => :name, 
-	  activity_id        => :activity_id,
-          timespan_id        => :timespan_id,
-          item_type_id       => :item_type_id,
-	  creation_user      => :creation_user,
-	  creation_ip        => :creation_ip,
-          context_id         => :calendar_id,
-          package_id         => :package_id,	  
-	  location           => :location
+	  on_which_calendar      => :calendar_id,
+          name                   => :name, 
+	  activity_id            => :activity_id,
+          timespan_id            => :timespan_id,
+          item_type_id           => :item_type_id,
+	  creation_user          => :creation_user,
+	  creation_ip            => :creation_ip,
+          context_id             => :calendar_id,
+          package_id             => :package_id,	  
+	  location               => :location,
+	  related_link_url       => :related_link_url,
+	  related_link_text      => :related_link_text,
+	  redirect_to_rel_link_p => :redirect_to_rel_link_p
 	);
 	end;
     

@@ -38,7 +38,10 @@
          e.related_link_url,
          e.related_link_text,
          e.redirect_to_rel_link_p,
-	 e.location
+	 e.location,
+	 e.related_link_url,
+	 e.related_link_text,
+	 e.redirect_to_rel_link_p
        from
          acs_events e join timespans s
            on (e.timespan_id = s.timespan_id)
@@ -78,7 +81,10 @@
          e.related_link_url,
          e.related_link_text,
          e.redirect_to_rel_link_p,
- 	 e.location
+ 	 e.location,
+	 e.related_link_url,
+	 e.related_link_text,
+	 e.redirect_to_rel_link_p
        from
          acs_events e join timespans s
            on (e.timespan_id = s.timespan_id)
@@ -197,7 +203,10 @@ select recurrence_id from acs_events where event_id= :cal_item_id
     update acs_events
     set    name = :name,
            description = :description,
-           location = :location
+           location = :location,
+	   related_link_url = :related_link_url,
+	   related_link_text = :related_link_text,
+	   redirect_to_rel_link_p = :redirect_to_rel_link_p
     where  event_id = :cal_item_id
     </querytext>
 </fullquery>

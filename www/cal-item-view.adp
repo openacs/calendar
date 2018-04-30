@@ -21,7 +21,7 @@
 			</div>
 			<div class="form-widget">                  
 				@cal_item.name@
-			</div>	  
+			</div>
 		</div>
                 <if @cal_item.description@ not nil>
 		  <div class="form-item-wrapper">
@@ -40,7 +40,11 @@
                     </div>
                     <div class="form-widget">                  
                       <a href="@cal_item.related_link_url@" title="@cal_item.related_link_text@">
+		      <if @cal_item.related_link_text@ nil>
+		        @cal_item.related_link_url@
+		      </if><else>
                         @cal_item.related_link_text@
+			</else>
                       </a>
                     </div>  
                   </div>
@@ -63,6 +67,15 @@
 			</div>  
 		</div>
 		
+                <if @cal_item.location@ not nil>
+		<div class="form-item-wrapper">
+			<div class="form-label"><strong>#calendar.Location#:</strong></div>
+			<div class="form-widget">                  
+			    @cal_item.location@
+			</div>  
+		</div>
+		</if>
+
 		<if @cal_item.item_type@ not nil>
 			<div class="form-item-wrapper">
 				<div class="form-label">

@@ -110,8 +110,8 @@ comment on column cal_uids.ical_vars is '
 -------------------------------------------------------------
 -- create package cal_item
 -------------------------------------------------------------
-                                                        
-                                                        
+
+
 create or replace package cal_item
 as
         function new (
@@ -129,7 +129,12 @@ as
                 context_id              in acs_objects.context_id%TYPE          default null,
                 creation_date           in acs_objects.creation_date%TYPE       default sysdate,
                 creation_user           in acs_objects.creation_user%TYPE       default null,
-                creation_ip             in acs_objects.creation_ip%TYPE         default null                                 
+                creation_ip             in acs_objects.creation_ip%TYPE         default null,
+                package_id              in acs_objects.package_id%TYPE          default null,
+                location                in acs_event.location%TYPE              default null,
+                related_link_url        in acs_event.related_link_url%TYPE      default null,
+		related_link_text       in acs_event.related_link_text%TYPE     default null,
+                redirect_to_rel_link_p  in acs_event.redirect_to_rel_link_p%TYPE default null
         ) return cal_items.cal_item_id%TYPE;
  
           -- delete cal_item
@@ -166,7 +171,10 @@ as
                 creation_user           in acs_objects.creation_user%TYPE       default null,
                 creation_ip             in acs_objects.creation_ip%TYPE         default null,
                 package_id              in acs_objects.package_id%TYPE          default null,
-                location                in acs_event.location%TYPE              default null                                 
+                location                in acs_event.location%TYPE              default null,
+                related_link_url        in acs_event.related_link_url%TYPE      default null,
+		related_link_text       in acs_event.related_link_text%TYPE     default null,
+                redirect_to_rel_link_p  in acs_event.redirect_to_rel_link_p%TYPE default null
 	) return cal_items.cal_item_id%TYPE
 
         is
@@ -190,7 +198,10 @@ as
                         creation_ip     =>      creation_ip,
                         context_id      =>      context_id,
                         package_id      =>      package_id,
-                        location        =>      location
+                        location        =>      location,
+                        related_link_url =>     related_link_url,
+			related_link_text =>    related_link_text,
+                        redirect_to_rel_link_p => redirect_to_rel_link_p
                 );
 
                 insert into     cal_items

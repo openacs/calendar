@@ -33,6 +33,9 @@ ad_proc -public calendar::item::new {
     {-item_type_id ""}
     {-package_id ""}
     {-location ""}
+    {-related_link_url ""}
+    {-related_link_text ""}
+    {-redirect_to_rel_link_p ""}
     {-cal_uid ""}
     {-ical_vars ""}
 } {
@@ -97,6 +100,19 @@ ad_proc -public calendar::item::new {
     }
 }
 
+ad_proc -private calendar::item::all_day_event {start_date_ansi end_date_ansi} {
+
+    Determine, if an event is an all day event depending on the ans
+    state and and dates (e.g. "2018-03-22 00:00:00" and "2018-03-23
+    00:00:00". The event is a full_day event, either when the
+    start_date is equal to the end data or the start_day is different
+    to the end day (this might happen through external calendars).
+    
+} {
+    return [expr {$start_date_ansi eq $end_date_ansi
+                  || [lindex $start_date_ansi 0] ne [lindex $end_date_ansi 0]}]
+}
+
 ad_proc -public calendar::item::get {
     {-cal_item_id:required}
     {-array}
@@ -126,13 +142,16 @@ ad_proc -public calendar::item::get {
         set row(start_date_ansi) [lc_time_system_to_conn $row(start_date_ansi)]
         set row(end_date_ansi)   [lc_time_system_to_conn $row(end_date_ansi)]
     }
-
-    if { $row(start_date_ansi) eq $row(end_date_ansi) } {
+    #
+    # all day events: either the start date 
+    #
+    if { [all_day_event $row(start_date_ansi) $row(end_date_ansi)] } {
         set row(time_p) 0
     } else {
         set row(time_p) 1
     }
-
+    ns_log notice "calendar::item::get $row(start_date_ansi) eq $row(end_date_ansi) => $row(time_p)"
+    
     # Localize
     set row(start_time) [lc_time_fmt $row(start_date_ansi) "%X"]
 
@@ -185,6 +204,9 @@ ad_proc -public calendar::item::edit {
     {-edit_past_events_p 1}
     {-calendar_id ""}
     {-location ""}
+    {-related_link_url ""}
+    {-related_link_text ""}
+    {-redirect_to_rel_link_p ""}
     {-cal_uid ""}
     {-ical_vars ""}
 } {

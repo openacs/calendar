@@ -186,7 +186,7 @@ aa_register_case -cats api cal_item_add_delete {
         aa_true "activity_id ($activity_id) is gone" {$activity_id eq ""}
 
         #
-        # Create now a a recurring calendar item
+        # Create now a recurring calendar item
         #
         aa_log "create a recurreinig calendar item"
 

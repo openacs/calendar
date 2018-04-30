@@ -92,6 +92,7 @@
   <msg key="Item">Item</msg>
   <msg key="last_week">last week</msg>
   <msg key="List">List</msg>
+  <msg key="Location">Location</msg>
   <msg key="lt_Are_you_sure_you_want">Are you sure you want to delete this calendar. All the calendar items
       and all the permission that's associated with this calendar will be 
       deleted as well.</msg>
@@ -207,7 +208,9 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Tuesday">Tuesday</msg>
   <msg key="Type">Type:</msg>
   <msg key="Type_1">Type</msg>
-  <msg key="Type_Help">Your calendar item can optionally be classified into types. Choose one from the drop down.</msg>
+  <msg key="Type_Help">Your calendar item can optionally be classified
+  into types. Choose one from the drop down.</msg>
+  <msg key="Use_Hours_Below">Use Hours Below:</msg>
   <msg key="Use_Hours_Below">Use Hours Below:</msg>
   <msg key="view">View</msg>
   <msg key="Wednesday">Wednesday</msg>

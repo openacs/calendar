@@ -67,7 +67,10 @@ select acs_event__insert_instances(:cal_item_id, NULL);
 					:creation_user,
 					:creation_ip,
 					:package_id,					
-					:location
+					:location,
+					:related_link_url,
+					:related_link_text,
+					:redirect_to_rel_link_p
 	)
 
      </querytext>

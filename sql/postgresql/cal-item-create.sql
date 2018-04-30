@@ -159,7 +159,11 @@ create or replace function cal_item__new(
    new__creation_user integer,     -- acs_objects.creation_date%TYPE default null
    new__creation_ip varchar,       -- default null
    new__package_id integer,        -- default null
-   new__location varchar default null
+   new__location varchar default NULL,
+   new__related_link_url varchar default NULL,
+   new__related_link_text varchar default NULL,
+   new__redirect_to_rel_link_p boolean default NULL
+
 ) returns integer AS $$
 declare
     v_cal_item_id        cal_items.cal_item_id%TYPE;
@@ -179,7 +183,10 @@ begin
         new__creation_ip,    -- creation_ip
         new__context_id,     -- context_id
         new__package_id,     -- package_id
-	new__location        -- location
+	new__location,        -- location
+	new__related_link_url,
+	new__related_link_text,
+	new__redirect_to_rel_link_p
     );
 
     insert into cal_items (cal_item_id,   on_which_calendar)

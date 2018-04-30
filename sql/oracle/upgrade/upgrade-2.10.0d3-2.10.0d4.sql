@@ -17,7 +17,10 @@ as
                 creation_user           in acs_objects.creation_user%TYPE       default null,
                 creation_ip             in acs_objects.creation_ip%TYPE         default null,
                 package_id              in acs_objects.package_id%TYPE          default null,
-                location                in acs_event.location%TYPE              default null
+                location                in acs_event.location%TYPE              default null,
+                related_link_url        in acs_event.related_link_url%TYPE      default null,
+		related_link_text       in acs_event.related_link_text%TYPE     default null,
+                redirect_to_rel_link_p  in acs_event.redirect_to_rel_link_p%TYPE default null
         ) return cal_items.cal_item_id%TYPE;
  
           -- delete cal_item
@@ -33,6 +36,8 @@ end cal_item;
 /
 show errors;
 
+
+                                                        
 create or replace package body cal_item
 as
         function new (
@@ -52,7 +57,10 @@ as
                 creation_user           in acs_objects.creation_user%TYPE       default null,
                 creation_ip             in acs_objects.creation_ip%TYPE         default null,
                 package_id              in acs_objects.package_id%TYPE          default null,
-                location                in acs_event.location%TYPE              default null                                 
+                location                in acs_event.location%TYPE              default null,
+                related_link_url        in acs_event.related_link_url%TYPE      default null,
+		related_link_text       in acs_event.related_link_text%TYPE     default null,
+                redirect_to_rel_link_p  in acs_event.redirect_to_rel_link_p%TYPE default null
 	) return cal_items.cal_item_id%TYPE
 
         is
@@ -76,7 +84,10 @@ as
                         creation_ip     =>      creation_ip,
                         context_id      =>      context_id,
                         package_id      =>      package_id,
-                        location        =>      location
+                        location        =>      location,
+                        related_link_url =>     related_link_url,
+			related_link_text =>    related_link_text,
+                        redirect_to_rel_link_p => redirect_to_rel_link_p
                 );
 
                 insert into     cal_items
@@ -112,8 +123,14 @@ as
                 cal_item_id             in cal_items.cal_item_id%TYPE
         )
         is
-
+          v_activity_id     acs_events.activity_id%TYPE;
+	  v_recurrence_id   acs_events.recurrence_id%TYPE;
         begin
+
+                select activity_id, recurrence_id into v_activity_id, v_recurrence_id
+		from   acs_events
+		where  event_id = cal_item_id;
+
                   -- Erase the cal_item associated with the id
                 delete from     cal_items
                 where           cal_item_id = cal_item.del.cal_item_id;
@@ -123,6 +140,19 @@ as
                 where           object_id = cal_item.del.cal_item_id;
 
                 acs_event.del(cal_item_id);
+
+		IF instances_exist_p(recurrence_id) = 'f' THEN
+		    --
+		    -- There are no more events for the activity, we can clean up
+		    -- both, the activity and - if given - the recurrence.
+		    --
+		    acs_activity.del(v_activity_id);
+	
+	           IF v_recurrence_id is not null THEN
+		       recurrence.del(v_recurrence_id);
+		   END IF;
+	        END IF;
+		
         end del;
                   
         procedure delete_all (
@@ -141,4 +171,4 @@ as
         end delete_all;
 end cal_item;
 /
-show errors;
+show errors

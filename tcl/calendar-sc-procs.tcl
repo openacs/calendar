@@ -40,7 +40,7 @@ ad_proc -private calendar::fts::datasource { cal_item_id } {
 }
 
 ad_proc -private calendar::fts::url { cal_item_id } {
-    returns a url for an event to the search package
+    returns a URL for an event to the search package
 
     @author davis@xarg.net
     @creation-date 2004-04-01

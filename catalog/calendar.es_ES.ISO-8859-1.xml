@@ -82,6 +82,7 @@
   <msg key="Item">Evento</msg>
   <msg key="last_week">semana anterior</msg>
   <msg key="List">Lista</msg>
+  <msg key="Location">Lugar</msg>
   <msg key="lt_Are_you_sure_you_want">¿Desea realmente borrar este calendario? Todos los eventos y permisos asociados serán borrados también.</msg>
   <msg key="lt_Are_you_sure_you_want_1">¿Desea realmente borrar este evento?</msg>
   <msg key="lt_Audiences_for_calenda">Audiencias del calendario</msg>

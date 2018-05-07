@@ -1,56 +1,60 @@
 DROP function if exists
 cal_item__new(integer, integer, character varying, character varying, boolean, character varying, integer, integer, integer, character varying, integer, timestamp with time zone, integer, character varying, integer, character varying);
 
-select define_function_args('acs_event__new','event_id;null,name;null,description;null,html_p;null,status_summary;null,timespan_id;null,activity_id;null,recurrence_id;null,object_type;acs_event,creation_date;now(),creation_user;null,creation_ip;null,context_id;null,package_id;null,location;null,related_link_url;null,related_link_text;null,redirect_to_rel_link_p;null');
+--
+-- procedure cal_item__new/15-16
+--
+select define_function_args('cal_item__new','cal_item_id;null,on_which_calendar;null,name,description,html_p;null,status_summary;null,timespan_id;null,activity_id;null,recurrence_id;null,object_type;"cal_item",context_id;null,creation_date;now(),creation_user;null,creation_ip;null,package_id;null,location;null');
 
-CREATE OR REPLACE FUNCTION acs_event__new(
-   new__event_id  integer,         -- default null,
-   new__name varchar,              -- default null,
-   new__description text,          -- default null,
+create or replace function cal_item__new(
+   new__cal_item_id integer,       -- default null
+   new__on_which_calendar integer, -- default null
+   new__name varchar,
+   new__description varchar,
    new__html_p boolean,            -- default null
-   new__status_summary text,       -- default null
-   new__timespan_id integer,       -- default null,
-   new__activity_id integer,       -- default null,
-   new__recurrence_id integer,     -- default null,
-   new__object_type varchar,       -- default 'acs_event',
-   new__creation_date timestamptz, -- default now(),
-   new__creation_user integer,     -- default null,
-   new__creation_ip varchar,       -- default null,
+   new__status_summary varchar,    -- default null
+   new__timespan_id integer,       -- default null
+   new__activity_id integer,       -- default null
+   new__recurrence_id integer,     -- default null
+   new__object_type varchar,       -- default "cal_item"
    new__context_id integer,        -- default null
+   new__creation_date timestamptz, -- default now()
+   new__creation_user integer,     -- acs_objects.creation_date%TYPE default null
+   new__creation_ip varchar,       -- default null
    new__package_id integer,        -- default null
    new__location varchar default NULL,
    new__related_link_url varchar default NULL,
    new__related_link_text varchar default NULL,
    new__redirect_to_rel_link_p boolean default NULL
 
-) RETURNS integer AS $$
-	-- acs_events.event_id%TYPE
-DECLARE
-       v_event_id	    acs_events.event_id%TYPE;
-BEGIN
-       v_event_id := acs_object__new(
-            new__event_id,	-- object_id
-            new__object_type,	-- object_type
-            new__creation_date, -- creation_date
-            new__creation_user,	-- creation_user
-            new__creation_ip,	-- creation_ip
-            new__context_id,	-- context_id
-            't',		-- security_inherit_p
-            new__name,		-- title
-            new__package_id	-- package_id
-	    );
+) returns integer AS $$
+declare
+    v_cal_item_id        cal_items.cal_item_id%TYPE;
+begin
+    v_cal_item_id := acs_event__new(
+        new__cal_item_id,    -- event_id
+    	new__name,           -- name
+        new__description,    -- description
+        new__html_p,         -- html_p
+        new__status_summary, -- status_summary
+        new__timespan_id,    -- timespan_id
+        new__activity_id,    -- activity_id
+        new__recurrence_id,  -- recurrence_id
+        new__object_type,    -- object_type
+        new__creation_date,  -- creation_date
+        new__creation_user,  -- creation_user
+        new__creation_ip,    -- creation_ip
+        new__context_id,     -- context_id
+        new__package_id,     -- package_id
+	new__location,        -- location
+	new__related_link_url,
+	new__related_link_text,
+	new__redirect_to_rel_link_p
+    );
 
-       insert into acs_events
-            (event_id, name, description, html_p, status_summary,
-	    activity_id, timespan_id, recurrence_id, location,
-	    related_link_url, related_link_text, redirect_to_rel_link_p)
-       values
-            (v_event_id, new__name, new__description, new__html_p, new__status_summary,
-	    new__activity_id, new__timespan_id, new__recurrence_id, new__location,
-	    new__related_link_url, new__related_link_text, new__redirect_to_rel_link_p);
+    insert into cal_items (cal_item_id,   on_which_calendar)
+    values                (v_cal_item_id, new__on_which_calendar);
 
-       return v_event_id;
-
-END;
+    return v_cal_item_id;
+end;
 $$ LANGUAGE plpgsql;
-

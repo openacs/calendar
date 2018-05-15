@@ -368,7 +368,7 @@ as
                 delete from     acs_permissions 
                 where           object_id = calendar.del.calendar_id;
 
-                  -- Delete all privilges of the cal_items that's associated 
+                  -- Delete all privileges of the cal_items that's associated 
                   -- with this calendar
                 delete from     acs_permissions
                 where           object_id in (

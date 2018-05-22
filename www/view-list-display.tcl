@@ -2,7 +2,7 @@ ad_include_contract {
     Display list calendar view
 
     Expects:
-      date: ignored, looks like passed ni for symmetry
+      date: ignored, looks like passed in for symmetry
       start_date: starting date for the list
       period_days:integer
       show_calendar_name_p (optional): 0 or 1

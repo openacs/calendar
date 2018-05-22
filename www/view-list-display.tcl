@@ -3,7 +3,7 @@ ad_include_contract {
 
     Expects:
       date: ignored, looks like passed ni for symmetry
-      start_date: startinig date for the list
+      start_date: starting date for the list
       period_days:integer
       show_calendar_name_p (optional): 0 or 1
       calendar_id_list: optional list of calendar_ids

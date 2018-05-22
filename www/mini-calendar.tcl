@@ -85,7 +85,7 @@ set month            [util::trim_leading_zeros [lindex $date_list 1]]
 set day              [util::trim_leading_zeros [lindex $date_list 2]]
 
 set months_list      [dt_month_names]
-set curr_month_idx   [expr [util::trim_leading_zeros [clock format $now -format "%m"]]-1]
+set curr_month_idx   [expr {[util::trim_leading_zeros [clock format $now -format "%m"]]-1}]
 set curr_day         [clock format $now -format "%d"]
 set curr_month       [clock format $now -format "%B"]
 set curr_year        [clock format $now -format "%Y"]

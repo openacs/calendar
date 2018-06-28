@@ -374,7 +374,7 @@ ad_proc -public calendar::personal_p {
     {-calendar_id:required}
     {-user_id ""}
 } {
-    Returns true (1) if this is the user's personal calendar, false (0) otherwise.
+    @return true (1) if this is the user's personal calendar, false (0) otherwise.
 
     @param user_id The user whose calendar you want to check
 } {
@@ -541,7 +541,7 @@ ad_proc -public calendar::do_notifications {
 ad_proc -public calendar::notification::get_url {
     object_id
 } {
-    Returns a full URL to the object_id
+    @return a full URL to the object_id
 } {
     return [site_node::get_url_from_object_id -object_id $object_id]
 }

@@ -311,6 +311,8 @@ ad_proc -public calendar::calendar_list {
     {-user_id ""}
     {-privilege ""}
 } {
+    @return a list of calendars
+} {
     # If no user_id
     if {$user_id eq ""} {
         set user_id [ad_conn user_id]
@@ -332,6 +334,9 @@ ad_proc -public calendar::adjust_date {
     {-date ""}
     {-julian_date ""}
 } {
+    @return the date if it is provided. Otherwise, the julian date in ANSI
+            format, if provided, or the system date.
+} {
     if {$date eq ""} {
         if {$julian_date ne ""} {
             set date [dt_julian_to_ansi $julian_date]
@@ -348,6 +353,10 @@ ad_proc -public calendar::new {
     {-private_p "f"}
     {-calendar_name:required}
     {-package_id ""}
+} {
+    Create a new calendar
+
+    @return the new calendar_id
 } {
     if { $package_id eq "" } {
         set package_id [ad_conn package_id]
@@ -431,6 +440,8 @@ ad_proc -public calendar::item_type_delete {
     {-calendar_id:required}
     {-item_type_id:required}
 } {
+    Delete an item type
+} {
     db_transaction {
         # Remove the mappings for all events
         db_dml reset_item_types {}
@@ -441,6 +452,8 @@ ad_proc -public calendar::item_type_delete {
 }
 
 ad_proc -public calendar::attachments_enabled_p {} {
+    @return 1 if the attachments are enabled, otherwise 0.
+} {
     set package_id [site_node_apm_integration::child_package_exists_p \
         -package_key attachments
     ]
@@ -472,6 +485,8 @@ ad_proc -private calendar::compare_day_items_by_current_hour {a b} {
 ad_proc -public calendar::do_notifications {
     {-mode:required}
     {-cal_item_id:required}
+} {
+    Perform the notifications
 } {
     # Select all the important information
     calendar::item::get -cal_item_id $cal_item_id -array cal_item
@@ -511,7 +526,7 @@ ad_proc -public calendar::do_notifications {
     # send text for now.
     set new_content [ad_html_to_text -- $new_content]
 
-    # Do the notification for the forum
+    # Do the notification for the calendar
     notification::new \
         -type_id [notification::type::get_type_id \
         -short_name calendar_notif] \

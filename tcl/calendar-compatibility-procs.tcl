@@ -7,7 +7,7 @@ ad_library {
 
     @author Dirk Gomez (openacs@dirkgomez.de)
     @creation-date Feb 19, 2004
-    @cvs-id $Id: 
+    @cvs-id $Id$ 
 }
 
 ad_proc -deprecated calendar_have_private_p { 

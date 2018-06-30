@@ -1,16 +1,16 @@
 # /packages/calendar/www/admin/calendar-create.tcl
 
 ad_page_contract {
-    
+
     generation of new group calendar
     when a party_wide calendar is generated
     the default permission is that this calendar is 
-    
+
     @author Gary Jin (gjin@arsdigita.com)
-    
-    @party_id  key to owner id
-    @calendar_name  the name of the calendar
-    @calendar_permission the permissions of the calendar
+
+    @param  party_id  key to owner id
+    @param  calendar_name  the name of the calendar
+    @param  calendar_permission the permissions of the calendar
 
     @creation-date Dec 14, 2000
     @cvs-id $Id$

@@ -103,7 +103,7 @@ begin
 	    attr_id := acs_attribute__create_attribute (
 		'calendar',          -- object_type
 		'private_p',         -- attribute_name
-		'string',            -- datatype
+		'boolean',           -- datatype
 		'Private Calendar',  -- pretty_name
 		'Private Calendars', -- pretty_plural
 		null,                -- table_name (default)

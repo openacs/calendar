@@ -103,7 +103,7 @@ ad_proc -public calendar::item::new {
 ad_proc -private calendar::item::all_day_event {start_date_ansi end_date_ansi} {
 
     Determine, if an event is an all day event depending on the ans
-    state and and dates (e.g. "2018-03-22 00:00:00" and "2018-03-23
+    state and dates (e.g. "2018-03-22 00:00:00" and "2018-03-23
     00:00:00". The event is a full_day event, either when the
     start_date is equal to the end data or the start_day is different
     to the end day (this might happen through external calendars).

@@ -28,8 +28,8 @@ aa_register_case -cats api cal_item_edit_recurrence {
 
             calendar::item::get \
                 -cal_item_id $cal_item_id -array cal_item
-            aa_true "Name is correct" [string equal $ci_name $cal_item(name)]
-            aa_true "Description is correct" [string equal $ci_description $cal_item(description)]
+            aa_equals "Name is correct"  $ci_name $cal_item(name)
+            aa_equals "Description is correct"  $ci_description $cal_item(description)
             # edit the time of the event
             set recurrence_id \
                 [calendar::item::add_recurrence \

@@ -3,7 +3,16 @@ ad_library {
     Tests for calendar::item API
 }
 
-aa_register_case -cats api cal_item_edit_recurrence {
+aa_register_case \
+    -cats api \
+    -procs {
+        calendar::create
+        calendar::item::add_recurrence
+        calendar::item::edit
+        calendar::item::get
+        calendar::item::new
+    } \
+    cal_item_edit_recurrence {
     Test editing a recurring calendar item/event
 } {
     aa_run_with_teardown \
@@ -135,13 +144,21 @@ aa_register_case -cats api cal_item_edit_recurrence {
                 set passed [expr {$passed && $ci_description eq $cal_item(description)}]
             }
             aa_true "Edited item name and New individual names are updated" $passed
-
-
         }
 }
 
 
-aa_register_case -cats api cal_item_add_delete {
+aa_register_case \
+    -cats {api} \
+    -procs {
+        calendar::create
+        calendar::delete
+        calendar::item::add_recurrence
+        calendar::item::delete
+        calendar::item::get
+        calendar::item::new
+    } \
+    cal_item_add_delete {
     Test adding and deleting a calendar entry
 } {
     try {

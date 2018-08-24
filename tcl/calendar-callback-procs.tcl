@@ -1,5 +1,5 @@
 ad_library {
-    Callbacks for the search package.
+    Callbacks for the calendar package.
 
     @author Dirk Gomez <openacs@dirkgomez.de>
     @creation-date 2005-06-12

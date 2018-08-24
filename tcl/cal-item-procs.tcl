@@ -302,6 +302,9 @@ ad_proc -public calendar::item::delete {
 } {
     Delete the calendar item
 } {
+    callback calendar::item::before_delete \
+        -cal_item_id $cal_item_id
+
     db_exec_plsql delete_cal_item {}
 }
 

@@ -178,4 +178,5 @@
   <msg key="Yes">Ja</msg>
   <msg key="yes_delete_it">Ja, löschen</msg>
   <msg key="Yes_I_am_sure">Ja, wirklich</msg>
+  <msg key="Location">Ort</msg>
 </message_catalog>

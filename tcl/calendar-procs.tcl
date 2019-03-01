@@ -203,7 +203,7 @@ ad_proc -public calendar::get_month_multirow_information {
     @creation-date 20-July-2003
 } {
     set first_day_of_week [lc_get firstdayofweek]
-    set last_day_of_week [expr {[expr {$first_day_of_week + 6}] % 7}]
+    set last_day_of_week [expr {($first_day_of_week + 6) % 7}]
 
     if {$current_day == $today_julian_date} {
         set today_p t
@@ -211,8 +211,7 @@ ad_proc -public calendar::get_month_multirow_information {
         set today_p f
     }
     set day_number [expr {$current_day - $first_julian_date_of_month +1}]
-    set weekday [expr {[expr {$current_day % 7}] + 1}]
-    set weekday [ad_decode $weekday 7 0 $weekday]
+    set weekday [expr {($current_day + 1) % 7}]
 
     set beginning_of_week_p f
     set end_of_week_p f

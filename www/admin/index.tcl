@@ -44,7 +44,7 @@ template::list::create \
         }
         type {
             label {Type}
-            display_eval {[ad_decode $private_p "t" "Personal" "Shared"]}
+            display_eval {[expr {$private_p ? "Personal" : "Shared"}]}
         }
         num_items {
             label "Items"

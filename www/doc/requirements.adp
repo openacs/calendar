@@ -20,7 +20,7 @@ that can be accessed through any browser. The application allows
 people to keep track of events as they normally would on a paper
 calendar while giving them the opportunity to share these events
 with other parties. Various types of additional information related
-to a calendar item, such as an URL, a map indicating a
+to a calendar item, such as a URL, a map indicating a
 meeting&#39;s location, et cetera, can also be managed through the
 Calendar application. The Calendar application also provides
 different end-user specifiable presentation formats for viewing

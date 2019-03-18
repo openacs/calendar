@@ -323,10 +323,18 @@ ad_proc -public calendar::calendar_list {
 
     set permissions_clause {}
     if { $privilege ne "" } {
-        set permissions_clause [db_map permissions_clause]
+        set permissions_clause {and acs_permission.permission_p(calendar_id, :user_id, :privilege)}
     }
 
-    set new_list [db_list_of_lists select_calendar_list {}]
+    set new_list [db_list_of_lists select_calendar_list [subst {
+       select calendar_name,
+              calendar_id,
+              acs_permission.permission_p(calendar_id, :user_id, 'calendar_admin') as calendar_admin_p
+       from   calendars
+       where  (private_p = 'f' and package_id = :package_id $permissions_clause) or
+              (private_p = 't' and owner_id = :user_id)
+       order  by private_p asc, upper(calendar_name)
+    }]]
 }
 
 ad_proc -public calendar::adjust_date {

@@ -134,7 +134,7 @@ Overview</a></li><li><a href="http://6916.lcs.mit.edu/class/6916-f2000/page-7/">
 course calendar</a></li><li>
 <a href="http://www.imc.org/pdi/">vCalendar/iCalendar</a>
 proposed standards</li><li><a href="http://www.arsdigita.com/doc/calendar/acceptance.txt">Acceptance
-Tests</a></li><li><a href="http://calendar.yahoo.com/">Yahoo Calendar</a></li><li><a href="http://planner.excite.com/">Excite Planner</a></li>
+Tests</a></li><li><a href="http://calendar.yahoo.com/">Yahoo Calendar</a></li><li>Excite Planner</li>
 </ul>
 <h3>VI.A Requirements: Private Calendar</h3>
 <strong>10 Private Calendar</strong>

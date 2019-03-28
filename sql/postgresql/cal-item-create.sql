@@ -156,7 +156,7 @@ create or replace function cal_item__new(
    new__object_type varchar,       -- default "cal_item"
    new__context_id integer,        -- default null
    new__creation_date timestamptz, -- default now()
-   new__creation_user integer,     -- acs_objects.creation_date%TYPE default null
+   new__creation_user integer,     -- default null
    new__creation_ip varchar,       -- default null
    new__package_id integer,        -- default null
    new__location varchar default NULL,

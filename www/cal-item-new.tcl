@@ -16,6 +16,14 @@ ad_page_contract {
     {end_time ""}
     {view "day"}
     {return_url:localurl "./"}
+}  -validate {
+    valid_date -requires { date } {
+        if {$date ne "" } {
+            if {[catch {set date [clock format [clock scan $date] -format "%Y-%m-%d"]} err]} {
+                ad_complain "Your input ($date) is not valid. It has to be in the form YYYY-MM-DD."
+            }
+        }
+    }
 }
 auth::require_login
 

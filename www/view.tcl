@@ -19,7 +19,7 @@ ad_page_contract {
             if {[catch {set date [clock format [clock scan $date -format "%Y-%m-%d"] -format "%Y-%m-%d"]} err]
                 && [catch {set date [clock format [clock scan $date  -format "%Y%m%d"] -format "%Y-%m-%d"]} err]
             } {
-                ad_complain "Your input was not valid. It has to be in the form YYYY-MM-DD."
+                ad_complain "Your input is not valid. It has to be in the form YYYY-MM-DD."
             }
         }
     }

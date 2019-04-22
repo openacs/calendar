@@ -375,8 +375,8 @@ ad_form -extend -name cal_item -validate {
 
 } -on_request {
 
-    template::add_event_listener -id cal_item:elements:time_p:0 -script {TimePChanged(this);}
-    template::add_event_listener -id cal_item:elements:time_p:1 -script {TimePChanged(this);}
+    template::add_event_listener -id cal_item:elements:time_p:0 -preventdefault=false -script {TimePChanged(this);}
+    template::add_event_listener -id cal_item:elements:time_p:1 -preventdefault=false -script {TimePChanged(this);}
     template::add_event_listener -id cal_item.date-button -script {showCalendarWithDateWidget('date', 'y-m-d');}
 
     template::add_body_script -script {

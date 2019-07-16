@@ -508,7 +508,7 @@ party/groups/person to the entire calendar</p>
 party/groups/person to individual calendar items</p>
 <p><strong>40.20 Calendar Items Administration</strong></p>
 <p>
-<strong>40.20.10</strong> Provides the funcationality to delete,
+<strong>40.20.10</strong> Provides the functionality to delete,
 add, edit any item on the calendar</p>
 <p>
 <strong>40.20.20</strong> Provides the funcatinality to allow

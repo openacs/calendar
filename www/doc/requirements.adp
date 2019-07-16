@@ -526,7 +526,7 @@ entire calendar<br>
 <strong>50.10.10</strong> Provide a function to add a new item
 to a calendar. This function should support specifying all the
 values that can be specified in the 'add item' form. It
-should allow creating either a user or a party-specific item. Iit
+should allow creating either a user or a party-specific item. It
 should support specifying a mapping between the new item and an
 arbitrary object in the database.</p>
 <p><strong>50.20 Calendar Views</strong></p>

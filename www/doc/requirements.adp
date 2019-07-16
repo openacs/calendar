@@ -511,11 +511,11 @@ party/groups/person to individual calendar items</p>
 <strong>40.20.10</strong> Provides the functionality to delete,
 add, edit any item on the calendar</p>
 <p>
-<strong>40.20.20</strong> Provides the funcatinality to allow
+<strong>40.20.20</strong> Provides the functionality to allow
 Calendar Administrator to change the permissions on each calendar
 item.</p>
 <p>
-<strong>40.20.20</strong> Provides the funcatinality to allow
+<strong>40.20.20</strong> Provides the functionality to allow
 Calendar Administrator to change the default permissions of the
 entire calendar<br>
 </p>

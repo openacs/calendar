@@ -11,13 +11,13 @@
 
   -- creating the basic set of permissions for cal_item
   --
-  -- 1  create: create an new item
+  -- 1  create: create a new item
   -- 2. read: can view the cal_item
   -- 3. write: edit an existing cal_item
   -- 4. delete: can delete the cal_item
   -- 5. invite: can allow other parties to view or edit the cal_item
 begin
-	acs_privilege.create_privilege('cal_item_create', 'Add an new item');
+	acs_privilege.create_privilege('cal_item_create', 'Add a new item');
 	acs_privilege.create_privilege('cal_item_read',   'view an cal_item');
 	acs_privilege.create_privilege('cal_item_write',  'Edit an existing cal_item');
 	acs_privilege.create_privilege('cal_item_delete', 'Delete cal_item' );

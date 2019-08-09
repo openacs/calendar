@@ -12,7 +12,7 @@
 
   -- creating the basic set of permissions for cal_item
   --
-  -- 1  create: create an new item
+  -- 1  create: create a new item
   -- 2. read: can view the cal_item
   -- 3. write: edit an existing cal_item
   -- 4. delete: can delete the cal_item
@@ -20,7 +20,7 @@
 
 
 
-  select acs_privilege__create_privilege('cal_item_create', 'Add an new item', null);
+  select acs_privilege__create_privilege('cal_item_create', 'Add a new item', null);
   select acs_privilege__create_privilege('cal_item_read',   'view an cal_item', null);
   select acs_privilege__create_privilege('cal_item_write',  'Edit an existing cal_item', null);
   select acs_privilege__create_privilege('cal_item_delete', 'Delete cal_item', null );

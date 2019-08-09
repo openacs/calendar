@@ -9,7 +9,7 @@ ad_library {
 }
 
 # wtem@olywa.net, 2001-06-12
-# adding support for synching a single event with msoutlook
+# adding support for syncing a single event with msoutlook
 
 # 1. make sure the server config file 
 # (in this case an .ini file) has the .ics extension mapped to msoutlook

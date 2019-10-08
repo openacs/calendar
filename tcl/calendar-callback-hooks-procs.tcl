@@ -13,3 +13,9 @@ ad_proc -public -callback calendar::item::before_delete {
     Puts extra logics before calendar item deletion.
 } -
 
+ad_proc -public -callback calendar::item::after_edit {
+    {-cal_item_id:required}
+} {
+    Puts extra logics after calendar edit.
+} -
+

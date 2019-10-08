@@ -211,7 +211,6 @@ ad_proc -public calendar::item::edit {
     {-ical_vars ""}
 } {
     Edit the item
-
 } {
     if {[dates_valid_p -start_date $start_date -end_date $end_date]} {
         if {$edit_all_p} {
@@ -289,7 +288,7 @@ ad_proc -public calendar::item::edit {
                 where  cal_item_id= :cal_item_id
             }]
 
-        calendar::do_notifications -mode Edited -cal_item_id $cal_item_id
+            calendar::do_notifications -mode Edited -cal_item_id $cal_item_id
         }
     } else {
         ad_return_complaint 1 [_ calendar.start_time_before_end_time]

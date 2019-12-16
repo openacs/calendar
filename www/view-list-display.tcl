@@ -12,7 +12,7 @@ ad_include_contract {
     {period_days:integer,notnull {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
     {show_calendar_name_p:boolean 1}
     {sort_by "start_date"}
-    {start_date {[clock format [clock seconds] -format "%Y-%m-%d 00:00"]}}
+    {start_date {[clock format [clock seconds] -format "%Y-%m-%d 00:00:00"]}}
     {cal_system_type ""}
     {date:optional}
     {calendar_id_list ""}
@@ -45,7 +45,7 @@ if { $calendar_id_list ne "" } {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar]
 }
 
-set end_date [clock format [clock scan "+${period_days} days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
+set end_date [clock format [clock scan "+${period_days} days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00:00"]
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 

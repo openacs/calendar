@@ -112,13 +112,17 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     set pretty_end_date [lc_time_fmt $ansi_end_date "%Q"]
     set pretty_start_time [lc_time_fmt $ansi_start_date "%X"]
     set pretty_end_time [lc_time_fmt $ansi_end_date "%X"]
+    set start_time [lc_time_fmt $ansi_start_date "%T"]
+    set end_time [lc_time_fmt $ansi_end_date "%T"]
     set pretty_today [lc_time_fmt $ansi_today "%Q"]
 
     set start_date_seconds [clock scan [lc_time_fmt $ansi_start_date "%Y-%m-%d"]]
     set today_seconds [clock scan [lc_time_fmt $ansi_today "%Y-%m-%d"]]
 
     # Adjust the display of no-time items
-    if {[dt_no_time_p -start_time $pretty_start_date -end_time $pretty_end_date]} {
+    if {($start_time eq "" || $start_time eq "00:00:00") &&
+        ($end_time eq "" || $end_time eq "00:00:00")
+    } {
         set pretty_start_time "--"
         set pretty_end_time "--"
     }

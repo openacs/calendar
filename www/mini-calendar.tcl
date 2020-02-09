@@ -16,7 +16,7 @@ ad_form -name go-to-date -method get -has_submit 1 -action $base_url  \
         }
         {btn_ok:text(submit)
             {label "[_ calendar.Go_to_date]"}
-        } 
+        }
         {view:text(hidden)
             {value "day"}
         }
@@ -33,12 +33,12 @@ if {[info exists page_num] && $page_num ne ""} {
 
 # Determine whether we need to pass on the period_days variable from the list view
 if {$view eq "list"} {
-    if {(![info exists period_days] || $period_days eq "") 
-	|| $period_days eq [parameter::get -parameter ListView_DefaultPeriodDays -default 31]
+    if {(![info exists period_days] || $period_days eq "")
+        || $period_days eq [parameter::get -parameter ListView_DefaultPeriodDays -default 31]
     } {
-	set url_stub_period_days ""
+        set url_stub_period_days ""
     } else {
-	set url_stub_period_days "&period_days=${period_days}"
+        set url_stub_period_days "&period_days=${period_days}"
     }
 } else {
     set url_stub_period_days ""
@@ -60,11 +60,11 @@ foreach viewname {list day week month} {
         set active_p f
     }
     if {$viewname eq "list"} {
-	multirow append views [lang::util::localize $message_key_array($viewname)] $viewname $active_p \
-	    "[export_vars -base $base_url {date {view $viewname}}]${page_num}${url_stub_period_days}"
+        multirow append views [lang::util::localize $message_key_array($viewname)] $viewname $active_p \
+            "[export_vars -base $base_url {date {view $viewname}}]${page_num}${url_stub_period_days}"
     } else {
-	multirow append views [lang::util::localize $message_key_array($viewname)] $viewname $active_p \
-	    "[export_vars -base $base_url {date {view $viewname}}]${page_num}"
+        multirow append views [lang::util::localize $message_key_array($viewname)] $viewname $active_p \
+            "[export_vars -base $base_url {date {view $viewname}}]${page_num}"
     }
 }
 
@@ -110,7 +110,7 @@ if {$view eq "month"} {
         set new_row_p [expr {$i / 3}]
 
         if {$i == $curr_month_idx} {
-            set current_month_p t 
+            set current_month_p t
         } else {
             set current_month_p f
         }
@@ -118,14 +118,14 @@ if {$view eq "month"} {
                              [clock scan "[expr {$i-$curr_month_idx}] month" -base $now] -format "%Y-%m-%d"]
         multirow append months $month $current_month_p $new_row_p  \
             "[export_vars -base $base_url {{date $target_date} view}]${page_num}${url_stub_period_days}"
-        
+
     }
 } else {
     set prev_month [clock format [clock scan "1 month ago" -base $now] -format "%Y-%m-%d"]
     set next_month [clock format [clock scan "1 month" -base $now] -format "%Y-%m-%d"]
     set prev_month_url "$base_url?view=$view&date=[ad_urlencode $prev_month]${page_num}${url_stub_period_days}"
     set next_month_url "$base_url?view=$view&date=[ad_urlencode $next_month]${page_num}${url_stub_period_days}"
-    
+
     set first_day_of_week [lc_get firstdayofweek]
     set week_days [lc_get abday]
     set long_weekdays [lc_get day]
@@ -158,10 +158,10 @@ if {$view eq "month"} {
             set active_p f
         } elseif {$julian_date > $last_julian_date_in_month} {
             set active_p f
-        } 
+        }
         set ansi_date [dt_julian_to_ansi $julian_date]
         set pretty_date [lc_time_fmt $ansi_date %Q]
-        
+
         if {$julian_date == $first_julian_date_of_month} {
             set day_number 1
         } elseif {$julian_date == $last_julian_date_in_month + 1} {
@@ -206,7 +206,7 @@ if {$view eq "month"} {
                 acs_KeypressGoto('$url#calendar',event);
             });
         }]
-        
+
         incr day_number
         incr day_of_week
     }

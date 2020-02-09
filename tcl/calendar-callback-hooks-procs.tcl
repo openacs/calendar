@@ -19,3 +19,9 @@ ad_proc -public -callback calendar::item::after_edit {
     Puts extra logics after calendar edit.
 } -
 
+
+# Local variables:
+#    mode: tcl
+#    tcl-indent-level: 4
+#    indent-tabs-mode: nil
+# End:

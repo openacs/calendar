@@ -104,13 +104,23 @@ ad_proc -private calendar::item::all_day_event {start_date_ansi end_date_ansi} {
 
     Determine, if an event is an all day event depending on the ansi
     start and end dates (e.g. "2018-03-22 00:00:00" and "2018-03-23
-    00:00:00". The event is a full_day event, either when the
-    start_date is equal to the end data or the start_day is different
-    to the end day (this might happen through external calendars).
-    
+    00:00:00").
+
+    The event is a full_day event, when both start_date and end_date
+    do not specify a time, which in the datamodel means both dates are
+    set at midnight.
 } {
-    return [expr {$start_date_ansi eq $end_date_ansi
-                  || [lindex $start_date_ansi 0] ne [lindex $end_date_ansi 0]}]
+    # This previous definition would match any start and end date that
+    # were equal (e.g. '2019-02-16 18:00:03' and '2019-02-16
+    # 18:00:03'), and also any event with some time specified as long
+    # as the date component was different (e.g. '2019-01-01 14:34:02'
+    # and '2019-02-16 18:00:03'). When such specific time intervals
+    # are given it is hard to argue this would be just an all day
+    # event.
+    # return [expr {$start_date_ansi eq $end_date_ansi
+    #               || [lindex $start_date_ansi 0] ne [lindex $end_date_ansi 0]}]
+    return [expr {[lindex $start_date_ansi 1] eq "00:00:00" &&
+                  [lindex $end_date_ansi 1] eq "00:00:00"}]
 }
 
 ad_proc -public calendar::item::get {
@@ -141,14 +151,12 @@ ad_proc -public calendar::item::get {
         set row(start_date_ansi) [lc_time_system_to_conn $row(start_date_ansi)]
         set row(end_date_ansi)   [lc_time_system_to_conn $row(end_date_ansi)]
     }
-    #
-    # all day events: either the start date 
-    #
-    if { [all_day_event $row(start_date_ansi) $row(end_date_ansi)] } {
-        set row(time_p) 0
-    } else {
-        set row(time_p) 1
-    }
+
+    set all_day_event_p [calendar::item::all_day_event \
+                             $row(start_date_ansi) $row(end_date_ansi)]
+    set row(all_day_event_p) $all_day_event_p
+    set row(time_p) [expr {!$all_day_event_p}]
+
     ns_log notice "calendar::item::get $row(start_date_ansi) eq $row(end_date_ansi) => $row(time_p)"
     
     # Localize

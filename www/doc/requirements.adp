@@ -309,7 +309,7 @@ should take you to the month view for that month.</p>
 entering information for the event in a form and then submitting
 that form. Form should include title, start date and time, or an
 explicit indication that the event does not have a start time.
-Default values should already be entered with the correct time zone
+Default values should already be entered with the correct timezone
 offset in place. Non-required fields should include end time or
 duration, type information, a description, to which party the event
 belongs, and an indicator as to whether or not this event

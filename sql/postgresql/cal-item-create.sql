@@ -97,7 +97,7 @@ comment on column cal_items.on_which_calendar is '
 ';
 
 create index cal_items_on_which_calendar_idx on cal_items (on_which_calendar);
-
+create index cal_items_on_which_calendar_item_type_id_idx on cal_items(on_which_calendar, item_type_id);
 
 -------------------------------------------------------------
 CREATE TABLE cal_uids (

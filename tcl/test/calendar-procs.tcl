@@ -61,9 +61,9 @@ aa_register_case -cats api -procs {
         calendar::delete -calendar_id $calendar_id
         aa_false "Calendar exists after deletion" \
             [calendar::exists_p $calendar_id]
-        }]
     }
 }
+
 # Local variables:
 #    mode: tcl
 #    tcl-indent-level: 4

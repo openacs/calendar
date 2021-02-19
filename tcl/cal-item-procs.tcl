@@ -157,8 +157,8 @@ ad_proc -public calendar::item::get {
     set row(all_day_event_p) $all_day_event_p
     set row(time_p) [expr {!$all_day_event_p}]
 
-    ns_log notice "calendar::item::get $row(start_date_ansi) eq $row(end_date_ansi) => $row(time_p)"
-    
+    #ns_log notice "calendar::item::get $row(start_date_ansi) eq $row(end_date_ansi) => $row(time_p)"
+
     # Localize
     set row(start_time) [lc_time_fmt $row(start_date_ansi) "%X"]
 
@@ -222,10 +222,12 @@ ad_proc -public calendar::item::edit {
     if {[dates_valid_p -start_date $start_date -end_date $end_date]} {
         if {$edit_all_p} {
             set recurrence_id [db_string select_recurrence_id {}]
-
-            # If the recurrence id is NULL, then we stop here and just do the normal update
+            #
+            # If the recurrence id is empty (coming from NULL value),
+            # then we stop here and just do the normal update
+            #
             if {$recurrence_id ne ""} {
-                ns_log notice "recurrence_id $recurrence_id"
+                #ns_log notice "recurrence_id $recurrence_id"
                 calendar::item::edit_recurrence \
                     -event_id $cal_item_id \
                     -start_date $start_date \

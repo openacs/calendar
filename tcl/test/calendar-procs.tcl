@@ -27,6 +27,8 @@ aa_register_case -cats api -procs {
     calendar::delete
     calendar::rename
     calendar::name
+    calendar::exists_p
+    acs::test::user::create
 } calendar_basic_api {
     Create, rename and delete a calendar
 

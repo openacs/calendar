@@ -13,7 +13,7 @@ namespace eval calendar {}
 namespace eval calendar::apm {}
 
 
-ad_proc -public calendar::apm::package_after_upgrade {
+ad_proc -private calendar::apm::package_after_upgrade {
     -from_version_name:required
     -to_version_name:required
 } {
@@ -34,7 +34,7 @@ ad_proc -public calendar::apm::package_after_upgrade {
     }
 }
 
-ad_proc -public calendar::apm::before_uninstantiate {
+ad_proc -private calendar::apm::before_uninstantiate {
     -package_id:required
 } {
     Cleanup calendars from this package instance upon uninstantiation.

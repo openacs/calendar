@@ -47,10 +47,12 @@ set recurrence_options [list \
 ad_form -name cal_item  -export {return_url} -form {
     {cal_item_id:key}
 
-    {every_n:integer,optional
+    {every_n:integer(number),optional
         {label "[_ calendar.Repeat_every]"}
         {value 1}
-        {html {size 4}} 
+        {html
+            {size 4 min 1}
+        }
     }
 
     {interval_type:text(radio)

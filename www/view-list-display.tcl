@@ -240,9 +240,9 @@ if { $the_form ne "" } {
 set exported_vars [export_vars -entire_form -no_empty -form -exclude $excluded_vars]
 
 ad_form -name frmdays -has_submit 1 -html {class "inline-form"} -form {
-    {period_days:integer,optional
+    {period_days:integer(number),optional
         {label "[_ calendar.days]"}
-        {html {size 3 maxlength 3 class "cal-input-field"}}
+        {html {min 1 max 999 size 3 class "cal-input-field"}}
         {value "$period_days"}
     }
 } -on_submit { }

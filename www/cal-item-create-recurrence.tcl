@@ -1,10 +1,9 @@
-
 # /packages/calendar/www/cal-item-create.tcl
 
 ad_page_contract {
-    
+
     Creation of new recurrence for cal item
-    
+
     @author Ben Adida (ben@openforce.net)
     @creation-date 10 Mar 2002
     @cvs-id $Id$
@@ -12,7 +11,7 @@ ad_page_contract {
     cal_item_id:naturalnum,notnull
     {return_url:localurl "./"}
     {days_of_week:multiple ""}
-} 
+}
 
 
 auth::require_login
@@ -22,15 +21,15 @@ calendar::item::get -cal_item_id $cal_item_id -array cal_item
 
 set dow_string ""
 foreach dow {
-    {"#calendar.Sunday#" 0} {"#calendar.Monday#" 1} {"#calendar.Tuesday#" 2} 
+    {"#calendar.Sunday#" 0} {"#calendar.Monday#" 1} {"#calendar.Tuesday#" 2}
     {"#calendar.Wednesday#" 3} {"#calendar.Thursday#" 4} {"#calendar.Friday#" 5}
     {"#calendar.Saturday#" 6}
 } {
-        if {[lindex $dow 1] == $cal_item(day_of_week) - 1} {
-                set checked_html "CHECKED"
-        } else {
-                set checked_html ""
-        }
+    if {[lindex $dow 1] == $cal_item(day_of_week) - 1} {
+        set checked_html "CHECKED"
+    } else {
+        set checked_html ""
+    }
 
     set dow_string "$dow_string <INPUT TYPE=checkbox name=days_of_week value=[lindex $dow 1] $checked_html id=\"cal_item:elements:interval_type:days_of_week:[lindex $dow 1]\" >[lindex $dow 0] &nbsp;\n"
 }
@@ -42,11 +41,8 @@ set recurrence_options [list \
                             [list "[_ calendar.same] $cal_item(pretty_day_of_week) [_ calendar.of_the_month]" month_by_day] \
                             [list [_ calendar.year] year]]
 
-
-
 ad_form -name cal_item  -export {return_url} -form {
     {cal_item_id:key}
-
     {every_n:integer(number),optional
         {label "[_ calendar.Repeat_every]"}
         {value 1}
@@ -54,22 +50,18 @@ ad_form -name cal_item  -export {return_url} -form {
             {size 4 min 1}
         }
     }
-
     {interval_type:text(radio)
         {label ""}
         {options $recurrence_options}
     }
-
     {recur_until:date
         {label "[_ calendar.lt_Repeat_this_event_unt]"}
         {format "YYYY MM DD"}
-        {after_html {<input type="button" id="cal-item-recur-until" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');"> \[<b>[_ calendar.y-m-d]</b>\]} 
+        {after_html {<input type="button" id="cal-item-recur-until" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');"> \[<b>[_ calendar.y-m-d]</b>\]}
         }
-        
+
     }
-
     {submit:text(submit) {label "[_ calendar.Add_Recurrence]"}}
-
 } -validate {
     {recur_until
         {
@@ -112,7 +104,6 @@ template::add_event_listener \
     -script {showCalendarWithDateWidget('recur_until', 'y-m-d');}
 
 ad_return_template
-
 
 # Local variables:
 #    mode: tcl

@@ -99,7 +99,7 @@ ad_form -name cal_item  -export { return_url } -form {
         {label "[_ calendar.Description]"}
         {html {cols 45 rows 10}}
     }
-    {related_link_url:text(text),optional
+    {related_link_url:text(url),optional
         {label "[_ calendar.RelatedLink]"}
         {html {size 45 maxlength 255}}
     }

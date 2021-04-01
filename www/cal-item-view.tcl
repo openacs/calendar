@@ -26,13 +26,15 @@ if { $cal_item(redirect_to_rel_link_p) == "t" &&
 
 set write_p [permission::write_permission_p -object_id $cal_item_id -creation_user $cal_item(creation_user)]
 
+multirow create attachments item_id label href detach_url
 # Attachments?
 if {$cal_item(n_attachments) > 0} {
-    set item_attachments [attachments::get_attachments \
-                              -object_id $cal_item(cal_item_id) \
-                              -return_url [ad_return_url]]
-} else {
-    set item_attachments [list]
+    foreach tuple [attachments::get_attachments \
+                       -object_id $cal_item(cal_item_id) \
+                       -return_url [ad_return_url]] {
+        lassign $tuple item_id label href detach_url
+        multirow append attachments $item_id $label $href $detach_url
+    }
 }
 
 # no time?

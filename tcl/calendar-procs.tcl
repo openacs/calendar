@@ -461,9 +461,9 @@ ad_proc -public calendar::item_type_delete {
 ad_proc -public calendar::attachments_enabled_p {} {
     @return 1 if the attachments are enabled, otherwise 0.
 } {
-    set package_id [site_node_apm_integration::child_package_exists_p \
-        -package_key attachments
-    ]
+    return [site_node_apm_integration::child_package_exists_p \
+                -package_key attachments]
+    #return [parameter::get -parameter Attachments -default 0]
 }
 
 ad_proc -public calendar::rename {

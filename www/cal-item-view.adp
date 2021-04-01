@@ -91,13 +91,13 @@
       </div>
       <div class="form-widget">
         <ul>
-          <%
-            foreach attachment $item_attachments {
-              template::adp_puts "<li><img src=\"/resources/acs-subsite/attach.png\"><a href="\"[lindex" $attachment 2]\">[lindex $attachment 1]</a> &nbsp;\[<a href="\"[lindex" $attachment 3]\">#attachments.remove#</a>\]</li>"
-            }
-            %>
+          <multiple name="attachments">
+              <li><img src="/resources/acs-subsite/attach.png">
+                <a href="@attachments.href@"\">@attachments.label@</a>
+                &nbsp;[<a href="@attachments.detach_url@">#attachments.remove#</a>]
+              </li>
+          </multiple>
         </ul>
-        <!-- @attachment_options;noquote@ -->
       </div>
     </div>
   </if>

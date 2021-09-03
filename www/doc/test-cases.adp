@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/calendar {Calendar}} {OpenACS Calendar package - test cases}</property>
+<property name="context">{/doc/calendar/ {Calendar}} {OpenACS Calendar package - test cases}</property>
 <property name="doc(title)">OpenACS Calendar package - test cases</property>
 <master>
 <h2>OpenACS Calendar package - test cases</h2>

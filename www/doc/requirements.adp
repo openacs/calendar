@@ -1,5 +1,5 @@
 
-<property name="context">{/doc/calendar {Calendar}} {Calendar Package Requirements}</property>
+<property name="context">{/doc/calendar/ {Calendar}} {Calendar Package Requirements}</property>
 <property name="doc(title)">Calendar Package Requirements</property>
 <master>
 <h2>Calendar Package Requirements</h2>
@@ -20,12 +20,12 @@ that can be accessed through any browser. The application allows
 people to keep track of events as they normally would on a paper
 calendar while giving them the opportunity to share these events
 with other parties. Various types of additional information related
-to a calendar item, such as a URL, a map indicating a
-meeting&#39;s location, et cetera, can also be managed through the
-Calendar application. The Calendar application also provides
-different end-user specifiable presentation formats for viewing
-this information. In its current form, the Calendar application can
-be integrated with other ACS components, for example, our Intranet
+to a calendar item, such as a URL, a map indicating a meeting&#39;s
+location, et cetera, can also be managed through the Calendar
+application. The Calendar application also provides different
+end-user specifiable presentation formats for viewing this
+information. In its current form, the Calendar application can be
+integrated with other ACS components, for example, our Intranet
 application and our Portals application; eventually the Calendar
 application will integrate with yet further systems, for example,
 PDAs.
@@ -511,11 +511,11 @@ party/groups/person to individual calendar items</p>
 <strong>40.20.10</strong> Provides the functionality to delete,
 add, edit any item on the calendar</p>
 <p>
-<strong>40.20.20</strong> Provides the functionality to allow
+<strong>40.20.20</strong> Provides the funcatinality to allow
 Calendar Administrator to change the permissions on each calendar
 item.</p>
 <p>
-<strong>40.20.20</strong> Provides the functionality to allow
+<strong>40.20.20</strong> Provides the funcatinality to allow
 Calendar Administrator to change the default permissions of the
 entire calendar<br>
 </p>
@@ -526,7 +526,7 @@ entire calendar<br>
 <strong>50.10.10</strong> Provide a function to add a new item
 to a calendar. This function should support specifying all the
 values that can be specified in the 'add item' form. It
-should allow creating either a user or a party-specific item. It
+should allow creating either a user or a party-specific item. Iit
 should support specifying a mapping between the new item and an
 arbitrary object in the database.</p>
 <p><strong>50.20 Calendar Views</strong></p>

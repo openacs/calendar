@@ -5,14 +5,14 @@
   <msg key="Add">Add</msg>
   <msg key="add">add</msg>
   <msg key="Add_a_new_Audience">Add a new Audience</msg>
-  <msg key="Add_all_day_event">Add an all day event</msg>
+  <msg key="Add_all_day_event">Add an all-day event</msg>
   <msg key="add_an_event">add an event</msg>
   <msg key="Add_an_item">Add an item</msg>
   <msg key="Add_an_Item_Type">Add an Item Type</msg>
   <msg key="Add_Item">Add Item</msg>
   <msg key="Add_item_beginning_at">Add an item beginning at this time</msg>
   <msg key="Add_Recurrence">Add Recurrence</msg>
-  <msg key="All_Day_Event">All Day Event</msg>
+  <msg key="All_Day_Event">All-Day Event</msg>
   <msg key="all_events">all events</msg>
   <msg key="All_Past_and_Future_Events">All Past and Future Events</msg>
   <msg key="and_Time">and Time</msg>
@@ -93,7 +93,7 @@
   <msg key="last_week">last week</msg>
   <msg key="List">List</msg>
   <msg key="Location">Location</msg>
-  <msg key="lt_Are_you_sure_you_want">Are you sure you want to delete this calendar. All the calendar items
+  <msg key="lt_Are_you_sure_you_want">Are you sure you want to delete this calendar? All the calendar items
       and all the permission that's associated with this calendar will be 
       deleted as well.</msg>
   <msg key="lt_Are_you_sure_you_want_1">Are you sure you want to delete this event?</msg>

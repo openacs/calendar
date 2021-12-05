@@ -118,9 +118,9 @@
   <msg key="Month">Monat</msg>
   <msg key="New_Type">Neue Eintragskategorie:</msg>
   <msg key="next_day">Nächster Tag</msg>
-  <msg key="next_month">Next Month</msg>
+  <msg key="next_month">Nächster Monat</msg>
   <msg key="next_week">Nächste Woche</msg>
-  <msg key="next_year">Next Year</msg>
+  <msg key="next_year">Nächstes Jahr</msg>
   <msg key="No">Nein</msg>
   <msg key="No_Calendars">Keine Kalender vorhanden</msg>
   <msg key="No_Items">Keine Einträge vorhanden</msg>
@@ -129,9 +129,9 @@
   <msg key="of_the_month">des Monats</msg>
   <msg key="of_the_week">&amp;nbsp;</msg>
   <msg key="prev_day">Voriger Tag</msg>
-  <msg key="prev_month">Previous Month</msg>
+  <msg key="prev_month">Voriger Monat</msg>
   <msg key="prev_week">Vorige Woche</msg>
-  <msg key="prev_year">Previous Year</msg>
+  <msg key="prev_year">Voriges Jahr</msg>
   <msg key="Print">Drucken</msg>
   <msg key="Private">Privat:</msg>
   <msg key="private">Privat</msg>
@@ -167,7 +167,7 @@
   <msg key="Tuesday">Dienstag</msg>
   <msg key="Type">Kategorie:</msg>
   <msg key="Type_1">Kategorie</msg>
-  <msg key="Type_Help">Your calendar item can optionally be classified into types. Choose one from the drop down.</msg>
+  <msg key="Type_Help">Der Kalendereintrag kann kategorisiert werden. Wählen Sie eine Kategorie aus.</msg>
   <msg key="Use_Hours_Below">Uhrzeit:</msg>
   <msg key="view">Ansicht</msg>
   <msg key="Wednesday">Mittwoch</msg>

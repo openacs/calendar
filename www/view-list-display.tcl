@@ -227,8 +227,7 @@ if { $export eq "print" } {
 set excluded_vars {}
 set the_form [ns_getform]
 if { $the_form ne "" } {
-    for { set i 0 } { $i < [ns_set size $the_form] } { incr i } {
-        set varname [ns_set key $the_form $i]
+    foreach varname [ns_set keys $the_form] {
         if {$varname eq "period_days" ||
             [string match "__*" $varname] ||
             [string match "form:*" $varname]} {

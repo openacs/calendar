@@ -368,9 +368,12 @@ ad_proc -public calendar::new {
     if { $package_id eq "" } {
         set package_id [ad_conn package_id]
     }
-    set extra_vars [ns_set create]
-    set context_id $package_id
-    oacs_util::vars_to_ns_set -ns_set $extra_vars -var_list {owner_id private_p calendar_name package_id context_id}
+    set extra_vars [ns_set create s \
+                        owner_id $owner_id \
+                        private_p $private_p \
+                        calendar_name $calendar_name \
+                        package_id $package_id \
+                        context_id $package_id]
 
     set calendar_id [package_instantiate_object -extra_vars $extra_vars calendar]
 

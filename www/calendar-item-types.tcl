@@ -24,7 +24,7 @@ ad_form -name add-new-item-type -action item-type-new -has_submit 1 -form {
     }
     {type:text,nospell
         {label "[_ calendar.New_Type]"}
-        {html {size 20}}
+        {html {size 100}}
     }
     {btn_ok:text(submit)
         {label "[_ calendar.add]"}

@@ -209,7 +209,10 @@ ad_form -extend -name cal_item -validate {
 
     set date [calendar::from_sql_datetime -sql_date $ansi_date  -format "YYY-MM-DD"]
     set repeat_p 0
-    if {[info exists start_time] && $start_time ne "" && $start_time != 0} {
+    if {[info exists start_time] &&
+        $start_time != 0 &&
+        [template::util::date::validate $start_time e]
+    } {
         # Set the start time
         set start_hour $start_time
         set start_time "{} {} {} $start_time 0 {} {HH24:MI}"

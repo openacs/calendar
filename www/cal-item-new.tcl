@@ -197,9 +197,6 @@ ad_form -extend -name cal_item -validate {
     {description {[string equal [set msg [ad_html_security_check $description]] ""]}
         $msg
     }
-    {time_p {$time_p in {0 1}}
-        "#acs-templating.Invalid_choice#"
-    }
 } -new_request {
     # Seamlessly create a private calendar if the user doesn't have one
     if { ![calendar::have_private_p -party_id $user_id] } {

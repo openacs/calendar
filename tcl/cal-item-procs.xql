@@ -10,15 +10,6 @@
     </querytext>
 </fullquery>
 
-<fullquery name="calendar::item::dates_valid_p.dates_valid_p_select">      
-<querytext>          
-  select CASE
-    WHEN cast(:start_date as timestamp with time zone) <= cast(:end_date as timestamp with time zone) THEN 1
-    ELSE 0
-  END from dual
-</querytext>
-</fullquery>
-
 <fullquery name="calendar::item::get.select_item_data">      
 <querytext>
       select

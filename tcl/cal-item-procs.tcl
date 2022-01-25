@@ -21,7 +21,20 @@ ad_proc -private calendar::item::dates_valid_p {
 } {
     A sanity check that the start time is before the end time.
 } {
-    return [db_string dates_valid_p_select {}]
+    try {
+        return [db_string dates_valid_p_select {
+            select CASE
+              WHEN cast(:start_date as timestamp with time zone)
+                   <=
+                   cast(:end_date as timestamp with time zone) THEN 1
+              ELSE 0
+            END from dual
+        }]
+    } on error {errmsg} {
+        # Invalid dates in input, definitely not ok.
+        ad_log warning $errmsg
+        return 0
+    }
 }
 
 ad_proc -public calendar::item::new {

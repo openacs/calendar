@@ -103,11 +103,6 @@ ad_form -name cal_item  -export { return_url } -form {
         {label "[_ calendar.RelatedLink]"}
         {html {size 45 maxlength 255}}
     }
-    {related_link_text:text(hidden),optional
-    }
-    {redirect_to_rel_link_p:text(hidden),optional
-    }
-
     {calendar_id:integer(radio)
         {label "[_ calendar.Sharing]"}
         {options $calendar_options}
@@ -191,6 +186,9 @@ if {[llength $cal_item_types] > 1} {
     }
 }
 
+if { ![ad_form_new_p -key cal_item_id] } {
+    calendar::item::get -cal_item_id $cal_item_id -array cal_item
+}
 
 ad_form -extend -name cal_item -validate {
     {title {[string length $title] <= 4000}
@@ -228,7 +226,6 @@ ad_form -extend -name cal_item -validate {
     set calendar_id [lindex $calendar_options 0 1]
 
 } -edit_request {
-    calendar::item::get -cal_item_id $cal_item_id -array cal_item
 
     permission::require_write_permission -object_id $cal_item_id -creation_user $cal_item(creation_user)
 
@@ -295,8 +292,6 @@ ad_form -extend -name cal_item -validate {
                          -description $description \
                          -location $location \
                          -related_link_url $related_link_url \
-                         -related_link_text $related_link_text \
-                         -redirect_to_rel_link_p $redirect_to_rel_link_p \
                          -calendar_id $calendar_id \
                          -item_type_id $item_type_id]
 
@@ -350,6 +345,7 @@ ad_form -extend -name cal_item -validate {
             }
         }
     }
+
     # Do the edit
     calendar::item::edit \
         -cal_item_id $cal_item_id \
@@ -359,8 +355,8 @@ ad_form -extend -name cal_item -validate {
         -description $description \
         -location $location \
         -related_link_url $related_link_url \
-        -related_link_text $related_link_text \
-        -redirect_to_rel_link_p $redirect_to_rel_link_p \
+        -related_link_text $cal_item(related_link_text) \
+        -redirect_to_rel_link_p $cal_item(redirect_to_rel_link_p) \
         -item_type_id $item_type_id \
         -edit_all_p $edit_all_p \
         -edit_past_events_p $edit_past_events_p \

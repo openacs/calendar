@@ -15,7 +15,14 @@ ad_page_contract {
 
 auth::require_login
 
-calendar::item::get -cal_item_id $cal_item_id -array cal_item
+try {
+    calendar::item::get \
+        -cal_item_id $cal_item_id \
+        -array cal_item
+} on error {
+    ns_returnnotfound
+    ad_script_abort
+}
 
 # no time?
 set cal_item(no_time_p) [expr {!$cal_item(time_p)}]

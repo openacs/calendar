@@ -19,7 +19,8 @@ try {
     calendar::item::get \
         -cal_item_id $cal_item_id \
         -array cal_item
-} on error {
+} on error {errmsg} {
+    ad_log warning $errmsg
     ns_returnnotfound
     ad_script_abort
 }

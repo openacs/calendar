@@ -1,14 +1,5 @@
-#
-# A script that assumes
-#
-# cal_item_id:naturalnum,notnull
-#
-# This will pull out information about the event and 
-# display it with some options.
-#
-
 ad_page_contract {
-    Confirm Deletion
+    Confirm deletion of a calendar item.
 } {
     cal_item_id:naturalnum,notnull
 }
@@ -44,8 +35,6 @@ if {  $cal_item(recurrence_id) ne "" } {
     set delete_confirm [export_vars -base "cal-item-delete" {cal_item_id {confirm_p 1}}]
     set delete_cancel [export_vars -base "cal-item-view" {cal_item_id}]
 }
-
-ad_return_template
 
 # Local variables:
 #    mode: tcl

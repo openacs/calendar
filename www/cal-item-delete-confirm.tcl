@@ -12,7 +12,7 @@ try {
         -array cal_item
 } on error {errmsg} {
     ad_log warning $errmsg
-    ns_returnnotfound
+    ad_return_complaint 1 [_ acs-templating.Invalid_item]
     ad_script_abort
 }
 

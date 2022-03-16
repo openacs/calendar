@@ -211,7 +211,7 @@ ad_form -extend -name cal_item -validate {
     set repeat_p 0
     if {[info exists start_time] &&
         $start_time != 0 &&
-        [template::util::date::validate "{} {} {} $start_time 0 {} {HH24:MI}" e]
+        [template::util::date::validate [list {} {} {} $start_time 0 {} {HH24:MI}] e]
     } {
         # Set the start time
         set start_hour $start_time

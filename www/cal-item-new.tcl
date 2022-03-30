@@ -65,10 +65,10 @@ if { [info exists cal_item_id] && $cal_item_id ne "" } {
 
 ad_form -name cal_item  -export { return_url } -form {
     {cal_item_id:key}
-
     {title:text(text)
         {label "[_ calendar.Title_1]"}
-        {html {size 45 maxlength 255}}
+        {maxlength 255}
+        {html {size 45}}
     }
     {date:date
         {label "[_ calendar.Date_1]"}
@@ -80,28 +80,27 @@ ad_form -name cal_item  -export { return_url } -form {
         {options {{"[_ calendar.All_Day_Event]" 0}
             {"[_ calendar.Use_Hours_Below]" 1} }}
     }
-
     {start_time:date,optional
         {label "[_ calendar.Start_Time]"}
         {format {[lc_get formbuilder_time_format]}}
     }
-
     {end_time:date,optional
         {label "[_ calendar.End_Time]"}
         {format {[lc_get formbuilder_time_format]}}
     }
     {location:text(text),optional
         {label "[_ calendar.Location]"}
-        {html {size 44 maxlength 255}}
+        {maxlength 255}
+        {html {size 44}}
     }
-
     {description:text(textarea),optional
         {label "[_ calendar.Description]"}
         {html {cols 45 rows 10}}
     }
     {related_link_url:text(url),optional
         {label "[_ calendar.RelatedLink]"}
-        {html {size 45 maxlength 255}}
+        {maxlength 255}
+        {html {size 45}}
     }
     {calendar_id:integer(radio)
         {label "[_ calendar.Sharing]"}
@@ -191,9 +190,6 @@ if { ![ad_form_new_p -key cal_item_id] } {
 }
 
 ad_form -extend -name cal_item -validate {
-    {title {[string length $title] <= 4000}
-        "Title is too long"
-    }
     {description {[string equal [set msg [ad_html_security_check $description]] ""]}
         $msg
     }
@@ -272,6 +268,16 @@ ad_form -extend -name cal_item -validate {
     set date       [calendar::from_sql_datetime -sql_date $ansi_start_date  -format "YYY-MM-DD"]
     set start_time [template::util::date::from_ansi $ansi_start_date [lc_get formbuilder_time_format]]
     set end_time   [template::util::date::from_ansi $ansi_end_date [lc_get formbuilder_time_format]]
+
+} -on_submit {
+
+    set start_date [calendar::to_sql_datetime -date $date -time $start_time -time_p $time_p]
+    set end_date   [calendar::to_sql_datetime -date $date -time $end_time -time_p $time_p]
+
+    if {![calendar::item::dates_valid_p -start_date $start_date -end_date $end_date]} {
+         template::form::set_error cal_item start_time [_ calendar.start_time_before_end_time]
+         break
+    }
 
 } -new_data {
 
@@ -372,19 +378,19 @@ ad_form -extend -name cal_item -validate {
     }
     ad_script_abort
 
-} -on_request {
+}
 
-    template::add_event_listener -id cal_item:elements:time_p:0 -preventdefault=false -script {TimePChanged(this);}
-    template::add_event_listener -id cal_item:elements:time_p:1 -preventdefault=false -script {TimePChanged(this);}
-    template::add_event_listener -id cal_item.date-button -script {showCalendarWithDateWidget('date', 'y-m-d');}
+# Register JS Eventhandlers
+template::add_event_listener -id cal_item:elements:time_p:0 -preventdefault=false -script {TimePChanged(this);}
+template::add_event_listener -id cal_item:elements:time_p:1 -preventdefault=false -script {TimePChanged(this);}
+template::add_event_listener -id cal_item.date-button -script {showCalendarWithDateWidget('date', 'y-m-d');}
 
-    template::add_body_script -script {
-        if (document.forms["cal_item"].time_p[0].checked == true ) {
-            // All day event
-            disableTime("cal_item");
-        } else {
-            enableTime("cal_item");
-        }
+template::add_body_script -script {
+    if (document.forms["cal_item"].time_p[0].checked == true ) {
+        // All day event
+        disableTime("cal_item");
+    } else {
+        enableTime("cal_item");
     }
 }
 

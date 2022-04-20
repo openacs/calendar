@@ -263,7 +263,7 @@ ad_form -extend -name cal_item -validate {
     # set edit_what $repeat_p
     if { !$repeat_p } {
         element set_properties cal_item edit_what -widget hidden
-        element set_value cal_item edit_what 0
+        element set_value cal_item edit_what this
     }
     set date       [calendar::from_sql_datetime -sql_date $ansi_start_date  -format "YYY-MM-DD"]
     set start_time [template::util::date::from_ansi $ansi_start_date [lc_get formbuilder_time_format]]

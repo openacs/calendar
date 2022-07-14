@@ -12,6 +12,7 @@ ad_page_contract {
     {sort_by ""}
     {start_date ""}
     {period_days:integer,notnull {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
+    {export:token ""}
 } -validate {
     valid_period_days  -requires { period_days } {
         # Tcl allows in for relative times just 6 digits, including the "+"
@@ -25,8 +26,6 @@ set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
 set ad_conn_url [ad_conn url]
-
-set export [ns_queryget export]
 
 if {$export eq "print"} {
     set view "list"

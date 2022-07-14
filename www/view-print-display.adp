@@ -32,3 +32,11 @@ body {
 </if>
 </body>
 </html>
+<script type="text/javascript" <if @::__csp_nonce@ not nil> nonce="@::__csp_nonce;literal@"</if>>
+    document.querySelector('#print').addEventListener('click', function (e) {
+        window.print();
+    });
+    document.querySelector('#close').addEventListener('click', function (e) {
+        window.close();
+    });
+</script>

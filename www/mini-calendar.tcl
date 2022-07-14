@@ -4,7 +4,7 @@ ad_include_contract {
 
 } {
     {base_url:localurl "[ad_conn url]"}
-    {date:clock(%Y-%m-%d) "[dt_sysdate]"}
+    {date:clock(%Y-%m-%d|%Y%m%d) "[dt_sysdate]"}
 }
 
 if {$base_url eq ""} {

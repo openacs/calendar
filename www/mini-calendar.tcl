@@ -1,9 +1,14 @@
-if {![info exists base_url] || $base_url eq ""} {
-    set base_url [ad_conn url]
+ad_include_contract {
+
+    Mini calendar
+
+} {
+    {base_url:localurl "[ad_conn url]"}
+    {date:clock(%Y-%m-%d) "[dt_sysdate]"}
 }
 
-if {![info exists date] || $date eq ""} {
-    set date [dt_sysdate]
+if {$base_url eq ""} {
+    set base_url [ad_conn url]
 }
 
 ad_form -name go-to-date -method get -has_submit 1 -action $base_url  \
@@ -71,12 +76,7 @@ foreach viewname {list day week month} {
 set list_of_vars [list]
 
 # Get the current month, day, and the first day of the month
-if {[catch {
-    dt_get_info $date
-} errmsg]} {
-    set date [dt_sysdate]
-    dt_get_info $date
-}
+dt_get_info $date
 
 set now              [clock scan $date]
 set date_list        [dt_ansi_to_list $date]

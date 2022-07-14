@@ -8,22 +8,11 @@ ad_page_contract {
     @cvs-id $Id$
 } {
     {view:word {[parameter::get -parameter DefaultView -default day]}}
-    {date ""}
+    {date:clock(%Y-%m-%d) ""}
     {sort_by ""}
     {start_date ""}
     {period_days:integer,notnull {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
 } -validate {
-    
-    valid_date -requires { date } {
-        if {$date ne "" } {
-            if {[catch {set date [clock format [clock scan $date -format "%Y-%m-%d"] -format "%Y-%m-%d"]} err]
-                && [catch {set date [clock format [clock scan $date  -format "%Y%m%d"] -format "%Y-%m-%d"]} err]
-            } {
-                ad_complain "Your input is not valid. It has to be in the form YYYY-MM-DD."
-            }
-        }
-    }
-    
     valid_period_days  -requires { period_days } {
         # Tcl allows in for relative times just 6 digits, including the "+"
         if {$period_days > 99999} {

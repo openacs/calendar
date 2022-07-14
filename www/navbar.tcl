@@ -1,20 +1,22 @@
-#expects: view
+ad_include_contract {
 
-if {(![info exists base_url] || $base_url eq "")} {
-    set base_url [ad_conn url]
+    Calendar navigation bar
+
+} {
+    {view:word {[parameter::get -parameter DefaultView -default day]}}
+    {date:clock(%Y-%m-%d|%Y%m%d) "[dt_sysdate]"}
+    {period_days:integer,notnull {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
+    {base_url:localurl "[ad_conn url]"}
+    {page_num:naturalnum ""}
 }
 
-if {(![info exists date] || $date eq "")} {
-    set date [dt_sysdate]
-}
-
-if {([info exists page_num] && $page_num ne "")} {
+if {$page_num ne ""} {
     set page_num "&page_num=$page_num"
 } else {
     set page_num ""
 }
 
-if {(![info exists period_days] || $period_days eq "") || $period_days eq [parameter::get -parameter ListView_DefaultPeriodDays -default 31]} {
+if {$period_days in [list "" [parameter::get -parameter ListView_DefaultPeriodDays -default 31]]} {
     set url_stub_period_days ""
 } else {
     set url_stub_period_days "&period_days=${period_days}"

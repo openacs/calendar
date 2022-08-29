@@ -392,7 +392,7 @@ ad_proc -public calendar::personal_p {
         set user_id [ad_conn user_id]
     }
     calendar::get -calendar_id $calendar_id -array calendar
-    if { [template::util::is_true $calendar(private_p)] && $calendar(owner_id) == $user_id } {
+    if { [string is true -strict $calendar(private_p)] && $calendar(owner_id) == $user_id } {
         return 1
     } else {
         return 0

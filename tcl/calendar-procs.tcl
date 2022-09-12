@@ -74,13 +74,15 @@ ad_proc calendar::make_datetime {
     }
 }
 
-ad_proc calendar::create { owner_id
-                          private_p
-                          {calendar_name ""}
+ad_proc calendar::create {
+    owner_id
+    private_p
+    {calendar_name ""}
 } {
-    create a new calendar
-    private_p is default to true since the default
-    calendar is a private calendar
+    Create a new calendar.
+
+    @param private_p defaults to true since the default calendar is a
+                     private calendar.
 } {
 
     # find out configuration info
@@ -113,20 +115,19 @@ ad_proc calendar::create { owner_id
 
 }
 
-ad_proc -public calendar::assign_permissions { calendar_id
-                                      party_id
-                                      cal_privilege
-                                      {revoke ""}
+ad_proc -public calendar::assign_permissions {
+    calendar_id
+    party_id
+    cal_privilege
+    {revoke ""}
 } {
-    given a calendar_id, party_id and a permission
-    this proc will assign the permission to the party
-    the legal permissions are
+    Given a calendar_id, party_id and a permission this proc will
+    assign the permission to the party the legal permissions are:
 
     public, private, calendar_read, calendar_write, calendar_delete
 
-    if the revoke is set, then the given permission will
-    be removed for the party
-
+    If the revoke is set, then the given permission will be removed
+    for the party.
 } {
     # default privilege is being able to read
 
@@ -156,10 +157,17 @@ ad_proc -public calendar::have_private_p {
     {-party_id party_id }
 } {
     Check to see if the user has a private calendar.
-    When the provided -return_id is 1, then proc will return the calendar_id
 
-    @param calendar_id_list If you supply the calendar_id_list, then we'll only search
-    for a personal calendar among the calendars supplied here.
+    When the provided -return_id is 1, then proc will return the
+    calendar_id
+
+    @param calendar_id_list If you supply the calendar_id_list, then
+                            we'll only search for a personal calendar
+                            among the calendars supplied here.
+    @param return_id when set to 1, this proc will return the
+                     calendar_id
+
+    @return boolean or the calendar_id according to 'return_id' flag.
 } {
     # Check whether the user is logged in at all
     if {!$party_id} {
@@ -199,6 +207,9 @@ ad_proc -public calendar::get_month_multirow_information {
     {-today_julian_date:required}
     {-first_julian_date_of_month:required}
 } {
+    Builds a multirow with information about the month. Used to
+    display the month calendar view.
+
     @author Dirk Gomez (openacs@dirkgomez.de)
     @creation-date 20-July-2003
 } {
@@ -231,7 +242,16 @@ ad_proc -public calendar::from_sql_datetime {
     {-sql_date:required}
     {-format:required}
 } {
+    Converts a date in a specified format into a templating date dict.
 
+    @param sql_date a date in one of the supported format.
+    @param format one of the supported format, "YYYY-MM-DD",
+                  "HH12:MIam" or "HH24:MI". When unspecified or
+                  invalid, we will try to treat the date as an ansi
+                  date.
+
+    @see template::util::date::create
+    @see template::util::date::set_property
 } {
     # for now, we recognize only "YYYY-MM-DD" "HH12:MIam" and "HH24:MI".
     set date [template::util::date::create]

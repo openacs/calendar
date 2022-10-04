@@ -8,7 +8,7 @@ ad_page_contract {
     @cvs-id $Id$
 } {
     {view:word {[parameter::get -parameter DefaultView -default day]}}
-    {date:clock(%Y-%m-%d|%Y%m%d) ""}
+    {date:clock(%Y-%m-%d) ""}
     {sort_by ""}
     {start_date ""}
     {period_days:integer,notnull {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}

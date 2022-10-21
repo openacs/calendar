@@ -92,7 +92,7 @@
       <div class="form-widget">
         <ul>
           <multiple name="attachments">
-              <li><img src="/resources/acs-subsite/attach.png">
+              <li><adp:icon name="paperclip" text="attachment">
                 <a href="@attachments.href@"\">@attachments.label@</a>
                 &nbsp;[<a href="@attachments.detach_url@">#attachments.remove#</a>]
               </li>

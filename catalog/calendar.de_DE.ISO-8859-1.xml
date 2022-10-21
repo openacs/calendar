@@ -74,8 +74,7 @@
   <msg key="goto_items_without_time_event_name">Zu %items_without_time.event_name% gehen</msg>
   <msg key="goto_months_name">Zu %months.name% gehen</msg>
   <msg key="goto_today">Zum heutigen Tag gehen</msg>
-  <msg key="goto_weekday">Zu %days_of_week.day_short% %days_of_week.monthday% gehen
-</msg>
+  <msg key="goto_weekday">Zu %days_of_week.day_short% %days_of_week.monthday% gehen</msg>
   <msg key="Grant">Erteilen</msg>
   <msg key="Grant_Permissions">Berechtigungen erteilen</msg>
   <msg key="Hours">Stunden</msg>

@@ -57,6 +57,11 @@
 	padding: 2px;
 }
 
+#cal-table-week th {
+    white-space:nowrap;
+    font-size:smaller;
+}
+
 /* END Month View  ---------------------------------------------------*/
 
 .cal-input-field {

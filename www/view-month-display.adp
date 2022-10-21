@@ -1,9 +1,7 @@
   <table class="cal-month-table" cellpadding="0" cellspacing="0" border="0" width="90%">
 
     <caption class="cal-table-caption">
-      <a href="@previous_month_url@#calendar" title="#calendar.prev_month#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_month#"></a>
-      &nbsp;@month_string@ @year@&nbsp;
-      <a href="@next_month_url@#calendar" title="#calendar.next_month#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_month#"></a>
+      <a href="@previous_month_url@#calendar" title="#calendar.prev_month#"><adp:icon name="previous"gif" alt="#calendar.prev_month#"></a>&nbsp;@month_string@ @year@&nbsp;<a href="@next_month_url@#calendar" title="#calendar.next_month#"><adp:icon name="next" text="#calendar.next_month#"></a>
     </caption>
 
     <thead>

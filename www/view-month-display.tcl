@@ -209,7 +209,9 @@ db_foreach dbqd.calendar.www.views.select_items {} {
             add_body_script -script [subst {
                 var e =  document.getElementById('month-calendar-$current_day_ansi');
                 e.addEventListener('click', function (event) {
-                    location.href = '$add_url';
+                    if (event.target.className == 'cal-month-day') {
+                        location.href = '$add_url';
+                    }
                 });
                 e.addEventListener('keypress', function (event) {
                     event.preventDefault();
@@ -255,16 +257,6 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         [lc_time_fmt $current_day_ansi %w] \
         month-calendar-$current_day_ansi
 
-    add_body_script -script [subst {
-        var e =  document.getElementById('month-calendar-$current_day_ansi');
-        e.addEventListener('click', function (event) {
-            location.href = '$add_url';
-        });
-        e.addEventListener('keypress', function (event) {
-            event.preventDefault();
-            acs_KeypressGoto('$add_url',event);
-        });
-    }]
 }
 
 if { !$exporting_p } {

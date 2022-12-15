@@ -10,7 +10,7 @@ ad_page_contract {
     {view:word {[parameter::get -parameter DefaultView -default day]}}
     {date:clock(%Y-%m-%d) ""}
     {sort_by ""}
-    {start_date ""}
+    {start_date:clock(%Y-%m-%d) ""}
     {period_days:integer,notnull {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
     {export:token ""}
 } -validate {
@@ -45,10 +45,10 @@ if {$view eq "list"} {
         set start_date $date
     }
 
-    set ansi_list [split $start_date "- "]
-    set ansi_year [lindex $ansi_list 0]
-    set ansi_month [string trimleft [lindex $ansi_list 1] "0"]
-    set ansi_day [string trimleft [lindex $ansi_list 2] "0"]
+    lassign [split $start_date -] ansi_year ansi_month ansi_day
+    set ansi_year  [string trimleft $ansi_year 0]
+    set ansi_month [string trimleft $ansi_month 0]
+    set ansi_day   [string trimleft $ansi_day 0]
     set end_date [dt_julian_to_ansi [expr {[dt_ansi_to_julian $ansi_year $ansi_month $ansi_day ] + $period_days}]]
 }
 if { $user_id eq 0 } {

@@ -7,32 +7,21 @@ ad_page_contract {
     @creation-date May 29, 2002
     @cvs-id $Id$
 } {
-    {calendar_id:naturalnum ""}
-    cal_item_id:naturalnum,optional
-    item_type_id:naturalnum,optional
-    {date ""}
+    {calendar_id:object_id ""}
+    cal_item_id:object_id,optional
+    {item_type_id:object_id ""}
+    {date:clock(%Y-%m-%d) ""}
     {julian_date ""}
     {start_time ""}
     {end_time ""}
     {view "day"}
     {return_url:localurl "./"}
-}  -validate {
-    valid_date -requires { date } {
-        if {$date ne "" } {
-            if {[catch {set date [clock format [clock scan $date] -format "%Y-%m-%d"]} err]} {
-                ad_complain "Your input ($date) is not valid. It has to be in the form YYYY-MM-DD."
-            }
-        }
-    }
 }
+
 auth::require_login
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
-
-if {![info exists item_type_id]} {
-    set item_type_id ""
-}
 
 set date [calendar::adjust_date -date $date -julian_date $julian_date]
 set ansi_date $date

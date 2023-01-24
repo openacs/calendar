@@ -295,12 +295,10 @@ ad_form -extend -name cal_item -validate {
 
     if {$repeat_p} {
         ad_returnredirect [export_vars -base cal-item-create-recurrence { return_url cal_item_id}]
+    } elseif {$return_url ne "./"} {
+        ad_returnredirect $return_url
     } else {
-        if {$return_url ne "./"  } {
-            ad_returnredirect $return_url
-        } else {
-            ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]
-        }
+        ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]
     }
     ad_script_abort
 

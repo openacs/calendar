@@ -12,7 +12,7 @@ if {$base_url eq ""} {
 }
 
 ad_form -name go-to-date -method get -has_submit 1 -action $base_url  \
-    -export [lappend list_of_vars page_num] \
+    -export {page_num} \
     -html {class inline-form} \
     -form {
         {date:text,nospell,optional
@@ -72,8 +72,6 @@ foreach viewname {list day week month} {
             "[export_vars -base $base_url {date {view $viewname}}]${page_num}"
     }
 }
-
-set list_of_vars [list]
 
 # Get the current month, day, and the first day of the month
 dt_get_info $date
@@ -218,18 +216,6 @@ if { $view eq "day" && [dt_sysdate] eq $date } {
     set today_p t
 } else {
     set today_p f
-}
-
-
-set form_vars ""
-foreach var $list_of_vars {
-    append form_vars "<INPUT TYPE=hidden name=[lindex $var 0] value=[lindex $var 1]>"
-}
-
-ad_form -name choose_new_date -show_required_p f -has_edit 0 -has_submit 0 -form {
-    {new_date:date
-        {label ""}
-        {format {MM DD YYYY}}}
 }
 
 # Local variables:

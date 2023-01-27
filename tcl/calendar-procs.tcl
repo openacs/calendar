@@ -446,8 +446,7 @@ ad_proc -public calendar::get_item_types {
 } {
     return the item types
 } {
-    return [concat [list [list {--} {}]] \
-            [db_list_of_lists select_item_types {}]]
+    return [list {--} {} {*}[db_list_of_lists select_item_types {}]]
 }
 
 ad_proc -public calendar::item_type_new {

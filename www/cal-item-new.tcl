@@ -171,6 +171,7 @@ ad_form -extend -name cal_item -validate {
         set end_time [clock format [clock add [clock scan $start_time -format {%H:%M}] 1 hour] -format {%H:%M}]
     }
 
+    # set the calendar_id before setting item_types form element (see top of script) DAVEB
     set calendar_id [lindex $calendar_options 0 1]
 
 } -edit_request {

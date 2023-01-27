@@ -20,18 +20,22 @@ permission::require_permission -object_id $cal_item_id -privilege cal_item_write
 calendar::item::get -cal_item_id $cal_item_id -array cal_item
 
 set dow_string ""
-foreach dow {
-    {"#calendar.Sunday#" 0} {"#calendar.Monday#" 1} {"#calendar.Tuesday#" 2}
-    {"#calendar.Wednesday#" 3} {"#calendar.Thursday#" 4} {"#calendar.Friday#" 5}
-    {"#calendar.Saturday#" 6}
+foreach {name num} {
+    "#calendar.Sunday#" 0
+    "#calendar.Monday#" 1
+    "#calendar.Tuesday#" 2
+    "#calendar.Wednesday#" 3
+    "#calendar.Thursday#" 4
+    "#calendar.Friday#" 5
+    "#calendar.Saturday#" 6
 } {
-    if {[lindex $dow 1] == $cal_item(day_of_week) - 1} {
+    if {$num == $cal_item(day_of_week) - 1} {
         set checked_html "CHECKED"
     } else {
         set checked_html ""
     }
 
-    set dow_string "$dow_string <INPUT TYPE=checkbox name=days_of_week value=[lindex $dow 1] $checked_html id=\"cal_item:elements:interval_type:days_of_week:[lindex $dow 1]\" >[lindex $dow 0] &nbsp;\n"
+    append dow_string [subst {<input type="checkbox" name="days_of_week" value="$num" $checked_html id="cal_item:elements:interval_type:days_of_week:$num"> $name }]
 }
 
 set recurrence_options [list \

@@ -1,35 +1,19 @@
 ad_include_contract {
     Display list calendar view
 
-    Expects:
-      date: ignored, looks like passed in for symmetry
-      start_date: starting date for the list
-      period_days:integer
-      show_calendar_name_p (optional): 0 or 1
-      calendar_id_list: optional list of calendar_ids
-      export: may be "print"
+    @param start_date starting date for the list
+    @param period_days
+    @param show_calendar_name_p
+    @param calendar_id_list  optional list of calendar_ids
+    @param export may be "print"
 } {
-    {period_days:integer,notnull {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
+    {period_days:range(1|99999),notnull, {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
     {show_calendar_name_p:boolean 1}
-    {sort_by "start_date"}
-    {start_date {[clock format [clock seconds] -format "%Y-%m-%d 00:00:00"]}}
-    {cal_system_type ""}
-    {date:optional}
-    {calendar_id_list ""}
-    {export ""}
-    {return_url:optional}
-} -validate {
-    valid_period_days -requires { period_days } {
-        # Tcl allows in for relative times just 6 digits, including the "+"
-        if {$period_days > 99999} {
-            ad_complain "Invalid time period"
-        }
-    }
-    valid_start_date -requires { start_date } {
-        if {[catch {clock scan $start_date} errorMsg]} {
-            ad_complain "invalid start date"
-        }
-    }
+    {sort_by:token "start_date"}
+    {start_date:clock(%Y-%m-%d|%Y-%m-%d %H:%M|%Y-%m-%d %H:%M:%S) {[clock format [clock seconds] -format "%Y-%m-%d 00:00:00"]}}
+    {calendar_id_list:object_id,multiple ""}
+    {export:token ""}
+    {return_url:localurl,optional}
 }
 
 #
@@ -93,10 +77,8 @@ set last_pretty_start_date ""
 
 set interval_limitation_clause [db_map dbqd.calendar.www.views.list_interval_limitation]
 set order_by_clause " order by $sort_by"
+
 set additional_limitations_clause ""
-if { $cal_system_type ne "" } {
-    append additional_limitations_clause " and system_type = :cal_system_type "
-}
 
 set additional_select_clause " , to_char(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS') as ansi_today, recurrence_id"
 

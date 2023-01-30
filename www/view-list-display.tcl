@@ -11,7 +11,7 @@ ad_include_contract {
     {show_calendar_name_p:boolean 1}
     {sort_by:token "start_date"}
     {{start_date:clock(%Y-%m-%d|%Y-%m-%d %H:%M|%Y-%m-%d %H:%M:%S)} {[clock format [clock seconds] -format "%Y-%m-%d 00:00:00"]}}
-    {calendar_id_list:object_id,multiple ""}
+    {calendar_id_list ""}
     {export:token ""}
     {return_url:localurl,optional}
 }

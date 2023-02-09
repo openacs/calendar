@@ -157,6 +157,7 @@ aa_register_case \
         calendar::item::delete
         calendar::item::get
         calendar::item::new
+        calendar::assign_permissions
     } \
     cal_item_add_delete {
     Test adding and deleting a calendar entry
@@ -165,6 +166,34 @@ aa_register_case \
 
         # create a test calendar
         set calendar_id [calendar::create [ad_conn user_id] t]
+
+        set another_user [dict get [acs::test::user::create] user_id]
+
+        aa_false "User '$another_user' has no 'calendar_read' permission on calendar '$calendar_id'" \
+            [permission::permission_p -party_id $another_user -object_id $calendar_id -privilege calendar_read]
+        aa_false "The public has no 'calendar_read' permission on calendar '$calendar_id'" \
+            [permission::permission_p -party_id [acs_magic_object "the_public"] -object_id $calendar_id -privilege calendar_read]
+
+        aa_log "Assign permission on user"
+        calendar::assign_permissions $calendar_id $another_user private
+        aa_true "User '$another_user' has 'calendar_read' permission on calendar '$calendar_id'" \
+            [permission::permission_p -party_id $another_user -object_id $calendar_id -privilege calendar_read]
+        aa_false "The public has no 'calendar_read' permission on calendar '$calendar_id'" \
+            [permission::permission_p -party_id [acs_magic_object "the_public"] -object_id $calendar_id -privilege calendar_read]
+
+        aa_log "Revoking permission on user"
+        calendar::assign_permissions $calendar_id $another_user private revoke
+        aa_false "User '$another_user' has no 'calendar_read' permission on calendar '$calendar_id'" \
+            [permission::permission_p -party_id $another_user -object_id $calendar_id -privilege calendar_read]
+        aa_false "The public has no 'calendar_read' permission on calendar '$calendar_id'" \
+            [permission::permission_p -party_id [acs_magic_object "the_public"] -object_id $calendar_id -privilege calendar_read]
+
+        aa_log "Assign permission to the public"
+        calendar::assign_permissions $calendar_id "" public
+        aa_true "User '$another_user' has 'calendar_read' permission on calendar '$calendar_id'" \
+            [permission::permission_p -party_id $another_user -object_id $calendar_id -privilege calendar_read]
+        aa_true "The public has 'calendar_read' permission on calendar '$calendar_id'" \
+            [permission::permission_p -party_id [acs_magic_object "the_public"] -object_id $calendar_id -privilege calendar_read]
 
         #
         # create a simple calendar item without recurrence
@@ -297,6 +326,7 @@ aa_register_case \
         # Finally, clean up the calendar
         #
         calendar::delete -calendar_id $calendar_id
+        acs_user::delete -user_id $another_user -permanent
     }
 
     #

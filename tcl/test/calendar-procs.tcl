@@ -55,12 +55,16 @@ aa_register_case -cats {
 }
 
 aa_register_case -cats api -procs {
+    calendar::get
     calendar::new
     calendar::delete
     calendar::rename
     calendar::name
     calendar::exists_p
     acs::test::user::create
+    calendar::get_item_types
+    calendar::item_type_new
+    calendar::item_type_delete
 } calendar_basic_api {
     Create, rename and delete a calendar
 
@@ -82,6 +86,36 @@ aa_register_case -cats api -procs {
                             -calendar_name $calendar_name]
         aa_true "Calendar exists after creation" \
             [calendar::exists_p $calendar_id]
+
+        set calendar_dict [calendar::get -calendar_id $calendar_id -array calendar_array]
+        aa_equals "Calendar dict and array are returned as expected" \
+            [lsort $calendar_dict] [lsort [array get calendar_array]]
+        foreach {v e} [list \
+                           calendar_id $calendar_id \
+                           calendar_name $calendar_name \
+                           owner_id $user_id] {
+            aa_equals "Calendar '$v' was returned" \
+                [dict get $calendar_dict $v] $e
+        }
+
+        calendar::item_type_new -calendar_id $calendar_id -type "Test Item Type"
+        aa_true "Item type was generated" [db_0or1row check {
+            select item_type_id from cal_item_types where type = 'Test Item Type'
+            and calendar_id = :calendar_id
+        }]
+
+        aa_equals "Cal item types are retrieved as expected" \
+            [calendar::get_item_types -calendar_id $calendar_id] \
+            [list {{--} {}} {*}[db_list_of_lists select_item_types {
+                select type, item_type_id from cal_item_types
+                where calendar_id= :calendar_id
+            }]]
+
+        calendar::item_type_delete -calendar_id $calendar_id -item_type_id $item_type_id
+        aa_false "Item type was deleted" [db_0or1row check {
+            select 1 from cal_item_types where item_type_id = :item_type_id
+        }]
+
         #
         # Rename calendar
         #

@@ -160,6 +160,7 @@ aa_register_case \
         calendar::assign_permissions
         calendar::calendar_list
         calendar::do_notifications
+        calendar::notification::get_url
     } \
     cal_item_add_delete {
     Test adding and deleting a calendar entry
@@ -274,6 +275,10 @@ aa_register_case \
             and notif_subject like '%TestMode%'
             and response_id = :cal_item_id
         }]
+
+        aa_equals "The notification URL is correct" \
+            [calendar::notification::get_url $package_id] \
+            [site_node::get_url_from_object_id -object_id $package_id]
 
         calendar::item::get \
             -cal_item_id $cal_item_id \

@@ -15,12 +15,17 @@ ad_library {
 namespace eval calendar {}
 namespace eval calendar::notification {}
 
-ad_proc calendar::make_datetime {
+ad_proc -deprecated calendar::make_datetime {
     event_date
     {event_time ""}
 } {
     given a date, and a time, construct the proper date string
     to be imported into oracle. (yyyy-mm-dd hh24:mi format)s
+
+    DEPRECATED: clock idioms and HTML5 feature make this date
+                conversion api less useful
+
+    @see clock
 } {
 
     # MUST CONVERT TO ARRAYS! (ben)

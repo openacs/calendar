@@ -8,6 +8,7 @@ aa_register_case \
     -procs {
         calendar::create
         calendar::item::add_recurrence
+        calendar::item::delete_recurrence
         calendar::item::edit
         calendar::item::get
         calendar::item::new
@@ -144,6 +145,13 @@ aa_register_case \
                 set passed [expr {$passed && $ci_description eq $cal_item(description)}]
             }
             aa_true "Edited item name and New individual names are updated" $passed
+
+            aa_log "Deleting recurrence"
+            calendar::item::delete_recurrence -recurrence_id $recurrence_id
+            aa_false "All recurring events have been deleted" [db_0or1row check [subst {
+                select 1 from acs_objects where object_id in ([join $recurrence_event_ids ,])
+                fetch first 1 rows only
+            }]]
         }
 }
 

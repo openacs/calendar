@@ -238,7 +238,7 @@ ad_proc -public calendar::get_month_multirow_information {
                 weekday $weekday]
 }
 
-ad_proc -public calendar::from_sql_datetime {
+ad_proc -deprecated calendar::from_sql_datetime {
     {-sql_date:required}
     {-format:required}
 } {
@@ -249,6 +249,9 @@ ad_proc -public calendar::from_sql_datetime {
                   "HH12:MIam" or "HH24:MI". When unspecified or
                   invalid, we will try to treat the date as an ansi
                   date.
+
+    DEPRECATED: clock idioms and modern HTML5 features make this api
+    less relevant.
 
     @see template::util::date::create
     @see template::util::date::set_property

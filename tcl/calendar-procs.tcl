@@ -357,12 +357,18 @@ ad_proc -public calendar::calendar_list {
     }]]
 }
 
-ad_proc -public calendar::adjust_date {
+ad_proc -deprecated calendar::adjust_date {
     {-date ""}
     {-julian_date ""}
 } {
     @return the date if it is provided. Otherwise, the julian date in ANSI
             format, if provided, or the system date.
+
+    DEPRECATED: this proc implements a trivial defaulting logic that
+                can be inlined just as well.
+
+    @see dt_sysdate
+    @see dt_julian_to_ansi
 } {
     if {$date eq ""} {
         if {$julian_date ne ""} {

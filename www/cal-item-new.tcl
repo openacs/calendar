@@ -23,7 +23,13 @@ auth::require_login
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
-set date [calendar::adjust_date -date $date -julian_date $julian_date]
+if {$date eq ""} {
+    if {$julian_date ne ""} {
+        set date [dt_julian_to_ansi $julian_date]
+    } else {
+        set date [dt_sysdate]
+    }
+}
 
 set ansi_date $date
 set calendar_list [calendar::calendar_list]

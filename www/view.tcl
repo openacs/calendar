@@ -38,7 +38,9 @@ set admin_p [permission::permission_p -object_id $package_id -privilege calendar
 
 set show_calendar_name_p [parameter::get -parameter Show_Calendar_Name_p -default 1]
 
-set date [calendar::adjust_date -date $date]
+if {$date eq ""} {
+    set date [dt_sysdate]
+}
 
 if {$view eq "list"} {
     if {$start_date eq ""} {

@@ -22,6 +22,38 @@ ad_proc -private calendar::exists_p {
     }]
 }
 
+aa_register_case -cats {
+    api smoke
+} -procs {
+    calendar::attachments_enabled_p
+    site_node_apm_integration::child_package_exists_p
+    site_node_apm_integration::get_child_package_id
+} attachments_enabled {
+    Checks the attachment detection api
+} {
+    set old_package_id [ad_conn package_id]
+
+    aa_run_with_teardown -rollback -test_code {
+        set safe_name [db_string q {select max(name) || 'z' from site_nodes}]
+        set package_id [site_node::instantiate_and_mount -package_key calendar -node_name $safe_name]
+
+        ad_conn -set package_id $package_id
+
+        aa_false "No attachments on the new calendar instance" [calendar::attachments_enabled_p]
+
+        set node [site_node::get_from_object_id -object_id $package_id]
+        set node_id [dict get $node node_id]
+
+        site_node::instantiate_and_mount -package_key attachments -parent_node_id $node_id
+
+        aa_true "Attachments are available" [calendar::attachments_enabled_p]
+
+        ad_conn -set package_id $old_package_id
+    } -teardown_code {
+        ad_conn -set package_id $old_package_id
+    }
+}
+
 aa_register_case -cats api -procs {
     calendar::new
     calendar::delete

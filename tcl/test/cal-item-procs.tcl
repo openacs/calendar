@@ -158,16 +158,33 @@ aa_register_case \
         calendar::item::get
         calendar::item::new
         calendar::assign_permissions
+        calendar::calendar_list
     } \
     cal_item_add_delete {
     Test adding and deleting a calendar entry
 } {
     try {
 
+        set user_id [ad_conn user_id]
+
         # create a test calendar
-        set calendar_id [calendar::create [ad_conn user_id] t]
+        set calendar_id [calendar::create $user_id t]
+
+        aa_true "User '$user_id' has the new calendar" {
+            [string first \
+                 $calendar_id \
+                 [calendar::calendar_list -user_id $user_id -privilege calendar_read]] >= 0
+        }
 
         set another_user [dict get [acs::test::user::create] user_id]
+
+        aa_equals "User '$another_user' has no private calendars" \
+            [calendar::calendar_list -user_id $another_user -privilege calendar_read] \
+            [list]
+
+        aa_equals "User '$another_user' has no public calendars" \
+            [calendar::calendar_list -user_id $another_user -privilege read] \
+            [list]
 
         aa_false "User '$another_user' has no 'calendar_read' permission on calendar '$calendar_id'" \
             [permission::permission_p -party_id $another_user -object_id $calendar_id -privilege calendar_read]
@@ -180,6 +197,31 @@ aa_register_case \
             [permission::permission_p -party_id $another_user -object_id $calendar_id -privilege calendar_read]
         aa_false "The public has no 'calendar_read' permission on calendar '$calendar_id'" \
             [permission::permission_p -party_id [acs_magic_object "the_public"] -object_id $calendar_id -privilege calendar_read]
+
+        aa_equals "User '$another_user' has no private calendars" \
+            [calendar::calendar_list -user_id $another_user -privilege read] \
+            [list]
+
+        aa_equals "User '$another_user' has no public calendars" \
+            [calendar::calendar_list -user_id $another_user -privilege calendar_read] \
+            [list]
+
+        aa_log "Create a private test calendar belonging to the other user"
+        set calendar_id_2 [calendar::create $another_user t]
+        aa_true "User '$another_user' has the new calendar" {
+            [string first \
+                 $calendar_id_2 \
+                 [calendar::calendar_list -user_id $another_user -privilege calendar_read]] >= 0
+        }
+
+        aa_log "Create a public test calendar belonging to the current user"
+        set calendar_id_3 [calendar::create $user_id f]
+        calendar::assign_permissions $calendar_id_3 $another_user private
+        aa_true "User '$another_user' has the new calendar" {
+            [string first \
+                 $calendar_id_3 \
+                 [calendar::calendar_list -user_id $another_user -privilege calendar_read]] >= 0
+        }
 
         aa_log "Revoking permission on user"
         calendar::assign_permissions $calendar_id $another_user private revoke

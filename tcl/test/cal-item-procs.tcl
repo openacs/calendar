@@ -159,6 +159,7 @@ aa_register_case \
         calendar::item::new
         calendar::assign_permissions
         calendar::calendar_list
+        calendar::do_notifications
     } \
     cal_item_add_delete {
     Test adding and deleting a calendar entry
@@ -251,6 +252,28 @@ aa_register_case \
                  -name $ci_name \
                  -description $ci_description \
                  -calendar_id $calendar_id]
+
+        aa_log "Create a notification request for the calendar item"
+        set type_id [notification::type::get_type_id -short_name calendar_notif]
+        set delivery_method_id [lindex [notification::get_delivery_methods -type_id $type_id] 0 1]
+        set interval_id [lindex [notification::get_intervals -type_id $type_id] 0 1]
+        set package_id [ad_conn package_id]
+        notification::request::new \
+            -type_id $type_id \
+            -user_id $user_id \
+            -object_id $package_id \
+            -interval_id $interval_id \
+            -delivery_method_id $delivery_method_id
+
+        aa_log "Do notifications"
+        calendar::do_notifications \
+            -mode TestMode \
+            -cal_item_id $cal_item_id
+        aa_true "Notification was generated" [db_0or1row check {
+            select 1 from notifications where object_id = :package_id
+            and notif_subject like '%TestMode%'
+            and response_id = :cal_item_id
+        }]
 
         calendar::item::get \
             -cal_item_id $cal_item_id \

@@ -30,9 +30,9 @@
   <msg key="Calendar_Item_Delete">Calendar Item Delete</msg>
   <msg key="Calendar_Item_Types">Calendar Item Types</msg>
   <msg key="Calendar_Name">Calendar Name</msg>
-  <msg key="Calendar_Permissions">&quot;Calendar Permissions&quot;</msg>
+  <msg key="Calendar_Permissions">&#34;Calendar Permissions&#34;</msg>
   <msg key="Calendar_Permissions_1">Calendar Permissions</msg>
-  <msg key="Calendar_Preferences">&quot;Calendar Preferences&quot;</msg>
+  <msg key="Calendar_Preferences">&#34;Calendar Preferences&#34;</msg>
   <msg key="Calendars">Calendars</msg>
   <msg key="Choose">Choose</msg>
   <msg key="Close_Window">Close Window</msg>
@@ -59,6 +59,7 @@
 </msg>
   <msg key="Edit">Edit</msg>
   <msg key="edit">edit</msg>
+  <msg key="Edited">Edited</msg>
   <msg key="End_Time">End Time</msg>
   <msg key="Event">Event</msg>
   <msg key="Events">Events</msg>
@@ -94,7 +95,7 @@
   <msg key="List">List</msg>
   <msg key="Location">Location</msg>
   <msg key="lt_Are_you_sure_you_want">Are you sure you want to delete this calendar? All the calendar items
-      and all the permission that's associated with this calendar will be 
+      and all the permission that&#39;s associated with this calendar will be 
       deleted as well.</msg>
   <msg key="lt_Are_you_sure_you_want_1">Are you sure you want to delete this event?</msg>
   <msg key="lt_Audiences_for_calenda">Audiences for calendar</msg>
@@ -103,7 +104,7 @@
   <msg key="lt_Calendar_Choose_Calen">Calendar: Choose Calendar</msg>
   <msg key="lt_Calendar_detail_listi">Calendar detail: listing all the info about the individual calendar</msg>
   <msg key="lt_Calendar_Item_Adminis">Calendar Item Administration</msg>
-  <msg key="lt_Calendar_Item_Permiss">&quot;Calendar Item Permissions&quot;</msg>
+  <msg key="lt_Calendar_Item_Permiss">&#34;Calendar Item Permissions&#34;</msg>
   <msg key="lt_Calendars_Repeating_E">Calendars: Repeating Event</msg>
   <msg key="lt_Create_a_new_calendar">Create a new calendar</msg>
   <msg key="lt_delete_all_occurrence">delete all occurrences</msg>
@@ -119,21 +120,21 @@
         &lt;/if&gt;
 
         &lt;else&gt;
-          &lt;tr class=&quot;days&quot;&gt;
-            &lt;multiple name=&quot;days_of_week&quot;&gt;
+          &lt;tr class=&#34;days&#34;&gt;
+            &lt;multiple name=&#34;days_of_week&#34;&gt;
               &lt;td&gt;%days_of_week.day_short%&lt;/td&gt;
             &lt;/multiple&gt;
           &lt;/tr&gt;
       
-          &lt;multiple name=&quot;days&quot;&gt;
+          &lt;multiple name=&#34;days&#34;&gt;
             &lt;if %days.beginning_of_week_p% true&gt;
               &lt;tr&gt;
             &lt;/if&gt;
         
             &lt;if %days.active_p% true&gt;
               &lt;if %days.today_p% true&gt;
-                &lt;td class=&quot;today&quot; onclick=&quot;javascript:location.href='%days.url%';&quot;&gt;
-                  &lt;a href=&quot;%days.url%&quot; title=&quot;&lt;#_ Go to %month_name% %days.day_number%, %year%</msg>
+                &lt;td class=&#34;today&#34; onclick=&#34;javascript:location.href=&#39;%days.url%&#39;;&#34;&gt;
+                  &lt;a href=&#34;%days.url%&#34; title=&#34;&lt;#_ Go to %month_name% %days.day_number%, %year%</msg>
   <description key="lt_Go_to_monthsname_curr_1">This looks like a buggy internationalization of the package.</description>
 
   <msg key="lt_Hide_Checked_Calendar">Hide Selected Calendars</msg>
@@ -149,12 +150,13 @@
   <msg key="lt_There_are_no_audience">There are no audiences for this calendar</msg>
   <msg key="lt_This_is_a_repeating_e">This is a repeating event</msg>
   <msg key="lt_You_are_choosing_to_m">You are choosing to make this event recurrent, so that it appears more
-than once in your calendar. The event's details are:</msg>
+than once in your calendar. The event&#39;s details are:</msg>
   <msg key="lt_You_can_manage_the_fo">You can manage the following calendars</msg>
   <msg key="lt_You_have_no_party_wid">You have no party wide calendars</msg>
   <msg key="Manage_Item_Types">Manage Item Types</msg>
   <msg key="Monday">Monday</msg>
   <msg key="Month">Month</msg>
+  <msg key="New">New</msg>
   <msg key="New_Type">New Type:</msg>
   <msg key="next_day">Next day</msg>
   <msg key="next_month">Next Month</msg>
@@ -210,7 +212,6 @@ than once in your calendar. The event's details are:</msg>
   <msg key="Type_1">Type</msg>
   <msg key="Type_Help">Your calendar item can optionally be classified
   into types. Choose one from the drop down.</msg>
-  <msg key="Use_Hours_Below">Use Hours Below:</msg>
   <msg key="Use_Hours_Below">Use Hours Below:</msg>
   <msg key="view">View</msg>
   <msg key="Wednesday">Wednesday</msg>

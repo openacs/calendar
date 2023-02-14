@@ -49,6 +49,7 @@
   <msg key="developer_note_calendar_add">Nota per gli Sviluppatori: Il processo di creazione del calendario comporta i seguenti passi: &lt;ol&gt;  &lt;li&gt; Creare l&#39;oggetto &amp;quote;calendario&amp;quot;, e modificare i permessi di default se necessario.&lt;li&gt; Seleziona gruppi e/o utenti che potranno vedere il calendario &lt;li&gt; Ae necessario, applicare i permessi specifici agli utenti o ai gruppi. &lt;/ol&gt;</msg>
   <msg key="Edit">Modifica</msg>
   <msg key="edit">modifica</msg>
+  <msg key="Edited">Modificato</msg>
   <msg key="End_Time">Ora finale</msg>
   <msg key="Event">Evento</msg>
   <msg key="Events">Eventi</msg>
@@ -116,6 +117,7 @@
   <msg key="Manage_Item_Types">Gestisci i Tipi evento</msg>
   <msg key="Monday">Lunedì</msg>
   <msg key="Month">Mese</msg>
+  <msg key="New">Nuovo</msg>
   <msg key="New_Type">Nuovo Tipo:</msg>
   <msg key="next_day">Giorno successivo</msg>
   <msg key="next_month">Mese Successivo</msg>

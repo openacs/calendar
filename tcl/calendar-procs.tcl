@@ -565,6 +565,10 @@ ad_proc -public calendar::do_notifications {
     # send text for now.
     set new_content [ad_html_to_text -- $new_content]
 
+    if {[lang::message::message_exists_p en_US calendar.$mode]} {
+        set mode [_ calendar.$mode]
+    }
+
     # Do the notification for the calendar
     notification::new \
         -type_id [notification::type::get_type_id \

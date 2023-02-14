@@ -272,9 +272,9 @@ aa_register_case \
         set package_id [ad_conn package_id]
         set mode_pretty [_ calendar.New]
         aa_true "Notification was generated" [db_0or1row check {
-            select 1 from notifications where object_id = :package_id
-            and notif_subject like '%' || :mode_pretty || '%'
-            and response_id = :cal_item_id
+            select 1 from notifications
+             where notif_subject like '%' || :mode_pretty || '%'
+               and response_id = :cal_item_id
         }]
 
         aa_equals "The notification URL is correct" \

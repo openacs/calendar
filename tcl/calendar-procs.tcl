@@ -174,7 +174,7 @@ ad_proc -public calendar::have_private_p {
     @return boolean or the calendar_id according to 'return_id' flag.
 } {
     # Check whether the user is logged in at all
-    if {!$party_id} {
+    if { !$party_id } {
         return -1
     }
 
@@ -184,16 +184,13 @@ ad_proc -public calendar::have_private_p {
         set result [db_string get_calendar_info {} -default 0]
     }
 
-    if { $result ne "0" } {
-
-        if {$return_id eq "1"} {
+    if { $result != 0 } {
+        if { $return_id == 1 } {
             return $result
         } else {
             return 1
         }
-
     } else {
-
         return 0
     }
 }

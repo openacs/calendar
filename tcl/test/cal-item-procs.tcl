@@ -242,6 +242,13 @@ aa_register_case \
 
         aa_log "Assign permission to the public"
         calendar::assign_permissions $calendar_id "" public
+
+        set cache_p [parameter::get -package_id [ad_acs_kernel_id] -parameter PermissionCacheP -default 0]
+        if { $cache_p } {
+            aa_log "Caching is activated, we flush it for [acs_magic_object the_public]"
+            permission::cache_flush -party_id [acs_magic_object "the_public"]
+        }
+
         aa_true "User '$another_user' has 'calendar_read' permission on calendar '$calendar_id'" \
             [permission::permission_p -party_id $another_user -object_id $calendar_id -privilege calendar_read]
         aa_true "The public has 'calendar_read' permission on calendar '$calendar_id'" \

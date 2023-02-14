@@ -134,13 +134,12 @@ ad_proc -public calendar::assign_permissions {
     If the revoke is set, then the given permission will be removed
     for the party.
 } {
-    # default privilege is being able to read
+    # Default privilege is being able to read.
 
-    # if the permission is public, oassign the magic object
-    # and set permission to read
+    # If the permission is public, assign the magic object and set
+    # permission to read.
 
     if {$cal_privilege eq "public"} {
-
         set party_id [acs_magic_object "the_public"]
         set cal_privilege "calendar_read"
     } elseif {$cal_privilege eq "private"} {

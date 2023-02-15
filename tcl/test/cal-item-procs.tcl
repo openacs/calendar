@@ -171,6 +171,8 @@ aa_register_case \
         calendar::notification::get_url
         calendar::have_private_p
         calendar::personal_p
+        calendar::outlook::format_item
+        calendar::outlook::ics_timestamp_format
     } \
     cal_item_add_delete {
     Test adding and deleting a calendar entry
@@ -287,6 +289,13 @@ aa_register_case \
                  -name $ci_name \
                  -description $ci_description \
                  -calendar_id $calendar_id]
+
+        set cal_item_ics_url [aa_get_first_url -package_key calendar]ics/${cal_item_id}.ics
+        set d [acs::test::http -user_id [ad_conn user_id] $cal_item_ics_url]
+        acs::test::reply_has_status_code $d 200
+        aa_true "Content type is .ics" \
+            [regexp {^application/x-msoutlook.*$} [ns_set iget [dict get $d headers] Content-type]]
+
 
         set package_id [ad_conn package_id]
         set mode_pretty [_ calendar.New]

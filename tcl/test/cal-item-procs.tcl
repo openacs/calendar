@@ -8,6 +8,7 @@ aa_register_case \
     -procs {
         calendar::create
         calendar::item::add_recurrence
+        calendar::item::edit_recurrence
         calendar::item::delete_recurrence
         calendar::item::edit
         calendar::item::get
@@ -226,6 +227,32 @@ aa_register_case \
         aa_log "Create a private test calendar belonging to the other user"
         set calendar_id_2 [calendar::create $another_user t]
 
+        aa_log "Create a calendar item belonging to the other user"
+        set ci_start_date [clock format [clock seconds] -format "%Y-%m-%d"]
+        set ci_end_date [clock format [clock scan "tomorrow" -base [clock seconds]] -format "%Y-%m-%d"]
+        #
+        # Note: the creation_user can only be specified by altering
+        # the connection information. This is not great.
+        #
+        set old_user [ad_conn user_id]
+        ad_conn -set user_id $another_user
+        set another_cal_item_id \
+            [calendar::item::new \
+                 -start_date $ci_start_date \
+                 -end_date $ci_end_date \
+                 -name Test \
+                 -description {Test Desc} \
+                 -calendar_id $calendar_id_2]
+        ad_conn -set user_id $old_user
+        foreach priv {cal_item_read read write delete admin} {
+            aa_true "Other user has privilege '$priv' on the cal item '$another_cal_item_id'" \
+                [permission::permission_p \
+                     -party_id $another_user \
+                     -object_id $another_cal_item_id \
+                     -privilege $priv]
+        }
+
+
         aa_true "User '$another_user' has now a private calendar" \
             [calendar::have_private_p -party_id $another_user]
 
@@ -425,7 +452,10 @@ aa_register_case \
         # Finally, clean up the calendar
         #
         calendar::delete -calendar_id $calendar_id
-        acs_user::delete -user_id $another_user -permanent
+        calendar::delete -calendar_id $calendar_id_2
+        calendar::delete -calendar_id $calendar_id_3
+        acs::test::user::delete -user_id $another_user \
+            -delete_created_acs_objects
     }
 
     #

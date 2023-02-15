@@ -99,10 +99,10 @@ ad_proc -public calendar::item::new {
             permission::set_not_inherit -object_id $cal_item_id
         }
 
-        assign_permission  $cal_item_id  $creation_user read
-        assign_permission  $cal_item_id  $creation_user write
-        assign_permission  $cal_item_id  $creation_user delete
-        assign_permission  $cal_item_id  $creation_user admin
+        ::permission::grant \
+            -object_id $cal_item_id \
+            -party_id $creation_user \
+            -privilege admin
 
         calendar::do_notifications -mode New -cal_item_id $cal_item_id
         return $cal_item_id
@@ -331,13 +331,18 @@ ad_proc -public calendar::item::delete {
     db_exec_plsql delete_cal_item {}
 }
 
-ad_proc calendar::item::assign_permission { cal_item_id
+ad_proc -deprecated calendar::item::assign_permission { cal_item_id
                                      party_id
                                      permission
                                      {revoke ""}
 } {
     update the permission of the specific cal_item
     if revoke is set to revoke, then we revoke all permissions
+
+    DEPRECATED: this api is in fact a trivial wrapper for the permission api.
+
+    @see permission::grant
+    @see permission::revoke
 } {
     if { $revoke ne "revoke" } {
         if { $permission ne "cal_item_read" } {

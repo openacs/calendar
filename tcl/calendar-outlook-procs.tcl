@@ -35,7 +35,18 @@ namespace eval calendar::outlook {
         return $timestamp
     }
 
-    ad_proc cal_outlook_gmt_sql {{hours 0} {dash ""}} {formats the hours to subtract or add to make the date_time be in gmt} {
+    ad_proc -deprecated cal_outlook_gmt_sql {
+        {hours 0}
+        {dash ""}
+    } {
+        Formats the hours to subtract or add to make the date_time be
+        in gmt.
+
+        DEPRECATED: upstream code stopped using this api in date
+                    2002-07-10.
+
+        @see nothing
+    } {
         # east of gmt is notated as "-",
         # in order to get gmt (to store the date_time for outlook)
         # we need to have the hour equal gmt at the same time as the client

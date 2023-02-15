@@ -251,11 +251,9 @@ ad_proc -deprecated calendar::from_sql_datetime {
                   invalid, we will try to treat the date as an ansi
                   date.
 
-    DEPRECATED: clock idioms and modern HTML5 features make this api
-    less relevant.
+    DEPRECATED: this api has been superseded by api in acs-templating.
 
-    @see template::util::date::create
-    @see template::util::date::set_property
+    @see template::data::from_sql::date
 } {
     # for now, we recognize only "YYYY-MM-DD" "HH12:MIam" and "HH24:MI".
     set date [template::util::date::create]
@@ -300,7 +298,7 @@ ad_proc -deprecated calendar::from_sql_datetime {
     return $date
 }
 
-ad_proc -public calendar::to_sql_datetime {
+ad_proc -deprecated calendar::to_sql_datetime {
     {-date:required}
     {-time:required}
     {-time_p 1}
@@ -311,6 +309,10 @@ ad_proc -public calendar::to_sql_datetime {
     The issue here is the incoming format.
     date: ANSI SQL YYYY-MM-DD
     time: we return HH24.
+
+    DEPRECATED: this api has been superseded by api in acs-templating.
+
+    @see template::data::to_sql::date
 } {
     # Set the time to 0 if necessary
     if {!$time_p} {

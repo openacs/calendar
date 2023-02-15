@@ -208,7 +208,7 @@ ad_proc -public calendar::name { calendar_id } {
 }
 
 
-ad_proc -public calendar::get_month_multirow_information {
+ad_proc -private calendar::get_month_multirow_information {
     {-current_day:required}
     {-today_julian_date:required}
     {-first_julian_date_of_month:required}

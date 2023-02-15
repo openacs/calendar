@@ -169,6 +169,8 @@ aa_register_case \
         calendar::calendar_list
         calendar::do_notifications
         calendar::notification::get_url
+        calendar::have_private_p
+        calendar::personal_p
     } \
     cal_item_add_delete {
     Test adding and deleting a calendar entry
@@ -216,8 +218,25 @@ aa_register_case \
             [calendar::calendar_list -user_id $another_user -privilege calendar_read] \
             [list]
 
+        aa_false "User '$another_user' has no private calendar" \
+            [calendar::have_private_p -party_id $another_user]
+
         aa_log "Create a private test calendar belonging to the other user"
         set calendar_id_2 [calendar::create $another_user t]
+
+        aa_true "User '$another_user' has now a private calendar" \
+            [calendar::have_private_p -party_id $another_user]
+
+        aa_true "Calendar '$calendar_id_2' is personal to '$another_user'" \
+            [calendar::personal_p -calendar_id $calendar_id_2 -user_id $another_user]
+
+        aa_false "Calendar '$calendar_id_2' is not personal to current user" \
+            [calendar::personal_p -calendar_id $calendar_id_2 -user_id [ad_conn user_id]]
+
+        aa_equals "User '$another_user' has the new calendar" \
+            [calendar::have_private_p -party_id $another_user -return_id 1] \
+            $calendar_id_2
+
         aa_true "User '$another_user' has the new calendar" {
             [string first \
                  $calendar_id_2 \

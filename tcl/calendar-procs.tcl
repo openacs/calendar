@@ -120,7 +120,7 @@ ad_proc calendar::create {
 
 }
 
-ad_proc -public calendar::assign_permissions {
+ad_proc -deprecated calendar::assign_permissions {
     calendar_id
     party_id
     cal_privilege
@@ -133,6 +133,11 @@ ad_proc -public calendar::assign_permissions {
 
     If the revoke is set, then the given permission will be removed
     for the party.
+
+    DEPRECATED: this api is a trivial wrapper to the permission api
+
+    @see permission::grant
+    @see permission::revoke
 } {
     # Default privilege is being able to read.
 

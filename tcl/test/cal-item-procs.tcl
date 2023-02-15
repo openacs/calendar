@@ -166,7 +166,6 @@ aa_register_case \
         calendar::item::delete
         calendar::item::get
         calendar::item::new
-        calendar::assign_permissions
         calendar::calendar_list
         calendar::do_notifications
         calendar::notification::get_url
@@ -207,7 +206,8 @@ aa_register_case \
             [permission::permission_p -party_id [acs_magic_object "the_public"] -object_id $calendar_id -privilege calendar_read]
 
         aa_log "Assign permission on user"
-        calendar::assign_permissions $calendar_id $another_user private
+        permission::grant -object_id $calendar_id -party_id $another_user -privilege calendar_read
+
         aa_true "User '$another_user' has 'calendar_read' permission on calendar '$calendar_id'" \
             [permission::permission_p -party_id $another_user -object_id $calendar_id -privilege calendar_read]
         aa_false "The public has no 'calendar_read' permission on calendar '$calendar_id'" \
@@ -274,7 +274,7 @@ aa_register_case \
 
         aa_log "Create a public test calendar belonging to the current user"
         set calendar_id_3 [calendar::create $user_id f]
-        calendar::assign_permissions $calendar_id_3 $another_user private
+        permission::grant -object_id $calendar_id_3 -party_id $another_user -privilege calendar_read
         aa_true "User '$another_user' has the new calendar" {
             [string first \
                  $calendar_id_3 \
@@ -282,14 +282,15 @@ aa_register_case \
         }
 
         aa_log "Revoking permission on user"
-        calendar::assign_permissions $calendar_id $another_user private revoke
+        permission::revoke -object_id $calendar_id_3 -party_id $another_user -privilege calendar_read
+
         aa_false "User '$another_user' has no 'calendar_read' permission on calendar '$calendar_id'" \
             [permission::permission_p -party_id $another_user -object_id $calendar_id -privilege calendar_read]
         aa_false "The public has no 'calendar_read' permission on calendar '$calendar_id'" \
             [permission::permission_p -party_id [acs_magic_object "the_public"] -object_id $calendar_id -privilege calendar_read]
 
         aa_log "Assign permission to the public"
-        calendar::assign_permissions $calendar_id "" public
+        permission::grant -object_id $calendar_id -party_id [acs_magic_object "the_public"] -privilege $cal_privilege
 
         set cache_p [parameter::get -package_id [ad_acs_kernel_id] -parameter PermissionCacheP -default 0]
         if { $cache_p } {

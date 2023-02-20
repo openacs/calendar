@@ -284,13 +284,13 @@ aa_register_case \
         aa_log "Revoking permission on user"
         permission::revoke -object_id $calendar_id_3 -party_id $another_user -privilege calendar_read
 
-        aa_false "User '$another_user' has no 'calendar_read' permission on calendar '$calendar_id'" \
-            [permission::permission_p -party_id $another_user -object_id $calendar_id -privilege calendar_read]
+        aa_false "User '$another_user' has no 'calendar_read' permission on calendar '$calendar_id_3'" \
+            [permission::permission_p -party_id $another_user -object_id $calendar_id_3 -privilege calendar_read]
         aa_false "The public has no 'calendar_read' permission on calendar '$calendar_id'" \
-            [permission::permission_p -party_id [acs_magic_object "the_public"] -object_id $calendar_id -privilege calendar_read]
+            [permission::permission_p -party_id [acs_magic_object "the_public"] -object_id $calendar_id_3 -privilege calendar_read]
 
         aa_log "Assign permission to the public"
-        permission::grant -object_id $calendar_id -party_id [acs_magic_object "the_public"] -privilege $cal_privilege
+        permission::grant -object_id $calendar_id -party_id [acs_magic_object "the_public"] -privilege calendar_read
 
         set cache_p [parameter::get -package_id [ad_acs_kernel_id] -parameter PermissionCacheP -default 0]
         if { $cache_p } {

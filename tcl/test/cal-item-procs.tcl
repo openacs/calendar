@@ -318,8 +318,10 @@ aa_register_case \
                  -description $ci_description \
                  -calendar_id $calendar_id]
 
+        set admin_user_info [acs::test::user::create -admin]
+        set admin_user_id [dict get $admin_user_info user_id]
         set cal_item_ics_url [aa_get_first_url -package_key calendar]ics/${cal_item_id}.ics
-        set d [acs::test::http -user_id [ad_conn user_id] $cal_item_ics_url]
+        set d [acs::test::http -user_info $admin_user_info $cal_item_ics_url]
         acs::test::reply_has_status_code $d 200
         aa_true "Content type is .ics" \
             [regexp {^application/x-msoutlook.*$} [ns_set iget [dict get $d headers] Content-type]]
@@ -455,8 +457,10 @@ aa_register_case \
         calendar::delete -calendar_id $calendar_id
         calendar::delete -calendar_id $calendar_id_2
         calendar::delete -calendar_id $calendar_id_3
-        acs::test::user::delete -user_id $another_user \
-            -delete_created_acs_objects
+        foreach user_id [list $another_user $admin_user_id] {
+            acs::test::user::delete -user_id $user_id \
+                -delete_created_acs_objects
+        }
     }
 
     #

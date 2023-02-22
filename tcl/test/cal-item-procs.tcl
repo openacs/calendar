@@ -303,6 +303,21 @@ aa_register_case \
         aa_true "The public has 'calendar_read' permission on calendar '$calendar_id'" \
             [permission::permission_p -party_id [acs_magic_object "the_public"] -object_id $calendar_id -privilege calendar_read]
 
+
+
+        #
+        # Creating a new calendar item will fire a notification, but
+        # only if the notification object has at least 1 subscriber.
+        #
+        aa_log "Subscribing user '$another_user' to the calendar notification"
+        notification::request::new \
+            -type_id [notification::type::get_type_id \
+                          -short_name calendar_notif] \
+            -user_id $another_user \
+            -object_id [ad_conn package_id] \
+            -interval_id [notification::interval::get_id_from_name -name "instant"] \
+            -delivery_method_id [notification::delivery::get_id -short_name "email"]
+
         #
         # create a simple calendar item without recurrence
         #
@@ -318,6 +333,10 @@ aa_register_case \
                  -description $ci_description \
                  -calendar_id $calendar_id]
 
+        #
+        # Check that the calendar item can be exported as .ics. We use
+        # an admin to avoid permission checks.
+        #
         set admin_user_info [acs::test::user::create -admin]
         set admin_user_id [dict get $admin_user_info user_id]
         set cal_item_ics_url [aa_get_first_url -package_key calendar]ics/${cal_item_id}.ics
@@ -326,8 +345,6 @@ aa_register_case \
         aa_true "Content type is .ics" \
             [regexp {^application/x-msoutlook.*$} [ns_set iget [dict get $d headers] Content-type]]
 
-
-        set package_id [ad_conn package_id]
         set mode_pretty [_ calendar.New]
         aa_true "Notification was generated" [db_0or1row check {
             select 1 from notifications
@@ -336,8 +353,8 @@ aa_register_case \
         }]
 
         aa_equals "The notification URL is correct" \
-            [calendar::notification::get_url $package_id] \
-            [site_node::get_url_from_object_id -object_id $package_id]
+            [calendar::notification::get_url [ad_conn package_id]] \
+            [site_node::get_url_from_object_id -object_id [ad_conn package_id]]
 
         calendar::item::get \
             -cal_item_id $cal_item_id \

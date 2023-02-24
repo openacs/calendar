@@ -38,7 +38,7 @@ if {$cal_item(n_attachments) > 0} {
 set cal_item(no_time_p) [expr {!$cal_item(time_p)}]
 
 # Attachment URLs
-if {[calendar::attachments_enabled_p]} {
+if {[calendar::attachments_enabled_p -package_id $cal_item(calendar_package_id)]} {
     set href [attachments::add_attachment_url \
                   -object_id $cal_item(cal_item_id) \
                   -pretty_name $cal_item(name) \

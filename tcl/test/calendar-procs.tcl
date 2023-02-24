@@ -37,8 +37,11 @@ aa_register_case -cats {
         set safe_name [db_string q {select max(name) || 'z' from site_nodes}]
         set package_id [site_node::instantiate_and_mount -package_key calendar -node_name $safe_name]
 
-        ad_conn -set package_id $package_id
+        ad_conn -set package_id ""
+        aa_false "No attachments on the new calendar instance (with package)" \
+            [calendar::attachments_enabled_p -package_id $package_id]
 
+        ad_conn -set package_id $package_id
         aa_false "No attachments on the new calendar instance" [calendar::attachments_enabled_p]
 
         set node [site_node::get_from_object_id -object_id $package_id]
@@ -46,6 +49,11 @@ aa_register_case -cats {
 
         site_node::instantiate_and_mount -package_key attachments -parent_node_id $node_id
 
+        ad_conn -set package_id ""
+        aa_true "Attachments are available (with package)" \
+            [calendar::attachments_enabled_p -package_id $package_id]
+
+        ad_conn -set package_id $package_id
         aa_true "Attachments are available" [calendar::attachments_enabled_p]
 
         ad_conn -set package_id $old_package_id

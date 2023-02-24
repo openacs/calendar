@@ -9,9 +9,6 @@ ad_page_contract {
     {return_url:localurl [ad_return_url]}
 }
 
-set user_id [ad_conn user_id]
-set package_id [ad_conn package_id]
-
 permission::require_permission -object_id $cal_item_id -privilege read
 
 calendar::item::get -cal_item_id $cal_item_id -array cal_item

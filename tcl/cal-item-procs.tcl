@@ -148,15 +148,14 @@ ad_proc -public calendar::item::get {
         upvar $array row
     }
 
-    set attachments_enabled_p [calendar::attachments_enabled_p]
+    db_1row select_item_data {} -column_array row
 
-    if { $attachments_enabled_p } {
-        set query_name select_item_data_with_attachment
-    } else {
-        set query_name select_item_data
+    if {[calendar::attachments_enabled_p -package_id $row(calendar_package_id)]} {
+        set row(n_attachments) [db_string count_attachments {
+            select count(*) from attachments where object_id = :cal_item_id
+        }]
     }
 
-    db_1row $query_name {} -column_array row
     if {$normalize_time_to_utc} {
         set row(start_date_ansi) [lc_time_local_to_utc $row(start_date_ansi)]
         set row(end_date_ansi)   [lc_time_local_to_utc $row(end_date_ansi)]

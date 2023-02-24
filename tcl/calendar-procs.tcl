@@ -497,12 +497,29 @@ ad_proc -public calendar::item_type_delete {
     }
 }
 
-ad_proc -public calendar::attachments_enabled_p {} {
+ad_proc -public calendar::attachments_enabled_p {
+    -package_id
+} {
+    @param package_id the package_id, assumed to belong to a calendar
+                      package instance. When not specified, we will
+                      determine the package from the connection. When
+                      no package can be determined, this proc will
+                      return 0.
+
     @return 1 if the attachments are enabled, otherwise 0.
 } {
+    if {![info exists package_id]} {
+        if {[ns_conn isconnected]} {
+            set package_id [ad_conn package_id]
+        } else {
+            ad_log warning "Cannot determine package_id. Returning 0"
+            return 0
+        }
+    }
+
     return [site_node_apm_integration::child_package_exists_p \
+		-package_id $package_id	\
                 -package_key attachments]
-    #return [parameter::get -parameter Attachments -default 0]
 }
 
 ad_proc -public calendar::rename {

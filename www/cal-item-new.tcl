@@ -172,6 +172,8 @@ ad_form -extend -name cal_item -validate {
 
     set repeat_p 0
 
+    set time_p [expr {$start_time ne ""}]
+
     if {$start_time ne "" && $end_time eq ""} {
         # Default end_time is one hour after start_time
         set end_time [clock format [clock add [clock scan $start_time -format {%H:%M}] 1 hour] -format {%H:%M}]

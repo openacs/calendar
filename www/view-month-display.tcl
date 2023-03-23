@@ -28,12 +28,9 @@ if { $export ne "" } {
     set exporting_p 0
 }
 
-dt_get_info $date
-
 if {![info exists return_url]} {
     set return_url [ad_urlencode "../"]
 }
-
 
 if {$calendar_id_list ne ""} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar]
@@ -41,10 +38,13 @@ if {$calendar_id_list ne ""} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar]
 }
 
-set date_list  [dt_ansi_to_list $date]
-set this_year  [util::trim_leading_zeros [lindex $date_list 0]]
-set this_month [util::trim_leading_zeros [lindex $date_list 1]]
-set this_day   [util::trim_leading_zeros [lindex $date_list 2]]
+lassign [dt_ansi_to_list $date] this_year this_month this_day
+set dt_info [dt_get_info -dict $date]
+set prev_month                 [dict get $dt_info prev_month]
+set next_month                 [dict get $dt_info next_month]
+set first_julian_date_of_month [dict get $dt_info first_julian_date_of_month]
+set last_julian_date_in_month  [dict get $dt_info last_julian_date_in_month]
+set first_day                  [dict get $dt_info first_day]
 
 set month_string [lindex [dt_month_names] $this_month-1]
 

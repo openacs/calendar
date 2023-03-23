@@ -73,21 +73,25 @@ foreach viewname {list day week month} {
     }
 }
 
-# Get the current month, day, and the first day of the month
-dt_get_info $date
-
+#
+# Parse the date and extract the information needed to render the
+# calendar.
+#
 set now              [clock scan $date]
-set date_list        [dt_ansi_to_list $date]
-set year             [util::trim_leading_zeros [lindex $date_list 0]]
-set month            [util::trim_leading_zeros [lindex $date_list 1]]
-set day              [util::trim_leading_zeros [lindex $date_list 2]]
-
+lassign [dt_ansi_to_list $date] year month day
 set months_list      [dt_month_names]
 set curr_month_idx   [expr {[util::trim_leading_zeros [clock format $now -format "%m"]]-1}]
 set curr_day         [clock format $now -format "%d"]
 set curr_month       [clock format $now -format "%B"]
 set curr_year        [clock format $now -format "%Y"]
 set curr_date_pretty [lc_time_fmt $date "%q"]
+
+set dt_info [dt_get_info -dict $date]
+set first_julian_date_of_month [dict get $dt_info first_julian_date_of_month]
+set days_in_last_month         [dict get $dt_info days_in_last_month]
+set last_julian_date           [dict get $dt_info last_julian_date]
+set last_julian_date_in_month  [dict get $dt_info last_julian_date_in_month]
+set julian_date_today          [dict get $dt_info julian_date_today]
 
 set today [lc_time_fmt [dt_sysdate] "%q"]
 

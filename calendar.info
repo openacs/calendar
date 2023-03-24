@@ -7,7 +7,7 @@
     <initial-install-p>f</initial-install-p>
     <singleton-p>f</singleton-p>
 
-    <version name="2.10.1d5" url="http://openacs.org/repository/download/apm/calendar-2.10.1d5.apm">
+    <version name="2.10.1d6" url="http://openacs.org/repository/download/apm/calendar-2.10.1d6.apm">
         <owner url="mailto:openacs-calendar@dirkgomez.de">Dirk Gomez</owner>
         <summary>Personal and shared event calendars.</summary>
         <release-date>2021-09-15</release-date>
@@ -17,9 +17,9 @@
         <maturity>2</maturity>
         <package_instance_name>#calendar.Calendar#</package_instance_name>
 
-        <provides url="calendar" version="2.10.1d5"/>
+        <provides url="calendar" version="2.10.1d6"/>
         <requires url="attachments" version="0.11"/>
-        <requires url="acs-datetime" version="5.9.1"/>
+        <requires url="acs-datetime" version="5.10.1d1"/>
         <requires url="acs-events" version="0.6.2d2"/>
         <requires url="acs-lang" version="5.10.0"/>
         <requires url="notifications" version="5.10.0"/>

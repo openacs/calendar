@@ -206,17 +206,12 @@ if { $export eq "print" } {
 }
 
 
-set excluded_vars {}
 set the_form [ns_getform]
-if { $the_form ne "" } {
-    foreach varname [ns_set keys $the_form] {
-        if {$varname eq "period_days" ||
-            [string match "__*" $varname] ||
-            [string match "form:*" $varname]} {
-            lappend excluded_vars $varname
-        }
-    }
-}
+set excluded_vars [list \
+                       "period_days" \
+                       {*}[ns_set keys $the_form "__*"] \
+                       {*}[ns_set keys $the_form "form:*"] \
+                      ]
 
 set exported_vars [export_vars -entire_form -no_empty -form -exclude $excluded_vars]
 

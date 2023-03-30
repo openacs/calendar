@@ -78,5 +78,5 @@
   #acs-datetime.is# @today@
   </p>
 
-  <formtemplate id="go-to-date"></formtemplate>
+  <formtemplate id="@form_name@"></formtemplate>
 

@@ -10,7 +10,7 @@
 <a href="@period_url_30@" title="#calendar.events_over_30d#">30</a>
 &nbsp;|&nbsp;
 <a href="@period_url_60@" title="#calendar.events_over_60d#">60</a>&nbsp;]
-<formtemplate id="frmdays">
+<formtemplate id="@form_name@">
   @exported_vars;literal@
   <formwidget id="period_days"/>
 </formtemplate>

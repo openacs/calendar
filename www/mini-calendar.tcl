@@ -11,7 +11,13 @@ if {$base_url eq ""} {
     set base_url [ad_conn url]
 }
 
-ad_form -name go-to-date -method get -has_submit 1 -action $base_url  \
+#
+# Do not conflict with other portlet instances being rendered on the
+# same page.
+#
+set form_name go-to-date-[clock microseconds]
+
+ad_form -name $form_name -method get -has_submit 1 -action $base_url  \
     -export {page_num} \
     -html {class inline-form} \
     -form {

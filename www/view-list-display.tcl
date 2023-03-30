@@ -215,7 +215,13 @@ set excluded_vars [list \
 
 set exported_vars [export_vars -entire_form -no_empty -form -exclude $excluded_vars]
 
-ad_form -name frmdays -has_submit 1 -html {class "inline-form"} -form {
+#
+# Do not conflict with other portlet instances being rendered on the
+# same page.
+#
+set form_name frmdays-[clock microseconds]
+
+ad_form -name $form_name -has_submit 1 -html {class "inline-form"} -form {
     {period_days:integer(number),optional
         {label "[_ calendar.days]"}
         {html {min 1 max 999 size 3 class "cal-input-field"}}

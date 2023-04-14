@@ -517,9 +517,10 @@ ad_proc -public calendar::attachments_enabled_p {
         }
     }
 
-    return [site_node_apm_integration::child_package_exists_p \
-		-package_id $package_id	\
-                -package_key attachments]
+    set node_id [site_node::get_node_id_from_object_id -object_id $package_id]
+    set nodes [site_node::get_children -package_key attachments -node_id $node_id]
+
+    return [expr {[llength $nodes] > 0}]
 }
 
 ad_proc -public calendar::rename {

@@ -24,7 +24,7 @@
 	from      calendars
 	where     owner_id = :party_id
 	and       private_p = 't'
-	and       calendar_id in ([join $calendar_id_list ", "])
+	and       calendar_id in ([ns_dbquotelist $calendar_id_list])
     </querytext>
   </fullquery>
  

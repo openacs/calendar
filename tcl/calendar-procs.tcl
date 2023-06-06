@@ -183,6 +183,11 @@ ad_proc -public calendar::have_private_p {
         return -1
     }
 
+    #
+    # Cleanup empty strings from the id list
+    #
+    set calendar_id_list [lsearch -all -inline -not -exact $calendar_id_list {}]
+
     if { [llength $calendar_id_list] > 0 } {
         set result [db_string get_calendar_info_calendar_id_list {} -default 0]
     } else {

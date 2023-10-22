@@ -8,7 +8,7 @@ ad_include_contract {
       export: may be "print"
 } {
     {date}
-    {show_calendar_name_p:boolean 1}
+    {show_calendar_name_p:boolean,notnull 1}
     {calendar_id_list ""}
     {cal_system_type ""}
     {export ""}

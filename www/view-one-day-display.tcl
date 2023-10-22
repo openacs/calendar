@@ -10,9 +10,9 @@ ad_include_contract {
       export: may be "print"
 } {
     {date}
-    {show_calendar_name_p:boolean 1}
-    {start_display_hour:integer 0}
-    {end_display_hour:integer 23}
+    {show_calendar_name_p:boolean,notnull 1}
+    {start_display_hour:integer,notnull 0}
+    {end_display_hour:integer,notnull 23}
     {calendar_id_list ""}
     {cal_system_type ""}
     {export ""}

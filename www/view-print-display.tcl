@@ -9,7 +9,7 @@ ad_include_contract {
 
 } {
     items
-    {show_calendar_name_p:boolean true}
+    {show_calendar_name_p:boolean,notnull true}
 }
 
 # Local variables:

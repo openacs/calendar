@@ -6,7 +6,7 @@ ad_page_contract {
 } {
     cal_item_id:naturalnum,notnull
     {return_url:localurl "view"}
-    {confirm_p:boolean 0}
+    {confirm_p:boolean,notnull 0}
 }
 
 permission::require_permission -object_id $cal_item_id -privilege delete

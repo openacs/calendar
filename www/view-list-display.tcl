@@ -8,7 +8,7 @@ ad_include_contract {
     @param export may be "print"
 } {
     {period_days:range(1|99999),notnull "[parameter::get -parameter ListView_DefaultPeriodDays -default 31]"}
-    {show_calendar_name_p:boolean 1}
+    {show_calendar_name_p:boolean,notnull 1}
     {sort_by:token "start_date"}
     {{start_date:clock(%Y-%m-%d|%Y-%m-%d %H:%M|%Y-%m-%d %H:%M:%S)} {[clock format [clock seconds] -format "%Y-%m-%d 00:00:00"]}}
     {calendar_id_list ""}

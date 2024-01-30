@@ -72,6 +72,76 @@ aa_register_case \
 aa_register_case \
     -cats api \
     -procs {
+        calendar::item::new
+        lang::conn::timezone
+        lang::system::timezone
+    } \
+    a_foreign_calendar_user {
+        Test the cornercase of a user having their timezone set to
+        something different than the system.
+
+        We also try formats of supported dates to make sure that the
+        necessary conversions do not fail.
+    } {
+        #
+        # The user timezone may be cached. To avoid any
+        # caching-related behavior, we create a fresh test user.
+        #
+        set user_id [dict get [acs::test::user::create -admin] user_id]
+
+        aa_run_with_teardown \
+            -rollback \
+            -test_code {
+                set calendar_id [calendar::create $user_id t]
+
+                #
+                # Set the timezone to anything that is not the system
+                # timezone. This should be sufficient to trigger an
+                # attempt to convert the calendar item dates.
+                #
+                set system_timezone [lang::system::timezone]
+                set foreign_timezone [db_string get_timezone {
+                    select min(tz) from timezones where tz <> :system_timezone
+                }]
+                db_dml set_timezone {
+                    update user_preferences set
+                    timezone = :foreign_timezone
+                    where user_id = :user_id
+                }
+
+                #
+                # Now try to create a calendar item with various date
+                # formats and make sure that we do not trigger an
+                # error.
+                #
+                foreach {start_date end_date} {
+                    2020-01-01 2020-12-31
+                    "2020-01-01 01:00" "2020-12-31 02:00"
+                    "2020-01-01 01:00:03" "2020-12-31 02:00:04"
+                } {
+                    set fail_p [catch {
+                        calendar::item::new \
+                            -start_date $start_date \
+                            -end_date $end_date \
+                            -name "Foreign calendar item" \
+                            -description "Foreign calendar item" \
+                            -calendar_id $calendar_id
+                    } errmsg]
+                    aa_false \
+                        "Creating calendar item in timezone '$foreign_timezone', '$start_date' -> '$end_date'" \
+                        $fail_p
+                    if {$fail_p} {
+                        aa_log $errmsg
+                    }
+                }
+            } -teardown_code {
+                acs::test::user::delete -user_id $user_id
+            }
+    }
+
+aa_register_case \
+    -cats api \
+    -procs {
         calendar::create
         calendar::item::add_recurrence
         calendar::item::edit_recurrence

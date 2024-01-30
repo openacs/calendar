@@ -56,6 +56,9 @@ aa_register_case \
             "14:00" "15:00" false
             "" "14:00" false
             "14:00" "" false
+
+            "2024-01-30 00:01:05" "2024-01-30 00:01:06" true
+            "2024-01-30 02:01:05" "2024-01-30 00:01:06" false
         }
         foreach {start_date end_date expected} $test_date {
             aa_equals "'$start_date' -> '$end_date' validity is '$expected'" \

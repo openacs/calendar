@@ -6,6 +6,69 @@ ad_library {
 aa_register_case \
     -cats api \
     -procs {
+        calendar::item::dates_valid_p
+    } \
+    cal_item_start_end_date_validation {
+        Test the validation of start and end date.
+    } {
+        set test_date {
+            "" "" false
+
+            "bogus" "" false
+            "" "bogus" false
+            "bogus" "bogus" false
+
+            "201-01-0" "" false
+            "" "201-01-0" false
+            "201-01-0" "201-01-0" false
+
+            "2010-15-09" "" false
+            "" "2010-15-09" false
+            "2010-15-09" "2010-15-09" false
+
+            "2010-15-12" "" false
+            "" "2010-15-12" false
+            "2010-15-12" "2010-15-12" false
+
+            "2010-15-12 1" "" false
+            "" "2010-15-12 1" false
+            "2010-15-12 1" "2010-15-12 1" false
+
+            "2024-01-30" "" false
+            "" "2024-01-30" false
+            "2024-01-30" "2024-01-30" true
+
+            "2024-01-30 08:00" "" false
+            "" "2024-01-30 08:00" false
+            "2024-01-30 08:00" "2024-01-30 08:00" true
+
+            "2024-01-30 08:00" "2024-01-30 20:00" true
+            "2024-01-30 08:00" "" false
+            "2024-01-30 20:00" "2024-01-30 08:00" false
+            "" "2024-01-30 08:00" false
+
+            "0001-01-01 00:00" "9999-12-31 23:59" true
+            "0001-01-01 00:00" "" false
+            "9999-12-31 23:59" "0001-01-01 00:00" false
+            "" "0001-01-01 00:00" false
+
+            "15:00" "14:00" false
+            "14:00" "15:00" false
+            "" "14:00" false
+            "14:00" "" false
+        }
+        foreach {start_date end_date expected} $test_date {
+            aa_equals "'$start_date' -> '$end_date' validity is '$expected'" \
+                [string is true [calendar::item::dates_valid_p \
+                                     -start_date $start_date \
+                                     -end_date $end_date]] \
+                [string is true $expected]
+        }
+    }
+
+aa_register_case \
+    -cats api \
+    -procs {
         calendar::create
         calendar::item::add_recurrence
         calendar::item::edit_recurrence

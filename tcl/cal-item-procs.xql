@@ -42,12 +42,12 @@
            on (e.activity_id = a.activity_id)
          join cal_items i
            on (e.event_id = i.cal_item_id)
+         join acs_objects o
+           on (o.object_id = i.cal_item_id)
          left join cal_item_types it
            on (it.item_type_id = i.item_type_id)
          left join calendars c
            on (c.calendar_id = i.on_which_calendar)
-         left join acs_objects o
-           on (o.object_id = i.cal_item_id)
        where
          e.event_id = :cal_item_id
 </querytext>

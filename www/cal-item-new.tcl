@@ -184,7 +184,10 @@ ad_form -extend -name cal_item -validate {
 
 } -edit_request {
 
-    permission::require_write_permission -object_id $cal_item_id -creation_user $cal_item(creation_user)
+    ::permission::require_permission \
+        -object_id $cal_item_id \
+        -privilege write \
+        -party_id $user_id
 
     set cal_item_id            $cal_item(cal_item_id)
     set n_attachments          $cal_item(n_attachments)
@@ -247,7 +250,10 @@ ad_form -extend -name cal_item -validate {
     set end_date   "$date $end_time"
 
     if { ![calendar::personal_p -calendar_id $calendar_id] } {
-        permission::require_permission -object_id $calendar_id -privilege create
+        ::permission::require_permission \
+            -object_id $calendar_id \
+            -privilege create \
+            -party_id $user_id
     }
     set cal_item_id [calendar::item::new \
                          -start_date $start_date \
@@ -270,10 +276,23 @@ ad_form -extend -name cal_item -validate {
 
 } -edit_data {
 
-    # Require write permission on the item and create on the calendar into which we're putting it
-    permission::require_write_permission -object_id $cal_item_id
+    #
+    # Require write permission to write on the item.
+    #
+    ::permission::require_permission \
+        -object_id $cal_item_id \
+        -privilege write \
+        -party_id $user_id
+
+    #
+    # When the calendar is not personal, also require the permission
+    # to create in it.
+    #
     if { ![calendar::personal_p -calendar_id $calendar_id] } {
-        permission::require_permission -object_id $calendar_id -privilege create
+        ::permission::require_permission \
+            -object_id $calendar_id \
+            -privilege create \
+            -party_id $user_id
     }
 
     # set up the datetimes

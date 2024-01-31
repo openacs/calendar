@@ -9,7 +9,12 @@ ad_page_contract {
     {return_url:localurl [ad_return_url]}
 }
 
-permission::require_permission -object_id $cal_item_id -privilege read
+set user_id [ad_conn user_id]
+
+::permission::require_permission \
+    -object_id $cal_item_id \
+    -privilege read \
+    -party_id $user_id
 
 calendar::item::get -cal_item_id $cal_item_id -array cal_item
 
@@ -21,7 +26,10 @@ if { $cal_item(redirect_to_rel_link_p) == "t" &&
     ad_script_abort
 }
 
-set write_p [permission::write_permission_p -object_id $cal_item_id -creation_user $cal_item(creation_user)]
+set write_p [::permission::permission_p \
+                 -object_id $cal_item_id \
+                 -privilege write \
+                 -party_id $user_id]
 
 multirow create attachments item_id label href detach_url
 # Attachments?

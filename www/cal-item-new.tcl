@@ -7,7 +7,7 @@ ad_page_contract {
     @creation-date May 29, 2002
     @cvs-id $Id$
 } {
-    {calendar_id:object_id ""}
+    {calendar_id:object_type(calendar) ""}
     cal_item_id:object_id,optional
     {item_type_id:object_id ""}
     {date:clock(%Y-%m-%d) ""}
@@ -16,6 +16,20 @@ ad_page_contract {
     {end_time:clock(%H:%M) ""}
     {view:token "day"}
     {return_url:localurl "./"}
+} -validate {
+    cal_item_id_valid -requires {cal_item_id:object_id} {
+        #
+        # Note that we need to let through ids that are not objects,
+        # these are normally the new entries, which were not persisted
+        # yet.
+        #
+        if { [db_0or1row check_type {
+            select 1 from acs_objects where object_id = :cal_item_id
+            and object_type <> 'cal_item'
+        }] } {
+            ad_complain [_ acs-tcl.lt_invalid_object_type]
+        }
+    }
 }
 
 auth::require_login

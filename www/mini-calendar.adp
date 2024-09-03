@@ -1,14 +1,14 @@
 <table id="at-a-glance" cellspacing="0" cellpadding="0">
   <caption>
     <if @view@ eq "month">
-      <a href="@prev_year_url@" title="#calendar.prev_year#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_year#"></a>
+      <a href="@prev_year_url@" title="#calendar.prev_year#"><adp:icon name="previous" text="#calendar.prev_year#"></a>
       @curr_date_pretty@
-      <a href="@next_year_url@" title="#calendar.next_year#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_year#" ></a>
+      <a href="@next_year_url@" title="#calendar.next_year#"><adp:icon name="next" text="#calendar.next_year#"></a>
     </if>
     <else>
-      <a href="@prev_month_url@#calendar" title="#calendar.prev_month#"><img src="/resources/calendar/images/left.gif" alt="#calendar.prev_month#" ></a>
+      <a href="@prev_month_url@#calendar" title="#calendar.prev_month#"><adp:icon name="previous" text="#calendar.prev_month#"></a>
       @curr_date_pretty@
-      <a href="@next_month_url@#calendar" title="#calendar.next_month#"><img src="/resources/calendar/images/right.gif" alt="#calendar.next_month#" ></a>
+      <a href="@next_month_url@#calendar" title="#calendar.next_month#"><adp:icon name="next" text="#calendar.next_month#"></a>
     </else>
   </caption>
 
@@ -78,5 +78,5 @@
   #acs-datetime.is# @today@
   </p>
 
-  <formtemplate id="go-to-date"></formtemplate>
+  <formtemplate id="@form_name@"></formtemplate>
 

@@ -1,35 +1,19 @@
 ad_include_contract {
     Display list calendar view
 
-    Expects:
-      date: ignored, looks like passed in for symmetry
-      start_date: starting date for the list
-      period_days:integer
-      show_calendar_name_p (optional): 0 or 1
-      calendar_id_list: optional list of calendar_ids
-      export: may be "print"
+    @param start_date starting date for the list
+    @param period_days
+    @param show_calendar_name_p
+    @param calendar_id_list  optional list of calendar_ids
+    @param export may be "print"
 } {
-    {period_days:integer,notnull {[parameter::get -parameter ListView_DefaultPeriodDays -default 31]}}
-    {show_calendar_name_p:boolean 1}
-    {sort_by "start_date"}
-    {start_date {[clock format [clock seconds] -format "%Y-%m-%d 00:00"]}}
-    {cal_system_type ""}
-    {date:optional}
+    {period_days:range(1|99999),notnull "[parameter::get -parameter ListView_DefaultPeriodDays -default 31]"}
+    {show_calendar_name_p:boolean,notnull 1}
+    {sort_by:token "start_date"}
+    {{start_date:clock(%Y-%m-%d|%Y-%m-%d %H:%M|%Y-%m-%d %H:%M:%S)} {[clock format [clock seconds] -format "%Y-%m-%d 00:00:00"]}}
     {calendar_id_list ""}
-    {export ""}
-    {return_url:optional}
-} -validate {
-    valid_period_days -requires { period_days } {
-        # Tcl allows in for relative times just 6 digits, including the "+"
-        if {$period_days > 99999} {
-            ad_complain "Invalid time period"
-        }
-    }
-    valid_start_date -requires { start_date } {
-        if {[catch {clock scan $start_date} errorMsg]} {
-            ad_complain "invalid start date"
-        }
-    }
+    {export:token ""}
+    {return_url:localurl,optional}
 }
 
 #
@@ -45,7 +29,7 @@ if { $calendar_id_list ne "" } {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar]
 }
 
-set end_date [clock format [clock scan "+${period_days} days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00"]
+set end_date [clock format [clock scan "+${period_days} days" -base [clock scan $start_date]] -format "%Y-%m-%d 00:00:00"]
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
@@ -93,10 +77,8 @@ set last_pretty_start_date ""
 
 set interval_limitation_clause [db_map dbqd.calendar.www.views.list_interval_limitation]
 set order_by_clause " order by $sort_by"
+
 set additional_limitations_clause ""
-if { $cal_system_type ne "" } {
-    append additional_limitations_clause " and system_type = :cal_system_type "
-}
 
 set additional_select_clause " , to_char(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS') as ansi_today, recurrence_id"
 
@@ -112,13 +94,17 @@ db_foreach dbqd.calendar.www.views.select_items {} {
     set pretty_end_date [lc_time_fmt $ansi_end_date "%Q"]
     set pretty_start_time [lc_time_fmt $ansi_start_date "%X"]
     set pretty_end_time [lc_time_fmt $ansi_end_date "%X"]
+    set start_time [lc_time_fmt $ansi_start_date "%T"]
+    set end_time [lc_time_fmt $ansi_end_date "%T"]
     set pretty_today [lc_time_fmt $ansi_today "%Q"]
 
     set start_date_seconds [clock scan [lc_time_fmt $ansi_start_date "%Y-%m-%d"]]
     set today_seconds [clock scan [lc_time_fmt $ansi_today "%Y-%m-%d"]]
 
     # Adjust the display of no-time items
-    if {[dt_no_time_p -start_time $pretty_start_date -end_time $pretty_end_date]} {
+    if {($start_time eq "" || $start_time eq "00:00:00") &&
+        ($end_time eq "" || $end_time eq "00:00:00")
+    } {
         set pretty_start_time "--"
         set pretty_end_time "--"
     }
@@ -220,25 +206,25 @@ if { $export eq "print" } {
 }
 
 
-set excluded_vars {}
 set the_form [ns_getform]
-if { $the_form ne "" } {
-    for { set i 0 } { $i < [ns_set size $the_form] } { incr i } {
-        set varname [ns_set key $the_form $i]
-        if {$varname eq "period_days" ||
-            [string match "__*" $varname] ||
-            [string match "form:*" $varname]} {
-            lappend excluded_vars $varname
-        }
-    }
-}
+set excluded_vars [list \
+                       "period_days" \
+                       {*}[ns_set keys $the_form "__*"] \
+                       {*}[ns_set keys $the_form "form:*"] \
+                      ]
 
 set exported_vars [export_vars -entire_form -no_empty -form -exclude $excluded_vars]
 
-ad_form -name frmdays -has_submit 1 -html {class "inline-form"} -form {
-    {period_days:integer,optional
+#
+# Do not conflict with other portlet instances being rendered on the
+# same page.
+#
+set form_name frmdays-[clock microseconds]
+
+ad_form -name $form_name -has_submit 1 -html {class "inline-form"} -form {
+    {period_days:integer(number),optional
         {label "[_ calendar.days]"}
-        {html {size 3 maxlength 3 class "cal-input-field"}}
+        {html {min 1 max 999 size 3 class "cal-input-field"}}
         {value "$period_days"}
     }
 } -on_submit { }

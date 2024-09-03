@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS cal_uids (
 );
 
 ---
---- The new ical_vars are now triples, contaning the tag name, the tag
+--- The new ical_vars are now triples, containing the tag name, the tag
 --- parameters and the value. Previously it wer just pairs.
 ---
 UPDATE cal_uids SET ical_vars = NULL;

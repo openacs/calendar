@@ -15,12 +15,17 @@ ad_library {
 namespace eval calendar {}
 namespace eval calendar::notification {}
 
-ad_proc calendar::make_datetime {
+ad_proc -deprecated calendar::make_datetime {
     event_date
     {event_time ""}
 } {
     given a date, and a time, construct the proper date string
     to be imported into oracle. (yyyy-mm-dd hh24:mi format)s
+
+    DEPRECATED: clock idioms and HTML5 feature make this date
+                conversion api less useful
+
+    @see clock
 } {
 
     # MUST CONVERT TO ARRAYS! (ben)
@@ -74,13 +79,15 @@ ad_proc calendar::make_datetime {
     }
 }
 
-ad_proc calendar::create { owner_id
-                          private_p
-                          {calendar_name ""}
+ad_proc calendar::create {
+    owner_id
+    private_p
+    {calendar_name ""}
 } {
-    create a new calendar
-    private_p is default to true since the default
-    calendar is a private calendar
+    Create a new calendar.
+
+    @param private_p defaults to true since the default calendar is a
+                     private calendar.
 } {
 
     # find out configuration info
@@ -113,28 +120,31 @@ ad_proc calendar::create { owner_id
 
 }
 
-ad_proc -public calendar::assign_permissions { calendar_id
-                                      party_id
-                                      cal_privilege
-                                      {revoke ""}
+ad_proc -deprecated calendar::assign_permissions {
+    calendar_id
+    party_id
+    cal_privilege
+    {revoke ""}
 } {
-    given a calendar_id, party_id and a permission
-    this proc will assign the permission to the party
-    the legal permissions are
+    Given a calendar_id, party_id and a permission this proc will
+    assign the permission to the party the legal permissions are:
 
     public, private, calendar_read, calendar_write, calendar_delete
 
-    if the revoke is set, then the given permission will
-    be removed for the party
+    If the revoke is set, then the given permission will be removed
+    for the party.
 
+    DEPRECATED: this api is a trivial wrapper to the permission api
+
+    @see permission::grant
+    @see permission::revoke
 } {
-    # default privilege is being able to read
+    # Default privilege is being able to read.
 
-    # if the permission is public, oassign the magic object
-    # and set permission to read
+    # If the permission is public, assign the magic object and set
+    # permission to read.
 
     if {$cal_privilege eq "public"} {
-
         set party_id [acs_magic_object "the_public"]
         set cal_privilege "calendar_read"
     } elseif {$cal_privilege eq "private"} {
@@ -156,13 +166,20 @@ ad_proc -public calendar::have_private_p {
     {-party_id party_id }
 } {
     Check to see if the user has a private calendar.
-    When the provided -return_id is 1, then proc will return the calendar_id
 
-    @param calendar_id_list If you supply the calendar_id_list, then we'll only search
-    for a personal calendar among the calendars supplied here.
+    When the provided -return_id is 1, then proc will return the
+    calendar_id
+
+    @param calendar_id_list If you supply the calendar_id_list, then
+                            we'll only search for a personal calendar
+                            among the calendars supplied here.
+    @param return_id when set to 1, this proc will return the
+                     calendar_id
+
+    @return boolean or the calendar_id according to 'return_id' flag.
 } {
     # Check whether the user is logged in at all
-    if {!$party_id} {
+    if { !$party_id } {
         return -1
     }
 
@@ -172,16 +189,13 @@ ad_proc -public calendar::have_private_p {
         set result [db_string get_calendar_info {} -default 0]
     }
 
-    if { $result ne "0" } {
-
-        if {$return_id eq "1"} {
+    if { $result != 0 } {
+        if { $return_id == 1 } {
             return $result
         } else {
             return 1
         }
-
     } else {
-
         return 0
     }
 }
@@ -194,16 +208,19 @@ ad_proc -public calendar::name { calendar_id } {
 }
 
 
-ad_proc -public calendar::get_month_multirow_information {
+ad_proc -private calendar::get_month_multirow_information {
     {-current_day:required}
     {-today_julian_date:required}
     {-first_julian_date_of_month:required}
 } {
+    Builds a multirow with information about the month. Used to
+    display the month calendar view.
+
     @author Dirk Gomez (openacs@dirkgomez.de)
     @creation-date 20-July-2003
 } {
     set first_day_of_week [lc_get firstdayofweek]
-    set last_day_of_week [expr {[expr {$first_day_of_week + 6}] % 7}]
+    set last_day_of_week [expr {($first_day_of_week + 6) % 7}]
 
     if {$current_day == $today_julian_date} {
         set today_p t
@@ -211,8 +228,7 @@ ad_proc -public calendar::get_month_multirow_information {
         set today_p f
     }
     set day_number [expr {$current_day - $first_julian_date_of_month +1}]
-    set weekday [expr {[expr {$current_day % 7}] + 1}]
-    set weekday [ad_decode $weekday 7 0 $weekday]
+    set weekday [expr {($current_day + 1) % 7}]
 
     set beginning_of_week_p f
     set end_of_week_p f
@@ -228,11 +244,21 @@ ad_proc -public calendar::get_month_multirow_information {
                 weekday $weekday]
 }
 
-ad_proc -public calendar::from_sql_datetime {
+ad_proc -deprecated calendar::from_sql_datetime {
     {-sql_date:required}
     {-format:required}
 } {
+    Converts a date in a specified format into a templating date dict.
 
+    @param sql_date a date in one of the supported format.
+    @param format one of the supported format, "YYYY-MM-DD",
+                  "HH12:MIam" or "HH24:MI". When unspecified or
+                  invalid, we will try to treat the date as an ansi
+                  date.
+
+    DEPRECATED: this api has been superseded by api in acs-templating.
+
+    @see template::data::from_sql::date
 } {
     # for now, we recognize only "YYYY-MM-DD" "HH12:MIam" and "HH24:MI".
     set date [template::util::date::create]
@@ -277,7 +303,7 @@ ad_proc -public calendar::from_sql_datetime {
     return $date
 }
 
-ad_proc -public calendar::to_sql_datetime {
+ad_proc -deprecated calendar::to_sql_datetime {
     {-date:required}
     {-time:required}
     {-time_p 1}
@@ -288,6 +314,10 @@ ad_proc -public calendar::to_sql_datetime {
     The issue here is the incoming format.
     date: ANSI SQL YYYY-MM-DD
     time: we return HH24.
+
+    DEPRECATED: this api has been superseded by api in acs-templating.
+
+    @see template::data::to_sql::date
 } {
     # Set the time to 0 if necessary
     if {!$time_p} {
@@ -324,18 +354,32 @@ ad_proc -public calendar::calendar_list {
 
     set permissions_clause {}
     if { $privilege ne "" } {
-        set permissions_clause [db_map permissions_clause]
+        set permissions_clause {and acs_permission.permission_p(calendar_id, :user_id, :privilege)}
     }
 
-    set new_list [db_list_of_lists select_calendar_list {}]
+    set new_list [db_list_of_lists select_calendar_list [subst {
+       select calendar_name,
+              calendar_id,
+              acs_permission.permission_p(calendar_id, :user_id, 'calendar_admin') as calendar_admin_p
+       from   calendars
+       where  (private_p = 'f' and package_id = :package_id $permissions_clause) or
+              (private_p = 't' and owner_id = :user_id)
+       order  by private_p asc, upper(calendar_name)
+    }]]
 }
 
-ad_proc -public calendar::adjust_date {
+ad_proc -deprecated calendar::adjust_date {
     {-date ""}
     {-julian_date ""}
 } {
     @return the date if it is provided. Otherwise, the julian date in ANSI
             format, if provided, or the system date.
+
+    DEPRECATED: this proc implements a trivial defaulting logic that
+                can be inlined just as well.
+
+    @see dt_sysdate
+    @see dt_julian_to_ansi
 } {
     if {$date eq ""} {
         if {$julian_date ne ""} {
@@ -361,9 +405,12 @@ ad_proc -public calendar::new {
     if { $package_id eq "" } {
         set package_id [ad_conn package_id]
     }
-    set extra_vars [ns_set create]
-    set context_id $package_id
-    oacs_util::vars_to_ns_set -ns_set $extra_vars -var_list {owner_id private_p calendar_name package_id context_id}
+    set extra_vars [ns_set create s \
+                        owner_id $owner_id \
+                        private_p $private_p \
+                        calendar_name $calendar_name \
+                        package_id $package_id \
+                        context_id $package_id]
 
     set calendar_id [package_instantiate_object -extra_vars $extra_vars calendar]
 
@@ -382,7 +429,7 @@ ad_proc -public calendar::personal_p {
         set user_id [ad_conn user_id]
     }
     calendar::get -calendar_id $calendar_id -array calendar
-    if { [template::util::is_true $calendar(private_p)] && $calendar(owner_id) == $user_id } {
+    if { [string is true -strict $calendar(private_p)] && $calendar(owner_id) == $user_id } {
         return 1
     } else {
         return 0
@@ -416,8 +463,7 @@ ad_proc -public calendar::get_item_types {
 } {
     return the item types
 } {
-    return [concat [list [list {--} {}]] \
-            [db_list_of_lists select_item_types {}]]
+    return [list {{--} {}} {*}[db_list_of_lists select_item_types {}]]
 }
 
 ad_proc -public calendar::item_type_new {
@@ -451,12 +497,30 @@ ad_proc -public calendar::item_type_delete {
     }
 }
 
-ad_proc -public calendar::attachments_enabled_p {} {
+ad_proc -public calendar::attachments_enabled_p {
+    -package_id
+} {
+    @param package_id the package_id, assumed to belong to a calendar
+                      package instance. When not specified, we will
+                      determine the package from the connection. When
+                      no package can be determined, this proc will
+                      return 0.
+
     @return 1 if the attachments are enabled, otherwise 0.
 } {
-    set package_id [site_node_apm_integration::child_package_exists_p \
-        -package_key attachments
-    ]
+    if {![info exists package_id]} {
+        if {[ns_conn isconnected]} {
+            set package_id [ad_conn package_id]
+        } else {
+            ad_log warning "Cannot determine package_id. Returning 0"
+            return 0
+        }
+    }
+
+    set node_id [site_node::get_node_id_from_object_id -object_id $package_id]
+    set nodes [site_node::get_children -package_key attachments -node_id $node_id]
+
+    return [expr {[llength $nodes] > 0}]
 }
 
 ad_proc -public calendar::rename {
@@ -525,6 +589,10 @@ ad_proc -public calendar::do_notifications {
 
     # send text for now.
     set new_content [ad_html_to_text -- $new_content]
+
+    if {[lang::message::message_exists_p en_US calendar.$mode]} {
+        set mode [_ calendar.$mode]
+    }
 
     # Do the notification for the calendar
     notification::new \

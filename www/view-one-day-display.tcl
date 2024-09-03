@@ -10,9 +10,9 @@ ad_include_contract {
       export: may be "print"
 } {
     {date}
-    {show_calendar_name_p:boolean 1}
-    {start_display_hour:integer 0}
-    {end_display_hour:integer 23}
+    {show_calendar_name_p:boolean,notnull 1}
+    {start_display_hour:integer,notnull 0}
+    {end_display_hour:integer,notnull 23}
     {calendar_id_list ""}
     {cal_system_type ""}
     {export ""}
@@ -226,8 +226,9 @@ set return_url [ad_return_url]
 set grid_start $adjusted_start_display_hour
 set grid_first_hour [lc_time_fmt "$current_date $grid_start:00:00" "%X"]
 set grid_hour $grid_start
+set start_time [ad_pad -left $grid_hour 2 0]:00
 set grid_first_add_url [export_vars -base ${calendar_url}cal-item-new {
-    {date $current_date} {start_time $grid_hour} return_url
+    {date $current_date} start_time return_url
 }]
 
 incr grid_start
@@ -235,8 +236,11 @@ incr grid_start
 multirow create grid hour add_url
 for { set grid_hour $grid_start } { $grid_hour <= $adjusted_end_display_hour } { incr grid_hour } {
     set localized_grid_hour [lc_time_fmt "$current_date $grid_hour:00:00" "%X"]
+    set start_time [ad_pad -left $grid_hour 2 0]:00
     multirow append grid $localized_grid_hour \
-        [export_vars -base ${calendar_url}cal-item-new {{date $current_date} {start_time $grid_hour} return_url}]
+        [export_vars -base ${calendar_url}cal-item-new {
+            {date $current_date} start_time return_url
+        }]
 }
 
 if { [info exists export] && $export eq "print" } {

@@ -1,5 +1,5 @@
   <master>
-    <property name="doc(title)">#calendar.Calendar_Item_Delete#: @cal_item.name;noquote@</property>
+    <property name="doc(title)">#calendar.Calendar_Item_Delete#: @cal_item.name;literal@</property>
     <property name="context">#calendar.Delete#</property>
 
     <div id="viewadp-mini-calendar">

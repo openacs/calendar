@@ -10,7 +10,7 @@
 
 <partialquery name="openacs_in_portal_calendar">      
   <querytext>
-    and on_which_calendar in ([join $calendar_id_list ","])
+    and on_which_calendar in ([ns_dbquotelist $calendar_id_list])
     and (cals.private_p='f' or (cals.private_p='t' and cals.owner_id= :user_id))
   </querytext>
 </partialquery>

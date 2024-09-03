@@ -8,7 +8,7 @@ ad_include_contract {
       export: may be "print"
 } {
     {date ""}
-    {show_calendar_name_p:boolean 1}
+    {show_calendar_name_p:boolean,notnull 1}
     {calendar_id_list ""}
     {export ""}
     {return_url:optional}
@@ -28,12 +28,9 @@ if { $export ne "" } {
     set exporting_p 0
 }
 
-dt_get_info $date
-
 if {![info exists return_url]} {
     set return_url [ad_urlencode "../"]
 }
-
 
 if {$calendar_id_list ne ""} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_in_portal_calendar]
@@ -41,10 +38,13 @@ if {$calendar_id_list ne ""} {
     set calendars_clause [db_map dbqd.calendar.www.views.openacs_calendar]
 }
 
-set date_list  [dt_ansi_to_list $date]
-set this_year  [util::trim_leading_zeros [lindex $date_list 0]]
-set this_month [util::trim_leading_zeros [lindex $date_list 1]]
-set this_day   [util::trim_leading_zeros [lindex $date_list 2]]
+lassign [dt_ansi_to_list $date] this_year this_month this_day
+set dt_info [dt_get_info -dict $date]
+set prev_month                 [dict get $dt_info prev_month]
+set next_month                 [dict get $dt_info next_month]
+set first_julian_date_of_month [dict get $dt_info first_julian_date_of_month]
+set last_julian_date_in_month  [dict get $dt_info last_julian_date_in_month]
+set first_day                  [dict get $dt_info first_day]
 
 set month_string [lindex [dt_month_names] $this_month-1]
 
@@ -209,7 +209,9 @@ db_foreach dbqd.calendar.www.views.select_items {} {
             add_body_script -script [subst {
                 var e =  document.getElementById('month-calendar-$current_day_ansi');
                 e.addEventListener('click', function (event) {
-                    location.href = '$add_url';
+                    if (event.target.className == 'cal-month-day') {
+                        location.href = '$add_url';
+                    }
                 });
                 e.addEventListener('keypress', function (event) {
                     event.preventDefault();
@@ -255,16 +257,6 @@ db_foreach dbqd.calendar.www.views.select_items {} {
         [lc_time_fmt $current_day_ansi %w] \
         month-calendar-$current_day_ansi
 
-    add_body_script -script [subst {
-        var e =  document.getElementById('month-calendar-$current_day_ansi');
-        e.addEventListener('click', function (event) {
-            location.href = '$add_url';
-        });
-        e.addEventListener('keypress', function (event) {
-            event.preventDefault();
-            acs_KeypressGoto('$add_url',event);
-        });
-    }]
 }
 
 if { !$exporting_p } {

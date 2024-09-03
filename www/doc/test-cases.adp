@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/calendar {Calendar}} {OpenACS Calendar package - test cases}</property>
+<property name="context">{/doc/calendar/ {Calendar}} {OpenACS Calendar package - test cases}</property>
 <property name="doc(title)">OpenACS Calendar package - test cases</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>OpenACS Calendar package - test cases</h2>
 <ul><li>Create an item that starts at 00:00</li></ul>
 <hr>

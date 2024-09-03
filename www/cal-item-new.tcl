@@ -7,26 +7,44 @@ ad_page_contract {
     @creation-date May 29, 2002
     @cvs-id $Id$
 } {
-    {calendar_id:naturalnum ""}
-    cal_item_id:naturalnum,optional
-    item_type_id:naturalnum,optional
-    {date ""}
-    {julian_date ""}
-    {start_time ""}
-    {end_time ""}
-    {view "day"}
+    {calendar_id:object_type(calendar) ""}
+    cal_item_id:object_id,optional
+    {item_type_id:object_id ""}
+    {date:clock(%Y-%m-%d) ""}
+    {julian_date:clock(%J) ""}
+    {start_time:clock(%H:%M) ""}
+    {end_time:clock(%H:%M) ""}
+    {view:token "day"}
     {return_url:localurl "./"}
+} -validate {
+    cal_item_id_valid -requires {cal_item_id:object_id} {
+        #
+        # Note that we need to let through ids that are not objects,
+        # these are normally the new entries, which were not persisted
+        # yet.
+        #
+        if { [db_0or1row check_type {
+            select 1 from acs_objects where object_id = :cal_item_id
+            and object_type <> 'cal_item'
+        }] } {
+            ad_complain [_ acs-tcl.lt_invalid_object_type]
+        }
+    }
 }
+
 auth::require_login
 
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 
-if {![info exists item_type_id]} {
-    set item_type_id ""
+if {$date eq ""} {
+    if {$julian_date ne ""} {
+        set date [dt_julian_to_ansi $julian_date]
+    } else {
+        set date [dt_sysdate]
+    }
 }
 
-set date [calendar::adjust_date -date $date -julian_date $julian_date]
 set ansi_date $date
 set calendar_list [calendar::calendar_list]
 set calendar_options [calendar::calendar_list -privilege create]
@@ -57,49 +75,39 @@ if { [info exists cal_item_id] && $cal_item_id ne "" } {
 
 ad_form -name cal_item  -export { return_url } -form {
     {cal_item_id:key}
-
     {title:text(text)
         {label "[_ calendar.Title_1]"}
-        {html {size 45 maxlength 255}}
+        {maxlength 255}
+        {html {size 45}}
     }
-    {date:date
+    {date:h5date
         {label "[_ calendar.Date_1]"}
-        {format "YYYY MM DD"}
-        {after_html {<input type="button" style="height:23px; width:23px; background: url('/resources/acs-templating/calendar.gif');" id='cal_item.date-button'> \[<b>[_ calendar.y-m-d]</b>\]} }
     }
     {time_p:text(radio)
         {label "&nbsp;"}
         {options {{"[_ calendar.All_Day_Event]" 0}
             {"[_ calendar.Use_Hours_Below]" 1} }}
     }
-
-    {start_time:date,optional
+    {start_time:h5time,optional
         {label "[_ calendar.Start_Time]"}
-        {format {[lc_get formbuilder_time_format]}}
     }
-
-    {end_time:date,optional
+    {end_time:h5time,optional
         {label "[_ calendar.End_Time]"}
-        {format {[lc_get formbuilder_time_format]}}
     }
     {location:text(text),optional
         {label "[_ calendar.Location]"}
-        {html {size 44 maxlength 255}}
+        {maxlength 255}
+        {html {size 44}}
     }
-
     {description:text(textarea),optional
         {label "[_ calendar.Description]"}
         {html {cols 45 rows 10}}
     }
-    {related_link_url:text(text),optional
+    {related_link_url:text(url),optional
         {label "[_ calendar.RelatedLink]"}
-        {html {size 45 maxlength 255}}
+        {maxlength 255}
+        {html {size 45}}
     }
-    {related_link_text:text(hidden),optional
-    }
-    {redirect_to_rel_link_p:text(hidden),optional
-    }
-
     {calendar_id:integer(radio)
         {label "[_ calendar.Sharing]"}
         {options $calendar_options}
@@ -143,31 +151,6 @@ if { [ad_form_new_p -key cal_item_id] } {
 
 
 #----------------------------------------------------------------------
-# LARS: Hack to make enable/disable time widgets work with i18n
-#----------------------------------------------------------------------
-
-set format_string [lc_get formbuilder_time_format]
-
-multirow create time_format_elms name
-
-while { $format_string ne "" } {
-    # Snip off the next token
-    regexp {([^/\-.: ]*)([/\-.: ]*)(.*)} \
-        $format_string match word sep format_string
-    # Extract the trailing "t", if any
-    regexp -nocase $template::util::date::token_exp $word \
-        match token type
-
-    # Output the widget
-    set fragment_def $template::util::date::fragment_widgets([string toupper $token])
-
-    multirow append time_format_elms [lindex $fragment_def 1]
-}
-
-
-
-
-#----------------------------------------------------------------------
 # Finishing definition of form
 #----------------------------------------------------------------------
 
@@ -183,11 +166,11 @@ if {[llength $cal_item_types] > 1} {
     }
 }
 
+if { ![ad_form_new_p -key cal_item_id] } {
+    calendar::item::get -cal_item_id $cal_item_id -array cal_item
+}
 
 ad_form -extend -name cal_item -validate {
-    {title {[string length $title] <= 4000}
-        "Title is too long"
-    }
     {description {[string equal [set msg [ad_html_security_check $description]] ""]}
         $msg
     }
@@ -201,28 +184,24 @@ ad_form -extend -name cal_item -validate {
                              -package_id $package_id]
     }
 
-    set date [calendar::from_sql_datetime -sql_date $ansi_date  -format "YYY-MM-DD"]
     set repeat_p 0
-    if {[info exists start_time] && $start_time ne "" && $start_time != 0} {
-        # Set the start time
-        set start_hour $start_time
-        set start_time "{} {} {} $start_time 0 {} {HH24:MI}"
-        set end_time "{} {} {} [expr {$start_hour + 1}] 0 {} {HH24:MI}"
-        set time_p 1
-    } else {
-        set time_p 0
-        set start_hour $start_time
-        set start_time "{} {} {} 0 0 {} {HH24:MI}"
-        set end_time "{} {} {} 0 0 {} {HH24:MI}"
-        set js "disableTime('cal_item');"
+
+    set time_p [expr {$start_time ne ""}]
+
+    if {$start_time ne "" && $end_time eq ""} {
+        # Default end_time is one hour after start_time
+        set end_time [clock format [clock add [clock scan $start_time -format {%H:%M}] 1 hour] -format {%H:%M}]
     }
+
     # set the calendar_id before setting item_types form element (see top of script) DAVEB
     set calendar_id [lindex $calendar_options 0 1]
 
 } -edit_request {
-    calendar::item::get -cal_item_id $cal_item_id -array cal_item
 
-    permission::require_write_permission -object_id $cal_item_id -creation_user $cal_item(creation_user)
+    ::permission::require_permission \
+        -object_id $cal_item_id \
+        -privilege write \
+        -party_id $user_id
 
     set cal_item_id            $cal_item(cal_item_id)
     set n_attachments          $cal_item(n_attachments)
@@ -259,26 +238,36 @@ ad_form -extend -name cal_item -validate {
     # set edit_what $repeat_p
     if { !$repeat_p } {
         element set_properties cal_item edit_what -widget hidden
-        element set_value cal_item edit_what 0
+        element set_value cal_item edit_what this
     }
-    set date       [calendar::from_sql_datetime -sql_date $ansi_start_date  -format "YYY-MM-DD"]
-    set start_time [template::util::date::from_ansi $ansi_start_date [lc_get formbuilder_time_format]]
-    set end_time   [template::util::date::from_ansi $ansi_end_date [lc_get formbuilder_time_format]]
+
+    set start_clock [clock scan $ansi_start_date -format {%Y-%m-%d %H:%M:%S}]
+    set end_clock   [clock scan $ansi_end_date -format {%Y-%m-%d %H:%M:%S}]
+
+    set date       [clock format $start_clock -format {%Y-%m-%d}]
+    set start_time [clock format $start_clock -format {%H:%M}]
+    set end_time   [clock format $end_clock   -format {%H:%M}]
+
+} -on_submit {
+
+    set start_date "$date $start_time"
+    set end_date   "$date $end_time"
+
+    if {![calendar::item::dates_valid_p -start_date $start_date -end_date $end_date]} {
+         template::form::set_error cal_item start_time [_ calendar.start_time_before_end_time]
+         break
+    }
 
 } -new_data {
 
-    set formatted_date ""
-    append formatted_date \
-        [template::util::date::get_property year  $date] " " \
-        [template::util::date::get_property month $date] " " \
-        [template::util::date::get_property day   $date]
-    set date $formatted_date
-
-    set start_date [calendar::to_sql_datetime -date $date -time $start_time -time_p $time_p]
-    set end_date   [calendar::to_sql_datetime -date $date -time $end_time -time_p $time_p]
+    set start_date "$date $start_time"
+    set end_date   "$date $end_time"
 
     if { ![calendar::personal_p -calendar_id $calendar_id] } {
-        permission::require_permission -object_id $calendar_id -privilege create
+        ::permission::require_permission \
+            -object_id $calendar_id \
+            -privilege create \
+            -party_id $user_id
     }
     set cal_item_id [calendar::item::new \
                          -start_date $start_date \
@@ -287,43 +276,42 @@ ad_form -extend -name cal_item -validate {
                          -description $description \
                          -location $location \
                          -related_link_url $related_link_url \
-                         -related_link_text $related_link_text \
-                         -redirect_to_rel_link_p $redirect_to_rel_link_p \
                          -calendar_id $calendar_id \
                          -item_type_id $item_type_id]
 
     if {$repeat_p} {
         ad_returnredirect [export_vars -base cal-item-create-recurrence { return_url cal_item_id}]
+    } elseif {$return_url ne "./"} {
+        ad_returnredirect $return_url
     } else {
-        if {$return_url ne "./"  } {
-            ad_returnredirect $return_url
-        } else {
-            ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]
-        }
+        ad_returnredirect [export_vars -base cal-item-view { cal_item_id }]
     }
     ad_script_abort
 
 } -edit_data {
 
     #
-    # Format date
+    # Require write permission to write on the item.
     #
-    set formatted_date ""
-    append formatted_date \
-        [template::util::date::get_property year  $date] " " \
-        [template::util::date::get_property month $date] " " \
-        [template::util::date::get_property day   $date]
-    set date $formatted_date
+    ::permission::require_permission \
+        -object_id $cal_item_id \
+        -privilege write \
+        -party_id $user_id
 
-    # Require write permission on the item and create on the calendar into which we're putting it
-    permission::require_write_permission -object_id $cal_item_id
+    #
+    # When the calendar is not personal, also require the permission
+    # to create in it.
+    #
     if { ![calendar::personal_p -calendar_id $calendar_id] } {
-        permission::require_permission -object_id $calendar_id -privilege create
+        ::permission::require_permission \
+            -object_id $calendar_id \
+            -privilege create \
+            -party_id $user_id
     }
 
     # set up the datetimes
-    set start_date [calendar::to_sql_datetime -date $date -time $start_time -time_p $time_p]
-    set end_date [calendar::to_sql_datetime -date $date -time $end_time -time_p $time_p]
+    set start_date "$date $start_time"
+    set end_date   "$date $end_time"
     set edit_all_p 0
     set edit_past_events_p 0
     if {[info exists edit_what]} {
@@ -342,6 +330,7 @@ ad_form -extend -name cal_item -validate {
             }
         }
     }
+
     # Do the edit
     calendar::item::edit \
         -cal_item_id $cal_item_id \
@@ -351,8 +340,8 @@ ad_form -extend -name cal_item -validate {
         -description $description \
         -location $location \
         -related_link_url $related_link_url \
-        -related_link_text $related_link_text \
-        -redirect_to_rel_link_p $redirect_to_rel_link_p \
+        -related_link_text $cal_item(related_link_text) \
+        -redirect_to_rel_link_p $cal_item(redirect_to_rel_link_p) \
         -item_type_id $item_type_id \
         -edit_all_p $edit_all_p \
         -edit_past_events_p $edit_past_events_p \
@@ -365,19 +354,18 @@ ad_form -extend -name cal_item -validate {
     }
     ad_script_abort
 
-} -on_request {
+}
 
-    template::add_event_listener -id cal_item:elements:time_p:0 -script {TimePChanged(this);}
-    template::add_event_listener -id cal_item:elements:time_p:1 -script {TimePChanged(this);}
-    template::add_event_listener -id cal_item.date-button -script {showCalendarWithDateWidget('date', 'y-m-d');}
+# Register JS Eventhandlers
+template::add_event_listener -id cal_item:elements:time_p:0 -preventdefault=false -script {TimePChanged(this);}
+template::add_event_listener -id cal_item:elements:time_p:1 -preventdefault=false -script {TimePChanged(this);}
 
-    template::add_body_script -script {
-        if (document.forms["cal_item"].time_p[0].checked == true ) {
-            // All day event
-            disableTime("cal_item");
-        } else {
-            enableTime("cal_item");
-        }
+template::add_body_script -script {
+    if (document.forms["cal_item"].time_p[0].checked == true ) {
+        // All day event
+        disableTime("cal_item");
+    } else {
+        enableTime("cal_item");
     }
 }
 

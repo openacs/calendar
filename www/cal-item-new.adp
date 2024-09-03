@@ -11,16 +11,12 @@
 
 <script type="text/javascript" <if @::__csp_nonce@ not nil> nonce="@::__csp_nonce;literal@"</if>>
     function disableTime(form_name) {
-          <multiple name="time_format_elms">
-            document.forms[form_name].elements["start_time.@time_format_elms.name@"].disabled = true;
-            document.forms[form_name].elements["end_time.@time_format_elms.name@"].disabled = true;
-          </multiple>
+            document.forms[form_name].elements["start_time"].disabled = true;
+            document.forms[form_name].elements["end_time"].disabled = true;
     }
     function enableTime(form_name) {
-          <multiple name="time_format_elms">
-            document.forms[form_name].elements["start_time.@time_format_elms.name@"].disabled = false;
-            document.forms[form_name].elements["end_time.@time_format_elms.name@"].disabled = false;
-          </multiple>
+            document.forms[form_name].elements["start_time"].disabled = false;
+            document.forms[form_name].elements["end_time"].disabled = false;
     }
 </script>
 

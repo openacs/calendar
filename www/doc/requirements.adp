@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/calendar {Calendar}} {Calendar Package Requirements}</property>
+<property name="context">{/doc/calendar/ {Calendar}} {Calendar Package Requirements}</property>
 <property name="doc(title)">Calendar Package Requirements</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>Calendar Package Requirements</h2>
 
 by <a href="mailto:gjin\@arsdigita.com">Gary Jin</a>
@@ -20,12 +24,12 @@ that can be accessed through any browser. The application allows
 people to keep track of events as they normally would on a paper
 calendar while giving them the opportunity to share these events
 with other parties. Various types of additional information related
-to a calendar item, such as an URL, a map indicating a
-meeting&#39;s location, et cetera, can also be managed through the
-Calendar application. The Calendar application also provides
-different end-user specifiable presentation formats for viewing
-this information. In its current form, the Calendar application can
-be integrated with other ACS components, for example, our Intranet
+to a calendar item, such as a URL, a map indicating a meeting&#39;s
+location, et cetera, can also be managed through the Calendar
+application. The Calendar application also provides different
+end-user specifiable presentation formats for viewing this
+information. In its current form, the Calendar application can be
+integrated with other ACS components, for example, our Intranet
 application and our Portals application; eventually the Calendar
 application will integrate with yet further systems, for example,
 PDAs.
@@ -134,7 +138,7 @@ Overview</a></li><li><a href="http://6916.lcs.mit.edu/class/6916-f2000/page-7/">
 course calendar</a></li><li>
 <a href="http://www.imc.org/pdi/">vCalendar/iCalendar</a>
 proposed standards</li><li><a href="http://www.arsdigita.com/doc/calendar/acceptance.txt">Acceptance
-Tests</a></li><li><a href="http://calendar.yahoo.com/">Yahoo Calendar</a></li><li><a href="http://planner.excite.com/">Excite Planner</a></li>
+Tests</a></li><li><a href="http://calendar.yahoo.com/">Yahoo Calendar</a></li><li>Excite Planner</li>
 </ul>
 <h3>VI.A Requirements: Private Calendar</h3>
 <strong>10 Private Calendar</strong>
@@ -309,7 +313,7 @@ should take you to the month view for that month.</p>
 entering information for the event in a form and then submitting
 that form. Form should include title, start date and time, or an
 explicit indication that the event does not have a start time.
-Default values should already be entered with the correct time zone
+Default values should already be entered with the correct timezone
 offset in place. Non-required fields should include end time or
 duration, type information, a description, to which party the event
 belongs, and an indicator as to whether or not this event
@@ -508,7 +512,7 @@ party/groups/person to the entire calendar</p>
 party/groups/person to individual calendar items</p>
 <p><strong>40.20 Calendar Items Administration</strong></p>
 <p>
-<strong>40.20.10</strong> Provides the funcationality to delete,
+<strong>40.20.10</strong> Provides the functionality to delete,
 add, edit any item on the calendar</p>
 <p>
 <strong>40.20.20</strong> Provides the funcatinality to allow

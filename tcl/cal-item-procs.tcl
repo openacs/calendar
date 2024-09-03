@@ -21,7 +21,20 @@ ad_proc -private calendar::item::dates_valid_p {
 } {
     A sanity check that the start time is before the end time.
 } {
-    return [db_string dates_valid_p_select {}]
+    try {
+        return [db_string dates_valid_p_select {
+            select CASE
+              WHEN cast(:start_date as timestamp with time zone)
+                   <=
+                   cast(:end_date as timestamp with time zone) THEN 1
+              ELSE 0
+            END from dual
+        }]
+    } on error {errmsg} {
+        # Invalid dates in input, definitely not ok.
+        ad_log warning $errmsg
+        return 0
+    }
 }
 
 ad_proc -public calendar::item::new {
@@ -86,10 +99,10 @@ ad_proc -public calendar::item::new {
             permission::set_not_inherit -object_id $cal_item_id
         }
 
-        assign_permission  $cal_item_id  $creation_user read
-        assign_permission  $cal_item_id  $creation_user write
-        assign_permission  $cal_item_id  $creation_user delete
-        assign_permission  $cal_item_id  $creation_user admin
+        ::permission::grant \
+            -object_id $cal_item_id \
+            -party_id $creation_user \
+            -privilege admin
 
         calendar::do_notifications -mode New -cal_item_id $cal_item_id
         return $cal_item_id
@@ -102,15 +115,25 @@ ad_proc -public calendar::item::new {
 
 ad_proc -private calendar::item::all_day_event {start_date_ansi end_date_ansi} {
 
-    Determine, if an event is an all day event depending on the ans
-    state and dates (e.g. "2018-03-22 00:00:00" and "2018-03-23
-    00:00:00". The event is a full_day event, either when the
-    start_date is equal to the end data or the start_day is different
-    to the end day (this might happen through external calendars).
-    
+    Determine, if an event is an all day event depending on the ansi
+    start and end dates (e.g. "2018-03-22 00:00:00" and "2018-03-23
+    00:00:00").
+
+    The event is a full_day event, when both start_date and end_date
+    do not specify a time, which in the datamodel means both dates are
+    set at midnight.
 } {
-    return [expr {$start_date_ansi eq $end_date_ansi
-                  || [lindex $start_date_ansi 0] ne [lindex $end_date_ansi 0]}]
+    # This previous definition would match any start and end date that
+    # were equal (e.g. '2019-02-16 18:00:03' and '2019-02-16
+    # 18:00:03'), and also any event with some time specified as long
+    # as the date component was different (e.g. '2019-01-01 14:34:02'
+    # and '2019-02-16 18:00:03'). When such specific time intervals
+    # are given it is hard to argue this would be just an all day
+    # event.
+    # return [expr {$start_date_ansi eq $end_date_ansi
+    #               || [lindex $start_date_ansi 0] ne [lindex $end_date_ansi 0]}]
+    return [expr {[lindex $start_date_ansi 1] eq "00:00:00" &&
+                  [lindex $end_date_ansi 1] eq "00:00:00"}]
 }
 
 ad_proc -public calendar::item::get {
@@ -124,17 +147,15 @@ ad_proc -public calendar::item::get {
     if {[info exists array]} {
         upvar $array row
     }
-    if { [catch  {
-      set attachments_enabled_p [calendar::attachments_enabled_p]
-    }] } { set attachments_enabled_p 0 }
 
-    if { $attachments_enabled_p } {
-        set query_name select_item_data_with_attachment
-    } else {
-        set query_name select_item_data
+    db_1row select_item_data {} -column_array row
+
+    if {[calendar::attachments_enabled_p -package_id $row(calendar_package_id)]} {
+        set row(n_attachments) [db_string count_attachments {
+            select count(*) from attachments where object_id = :cal_item_id
+        }]
     }
 
-    db_1row $query_name {} -column_array row
     if {$normalize_time_to_utc} {
         set row(start_date_ansi) [lc_time_local_to_utc $row(start_date_ansi)]
         set row(end_date_ansi)   [lc_time_local_to_utc $row(end_date_ansi)]
@@ -142,16 +163,14 @@ ad_proc -public calendar::item::get {
         set row(start_date_ansi) [lc_time_system_to_conn $row(start_date_ansi)]
         set row(end_date_ansi)   [lc_time_system_to_conn $row(end_date_ansi)]
     }
-    #
-    # all day events: either the start date 
-    #
-    if { [all_day_event $row(start_date_ansi) $row(end_date_ansi)] } {
-        set row(time_p) 0
-    } else {
-        set row(time_p) 1
-    }
-    ns_log notice "calendar::item::get $row(start_date_ansi) eq $row(end_date_ansi) => $row(time_p)"
-    
+
+    set all_day_event_p [calendar::item::all_day_event \
+                             $row(start_date_ansi) $row(end_date_ansi)]
+    set row(all_day_event_p) $all_day_event_p
+    set row(time_p) [expr {!$all_day_event_p}]
+
+    #ns_log notice "calendar::item::get $row(start_date_ansi) eq $row(end_date_ansi) => $row(time_p)"
+
     # Localize
     set row(start_time) [lc_time_fmt $row(start_date_ansi) "%X"]
 
@@ -211,15 +230,16 @@ ad_proc -public calendar::item::edit {
     {-ical_vars ""}
 } {
     Edit the item
-
 } {
     if {[dates_valid_p -start_date $start_date -end_date $end_date]} {
         if {$edit_all_p} {
             set recurrence_id [db_string select_recurrence_id {}]
-
-            # If the recurrence id is NULL, then we stop here and just do the normal update
+            #
+            # If the recurrence id is empty (coming from NULL value),
+            # then we stop here and just do the normal update
+            #
             if {$recurrence_id ne ""} {
-                ns_log notice "recurrence_id $recurrence_id"
+                #ns_log notice "recurrence_id $recurrence_id"
                 calendar::item::edit_recurrence \
                     -event_id $cal_item_id \
                     -start_date $start_date \
@@ -289,7 +309,9 @@ ad_proc -public calendar::item::edit {
                 where  cal_item_id= :cal_item_id
             }]
 
-        calendar::do_notifications -mode Edited -cal_item_id $cal_item_id
+            calendar::do_notifications -mode Edited -cal_item_id $cal_item_id
+
+            callback calendar::item::after_edit -cal_item_id $cal_item_id
         }
     } else {
         ad_return_complaint 1 [_ calendar.start_time_before_end_time]
@@ -308,13 +330,18 @@ ad_proc -public calendar::item::delete {
     db_exec_plsql delete_cal_item {}
 }
 
-ad_proc calendar::item::assign_permission { cal_item_id
+ad_proc -deprecated calendar::item::assign_permission { cal_item_id
                                      party_id
                                      permission
                                      {revoke ""}
 } {
     update the permission of the specific cal_item
     if revoke is set to revoke, then we revoke all permissions
+
+    DEPRECATED: this api is in fact a trivial wrapper for the permission api.
+
+    @see permission::grant
+    @see permission::revoke
 } {
     if { $revoke ne "revoke" } {
         if { $permission ne "cal_item_read" } {

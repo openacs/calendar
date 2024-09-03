@@ -6,8 +6,146 @@ ad_library {
 aa_register_case \
     -cats api \
     -procs {
+        calendar::item::dates_valid_p
+    } \
+    cal_item_start_end_date_validation {
+        Test the validation of start and end date.
+    } {
+        set test_date {
+            "" "" false
+
+            "bogus" "" false
+            "" "bogus" false
+            "bogus" "bogus" false
+
+            "201-01-0" "" false
+            "" "201-01-0" false
+            "201-01-0" "201-01-0" false
+
+            "2010-15-09" "" false
+            "" "2010-15-09" false
+            "2010-15-09" "2010-15-09" false
+
+            "2010-15-12" "" false
+            "" "2010-15-12" false
+            "2010-15-12" "2010-15-12" false
+
+            "2010-15-12 1" "" false
+            "" "2010-15-12 1" false
+            "2010-15-12 1" "2010-15-12 1" false
+
+            "2024-01-30" "" false
+            "" "2024-01-30" false
+            "2024-01-30" "2024-01-30" true
+
+            "2024-01-30 08:00" "" false
+            "" "2024-01-30 08:00" false
+            "2024-01-30 08:00" "2024-01-30 08:00" true
+
+            "2024-01-30 08:00" "2024-01-30 20:00" true
+            "2024-01-30 08:00" "" false
+            "2024-01-30 20:00" "2024-01-30 08:00" false
+            "" "2024-01-30 08:00" false
+
+            "0001-01-01 00:00" "9999-12-31 23:59" true
+            "0001-01-01 00:00" "" false
+            "9999-12-31 23:59" "0001-01-01 00:00" false
+            "" "0001-01-01 00:00" false
+
+            "15:00" "14:00" false
+            "14:00" "15:00" false
+            "" "14:00" false
+            "14:00" "" false
+
+            "2024-01-30 00:01:05" "2024-01-30 00:01:06" true
+            "2024-01-30 02:01:05" "2024-01-30 00:01:06" false
+        }
+        foreach {start_date end_date expected} $test_date {
+            aa_equals "'$start_date' -> '$end_date' validity is '$expected'" \
+                [string is true [calendar::item::dates_valid_p \
+                                     -start_date $start_date \
+                                     -end_date $end_date]] \
+                [string is true $expected]
+        }
+    }
+
+aa_register_case \
+    -cats api \
+    -procs {
+        calendar::item::new
+        lang::conn::timezone
+        lang::system::timezone
+    } \
+    a_foreign_calendar_user {
+        Test the cornercase of a user having their timezone set to
+        something different than the system.
+
+        We also try formats of supported dates to make sure that the
+        necessary conversions do not fail.
+    } {
+        #
+        # The user timezone may be cached. To avoid any
+        # caching-related behavior, we create a fresh test user.
+        #
+        set user_id [dict get [acs::test::user::create -admin] user_id]
+
+        aa_run_with_teardown \
+            -rollback \
+            -test_code {
+                set calendar_id [calendar::create $user_id t]
+
+                #
+                # Set the timezone to anything that is not the system
+                # timezone. This should be sufficient to trigger an
+                # attempt to convert the calendar item dates.
+                #
+                set system_timezone [lang::system::timezone]
+                set foreign_timezone [db_string get_timezone {
+                    select min(tz) from timezones where tz <> :system_timezone
+                }]
+                db_dml set_timezone {
+                    update user_preferences set
+                    timezone = :foreign_timezone
+                    where user_id = :user_id
+                }
+
+                #
+                # Now try to create a calendar item with various date
+                # formats and make sure that we do not trigger an
+                # error.
+                #
+                foreach {start_date end_date} {
+                    2020-01-01 2020-12-31
+                    "2020-01-01 01:00" "2020-12-31 02:00"
+                    "2020-01-01 01:00:03" "2020-12-31 02:00:04"
+                } {
+                    set fail_p [catch {
+                        calendar::item::new \
+                            -start_date $start_date \
+                            -end_date $end_date \
+                            -name "Foreign calendar item" \
+                            -description "Foreign calendar item" \
+                            -calendar_id $calendar_id
+                    } errmsg]
+                    aa_false \
+                        "Creating calendar item in timezone '$foreign_timezone', '$start_date' -> '$end_date'" \
+                        $fail_p
+                    if {$fail_p} {
+                        aa_log $errmsg
+                    }
+                }
+            } -teardown_code {
+                acs::test::user::delete -user_id $user_id
+            }
+    }
+
+aa_register_case \
+    -cats api \
+    -procs {
         calendar::create
         calendar::item::add_recurrence
+        calendar::item::edit_recurrence
+        calendar::item::delete_recurrence
         calendar::item::edit
         calendar::item::get
         calendar::item::new
@@ -144,6 +282,13 @@ aa_register_case \
                 set passed [expr {$passed && $ci_description eq $cal_item(description)}]
             }
             aa_true "Edited item name and New individual names are updated" $passed
+
+            aa_log "Deleting recurrence"
+            calendar::item::delete_recurrence -recurrence_id $recurrence_id
+            aa_false "All recurring events have been deleted" [db_0or1row check [subst {
+                select 1 from acs_objects where object_id in ([join $recurrence_event_ids ,])
+                fetch first 1 rows only
+            }]]
         }
 }
 
@@ -157,14 +302,157 @@ aa_register_case \
         calendar::item::delete
         calendar::item::get
         calendar::item::new
+        calendar::calendar_list
+        calendar::do_notifications
+        calendar::notification::get_url
+        calendar::have_private_p
+        calendar::personal_p
+        calendar::outlook::format_item
+        calendar::outlook::ics_timestamp_format
     } \
     cal_item_add_delete {
     Test adding and deleting a calendar entry
 } {
     try {
 
+        set user_id [ad_conn user_id]
+
         # create a test calendar
-        set calendar_id [calendar::create [ad_conn user_id] t]
+        set calendar_id [calendar::create $user_id t]
+
+        aa_true "User '$user_id' has the new calendar" {
+            [string first \
+                 $calendar_id \
+                 [calendar::calendar_list -user_id $user_id -privilege calendar_read]] >= 0
+        }
+
+        set another_user [dict get [acs::test::user::create] user_id]
+
+        aa_equals "User '$another_user' has no private calendars" \
+            [calendar::calendar_list -user_id $another_user -privilege calendar_read] \
+            [list]
+
+        aa_equals "User '$another_user' has no public calendars" \
+            [calendar::calendar_list -user_id $another_user -privilege read] \
+            [list]
+
+        aa_false "User '$another_user' has no 'calendar_read' permission on calendar '$calendar_id'" \
+            [permission::permission_p -party_id $another_user -object_id $calendar_id -privilege calendar_read]
+        aa_false "The public has no 'calendar_read' permission on calendar '$calendar_id'" \
+            [permission::permission_p -party_id [acs_magic_object "the_public"] -object_id $calendar_id -privilege calendar_read]
+
+        aa_log "Assign permission on user"
+        permission::grant -object_id $calendar_id -party_id $another_user -privilege calendar_read
+
+        aa_true "User '$another_user' has 'calendar_read' permission on calendar '$calendar_id'" \
+            [permission::permission_p -party_id $another_user -object_id $calendar_id -privilege calendar_read]
+        aa_false "The public has no 'calendar_read' permission on calendar '$calendar_id'" \
+            [permission::permission_p -party_id [acs_magic_object "the_public"] -object_id $calendar_id -privilege calendar_read]
+
+        aa_equals "User '$another_user' has no private calendars" \
+            [calendar::calendar_list -user_id $another_user -privilege read] \
+            [list]
+
+        aa_equals "User '$another_user' has no public calendars" \
+            [calendar::calendar_list -user_id $another_user -privilege calendar_read] \
+            [list]
+
+        aa_false "User '$another_user' has no private calendar" \
+            [calendar::have_private_p -party_id $another_user]
+
+        aa_log "Create a private test calendar belonging to the other user"
+        set calendar_id_2 [calendar::create $another_user t]
+
+        aa_log "Create a calendar item belonging to the other user"
+        set ci_start_date [clock format [clock seconds] -format "%Y-%m-%d"]
+        set ci_end_date [clock format [clock scan "tomorrow" -base [clock seconds]] -format "%Y-%m-%d"]
+        #
+        # Note: the creation_user can only be specified by altering
+        # the connection information. This is not great.
+        #
+        set old_user [ad_conn user_id]
+        ad_conn -set user_id $another_user
+        set another_cal_item_id \
+            [calendar::item::new \
+                 -start_date $ci_start_date \
+                 -end_date $ci_end_date \
+                 -name Test \
+                 -description {Test Desc} \
+                 -calendar_id $calendar_id_2]
+        ad_conn -set user_id $old_user
+        foreach priv {cal_item_read read write delete admin} {
+            aa_true "Other user has privilege '$priv' on the cal item '$another_cal_item_id'" \
+                [permission::permission_p \
+                     -party_id $another_user \
+                     -object_id $another_cal_item_id \
+                     -privilege $priv]
+        }
+
+
+        aa_true "User '$another_user' has now a private calendar" \
+            [calendar::have_private_p -party_id $another_user]
+
+        aa_true "Calendar '$calendar_id_2' is personal to '$another_user'" \
+            [calendar::personal_p -calendar_id $calendar_id_2 -user_id $another_user]
+
+        aa_false "Calendar '$calendar_id_2' is not personal to current user" \
+            [calendar::personal_p -calendar_id $calendar_id_2 -user_id [ad_conn user_id]]
+
+        aa_equals "User '$another_user' has the new calendar" \
+            [calendar::have_private_p -party_id $another_user -return_id 1] \
+            $calendar_id_2
+
+        aa_true "User '$another_user' has the new calendar" {
+            [string first \
+                 $calendar_id_2 \
+                 [calendar::calendar_list -user_id $another_user -privilege calendar_read]] >= 0
+        }
+
+        aa_log "Create a public test calendar belonging to the current user"
+        set calendar_id_3 [calendar::create $user_id f]
+        permission::grant -object_id $calendar_id_3 -party_id $another_user -privilege calendar_read
+        aa_true "User '$another_user' has the new calendar" {
+            [string first \
+                 $calendar_id_3 \
+                 [calendar::calendar_list -user_id $another_user -privilege calendar_read]] >= 0
+        }
+
+        aa_log "Revoking permission on user"
+        permission::revoke -object_id $calendar_id_3 -party_id $another_user -privilege calendar_read
+
+        aa_false "User '$another_user' has no 'calendar_read' permission on calendar '$calendar_id_3'" \
+            [permission::permission_p -party_id $another_user -object_id $calendar_id_3 -privilege calendar_read]
+        aa_false "The public has no 'calendar_read' permission on calendar '$calendar_id'" \
+            [permission::permission_p -party_id [acs_magic_object "the_public"] -object_id $calendar_id_3 -privilege calendar_read]
+
+        aa_log "Assign permission to the public"
+        permission::grant -object_id $calendar_id -party_id [acs_magic_object "the_public"] -privilege calendar_read
+
+        set cache_p [parameter::get -package_id [ad_acs_kernel_id] -parameter PermissionCacheP -default 0]
+        if { $cache_p } {
+            aa_log "Caching is activated, we flush it for [acs_magic_object the_public]"
+            permission::cache_flush -party_id [acs_magic_object "the_public"]
+        }
+
+        aa_true "User '$another_user' has 'calendar_read' permission on calendar '$calendar_id'" \
+            [permission::permission_p -party_id $another_user -object_id $calendar_id -privilege calendar_read]
+        aa_true "The public has 'calendar_read' permission on calendar '$calendar_id'" \
+            [permission::permission_p -party_id [acs_magic_object "the_public"] -object_id $calendar_id -privilege calendar_read]
+
+
+
+        #
+        # Creating a new calendar item will fire a notification, but
+        # only if the notification object has at least 1 subscriber.
+        #
+        aa_log "Subscribing user '$another_user' to the calendar notification"
+        notification::request::new \
+            -type_id [notification::type::get_type_id \
+                          -short_name calendar_notif] \
+            -user_id $another_user \
+            -object_id [ad_conn package_id] \
+            -interval_id [notification::interval::get_id_from_name -name "instant"] \
+            -delivery_method_id [notification::delivery::get_id -short_name "email"]
 
         #
         # create a simple calendar item without recurrence
@@ -180,6 +468,29 @@ aa_register_case \
                  -name $ci_name \
                  -description $ci_description \
                  -calendar_id $calendar_id]
+
+        #
+        # Check that the calendar item can be exported as .ics. We use
+        # an admin to avoid permission checks.
+        #
+        set admin_user_info [acs::test::user::create -admin]
+        set admin_user_id [dict get $admin_user_info user_id]
+        set cal_item_ics_url [aa_get_first_url -package_key calendar]ics/${cal_item_id}.ics
+        set d [acs::test::http -user_info $admin_user_info $cal_item_ics_url]
+        acs::test::reply_has_status_code $d 200
+        aa_true "Content type is .ics" \
+            [regexp {^application/x-msoutlook.*$} [ns_set iget [dict get $d headers] Content-type]]
+
+        set mode_pretty [_ calendar.New]
+        aa_true "Notification was generated" [db_0or1row check {
+            select 1 from notifications
+             where notif_subject like '%' || :mode_pretty || '%'
+               and response_id = :cal_item_id
+        }]
+
+        aa_equals "The notification URL is correct" \
+            [calendar::notification::get_url [ad_conn package_id]] \
+            [site_node::get_url_from_object_id -object_id [ad_conn package_id]]
 
         calendar::item::get \
             -cal_item_id $cal_item_id \
@@ -297,6 +608,12 @@ aa_register_case \
         # Finally, clean up the calendar
         #
         calendar::delete -calendar_id $calendar_id
+        calendar::delete -calendar_id $calendar_id_2
+        calendar::delete -calendar_id $calendar_id_3
+        foreach user_id [list $another_user $admin_user_id] {
+            acs::test::user::delete -user_id $user_id \
+                -delete_created_acs_objects
+        }
     }
 
     #

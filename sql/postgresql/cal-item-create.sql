@@ -97,7 +97,7 @@ comment on column cal_items.on_which_calendar is '
 ';
 
 create index cal_items_on_which_calendar_idx on cal_items (on_which_calendar);
-
+create index cal_items_on_which_calendar_item_type_id_idx on cal_items(on_which_calendar, item_type_id);
 
 -------------------------------------------------------------
 CREATE TABLE cal_uids (
@@ -141,7 +141,7 @@ comment on column cal_uids.ical_vars is '
 --
 -- procedure cal_item__new/15-16
 --
-select define_function_args('cal_item__new','cal_item_id;null,on_which_calendar;null,name,description,html_p;null,status_summary;null,timespan_id;null,activity_id;null,recurrence_id;null,object_type;"cal_item",context_id;null,creation_date;now(),creation_user;null,creation_ip;null,package_id;null,location;null');
+select define_function_args('cal_item__new','cal_item_id;null,on_which_calendar;null,name,description,html_p;null,status_summary;null,timespan_id;null,activity_id;null,recurrence_id;null,object_type;"cal_item",context_id;null,creation_date;now(),creation_user;null,creation_ip;null,package_id;null,location;null,related_link_url;null,related_link_text;null,redirect_to_rel_link_p;null');
 
 create or replace function cal_item__new(
    new__cal_item_id integer,       -- default null
@@ -156,7 +156,7 @@ create or replace function cal_item__new(
    new__object_type varchar,       -- default "cal_item"
    new__context_id integer,        -- default null
    new__creation_date timestamptz, -- default now()
-   new__creation_user integer,     -- acs_objects.creation_date%TYPE default null
+   new__creation_user integer,     -- default null
    new__creation_ip varchar,       -- default null
    new__package_id integer,        -- default null
    new__location varchar default NULL,

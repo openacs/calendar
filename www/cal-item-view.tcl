@@ -5,14 +5,16 @@ ad_page_contract {
     @creation-date April 09, 2002
     @cvs-id $Id$
 } {
-    cal_item_id:naturalnum,notnull
+    cal_item_id:object_type(cal_item),optional
     {return_url:localurl [ad_return_url]}
 }
 
 set user_id [ad_conn user_id]
-set package_id [ad_conn package_id]
 
-permission::require_permission -object_id $cal_item_id -privilege read
+::permission::require_permission \
+    -object_id $cal_item_id \
+    -privilege read \
+    -party_id $user_id
 
 calendar::item::get -cal_item_id $cal_item_id -array cal_item
 
@@ -24,22 +26,27 @@ if { $cal_item(redirect_to_rel_link_p) == "t" &&
     ad_script_abort
 }
 
-set write_p [permission::write_permission_p -object_id $cal_item_id -creation_user $cal_item(creation_user)]
+set write_p [::permission::permission_p \
+                 -object_id $cal_item_id \
+                 -privilege write \
+                 -party_id $user_id]
 
+multirow create attachments item_id label href detach_url
 # Attachments?
 if {$cal_item(n_attachments) > 0} {
-    set item_attachments [attachments::get_attachments \
-                              -object_id $cal_item(cal_item_id) \
-                              -return_url [ad_return_url]]
-} else {
-    set item_attachments [list]
+    foreach tuple [attachments::get_attachments \
+                       -object_id $cal_item(cal_item_id) \
+                       -return_url [ad_return_url]] {
+        lassign $tuple item_id label href detach_url
+        multirow append attachments $item_id $label $href $detach_url
+    }
 }
 
 # no time?
 set cal_item(no_time_p) [expr {!$cal_item(time_p)}]
 
 # Attachment URLs
-if {[calendar::attachments_enabled_p]} {
+if {[calendar::attachments_enabled_p -package_id $cal_item(calendar_package_id)]} {
     set href [attachments::add_attachment_url \
                   -object_id $cal_item(cal_item_id) \
                   -pretty_name $cal_item(name) \
@@ -50,7 +57,6 @@ if {[calendar::attachments_enabled_p]} {
 }
 
 set date $cal_item(start_date)
-set show_synch_p [parameter::get -package_id $package_id -parameter ShowSynchP -default 1]
 set cal_item(description) [ad_html_text_convert -from text/enhanced -to text/html -- $cal_item(description)]
 
 # actions URLs

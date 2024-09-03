@@ -36,7 +36,11 @@ set calendar_id [calendar::create $party_id "f" $calendar_name]
 if {$calendar_permission eq "public"} {
 
     # assign the permission to the calendar
-    calendar::assign_permissions $calendar_id $party_id $calendar_permission
+    ::permission::grant \
+        -object_id $calendar_id \
+        -party_id [acs_magic_object "the_public"] \
+        -privilege calendar_read
+
     ad_returnredirect  "one?action=permission&calendar_id=$calendar_id"
 
 } elseif {$calendar_permission eq "private"} {

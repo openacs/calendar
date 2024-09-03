@@ -1,7 +1,11 @@
 
-<property name="context">{/doc/calendar {Calendar}} {OpenACS Calendar package}</property>
+<property name="context">{/doc/calendar/ {Calendar}} {OpenACS Calendar package}</property>
 <property name="doc(title)">OpenACS Calendar package</property>
 <master>
+<style>
+div.sect2 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 16px;}
+div.sect3 > div.itemizedlist > ul.itemizedlist > li.listitem {margin-top: 6px;}
+</style>              
 <h2>OpenACS Calendar package</h2>
 <a href="../">OpenACS documentation</a>
 <p>The OpenACS calendar package is a web-based calendar package. In

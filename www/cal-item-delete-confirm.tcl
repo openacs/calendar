@@ -1,21 +1,20 @@
-#
-# A script that assumes
-#
-# cal_item_id:naturalnum,notnull
-#
-# This will pull out information about the event and 
-# display it with some options.
-#
-
 ad_page_contract {
-    Confirm Deletion
+    Confirm deletion of a calendar item.
 } {
     cal_item_id:naturalnum,notnull
 }
 
 auth::require_login
 
-calendar::item::get -cal_item_id $cal_item_id -array cal_item
+try {
+    calendar::item::get \
+        -cal_item_id $cal_item_id \
+        -array cal_item
+} on error {errmsg} {
+    ad_log warning $errmsg
+    ad_return_complaint 1 [_ acs-templating.Invalid_item]
+    ad_script_abort
+}
 
 # no time?
 set cal_item(no_time_p) [expr {!$cal_item(time_p)}]
@@ -36,8 +35,6 @@ if {  $cal_item(recurrence_id) ne "" } {
     set delete_confirm [export_vars -base "cal-item-delete" {cal_item_id {confirm_p 1}}]
     set delete_cancel [export_vars -base "cal-item-view" {cal_item_id}]
 }
-
-ad_return_template
 
 # Local variables:
 #    mode: tcl

@@ -9,7 +9,7 @@ ad_page_contract {
     @cvs-id $Id$
 } {
     calendar_id:naturalnum,notnull
-    type:notnull
+    type:notnull,string_length(max|100)
 }
 
 # Permission check

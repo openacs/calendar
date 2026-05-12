@@ -25,7 +25,7 @@ ad_page_contract {
         #
         if { [db_0or1row check_type {
             select 1 from acs_objects where object_id = :cal_item_id
-            and object_type <> 'cal_item'
+            and object_type not in ('cal_item', 'acs_event')
         }] } {
             ad_complain [_ acs-tcl.lt_invalid_object_type]
         }

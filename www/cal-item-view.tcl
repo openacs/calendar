@@ -5,7 +5,7 @@ ad_page_contract {
     @creation-date April 09, 2002
     @cvs-id $Id$
 } {
-    cal_item_id:object_type(cal_item),optional
+    cal_item_id:object_type(cal_item|acs_event),optional
     {return_url:localurl [ad_return_url]}
 }
 

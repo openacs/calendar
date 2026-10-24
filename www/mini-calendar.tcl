@@ -105,7 +105,9 @@ if {$view eq "month"} {
     set prev_year [clock format [clock scan "1 year ago" -base $now] -format "%Y-%m-%d"]
     set next_year [clock format [clock scan "1 year" -base $now] -format "%Y-%m-%d"]
     set prev_year_url "$base_url?view=$view&date=[ad_urlencode $prev_year]${page_num}${url_stub_period_days}"
+    set prev_year_url [calendar::navigation_url $prev_year $prev_year_url]
     set next_year_url "$base_url?view=$view&date=[ad_urlencode $next_year]${page_num}${url_stub_period_days}"
+    set next_year_url [calendar::navigation_url $next_year $next_year_url]
     set now       [clock scan $date]
 
     multirow create months name current_month_p new_row_p url
@@ -125,14 +127,16 @@ if {$view eq "month"} {
         set target_date [clock format \
                              [clock scan "[expr {$i-$curr_month_idx}] month" -base $now] -format "%Y-%m-%d"]
         multirow append months $month $current_month_p $new_row_p  \
-            "[export_vars -base $base_url {{date $target_date} view}]${page_num}${url_stub_period_days}"
+            [calendar::navigation_url $target_date "[export_vars -base $base_url {{date $target_date} view}]${page_num}${url_stub_period_days}"]
 
     }
 } else {
     set prev_month [clock format [clock scan "1 month ago" -base $now] -format "%Y-%m-%d"]
     set next_month [clock format [clock scan "1 month" -base $now] -format "%Y-%m-%d"]
     set prev_month_url "$base_url?view=$view&date=[ad_urlencode $prev_month]${page_num}${url_stub_period_days}"
+    set prev_month_url [calendar::navigation_url $prev_month $prev_month_url]
     set next_month_url "$base_url?view=$view&date=[ad_urlencode $next_month]${page_num}${url_stub_period_days}"
+    set next_month_url [calendar::navigation_url $next_month $next_month_url]
 
     set first_day_of_week [lc_get firstdayofweek]
     set week_days [lc_get abday]
@@ -195,7 +199,7 @@ if {$view eq "month"} {
         }
 
         set weekday [lindex $long_weekdays $day_of_week]
-        set url "[export_vars -base $base_url {{date $ansi_date} view}]${page_num}${url_stub_period_days}"
+        set url [calendar::navigation_url $ansi_date "[export_vars -base $base_url {{date $ansi_date} view}]${page_num}${url_stub_period_days}"]
         multirow append days $day_number $beginning_of_week_p $end_of_week_p $today_p $active_p \
             $url \
             $weekday \

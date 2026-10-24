@@ -263,8 +263,10 @@ for {set i 1} {$i <= $num_items } {incr i} {
 set dates "[lc_time_fmt $first_weekday_date "%q"] - [lc_time_fmt $last_weekday_date "%q"]"
 set prev_date_ansi [ad_urlencode [dt_julian_to_ansi [expr {$first_weekday_julian - 7}]]]
 set previous_week_url ?[export_vars {page_num {view week} {date $prev_date_ansi}}]\#calendar
+set previous_week_url [calendar::navigation_url $prev_date_ansi $previous_week_url]
 set next_date_ansi [ad_urlencode [dt_julian_to_ansi [expr {$first_weekday_julian + 7}]]]
 set next_week_url ?[export_vars {page_num {view week} {date $next_date_ansi}}]\#calendar
+set next_week_url [calendar::navigation_url $next_date_ansi $next_week_url]
 
 #Calendar grid.
 set grid_start $adjusted_start_display_hour
@@ -300,6 +302,7 @@ for {set i 0} {$i < 7} {incr i} {
     set trimmed_day   [string trimleft [clock format $weekday_secs -format "%d"] 0]
     set weekday_date  [clock format $weekday_secs -format "%Y-%m-%d"]
     set weekday_url   [export_vars -base [ad_conn url] -url -entire_form {{view day} {date $weekday_date}}]
+    set weekday_url [calendar::navigation_url $weekday_date $weekday_url]
     #TODO: localize_me
     set weekday_monthday "$trimmed_month/$trimmed_day"
     set i_day [expr { ($i + $first_day_of_week) % 7 }]

@@ -53,7 +53,9 @@ set user_id [ad_conn user_id]
 set today_date [dt_sysdate]
 
 set previous_month_url ?[export_vars {{view month} {date $prev_month} page_num}]
+set previous_month_url [calendar::navigation_url $prev_month $previous_month_url]
 set next_month_url ?[export_vars {{view month} {date $next_month} page_num}]
+set next_month_url [calendar::navigation_url $next_month $next_month_url]
 
 set first_day_of_week [lc_get firstdayofweek]
 set last_day_of_week [expr {($first_day_of_week + 6) % 7}]

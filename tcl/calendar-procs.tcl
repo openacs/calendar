@@ -616,6 +616,41 @@ ad_proc -public calendar::notification::get_url {
 
 
 
+ad_proc -public calendar::navigation_bounds {} {
+    Return the inclusive navigation years for the current calendar instance.
+    NavigationMinYear is absolute; NavigationYearsAhead is relative to the
+    current server year so the upper bound advances without configuration edits.
+} {
+    set min [parameter::get -parameter NavigationMinYear -default 2000]
+    set ahead [parameter::get -parameter NavigationYearsAhead -default 5]
+    if {![string is integer -strict $min] || $min < 1 || $min > 9999
+        || ![string is integer -strict $ahead] || $ahead < 0 || $ahead > 9999} {
+        error "Invalid calendar navigation bounds"
+    }
+    scan [clock format [clock seconds] -format %Y] %d year
+    set max [expr {min(9999, $year + $ahead)}]
+    if {$min > $max} {error "Calendar navigation minimum exceeds maximum"}
+    return [list $min $max]
+}
+
+ad_proc -public calendar::navigation_date_allowed_p {date} {
+    Whether an ISO calendar date is inside the configured navigation window.
+    Validate with clock scan, retaining its existing rollover interpretation.
+} {
+    if {[catch {clock scan $date -format %Y-%m-%d} seconds]} {return 0}
+    scan [clock format $seconds -format %Y] %d year
+    lassign [calendar::navigation_bounds] min max
+    return [expr {$year >= $min && $year <= $max}]
+}
+
+ad_proc -private calendar::navigation_url {date url} {
+    Return an empty string for out-of-range navigation targets. Templates must
+    render these targets as text, rather than anchors with empty href values.
+} {
+    if {![calendar::navigation_date_allowed_p $date]} {return ""}
+    return $url
+}
+
 # Local variables:
 #    mode: tcl
 #    tcl-indent-level: 4

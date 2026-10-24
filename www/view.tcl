@@ -22,6 +22,18 @@ ad_page_contract {
     }
 }
 
+# Reject distant dates before querying events or rendering navigation includes.
+if {$date eq ""} {set date [dt_sysdate]}
+foreach navigation_date [list $date $start_date] {
+    if {$navigation_date ne "" && ![calendar::navigation_date_allowed_p $navigation_date]} {
+        lassign [calendar::navigation_bounds] min_year max_year
+        set today_url [ns_quotehtml [export_vars -base [ad_conn url] {{date [dt_sysdate]} {view day}}]]
+        ad_return_exception_page 422 "Calendar date outside navigation range" \
+            "<p>This calendar can be browsed from $min_year through $max_year.</p><p><a href=\"$today_url\">Today</a></p>"
+        ad_script_abort
+    }
+}
+
 set package_id [ad_conn package_id]
 set user_id [ad_conn user_id]
 

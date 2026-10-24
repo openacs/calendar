@@ -1,6 +1,6 @@
   <table id="cal-table-week" cellpadding="0" cellspacing="1" border="0" width="@week_width@@width_units@">
     <caption class="cal-table-caption">
-      <a href="@previous_week_url@" title="#calendar.prev_week#"><adp:icon name="previous" text="#calendar.prev_week#"></a>&nbsp;#calendar.Week_of# @dates@&nbsp;<a href="@next_week_url@" title="#calendar.next_week#"><adp:icon name="next" text="#calendar.next_week#"></a>
+      <if @previous_week_url@ ne ""><a href="@previous_week_url@" title="#calendar.prev_week#"><adp:icon name="previous" text="#calendar.prev_week#"></a></if>&nbsp;#calendar.Week_of# @dates@&nbsp;<if @next_week_url@ ne ""><a href="@next_week_url@" title="#calendar.next_week#"><adp:icon name="next" text="#calendar.next_week#"></a></if>
     </caption>
 
     <thead>
@@ -8,7 +8,7 @@
         <th id="hours">#calendar.Hours#</th>
         <multiple name="days_of_week">
           <th id="wday_@days_of_week.day_num@" style="width:@days_of_week.width@@width_units@;">
-            <a href="@days_of_week.weekday_url@" title="#calendar.goto_weekday#">@days_of_week.day_short@ @days_of_week.monthday@</a>
+            <if @days_of_week.weekday_url@ ne ""><a href="@days_of_week.weekday_url@" title="#calendar.goto_weekday#">@days_of_week.day_short@ @days_of_week.monthday@</a></if><else>@days_of_week.day_short@ @days_of_week.monthday@</else>
           </th>
         </multiple>
       </tr>

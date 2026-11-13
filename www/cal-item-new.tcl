@@ -32,11 +32,6 @@ ad_page_contract {
     }
 }
 
-auth::require_login
-
-set package_id [ad_conn package_id]
-set user_id [ad_conn user_id]
-
 if {$date eq ""} {
     if {$julian_date ne ""} {
         set date [dt_julian_to_ansi $julian_date]
@@ -44,6 +39,20 @@ if {$date eq ""} {
         set date [dt_sysdate]
     }
 }
+
+# Reject out-of-range dates before sending anonymous users to login.
+if {![calendar::navigation_date_allowed_p $date]} {
+    lassign [calendar::navigation_bounds] min_year max_year
+    set today_url [ns_quotehtml [export_vars -base view {{date [dt_sysdate]} {view day}}]]
+    ad_return_exception_page 422 "Calendar date outside navigation range" \
+        "<p>This calendar can be browsed from $min_year through $max_year.</p><p><a href=\"$today_url\">Today</a></p>"
+    ad_script_abort
+}
+
+auth::require_login
+
+set package_id [ad_conn package_id]
+set user_id [ad_conn user_id]
 
 set ansi_date $date
 set calendar_list [calendar::calendar_list]

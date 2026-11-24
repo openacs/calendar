@@ -280,7 +280,7 @@ $$ LANGUAGE plpgsql;
 select define_function_args('calendar__delete','calendar_id');
 
 create or replace function calendar__delete(
-       integer            -- calendar.calendar_id%TYPE
+       arg_calendar_id integer            -- calendar.calendar_id%TYPE
 ) returns integer AS $$
 declare
 	delete__calendar_id		alias for $1;
